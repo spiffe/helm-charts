@@ -1,0 +1,15 @@
+{{- if eq (.Values.oidc.enabled | toString) "true" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spire.fullname" . }}-oidc
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.oidc.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.oidc.service.port }}
+      targetPort: spire-oidc-port
+  selector:
+    {{- include "spire.server.selectorLabels" . | nindent 4 }}
+{{ end }}

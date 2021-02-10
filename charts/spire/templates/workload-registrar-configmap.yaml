@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spire.fullname" . }}-workload-registrar
+  namespace: {{ .Release.Namespace }}
+data:
+  workload-registrar.conf: |
+    log_level       = "debug"
+    mode            = "reconcile"
+    trust_domain    = {{ .Values.spire.trustDomain | quote }}
+    cluster         = {{ .Values.spire.clusterName | quote }}
+    server_address  = "unix://{{ include "spire.sockets" . }}/registration.sock"
+    leader_election = true
+    metrics_addr    = "0.0.0.0:18080"

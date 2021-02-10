@@ -1,0 +1,22 @@
+{{- if eq (.Values.oidc.enabled | toString) "true" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spire.fullname" . }}-oidc-discovery-provider
+  namespace: {{ .Release.Namespace }}
+data:
+  oidc-discovery-provider.conf: |
+    log_level = "{{ .Values.oidc.logLevel }}"
+
+    domain = "{{ .Values.oidc.ingress.domain }}"
+    insecure_addr = ":{{ .Values.oidc.service.port }}"
+    # acme {
+    #     directory_url = "https://acme-v02.api.letsencrypt.org/directory"
+    #     cache_dir = "/run/spire"
+    #     tos_accepted = true
+    #     email = "{{ .Values.oidc.letsEncrypt.emailAddress }}"
+    # }
+    server_api {
+        address = "unix://{{ include "spire.sockets" . }}/registration.sock"
+    }
+{{ end }}
