@@ -67,7 +67,7 @@ Kubernetes: `>=1.19.0-0`
 | oidc.letsEncrypt.emailAddress | string | `"letsencrypt@example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.service.port | int | `80` |  |
-| oidc.service.type | string | `"NodePort"` |  |
+| oidc.service.type | string | `"ClusterIP"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
@@ -81,7 +81,7 @@ Kubernetes: `>=1.19.0-0`
 | server.image.repository | string | `"gcr.io/spiffe-io/spire-server"` |  |
 | server.image.tag | string | `""` |  |
 | server.service.port | int | `8081` |  |
-| server.service.type | string | `"NodePort"` |  |
+| server.service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |

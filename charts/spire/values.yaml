@@ -25,7 +25,7 @@ server:
     storageClass: null
 
   service:
-    type: NodePort
+    type: ClusterIP
     port: 8081
 
 oidc:
@@ -39,7 +39,7 @@ oidc:
   logLevel: INFO
 
   service:
-    type: NodePort
+    type: ClusterIP
     port: 80
 
   ingress:
