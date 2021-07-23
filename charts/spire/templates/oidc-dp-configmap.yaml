@@ -8,14 +8,15 @@ data:
   oidc-discovery-provider.conf: |
     log_level = "{{ .Values.oidc.logLevel }}"
 
-    domain = "{{ .Values.oidc.ingress.domain }}"
+    domain = "{{ .Values.oidc.domain }}"
     insecure_addr = ":{{ .Values.oidc.service.port }}"
-    # acme {
-    #     directory_url = "https://acme-v02.api.letsencrypt.org/directory"
-    #     cache_dir = "/run/spire"
-    #     tos_accepted = true
-    #     email = "{{ .Values.oidc.letsEncrypt.emailAddress }}"
-    # }
+    allow_insecure_scheme = {{ .Values.oidc.allowInsecureScheme }}
+    acme {
+        directory_url = "{{ .Values.oidc.acme.directoryUrl }}"
+        cache_dir = "{{ .Values.oidc.acme.cacheDir }}"
+        tos_accepted = {{ .Values.oidc.acme.tosAccepted }}
+        email = "{{ .Values.oidc.acme.emailAddress }}"
+    }
     server_api {
         address = "unix://{{ include "spire.sockets" . }}/registration.sock"
     }

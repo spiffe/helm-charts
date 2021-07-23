@@ -94,12 +94,15 @@ spec:
         {{- if eq (.Values.oidc.enabled | toString) "true" }}
         - name: spire-oidc
           image: "{{ .Values.oidc.image.repository }}:{{ .Values.oidc.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.oidc.image.pullPolicy }}
           args:
             - -config
             - /run/spire/oidc/config/oidc-discovery-provider.conf
           ports:
             - containerPort: {{ .Values.oidc.service.port }}
-              name: spire-oidc-port
+              name: oidc-http
+            - containerPort: 443
+              name: oidc-https
           volumeMounts:
             - name: spire-server-socket
               mountPath: {{ include "spire.sockets" . }}

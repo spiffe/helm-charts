@@ -39,14 +39,19 @@ oidc:
   logLevel: INFO
 
   service:
-    type: ClusterIP
+    type: NodePort
     port: 80
+    annotations: {}
+      # external-dns.alpha.kubernetes.io/hostname: oidc-discovery.example.org
 
-  ingress:
-    enabled: false
-    domain: "oidc-discovery.example.org"
+  domain: "oidc-discovery.example.org"
 
-  letsEncrypt:
+  allowInsecureScheme: false
+
+  acme:
+    tosAccepted: false
+    cacheDir: /run/spire
+    directoryUrl: https://acme-v02.api.letsencrypt.org/directory
     emailAddress: letsencrypt@example.org
 
 agent:

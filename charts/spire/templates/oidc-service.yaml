@@ -4,12 +4,19 @@ kind: Service
 metadata:
   name: {{ include "spire.fullname" . }}-oidc
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.oidc.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
 spec:
   type: {{ .Values.oidc.service.type }}
   ports:
     - name: http
       port: {{ .Values.oidc.service.port }}
-      targetPort: spire-oidc-port
+      targetPort: oidc-http
+    - name: https
+      port: 443
+      targetPort: oidc-https
   selector:
     {{- include "spire.server.selectorLabels" . | nindent 4 }}
 {{ end }}
