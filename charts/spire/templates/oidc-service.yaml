@@ -13,10 +13,10 @@ spec:
   ports:
     - name: http
       port: {{ .Values.oidc.service.port }}
-      targetPort: oidc-http
+      targetPort: http
     - name: https
       port: 443
-      targetPort: oidc-https
+      targetPort: https
   selector:
-    {{- include "spire.server.selectorLabels" . | nindent 4 }}
+    {{- include "spire.oidc.selectorLabels" . | nindent 4 }}
 {{ end }}

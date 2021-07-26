@@ -1,0 +1,86 @@
+{{- if eq (.Values.oidc.enabled | toString) "true" }}
+{{- $fullname := include "spire.fullname" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "%s-oidc" $fullname }}
+  labels:
+    {{- include "spire.oidc.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "spire.oidc.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "spire.oidc.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- range . }}
+        - name: {{ printf "%s-%s" $fullname .name }}
+        {{- end }}
+      {{- end }}
+      serviceAccountName: {{ include "spire.serviceAccountName" . }}-agent
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: spire-oidc
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.oidc.image.repository }}:{{ .Values.oidc.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.oidc.image.pullPolicy }}
+          args:
+            - -config
+            - /run/spire/oidc/config/oidc-discovery-provider.conf
+          ports:
+            - containerPort: {{ .Values.oidc.service.port }}
+              name: http
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: spire-agent-socket
+              mountPath: {{ include "spire.sockets" . }}
+              readOnly: true
+            - name: spire-oidc-config
+              mountPath: /run/spire/oidc/config/
+              readOnly: true
+          readinessProbe:
+            exec:
+              command: ["/bin/ps", "aux", " ||", "grep", "oidc-discovery-provider -config /run/spire/oidc/config/oidc-discovery-provider.conf"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /.well-known/openid-configuration
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: spire-agent-socket
+          hostPath:
+            path: /run/spire/sockets
+            type: DirectoryOrCreate
+        - name: spire-oidc-config
+          configMap:
+            name: {{ include "spire.fullname" . }}-oidc-discovery-provider
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{ end }}

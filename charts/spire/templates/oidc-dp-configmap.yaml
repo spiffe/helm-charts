@@ -17,7 +17,8 @@ data:
         tos_accepted = {{ .Values.oidc.acme.tosAccepted }}
         email = "{{ .Values.oidc.acme.emailAddress }}"
     }
-    server_api {
-        address = "unix://{{ include "spire.sockets" . }}/registration.sock"
+    workload_api {
+        socket_path = "{{ include "spire.sockets" . }}/agent.sock"
+        trust_domain = "{{ .Values.spire.trustDomain }}"
     }
 {{ end }}

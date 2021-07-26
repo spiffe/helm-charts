@@ -91,6 +91,26 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Common oidc labels
+*/}}
+{{- define "spire.oidc.labels" -}}
+helm.sh/chart: {{ include "spire.chart" . }}
+{{ include "spire.oidc.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector oidc labels
+*/}}
+{{- define "spire.oidc.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "spire.name" . }}-oidc
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "spire.serviceAccountName" -}}
