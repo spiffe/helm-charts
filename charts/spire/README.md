@@ -71,6 +71,7 @@ Kubernetes: `>=1.19.0-0`
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
 | oidc.image.repository | string | `"gcr.io/spiffe-io/oidc-discovery-provider"` |  |
 | oidc.image.tag | string | `""` |  |
+| oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.service.annotations | object | `{}` |  |
 | oidc.service.port | int | `80` |  |

@@ -16,7 +16,7 @@ data:
       ca_key_type = "rsa-2048"
 
       {{- if eq (.Values.oidc.enabled | toString) "true" }}
-      jwt_issuer = "{{ .Values.oidc.domain }}"
+      jwt_issuer = "{{ .Values.oidc.jwtIssuer }}"
       {{ end }}
       default_svid_ttl = "1h"
       ca_subject = {
