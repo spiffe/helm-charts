@@ -11,7 +11,7 @@ metadata:
 spec:
   type: {{ .Values.oidc.service.type }}
   ports:
-    {{- if .Values.oidc.allowInsecureScheme }}
+    {{- if .Values.oidc.insecureScheme.enabled }}
     - name: http
       port: {{ .Values.oidc.service.port }}
       targetPort: http

@@ -40,7 +40,7 @@ spec:
           args:
             - -config
             - /run/spire/oidc/config/oidc-discovery-provider.conf
-          {{- if not .Values.oidc.allowInsecureScheme }}
+          {{- if not .Values.oidc.insecureScheme.enabled }}
           ports:
             - containerPort: 443
               name: https
@@ -64,12 +64,12 @@ spec:
             periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-        {{- if .Values.oidc.allowInsecureScheme }}
+        {{- if .Values.oidc.insecureScheme.enabled }}
         - name: nginx
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: nginx:latest
-          imagePullPolicy: {{ .Values.oidc.image.pullPolicy }}
+          image: "{{ .Values.oidc.insecureScheme.nginx.repository }}:{{ .Values.oidc.insecureScheme.nginx.tag }}"
+          imagePullPolicy: {{ .Values.oidc.insecureScheme.nginx.pullPolicy }}
           ports:
             - containerPort: 80
               name: http

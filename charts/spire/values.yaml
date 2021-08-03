@@ -52,7 +52,13 @@ oidc:
     - spire-oidc.spire.svc.cluster.local
     - oidc-discovery.example.org
 
-  allowInsecureScheme: false
+  insecureScheme:
+    enabled: false
+
+    nginx:
+      repository: nginx
+      pullPolicy: IfNotPresent
+      tag: "alpine"
 
   acme:
     tosAccepted: false

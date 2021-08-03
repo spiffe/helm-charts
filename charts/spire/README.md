@@ -62,7 +62,6 @@ Kubernetes: `>=1.19.0-0`
 | oidc.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | oidc.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | oidc.acme.tosAccepted | bool | `false` |  |
-| oidc.allowInsecureScheme | bool | `false` |  |
 | oidc.domains[0] | string | `"localhost"` |  |
 | oidc.domains[1] | string | `"spire-oidc.spire"` |  |
 | oidc.domains[2] | string | `"spire-oidc.spire.svc.cluster.local"` |  |
@@ -71,6 +70,10 @@ Kubernetes: `>=1.19.0-0`
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
 | oidc.image.repository | string | `"gcr.io/spiffe-io/oidc-discovery-provider"` |  |
 | oidc.image.tag | string | `""` |  |
+| oidc.insecureScheme.enabled | bool | `false` |  |
+| oidc.insecureScheme.nginx.pullPolicy | string | `"IfNotPresent"` |  |
+| oidc.insecureScheme.nginx.repository | string | `"nginx"` |  |
+| oidc.insecureScheme.nginx.tag | string | `"alpine"` |  |
 | oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.service.annotations | object | `{}` |  |

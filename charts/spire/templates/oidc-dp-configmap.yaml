@@ -12,8 +12,8 @@ data:
     {{ else }}
     domains = []
     {{ end }}
-    {{- if .Values.oidc.allowInsecureScheme }}
-    allow_insecure_scheme = {{ .Values.oidc.allowInsecureScheme }}
+    {{- if .Values.oidc.insecureScheme.enabled }}
+    allow_insecure_scheme = {{ .Values.oidc.insecureScheme.enabled }}
     listen_socket_path = "/run/spire/oidc-sockets/oidc-server.sock"
     {{- else }}
     acme {
@@ -28,7 +28,7 @@ data:
         socket_path = "/run/spire/agent-sockets/agent.sock"
         trust_domain = "{{ .Values.spire.trustDomain }}"
     }
-  {{- if .Values.oidc.allowInsecureScheme }}
+  {{- if .Values.oidc.insecureScheme.enabled }}
   default.conf.template: |
     upstream oidc {
       server unix:/run/spire/oidc-sockets/oidc-server.sock;
