@@ -47,7 +47,7 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: spire-server-socket
-              mountPath: {{ include "spire.sockets" . }}
+              mountPath: /run/spire/server-sockets
               readOnly: false
             - name: spire-config
               mountPath: /run/spire/config
@@ -86,7 +86,7 @@ spec:
               name: registrar-port
           volumeMounts:
             - name: spire-server-socket
-              mountPath: {{ include "spire.sockets" . }}
+              mountPath: /run/spire/server-sockets
               readOnly: true
             - name: spire-workload-registrar-config
               mountPath: /run/spire/k8s-workload-registrar/config

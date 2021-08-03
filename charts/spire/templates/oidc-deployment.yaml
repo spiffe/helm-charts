@@ -46,9 +46,9 @@ spec:
             - containerPort: 443
               name: https
           volumeMounts:
-            - name: spire-agent-socket
-              mountPath: {{ include "spire.sockets" . }}
-              readOnly: true
+            - name: spire-oidc-sockets
+              mountPath: /run/spire/oidc-sockets
+              readOnly: false
             - name: spire-oidc-config
               mountPath: /run/spire/oidc/config/
               readOnly: true
@@ -64,9 +64,9 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-        - name: spire-agent-socket
+        - name: spire-oidc-sockets
           hostPath:
-            path: /run/spire/sockets
+            path: /run/spire/oidc-sockets
             type: DirectoryOrCreate
         - name: spire-oidc-config
           configMap:

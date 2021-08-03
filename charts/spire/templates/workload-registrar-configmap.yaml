@@ -9,6 +9,6 @@ data:
     mode            = "reconcile"
     trust_domain    = {{ .Values.spire.trustDomain | quote }}
     cluster         = {{ .Values.spire.clusterName | quote }}
-    server_address  = "unix://{{ include "spire.sockets" . }}/registration.sock"
+    server_address  = "unix:///run/spire/server-sockets/registration.sock"
     leader_election = true
     metrics_addr    = "0.0.0.0:18080"

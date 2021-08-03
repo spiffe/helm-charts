@@ -38,8 +38,8 @@ spec:
             - name: spire-bundle
               mountPath: /run/spire/bundle
               readOnly: true
-            - name: spire-agent-socket
-              mountPath: /run/spire/sockets
+            - name: spire-agent-sockets
+              mountPath: /run/spire/agent-sockets
               readOnly: false
             - name: spire-token
               mountPath: /var/run/secrets/tokens
@@ -62,9 +62,9 @@ spec:
         - name: spire-bundle
           configMap:
             name: {{ include "spire.fullname" . }}-bundle
-        - name: spire-agent-socket
+        - name: spire-agent-sockets
           hostPath:
-            path: /run/spire/sockets
+            path: /run/spire/agent-sockets
             type: DirectoryOrCreate
         - name: spire-token
           projected:
