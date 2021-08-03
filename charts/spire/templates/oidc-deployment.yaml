@@ -46,6 +46,9 @@ spec:
               name: https
           {{- end }}
           volumeMounts:
+            - name: spire-agent-sockets
+              mountPath: /run/spire/agent-sockets
+              readOnly: true
             - name: spire-oidc-sockets
               mountPath: /run/spire/oidc-sockets
               readOnly: false
@@ -86,6 +89,10 @@ spec:
         - name: spire-oidc-sockets
           hostPath:
             path: /run/spire/oidc-sockets
+            type: DirectoryOrCreate
+        - name: spire-agent-sockets
+          hostPath:
+            path: /run/spire/agent-sockets
             type: DirectoryOrCreate
         - name: spire-oidc-config
           configMap:
