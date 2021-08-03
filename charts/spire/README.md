@@ -63,7 +63,10 @@ Kubernetes: `>=1.19.0-0`
 | oidc.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | oidc.acme.tosAccepted | bool | `false` |  |
 | oidc.allowInsecureScheme | bool | `false` |  |
-| oidc.domain | string | `"oidc-discovery.example.org"` |  |
+| oidc.domains[0] | string | `"localhost"` |  |
+| oidc.domains[1] | string | `"spire-oidc.spire"` |  |
+| oidc.domains[2] | string | `"spire-oidc.spire.svc.cluster.local"` |  |
+| oidc.domains[3] | string | `"oidc-discovery.example.org"` |  |
 | oidc.enabled | bool | `false` |  |
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
 | oidc.image.repository | string | `"gcr.io/spiffe-io/oidc-discovery-provider"` |  |

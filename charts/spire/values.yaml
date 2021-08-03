@@ -44,7 +44,11 @@ oidc:
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: oidc-discovery.example.org
 
-  domain: "oidc-discovery.example.org"
+  domains:
+    - localhost
+    - spire-oidc.spire
+    - spire-oidc.spire.svc.cluster.local
+    - oidc-discovery.example.org
 
   allowInsecureScheme: false
 

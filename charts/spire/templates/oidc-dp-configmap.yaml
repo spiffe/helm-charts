@@ -7,9 +7,11 @@ metadata:
 data:
   oidc-discovery-provider.conf: |
     log_level = "{{ .Values.oidc.logLevel }}"
-
-    domain = "{{ .Values.oidc.domain }}"
-    insecure_addr = ":{{ .Values.oidc.service.port }}"
+    {{ if gt (len .Values.oidc.domains) 0 }}
+    domains = ["{{- join "\", \"" .Values.oidc.domains }}"]
+    {{ else }}
+    domains = []
+    {{ end }}
     allow_insecure_scheme = {{ .Values.oidc.allowInsecureScheme }}
     acme {
         directory_url = "{{ .Values.oidc.acme.directoryUrl }}"
