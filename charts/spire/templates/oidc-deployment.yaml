@@ -40,11 +40,11 @@ spec:
           args:
             - -config
             - /run/spire/oidc/config/oidc-discovery-provider.conf
+          {{- if not .Values.oidc.allowInsecureScheme }}
           ports:
-            - containerPort: {{ .Values.oidc.service.port }}
-              name: http
             - containerPort: 443
               name: https
+          {{- end }}
           volumeMounts:
             - name: spire-oidc-sockets
               mountPath: /run/spire/oidc-sockets
@@ -54,15 +54,34 @@ spec:
               readOnly: true
           readinessProbe:
             exec:
-              command: ["/bin/ps", "aux", " ||", "grep", "oidc-discovery-provider -config /run/spire/oidc/config/oidc-discovery-provider.conf"]
+              command: ["/bin/ps", "aux", "|", "grep", "oidc-discovery-provider -config /run/spire/oidc/config/oidc-discovery-provider.conf"]
             initialDelaySeconds: 5
             periodSeconds: 5
           livenessProbe:
-            httpGet:
-              path: /.well-known/openid-configuration
-              port: http
+            exec:
+              command: ["/bin/ps", "aux", "|", "grep", "oidc-discovery-provider -config /run/spire/oidc/config/oidc-discovery-provider.conf"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.oidc.allowInsecureScheme }}
+        - name: nginx
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: nginx:latest
+          imagePullPolicy: {{ .Values.oidc.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: spire-oidc-sockets
+              mountPath: /run/spire/oidc-sockets
+              readOnly: true
+            - name: spire-oidc-config
+              mountPath: /etc/nginx/templates/default.conf.template
+              subPath: default.conf.template
+              readOnly: true
+        {{- end }}
       volumes:
         - name: spire-oidc-sockets
           hostPath:

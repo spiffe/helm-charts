@@ -11,12 +11,15 @@ metadata:
 spec:
   type: {{ .Values.oidc.service.type }}
   ports:
+    {{- if .Values.oidc.allowInsecureScheme }}
     - name: http
       port: {{ .Values.oidc.service.port }}
       targetPort: http
+    {{- else }}
     - name: https
       port: 443
       targetPort: https
+    {{- end }}
   selector:
     {{- include "spire.oidc.selectorLabels" . | nindent 4 }}
 {{ end }}
