@@ -76,7 +76,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.server.resources | nindent 12 }}
         - name: {{ .Chart.Name }}-workload-registrar
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

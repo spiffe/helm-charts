@@ -66,7 +66,7 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.oidc.resources | nindent 12 }}
         {{- if .Values.oidc.insecureScheme.enabled }}
         - name: nginx
           securityContext:

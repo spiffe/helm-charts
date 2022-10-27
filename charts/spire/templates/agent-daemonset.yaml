@@ -59,6 +59,8 @@ spec:
               port: 8080
             initialDelaySeconds: 15
             periodSeconds: 60
+          resources:
+            {{- toYaml .Values.agent.resources | nindent 12 }}
         # This is the container which runs the SPIFFE CSI driver.
         - name: spiffe-csi-driver
           image: ghcr.io/spiffe/spiffe-csi-driver:nightly
@@ -90,6 +92,8 @@ spec:
               name: mountpoint-dir
           securityContext:
             privileged: true
+          resources:
+            {{- toYaml .Values.csiDriver.resources | nindent 12 }}
         # This container runs the CSI Node Driver Registrar which takes care
         # of all the little details required to register a CSI driver with
         # the kubelet.
@@ -108,6 +112,8 @@ spec:
             # directory
             - name: kubelet-plugin-registration-dir
               mountPath: /registration
+          resources:
+            {{- toYaml .Values.csiDriver.resources | nindent 12 }}
       volumes:
         - name: spire-config
           configMap:
