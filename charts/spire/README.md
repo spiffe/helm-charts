@@ -52,6 +52,7 @@ Kubernetes: `>=1.19.0-0`
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | agent.image.repository | string | `"gcr.io/spiffe-io/spire-agent"` |  |
 | agent.image.tag | string | `""` |  |
+| agent.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -59,7 +60,6 @@ Kubernetes: `>=1.19.0-0`
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
 | oidc.acme.cacheDir | string | `"/run/spire"` |  |
 | oidc.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | oidc.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
@@ -78,6 +78,7 @@ Kubernetes: `>=1.19.0-0`
 | oidc.insecureScheme.nginx.tag | string | `"alpine"` |  |
 | oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
+| oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | oidc.service.annotations | object | `{}` |  |
 | oidc.service.port | int | `80` |  |
 | oidc.service.type | string | `"NodePort"` |  |
@@ -93,6 +94,7 @@ Kubernetes: `>=1.19.0-0`
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.image.repository | string | `"gcr.io/spiffe-io/spire-server"` |  |
 | server.image.tag | string | `""` |  |
+| server.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | server.service.port | int | `8081` |  |
 | server.service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
