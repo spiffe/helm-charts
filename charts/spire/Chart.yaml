@@ -37,4 +37,4 @@ maintainers:
   - name: marcofranssen
     email: marco.franssen@gmail.com
     url: https://marcofranssen.nl
-kubeVersion: ">=1.19.0-0"
+kubeVersion: ">=1.21.0-0"

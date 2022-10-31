@@ -42,7 +42,7 @@ spec:
 
 ## Requirements
 
-Kubernetes: `>=1.19.0-0`
+Kubernetes: `>=1.21.0-0`
 
 ## Values
 
