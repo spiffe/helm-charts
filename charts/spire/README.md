@@ -65,6 +65,10 @@ Kubernetes: `>=1.21.0-0`
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
+| nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
+| nodeDriverRegistrar.image.repository | string | `"quay.io/k8scsi/csi-node-driver-registrar"` |  |
+| nodeDriverRegistrar.image.tag | string | `"v2.0.1"` |  |
+| nodeDriverRegistrar.resources | object | `{}` |  |
 | oidc.acme.cacheDir | string | `"/run/spire"` |  |
 | oidc.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | oidc.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
