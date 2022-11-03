@@ -1,3 +1,6 @@
+nameOverride: ""
+fullnameOverride: ""
+
 waitForIt:
   image:
     registry: gcr.io
@@ -186,9 +189,6 @@ imagePullSecrets: []
   #   username: my-docker-user
   #   password: my-docker-password
   #   registryURL: my-private.docker-registry.com
-
-nameOverride: ""
-fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
