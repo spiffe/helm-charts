@@ -40,7 +40,7 @@ spec:
         - name: {{ .Chart.Name }}-server
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag | default .Chart.AppVersion }}"
+          image: {{ template "spire.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.server.image) }}
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           args:
             - -config
@@ -80,7 +80,7 @@ spec:
         - name: {{ .Chart.Name }}-workload-registrar
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.workloadRegistrar.image.repository }}:{{ .Values.workloadRegistrar.image.tag | default .Chart.AppVersion }}"
+          image: {{ template "spire.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.workloadRegistrar.image) }}
           imagePullPolicy: {{ .Values.workloadRegistrar.image.pullPolicy }}
           args:
             - -config

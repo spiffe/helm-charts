@@ -4,12 +4,20 @@
 
 replicaCount: 1
 
+waitForIt:
+  image:
+    registry: gcr.io
+    repository: spiffe-io/wait-for-it
+    pullPolicy: IfNotPresent
+    version: ""
+
 workloadRegistrar:
   image:
-    repository: gcr.io/spiffe-io/k8s-workload-registrar
+    registry: gcr.io
+    repository: spiffe-io/k8s-workload-registrar
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    version: ""
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -25,10 +33,11 @@ workloadRegistrar:
 
 server:
   image:
-    repository: gcr.io/spiffe-io/spire-server
+    registry: gcr.io
+    repository: spiffe-io/spire-server
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    version: ""
 
   nodeSelector:
     kubernetes.io/arch: amd64
@@ -57,9 +66,10 @@ server:
 
 csiDriver:
   image:
-    repository: ghcr.io/spiffe/spiffe-csi-driver
+    registry: ghcr.io
+    repository: spiffe/spiffe-csi-driver
     pullPolicy: IfNotPresent
-    tag: 0.2.0
+    version: 0.2.0
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -74,9 +84,10 @@ csiDriver:
 
 nodeDriverRegistrar:
   image:
-    repository: quay.io/k8scsi/csi-node-driver-registrar
+    registry: quay.io
+    repository: k8scsi/csi-node-driver-registrar
     pullPolicy: IfNotPresent
-    tag: v2.0.1
+    version: v2.0.1
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -93,9 +104,10 @@ oidc:
   enabled: false
 
   image:
-    repository: gcr.io/spiffe-io/oidc-discovery-provider
+    registry: gcr.io
+    repository: spiffe-io/oidc-discovery-provider
     pullPolicy: IfNotPresent
-    tag: ""
+    version: ""
 
   nodeSelector:
     kubernetes.io/arch: amd64
@@ -132,9 +144,11 @@ oidc:
     enabled: false
 
     nginx:
-      repository: nginx
-      pullPolicy: IfNotPresent
-      tag: "alpine"
+      image:
+        registry: docker.io
+        repository: nginx
+        pullPolicy: IfNotPresent
+        version: alpine
 
   acme:
     tosAccepted: false
@@ -144,10 +158,11 @@ oidc:
 
 agent:
   image:
-    repository: gcr.io/spiffe-io/spire-agent
+    registry: gcr.io
+    repository: spiffe-io/spire-agent
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    version: ""
 
   nodeSelector:
     kubernetes.io/arch: amd64

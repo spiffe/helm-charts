@@ -35,7 +35,7 @@ spec:
         - name: spire-oidc
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.oidc.image.repository }}:{{ .Values.oidc.image.tag | default .Chart.AppVersion }}"
+          image: {{ template "spire.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.oidc.image) }}
           imagePullPolicy: {{ .Values.oidc.image.pullPolicy }}
           args:
             - -config
@@ -71,8 +71,8 @@ spec:
         - name: nginx
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.oidc.insecureScheme.nginx.repository }}:{{ .Values.oidc.insecureScheme.nginx.tag }}"
-          imagePullPolicy: {{ .Values.oidc.insecureScheme.nginx.pullPolicy }}
+          image: {{ template "spire.image" .Values.oidc.insecureScheme.nginx }}
+          imagePullPolicy: {{ .Values.oidc.insecureScheme.nginx.image.pullPolicy }}
           ports:
             - containerPort: 80
               name: http

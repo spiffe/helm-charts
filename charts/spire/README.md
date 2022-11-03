@@ -50,8 +50,9 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| agent.image.repository | string | `"gcr.io/spiffe-io/spire-agent"` |  |
-| agent.image.tag | string | `""` |  |
+| agent.image.registry | string | `"gcr.io"` |  |
+| agent.image.repository | string | `"spiffe-io/spire-agent"` |  |
+| agent.image.version | string | `""` |  |
 | agent.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | agent.resources | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
@@ -59,15 +60,17 @@ Kubernetes: `>=1.21.0-0`
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | csiDriver.image.pullPolicy | string | `"IfNotPresent"` |  |
-| csiDriver.image.repository | string | `"ghcr.io/spiffe/spiffe-csi-driver"` |  |
-| csiDriver.image.tag | string | `"0.2.0"` |  |
+| csiDriver.image.registry | string | `"ghcr.io"` |  |
+| csiDriver.image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
+| csiDriver.image.version | string | `"0.2.0"` |  |
 | csiDriver.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nodeDriverRegistrar.image.repository | string | `"quay.io/k8scsi/csi-node-driver-registrar"` |  |
-| nodeDriverRegistrar.image.tag | string | `"v2.0.1"` |  |
+| nodeDriverRegistrar.image.registry | string | `"quay.io"` |  |
+| nodeDriverRegistrar.image.repository | string | `"k8scsi/csi-node-driver-registrar"` |  |
+| nodeDriverRegistrar.image.version | string | `"v2.0.1"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
 | oidc.acme.cacheDir | string | `"/run/spire"` |  |
 | oidc.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
@@ -79,12 +82,14 @@ Kubernetes: `>=1.21.0-0`
 | oidc.domains[3] | string | `"oidc-discovery.example.org"` |  |
 | oidc.enabled | bool | `false` |  |
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.image.repository | string | `"gcr.io/spiffe-io/oidc-discovery-provider"` |  |
-| oidc.image.tag | string | `""` |  |
+| oidc.image.registry | string | `"gcr.io"` |  |
+| oidc.image.repository | string | `"spiffe-io/oidc-discovery-provider"` |  |
+| oidc.image.version | string | `""` |  |
 | oidc.insecureScheme.enabled | bool | `false` |  |
-| oidc.insecureScheme.nginx.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.insecureScheme.nginx.repository | string | `"nginx"` |  |
-| oidc.insecureScheme.nginx.tag | string | `"alpine"` |  |
+| oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
+| oidc.insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
+| oidc.insecureScheme.nginx.image.repository | string | `"nginx"` |  |
+| oidc.insecureScheme.nginx.image.version | string | `"alpine"` |  |
 | oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
@@ -101,8 +106,9 @@ Kubernetes: `>=1.21.0-0`
 | server.dataStorage.size | string | `"1Gi"` |  |
 | server.dataStorage.storageClass | string | `nil` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
-| server.image.repository | string | `"gcr.io/spiffe-io/spire-server"` |  |
-| server.image.tag | string | `""` |  |
+| server.image.registry | string | `"gcr.io"` |  |
+| server.image.repository | string | `"spiffe-io/spire-server"` |  |
+| server.image.version | string | `""` |  |
 | server.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | server.resources | object | `{}` |  |
 | server.service.port | int | `8081` |  |
@@ -115,9 +121,14 @@ Kubernetes: `>=1.21.0-0`
 | spire.server.logLevel | string | `"INFO"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
 | tolerations | list | `[]` |  |
+| waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
+| waitForIt.image.registry | string | `"gcr.io"` |  |
+| waitForIt.image.repository | string | `"spiffe-io/wait-for-it"` |  |
+| waitForIt.image.version | string | `""` |  |
 | workloadRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
-| workloadRegistrar.image.repository | string | `"gcr.io/spiffe-io/k8s-workload-registrar"` |  |
-| workloadRegistrar.image.tag | string | `""` |  |
+| workloadRegistrar.image.registry | string | `"gcr.io"` |  |
+| workloadRegistrar.image.repository | string | `"spiffe-io/k8s-workload-registrar"` |  |
+| workloadRegistrar.image.version | string | `""` |  |
 | workloadRegistrar.resources | object | `{}` |  |
 
 ----------------------------------------------
