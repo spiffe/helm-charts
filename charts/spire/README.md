@@ -93,14 +93,14 @@ Kubernetes: `>=1.21.0-0`
 | oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| oidc.podSecurityContext | object | `{}` |  |
 | oidc.replicaCount | int | `1` |  |
 | oidc.resources | object | `{}` |  |
+| oidc.securityContext | object | `{}` |  |
 | oidc.service.annotations | object | `{}` |  |
 | oidc.service.port | int | `80` |  |
 | oidc.service.type | string | `"NodePort"` |  |
 | podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
-| securityContext | object | `{}` |  |
 | server.dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | server.dataStorage.enabled | bool | `true` |  |
 | server.dataStorage.size | string | `"1Gi"` |  |
@@ -110,8 +110,10 @@ Kubernetes: `>=1.21.0-0`
 | server.image.repository | string | `"spiffe/spire-server"` |  |
 | server.image.version | string | `""` |  |
 | server.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| server.podSecurityContext | object | `{}` |  |
 | server.replicaCount | int | `1` |  |
 | server.resources | object | `{}` |  |
+| server.securityContext | object | `{}` |  |
 | server.service.port | int | `8081` |  |
 | server.service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
