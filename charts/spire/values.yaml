@@ -175,10 +175,10 @@ oidc:
 
     nginx:
       image:
-        registry: docker.io
-        repository: nginx
+        registry: cgr.dev
+        repository: chainguard/nginx
         pullPolicy: IfNotPresent
-        version: alpine
+        version: 1.23
 
   acme:
     tosAccepted: false

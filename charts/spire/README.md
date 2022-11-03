@@ -87,9 +87,9 @@ Kubernetes: `>=1.21.0-0`
 | oidc.image.version | string | `""` |  |
 | oidc.insecureScheme.enabled | bool | `false` |  |
 | oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
-| oidc.insecureScheme.nginx.image.repository | string | `"nginx"` |  |
-| oidc.insecureScheme.nginx.image.version | string | `"alpine"` |  |
+| oidc.insecureScheme.nginx.image.registry | string | `"cgr.dev"` |  |
+| oidc.insecureScheme.nginx.image.repository | string | `"chainguard/nginx"` |  |
+| oidc.insecureScheme.nginx.image.version | float | `1.23` |  |
 | oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
