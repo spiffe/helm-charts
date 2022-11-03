@@ -48,7 +48,6 @@ Kubernetes: `>=1.21.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | agent.image.registry | string | `"ghcr.io"` |  |
 | agent.image.repository | string | `"spiffe/spire-agent"` |  |
@@ -76,6 +75,7 @@ Kubernetes: `>=1.21.0-0`
 | oidc.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | oidc.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | oidc.acme.tosAccepted | bool | `false` |  |
+| oidc.affinity | object | `{}` |  |
 | oidc.domains[0] | string | `"localhost"` |  |
 | oidc.domains[1] | string | `"spire-oidc.spire"` |  |
 | oidc.domains[2] | string | `"spire-oidc.spire.svc.cluster.local"` |  |
@@ -93,6 +93,7 @@ Kubernetes: `>=1.21.0-0`
 | oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | oidc.logLevel | string | `"INFO"` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| oidc.podAnnotations | object | `{}` |  |
 | oidc.podSecurityContext | object | `{}` |  |
 | oidc.replicaCount | int | `1` |  |
 | oidc.resources | object | `{}` |  |
@@ -100,7 +101,7 @@ Kubernetes: `>=1.21.0-0`
 | oidc.service.annotations | object | `{}` |  |
 | oidc.service.port | int | `80` |  |
 | oidc.service.type | string | `"NodePort"` |  |
-| podAnnotations | object | `{}` |  |
+| oidc.tolerations | list | `[]` |  |
 | server.dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | server.dataStorage.enabled | bool | `true` |  |
 | server.dataStorage.size | string | `"1Gi"` |  |
@@ -123,7 +124,6 @@ Kubernetes: `>=1.21.0-0`
 | spire.clusterName | string | `"example-cluster"` |  |
 | spire.server.logLevel | string | `"info"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
-| tolerations | list | `[]` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
 | waitForIt.image.registry | string | `"gcr.io"` |  |
 | waitForIt.image.repository | string | `"spiffe-io/wait-for-it"` |  |
