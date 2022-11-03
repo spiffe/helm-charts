@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.4](https://img.shields.io/badge/AppVersion-1.4.4-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.0](https://img.shields.io/badge/AppVersion-1.5.0-informational?style=flat-square)
 
 A Helm chart for deploying spire-server and spire-agent.
 
@@ -50,8 +50,8 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| agent.image.registry | string | `"gcr.io"` |  |
-| agent.image.repository | string | `"spiffe-io/spire-agent"` |  |
+| agent.image.registry | string | `"ghcr.io"` |  |
+| agent.image.repository | string | `"spiffe/spire-agent"` |  |
 | agent.image.version | string | `""` |  |
 | agent.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | agent.resources | object | `{}` |  |
@@ -82,8 +82,8 @@ Kubernetes: `>=1.21.0-0`
 | oidc.domains[3] | string | `"oidc-discovery.example.org"` |  |
 | oidc.enabled | bool | `false` |  |
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.image.registry | string | `"gcr.io"` |  |
-| oidc.image.repository | string | `"spiffe-io/oidc-discovery-provider"` |  |
+| oidc.image.registry | string | `"ghcr.io"` |  |
+| oidc.image.repository | string | `"spiffe/spire-oidc-provider"` |  |
 | oidc.image.version | string | `""` |  |
 | oidc.insecureScheme.enabled | bool | `false` |  |
 | oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -106,8 +106,8 @@ Kubernetes: `>=1.21.0-0`
 | server.dataStorage.size | string | `"1Gi"` |  |
 | server.dataStorage.storageClass | string | `nil` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
-| server.image.registry | string | `"gcr.io"` |  |
-| server.image.repository | string | `"spiffe-io/spire-server"` |  |
+| server.image.registry | string | `"ghcr.io"` |  |
+| server.image.repository | string | `"spiffe/spire-server"` |  |
 | server.image.version | string | `""` |  |
 | server.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | server.resources | object | `{}` |  |
