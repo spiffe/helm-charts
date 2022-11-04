@@ -102,7 +102,7 @@ spec:
         - name: spire-oidc-config
           configMap:
             name: {{ include "spire.fullname" . }}-oidc-discovery-provider
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.oidc.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
