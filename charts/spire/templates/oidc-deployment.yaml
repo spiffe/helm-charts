@@ -40,8 +40,10 @@ spec:
           args:
             - -config
             - /run/spire/oidc/config/oidc-discovery-provider.conf
-          {{- if not .Values.oidc.insecureScheme.enabled }}
           ports:
+            - containerPort: 8008
+              name: health
+          {{- if not .Values.oidc.insecureScheme.enabled }}
             - containerPort: 443
               name: https
           {{- end }}
@@ -55,16 +57,19 @@ spec:
             - name: spire-oidc-config
               mountPath: /run/spire/oidc/config/
               readOnly: true
-          readinessProbe:
-            exec:
-              command: ["/bin/ps", "aux", "|", "grep", "oidc-discovery-provider -config /run/spire/oidc/config/oidc-discovery-provider.conf"]
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          livenessProbe:
-            exec:
-              command: ["/bin/ps", "aux", "|", "grep", "oidc-discovery-provider -config /run/spire/oidc/config/oidc-discovery-provider.conf"]
-            initialDelaySeconds: 5
-            periodSeconds: 5
+          # Needs new release of spire to fix the http healthchecks
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: health
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: health
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
           resources:
             {{- toYaml .Values.oidc.resources | nindent 12 }}
         {{- if .Values.oidc.insecureScheme.enabled }}

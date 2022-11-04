@@ -17,16 +17,22 @@ data:
     listen_socket_path = "/run/spire/oidc-sockets/oidc-server.sock"
     {{- else }}
     acme {
-        directory_url = "{{ .Values.oidc.acme.directoryUrl }}"
-        cache_dir = "{{ .Values.oidc.acme.cacheDir }}"
-        tos_accepted = {{ .Values.oidc.acme.tosAccepted }}
-        email = "{{ .Values.oidc.acme.emailAddress }}"
+      directory_url = "{{ .Values.oidc.acme.directoryUrl }}"
+      cache_dir = "{{ .Values.oidc.acme.cacheDir }}"
+      tos_accepted = {{ .Values.oidc.acme.tosAccepted }}
+      email = "{{ .Values.oidc.acme.emailAddress }}"
     }
     {{- end }}
 
     workload_api {
-        socket_path = "/run/spire/agent-sockets/agent.sock"
-        trust_domain = "{{ .Values.spire.trustDomain }}"
+      socket_path = "/run/spire/agent-sockets/agent.sock"
+      trust_domain = "{{ .Values.spire.trustDomain }}"
+    }
+
+    health_checks {
+      bind_port = "8008"
+      ready_path = "/ready"
+      live_path = "/live"
     }
   {{- if .Values.oidc.insecureScheme.enabled }}
   default.conf.template: |
