@@ -7,11 +7,15 @@ metadata:
 data:
   oidc-discovery-provider.conf: |
     log_level = "{{ .Values.oidc.logLevel }}"
-    {{ if gt (len .Values.oidc.domains) 0 }}
-    domains = ["{{- join "\", \"" .Values.oidc.domains }}"]
-    {{ else }}
-    domains = []
-    {{ end }}
+
+    domains = [
+      "spire-oidc.{{ .Release.Namespace }}",
+      "spire-oidc.{{ .Release.Namespace }}.svc.cluster.local",
+    {{- if gt (len .Values.oidc.domains) 0 }}
+      "{{- join "\",\n      \"" .Values.oidc.domains }}"
+    {{- end }}
+    ]
+
     {{- if .Values.oidc.insecureScheme.enabled }}
     allow_insecure_scheme = {{ .Values.oidc.insecureScheme.enabled }}
     listen_socket_path = "/run/spire/oidc-sockets/oidc-server.sock"

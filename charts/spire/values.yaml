@@ -150,8 +150,6 @@ oidc:
 
   domains:
     - localhost
-    - spire-oidc.spire
-    - spire-oidc.spire.svc.cluster.local
     - oidc-discovery.example.org
 
   podSecurityContext: {}
