@@ -33,6 +33,8 @@ workloadRegistrar:
 
 server:
   image:
+    # registry: gcr.io
+    # repository: spiffe-io/spire-server
     registry: ghcr.io
     repository: spiffe/spire-server
     pullPolicy: IfNotPresent
@@ -104,6 +106,8 @@ oidc:
   enabled: false
 
   image:
+    # registry: gcr.io
+    # repository: spiffe-io/oidc-discovery-provider
     registry: ghcr.io
     repository: spiffe/spire-oidc-provider
     pullPolicy: IfNotPresent
@@ -158,6 +162,8 @@ oidc:
 
 agent:
   image:
+    # registry: gcr.io
+    # repository: spiffe-io/spire-agent
     registry: ghcr.io
     repository: spiffe/spire-agent
     pullPolicy: IfNotPresent
