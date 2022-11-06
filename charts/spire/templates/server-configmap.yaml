@@ -11,19 +11,21 @@ data:
       socket_path = "/run/spire/server-sockets/registration.sock"
       trust_domain = {{ .Values.spire.trustDomain | quote }}
       data_dir = "/run/spire/data"
-      log_level = "{{ .Values.spire.server.logLevel }}"
-      #AWS requires the use of RSA.  EC cryptography is not supported
+      log_level = "{{ .Values.server.config.logLevel }}"
+      # AWS requires the use of RSA.  EC cryptography is not supported
       ca_key_type = "rsa-2048"
 
       {{- if eq (.Values.oidc.enabled | toString) "true" }}
-      jwt_issuer = "{{ .Values.oidc.jwtIssuer }}"
+      jwt_issuer = "{{ .Values.server.config.jwtIssuer }}"
       {{ end }}
       default_x509_svid_ttl = "1h"
       default_jwt_svid_ttl = "1h"
       ca_subject = {
-        country = ["NL"],
-        organization = ["EXAMPLE"],
-        common_name = "",
+        {{- with .Values.server.config.ca_subject }}
+        country = [{{ .country | quote }}],
+        organization = [{{ .organization | quote }}],
+        common_name = {{ .common_name | quote }},
+        {{- end }}
       }
     }
 

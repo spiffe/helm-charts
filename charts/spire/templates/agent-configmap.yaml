@@ -7,7 +7,7 @@ data:
   agent.conf: |
     agent {
       data_dir = "/run/spire"
-      log_level = "{{ .Values.spire.agent.logLevel }}"
+      log_level = "{{ .Values.agent.config.logLevel }}"
       server_address = "{{ include "spire.fullname" . }}-server"
       server_port = "{{ .Values.server.service.port }}"
       socket_path = "/run/spire/agent-sockets/agent.sock"

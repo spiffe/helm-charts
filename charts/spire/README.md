@@ -48,6 +48,7 @@ Kubernetes: `>=1.21.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| agent.config.logLevel | string | `"info"` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | agent.image.registry | string | `"ghcr.io"` |  |
 | agent.image.repository | string | `"spiffe/spire-agent"` |  |
@@ -71,15 +72,14 @@ Kubernetes: `>=1.21.0-0`
 | nodeDriverRegistrar.image.repository | string | `"k8scsi/csi-node-driver-registrar"` |  |
 | nodeDriverRegistrar.image.version | string | `"v2.0.1"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
-| oidc.acme.cacheDir | string | `"/run/spire"` |  |
-| oidc.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
-| oidc.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
-| oidc.acme.tosAccepted | bool | `false` |  |
 | oidc.affinity | object | `{}` |  |
-| oidc.domains[0] | string | `"localhost"` |  |
-| oidc.domains[1] | string | `"spire-oidc.spire"` |  |
-| oidc.domains[2] | string | `"spire-oidc.spire.svc.cluster.local"` |  |
-| oidc.domains[3] | string | `"oidc-discovery.example.org"` |  |
+| oidc.config.acme.cacheDir | string | `"/run/spire"` |  |
+| oidc.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
+| oidc.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
+| oidc.config.acme.tosAccepted | bool | `false` |  |
+| oidc.config.domains[0] | string | `"localhost"` |  |
+| oidc.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| oidc.config.logLevel | string | `"info"` |  |
 | oidc.enabled | bool | `false` |  |
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
 | oidc.image.registry | string | `"ghcr.io"` |  |
@@ -90,8 +90,6 @@ Kubernetes: `>=1.21.0-0`
 | oidc.insecureScheme.nginx.image.registry | string | `"cgr.dev"` |  |
 | oidc.insecureScheme.nginx.image.repository | string | `"chainguard/nginx"` |  |
 | oidc.insecureScheme.nginx.image.version | float | `1.23` |  |
-| oidc.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
-| oidc.logLevel | string | `"INFO"` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | oidc.podAnnotations | object | `{}` |  |
 | oidc.podSecurityContext | object | `{}` |  |
@@ -102,6 +100,11 @@ Kubernetes: `>=1.21.0-0`
 | oidc.service.port | int | `80` |  |
 | oidc.service.type | string | `"NodePort"` |  |
 | oidc.tolerations | list | `[]` |  |
+| server.config.ca_subject.common_name | string | `"example.org"` |  |
+| server.config.ca_subject.country | string | `"NL"` |  |
+| server.config.ca_subject.organization | string | `"Example"` |  |
+| server.config.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
+| server.config.logLevel | string | `"info"` |  |
 | server.dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | server.dataStorage.enabled | bool | `true` |  |
 | server.dataStorage.size | string | `"1Gi"` |  |
@@ -120,9 +123,7 @@ Kubernetes: `>=1.21.0-0`
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| spire.agent.logLevel | string | `"info"` |  |
 | spire.clusterName | string | `"example-cluster"` |  |
-| spire.server.logLevel | string | `"info"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
 | waitForIt.image.registry | string | `"gcr.io"` |  |
