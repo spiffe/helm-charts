@@ -18,7 +18,7 @@ data:
 
     {{- if .Values.oidc.insecureScheme.enabled }}
     allow_insecure_scheme = {{ .Values.oidc.insecureScheme.enabled }}
-    listen_socket_path = "/run/spire/oidc-sockets/oidc-server.sock"
+    listen_socket_path = "/run/spire/oidc-sockets/spire-oidc-server.sock"
     {{- else }}
     acme {
       directory_url = "{{ .Values.oidc.config.acme.directoryUrl }}"
@@ -29,7 +29,7 @@ data:
     {{- end }}
 
     workload_api {
-      socket_path = "/run/spire/agent-sockets/agent.sock"
+      socket_path = "/spiffe-workload-api/spire-agent.sock"
       trust_domain = "{{ .Values.spire.trustDomain }}"
     }
 
@@ -41,7 +41,7 @@ data:
   {{- if .Values.oidc.insecureScheme.enabled }}
   default.conf.template: |
     upstream oidc {
-      server unix:/run/spire/oidc-sockets/oidc-server.sock;
+      server unix:/run/spire/oidc-sockets/spire-oidc-server.sock;
     }
 
     server {
