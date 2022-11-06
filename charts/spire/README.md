@@ -116,9 +116,9 @@ Kubernetes: `>=1.21.0-0`
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| spire.agent.logLevel | string | `"INFO"` |  |
+| spire.agent.logLevel | string | `"info"` |  |
 | spire.clusterName | string | `"example-cluster"` |  |
-| spire.server.logLevel | string | `"INFO"` |  |
+| spire.server.logLevel | string | `"info"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
 | tolerations | list | `[]` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |

@@ -227,6 +227,6 @@ spire:
   clusterName: "example-cluster"
   trustDomain: "example.org"
   agent:
-    logLevel: INFO
+    logLevel: info
   server:
-    logLevel: INFO
+    logLevel: info
