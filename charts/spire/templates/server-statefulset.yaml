@@ -6,9 +6,7 @@ metadata:
   labels:
     {{- include "spire.server.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.server.replicaCount }}
-  {{- end }}
   serviceName: {{ include "spire.fullname" . }}-server
   selector:
     matchLabels:

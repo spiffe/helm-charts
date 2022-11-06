@@ -55,10 +55,6 @@ Kubernetes: `>=1.21.0-0`
 | agent.image.version | string | `""` |  |
 | agent.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | agent.resources | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | csiDriver.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csiDriver.image.registry | string | `"ghcr.io"` |  |
 | csiDriver.image.repository | string | `"spiffe/spiffe-csi-driver"` |  |

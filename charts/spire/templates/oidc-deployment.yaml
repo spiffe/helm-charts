@@ -7,9 +7,7 @@ metadata:
   labels:
     {{- include "spire.oidc.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.oidc.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "spire.oidc.selectorLabels" . | nindent 6 }}
