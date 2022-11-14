@@ -205,7 +205,7 @@ oidc:
         registry: cgr.dev
         repository: chainguard/nginx
         pullPolicy: IfNotPresent
-        version: 1.23
+        version: "1.23"
 
   config:
     logLevel: info

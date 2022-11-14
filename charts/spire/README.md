@@ -85,7 +85,7 @@ Kubernetes: `>=1.21.0-0`
 | oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | oidc.insecureScheme.nginx.image.registry | string | `"cgr.dev"` |  |
 | oidc.insecureScheme.nginx.image.repository | string | `"chainguard/nginx"` |  |
-| oidc.insecureScheme.nginx.image.version | float | `1.23` |  |
+| oidc.insecureScheme.nginx.image.version | string | `"1.23"` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | oidc.podAnnotations | object | `{}` |  |
 | oidc.podSecurityContext | object | `{}` |  |
