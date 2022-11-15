@@ -1,4 +1,5 @@
 {{- if eq (.Values.oidc.enabled | toString) "true" }}
+{{- $oidcSocket := "/run/spire/oidc-sockets/spire-oidc-server.sock" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,7 +19,7 @@ data:
 
     {{- if .Values.oidc.insecureScheme.enabled }}
     allow_insecure_scheme = {{ .Values.oidc.insecureScheme.enabled }}
-    listen_socket_path = "/run/spire/oidc-sockets/spire-oidc-server.sock"
+    listen_socket_path = {{ $oidcSocket | quote }}
     {{- else }}
     acme {
       directory_url = "{{ .Values.oidc.config.acme.directoryUrl }}"
@@ -41,7 +42,7 @@ data:
   {{- if .Values.oidc.insecureScheme.enabled }}
   default.conf.template: |
     upstream oidc {
-      server unix:/run/spire/oidc-sockets/spire-oidc-server.sock;
+      server unix:{{ $oidcSocket }};
     }
 
     server {
