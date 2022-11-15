@@ -29,7 +29,7 @@ data:
     {{- end }}
 
     workload_api {
-      socket_path = "/spiffe-workload-api/spire-agent.sock"
+      socket_path = "/spiffe-workload-api/{{ splitList "/" .Values.agent.config.socketPath | last }}"
       trust_domain = "{{ .Values.spire.trustDomain }}"
     }
 
