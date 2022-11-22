@@ -87,6 +87,7 @@ Kubernetes: `>=1.21.0-0`
 | oidc.insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
 | oidc.insecureScheme.nginx.image.repository | string | `"nginx"` |  |
 | oidc.insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
+| oidc.insecureScheme.nginx.resources | object | `{}` |  |
 | oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | oidc.podAnnotations | object | `{}` |  |
 | oidc.podSecurityContext | object | `{}` |  |

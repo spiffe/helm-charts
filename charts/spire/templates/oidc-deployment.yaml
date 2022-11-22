@@ -87,6 +87,8 @@ spec:
               mountPath: /etc/nginx/templates/default.conf.template
               subPath: default.conf.template
               readOnly: true
+          resources:
+            {{- toYaml .Values.oidc.insecureScheme.nginx.resources | nindent 12 }}
         {{- end }}
       volumes:
         - name: spiffe-workload-api
