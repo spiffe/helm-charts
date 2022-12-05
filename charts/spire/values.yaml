@@ -3,10 +3,10 @@ fullnameOverride: ""
 
 waitForIt:
   image:
-    registry: gcr.io
-    repository: spiffe-io/wait-for-it
+    registry: cgr.dev
+    repository: chainguard/wait-for-it
     pullPolicy: IfNotPresent
-    version: ""
+    version: latest-20221215
   resources: {}
 
 workloadRegistrar:

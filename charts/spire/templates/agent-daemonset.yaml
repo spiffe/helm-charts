@@ -31,7 +31,7 @@ spec:
           # from https://github.com/lqhl/wait-for-it
           image: {{ template "spire.image" .Values.waitForIt }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
-          args: ["-t", "30", "{{ include "spire.fullname" . }}-server:8081"]
+          args: ["-t", "30", "-h", "{{ include "spire.fullname" . }}-server", "-p", "8081"]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
       {{- with .Values.agent.nodeSelector }}
