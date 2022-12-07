@@ -105,6 +105,7 @@ spec:
           args: [
             "-csi-address", "/spiffe-csi/csi.sock",
             "-kubelet-registration-path", "/var/lib/kubelet/plugins/csi.spiffe.io/csi.sock",
+            "-health-port", "9809"
           ]
           volumeMounts:
             # The registrar needs access to the SPIFFE CSI driver socket
@@ -114,6 +115,15 @@ spec:
             # directory
             - name: kubelet-plugin-registration-dir
               mountPath: /registration
+          ports:
+            - containerPort: 9809
+              name: healthz
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: healthz
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
           resources:
             {{- toYaml .Values.nodeDriverRegistrar.resources | nindent 12 }}
       volumes:
