@@ -65,9 +65,9 @@ Kubernetes: `>=1.21.0-0`
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nodeDriverRegistrar.image.registry | string | `"quay.io"` |  |
-| nodeDriverRegistrar.image.repository | string | `"k8scsi/csi-node-driver-registrar"` |  |
-| nodeDriverRegistrar.image.version | string | `"v2.0.1"` |  |
+| nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` |  |
+| nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` |  |
+| nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
 | oidc.affinity | object | `{}` |  |
 | oidc.config.acme.cacheDir | string | `"/run/spire"` |  |

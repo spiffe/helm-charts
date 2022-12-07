@@ -134,10 +134,10 @@ csiDriver:
 
 nodeDriverRegistrar:
   image:
-    registry: quay.io
-    repository: k8scsi/csi-node-driver-registrar
+    registry: registry.k8s.io
+    repository: sig-storage/csi-node-driver-registrar
     pullPolicy: IfNotPresent
-    version: v2.0.1
+    version: v2.6.2
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
