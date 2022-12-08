@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: {{ include "spire.fullname" . }}-k8s-workload-registrar
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.workloadRegistrar.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
   labels:
     {{- include "spire.server.labels" . | nindent 4 }}
 spec:

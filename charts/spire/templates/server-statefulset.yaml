@@ -93,6 +93,8 @@ spec:
             - name: spire-workload-registrar-config
               mountPath: /run/spire/k8s-workload-registrar/config
               readOnly: true
+          resources:
+            {{- toYaml .Values.workloadRegistrar.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -103,6 +105,10 @@ spec:
       {{- end }}
       {{- with .Values.server.tolerations }}
       tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.server.topologySpreadConstraints }}
+      topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:

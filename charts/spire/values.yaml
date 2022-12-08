@@ -7,6 +7,7 @@ waitForIt:
     repository: spiffe-io/wait-for-it
     pullPolicy: IfNotPresent
     version: ""
+  resources: {}
 
 workloadRegistrar:
   image:
@@ -27,6 +28,9 @@ workloadRegistrar:
     # limits:
     #   cpu: 100m
     #   memory: 64Mi
+
+  service:
+    annotations: {}
 
 server:
   replicaCount: 1
@@ -63,6 +67,7 @@ server:
   service:
     type: ClusterIP
     port: 8081
+    annotations: {}
 
   podSecurityContext: {}
     # fsGroup: 2000
@@ -74,6 +79,8 @@ server:
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
     # runAsUser: 1000
+
+  topologySpreadConstraints: []
 
   config:
     logLevel: info
@@ -109,6 +116,9 @@ agent:
     # limits:
     #   cpu: 100m
     #   memory: 128Mi
+
+  service:
+    annotations: {}
 
   config:
     logLevel: info
