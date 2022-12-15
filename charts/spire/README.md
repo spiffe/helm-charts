@@ -44,6 +44,10 @@ spec:
 
 Kubernetes: `>=1.21.0-0`
 
+| Repository | Name | Version |
+|------------|------|---------|
+| file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -57,19 +61,9 @@ Kubernetes: `>=1.21.0-0`
 | agent.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | agent.resources | object | `{}` |  |
 | agent.service.annotations | object | `{}` |  |
-| csiDriver.image.pullPolicy | string | `"IfNotPresent"` |  |
-| csiDriver.image.registry | string | `"ghcr.io"` |  |
-| csiDriver.image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
-| csiDriver.image.version | string | `"0.2.1"` |  |
-| csiDriver.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
-| nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
-| nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` |  |
-| nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` |  |
-| nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
-| nodeDriverRegistrar.resources | object | `{}` |  |
 | oidc.affinity | object | `{}` |  |
 | oidc.config.acme.cacheDir | string | `"/run/spire"` |  |
 | oidc.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |

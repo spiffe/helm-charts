@@ -38,3 +38,7 @@ maintainers:
     email: marco.franssen@gmail.com
     url: https://marcofranssen.nl
 kubeVersion: ">=1.21.0-0"
+dependencies:
+  - name: spiffe-csi-driver
+    repository: file://./charts/spiffe-csi-driver
+    version: 0.1.0
