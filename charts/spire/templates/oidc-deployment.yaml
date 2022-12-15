@@ -55,19 +55,18 @@ spec:
             - name: spire-oidc-config
               mountPath: /run/spire/oidc/config/
               readOnly: true
-          # Needs new release of spire to fix the http healthchecks
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: health
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: health
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: health
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: health
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.oidc.resources | nindent 12 }}
         {{- if .Values.oidc.insecureScheme.enabled }}

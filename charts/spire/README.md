@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.2](https://img.shields.io/badge/AppVersion-1.5.2-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.3](https://img.shields.io/badge/AppVersion-1.5.3-informational?style=flat-square)
 
 A Helm chart for deploying spire-server and spire-agent.
 
@@ -80,8 +80,8 @@ Kubernetes: `>=1.21.0-0`
 | oidc.config.logLevel | string | `"info"` |  |
 | oidc.enabled | bool | `false` |  |
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.image.registry | string | `"ghcr.io"` |  |
-| oidc.image.repository | string | `"spiffe/spire-oidc-provider"` |  |
+| oidc.image.registry | string | `"gcr.io"` |  |
+| oidc.image.repository | string | `"spiffe-io/oidc-discovery-provider"` |  |
 | oidc.image.version | string | `""` |  |
 | oidc.insecureScheme.enabled | bool | `false` |  |
 | oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
