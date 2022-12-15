@@ -28,7 +28,7 @@ spec:
         - name: init
           # This is a small image with wait-for-it, choose whatever image
           # you prefer that waits for a service to be up. This image is built
-          # from https://github.com/lqhl/wait-for-it
+          # from https://github.com/vishnubob/wait-for-it
           image: {{ template "spire.image" .Values.waitForIt }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
           args: ["-t", "30", "-h", "{{ include "spire.fullname" . }}-server", "-p", "8081"]
