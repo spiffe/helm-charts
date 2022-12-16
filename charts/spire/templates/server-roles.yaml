@@ -1,0 +1,68 @@
+# ClusterRole to allow spire-server node attestor to query Token Review API
+# and to be able to push certificate bundles to a configmap
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "spire.fullname" . }}-server
+  namespace: {{ .Release.Namespace }}
+rules:
+  # allow "get" access to pods (to resolve selectors for PSAT attestation)
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [get]
+    # allow access to "get" and "patch" the spire-bundle ConfigMap (for SPIRE
+    # agent bootstrapping, see the spire-bundle ConfigMap below)
+  - apiGroups: [""]
+    resources: [configmaps]
+    resourceNames: ["{{ include "spire.fullname" . }}-bundle"]
+    verbs:
+      - get
+      - patch
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "spire.fullname" . }}-server
+  namespace: {{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "spire.serviceAccountName" . }}-server
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ include "spire.fullname" . }}-server
+  apiGroup: rbac.authorization.k8s.io
+---
+# ClusterRole to allow spire-server node attestor to query Token Review API
+# and to be able to push certificate bundles to a configmap
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "spire.fullname" . }}-server
+rules:
+    # allow TokenReview requests (to verify service account tokens for PSAT
+    # attestation)
+  - apiGroups: [authentication.k8s.io]
+    resources: [tokenreviews]
+    verbs:
+      - get
+      - create
+  - apiGroups: [""]
+    resources: [nodes]
+    verbs:
+      - get
+---
+# Binds above cluster role to spire-server service account
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "spire.fullname" . }}-server
+  namespace: {{ .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "spire.serviceAccountName" . }}-server
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "spire.fullname" . }}-server
+  apiGroup: rbac.authorization.k8s.io

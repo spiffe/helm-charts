@@ -80,26 +80,6 @@ spec:
             periodSeconds: 5
           resources:
             {{- toYaml .Values.server.resources | nindent 12 }}
-        - name: {{ .Chart.Name }}-workload-registrar
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spire.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.workloadRegistrar.image) }}
-          imagePullPolicy: {{ .Values.workloadRegistrar.image.pullPolicy }}
-          args:
-            - -config
-            - /run/spire/k8s-workload-registrar/config/workload-registrar.conf
-          ports:
-            - containerPort: 8443
-              name: registrar-port
-          volumeMounts:
-            - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
-              readOnly: true
-            - name: spire-workload-registrar-config
-              mountPath: /run/spire/k8s-workload-registrar/config
-              readOnly: true
-          resources:
-            {{- toYaml .Values.workloadRegistrar.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -117,9 +97,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: spire-workload-registrar-config
-          configMap:
-            name: {{ include "spire.fullname" . }}-workload-registrar
         - name: spire-config
           configMap:
             name: {{ include "spire.fullname" . }}-server
