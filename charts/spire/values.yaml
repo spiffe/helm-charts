@@ -131,7 +131,7 @@ csiDriver:
     registry: ghcr.io
     repository: spiffe/spiffe-csi-driver
     pullPolicy: IfNotPresent
-    version: 0.2.0
+    version: 0.2.1
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little

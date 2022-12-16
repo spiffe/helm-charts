@@ -60,7 +60,7 @@ Kubernetes: `>=1.21.0-0`
 | csiDriver.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csiDriver.image.registry | string | `"ghcr.io"` |  |
 | csiDriver.image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
-| csiDriver.image.version | string | `"0.2.0"` |  |
+| csiDriver.image.version | string | `"0.2.1"` |  |
 | csiDriver.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
