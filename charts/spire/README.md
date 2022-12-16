@@ -47,6 +47,7 @@ Kubernetes: `>=1.21.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
+| file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 
 ## Values
 
@@ -64,35 +65,6 @@ Kubernetes: `>=1.21.0-0`
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
-| oidc.affinity | object | `{}` |  |
-| oidc.config.acme.cacheDir | string | `"/run/spire"` |  |
-| oidc.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
-| oidc.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
-| oidc.config.acme.tosAccepted | bool | `false` |  |
-| oidc.config.domains[0] | string | `"localhost"` |  |
-| oidc.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
-| oidc.config.logLevel | string | `"info"` |  |
-| oidc.enabled | bool | `false` |  |
-| oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.image.registry | string | `"ghcr.io"` |  |
-| oidc.image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
-| oidc.image.version | string | `""` |  |
-| oidc.insecureScheme.enabled | bool | `false` |  |
-| oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
-| oidc.insecureScheme.nginx.image.repository | string | `"nginx"` |  |
-| oidc.insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
-| oidc.insecureScheme.nginx.resources | object | `{}` |  |
-| oidc.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
-| oidc.podAnnotations | object | `{}` |  |
-| oidc.podSecurityContext | object | `{}` |  |
-| oidc.replicaCount | int | `1` |  |
-| oidc.resources | object | `{}` |  |
-| oidc.securityContext | object | `{}` |  |
-| oidc.service.annotations | object | `{}` |  |
-| oidc.service.port | int | `80` |  |
-| oidc.service.type | string | `"NodePort"` |  |
-| oidc.tolerations | list | `[]` |  |
 | server.config.ca_subject.common_name | string | `"example.org"` |  |
 | server.config.ca_subject.country | string | `"NL"` |  |
 | server.config.ca_subject.organization | string | `"Example"` |  |
@@ -124,6 +96,7 @@ Kubernetes: `>=1.21.0-0`
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spire.clusterName | string | `"example-cluster"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |

@@ -42,3 +42,7 @@ dependencies:
   - name: spiffe-csi-driver
     repository: file://./charts/spiffe-csi-driver
     version: 0.1.0
+  - name: spiffe-oidc-discovery-provider
+    condition: spiffe-oidc-discovery-provider.enabled
+    repository: file://./charts/spiffe-oidc-discovery-provider
+    version: 0.1.0

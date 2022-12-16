@@ -15,7 +15,7 @@ data:
       # AWS requires the use of RSA.  EC cryptography is not supported
       ca_key_type = "rsa-2048"
 
-      {{- if eq (.Values.oidc.enabled | toString) "true" }}
+      {{- if eq (index .Values "spiffe-oidc-discovery-provider" "enabled" | toString) "true" }}
       jwt_issuer = "{{ .Values.server.config.jwtIssuer }}"
       {{ end }}
       default_x509_svid_ttl = "1h"

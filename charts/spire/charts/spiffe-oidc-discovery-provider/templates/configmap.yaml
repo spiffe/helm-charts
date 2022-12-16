@@ -1,0 +1,56 @@
+{{- $oidcSocket := "/run/spire/oidc-sockets/spire-oidc-server.sock" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spire.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+data:
+  oidc-discovery-provider.conf: |
+    log_level = "{{ .Values.config.logLevel }}"
+
+    domains = [
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.svc.cluster.local",
+    {{- if gt (len .Values.config.domains) 0 }}
+      "{{- join "\",\n      \"" .Values.config.domains }}"
+    {{- end }}
+    ]
+
+    {{- if .Values.insecureScheme.enabled }}
+    allow_insecure_scheme = {{ .Values.insecureScheme.enabled }}
+    listen_socket_path = {{ $oidcSocket | quote }}
+    {{- else }}
+    acme {
+      directory_url = "{{ .Values.config.acme.directoryUrl }}"
+      cache_dir = "{{ .Values.config.acme.cacheDir }}"
+      tos_accepted = {{ .Values.config.acme.tosAccepted }}
+      email = "{{ .Values.config.acme.emailAddress }}"
+    }
+    {{- end }}
+
+    workload_api {
+      socket_path = "/spiffe-workload-api/{{ splitList "/" .Values.agentSocketPath | last }}"
+      trust_domain = "{{ .Values.trustDomain }}"
+    }
+
+    health_checks {
+      bind_port = "8008"
+      ready_path = "/ready"
+      live_path = "/live"
+    }
+  {{- if .Values.insecureScheme.enabled }}
+  default.conf.template: |
+    upstream oidc {
+      server unix:{{ $oidcSocket }};
+    }
+
+    server {
+      listen            80;
+      listen       [::]:80;
+
+      location / {
+        proxy_pass http://oidc;
+        proxy_set_header Host $host;
+      }
+    }
+  {{- end }}

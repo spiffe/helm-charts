@@ -1,47 +1,45 @@
-{{- if eq (.Values.oidc.enabled | toString) "true" }}
-{{- $fullname := include "spire.fullname" . }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ printf "%s-oidc" $fullname }}
+  name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
   labels:
-    {{- include "spire.oidc.labels" . | nindent 4 }}
+    {{- include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.oidc.replicaCount }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      {{- include "spire.oidc.selectorLabels" . | nindent 6 }}
+      {{- include "spiffe-oidc-discovery-provider.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.oidc.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "spire.oidc.selectorLabels" . | nindent 8 }}
+        {{- include "spiffe-oidc-discovery-provider.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- range . }}
-        - name: {{ printf "%s-%s" $fullname .name }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "spire.serviceAccountName" . }}-agent
+      serviceAccountName: {{ include "spiffe-oidc-discovery-provider.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.oidc.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: spire-oidc
+        - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spire.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.oidc.image) }}
-          imagePullPolicy: {{ .Values.oidc.image.pullPolicy }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - -config
             - /run/spire/oidc/config/oidc-discovery-provider.conf
           ports:
             - containerPort: 8008
               name: health
-          {{- if not .Values.oidc.insecureScheme.enabled }}
+          {{- if not .Values.insecureScheme.enabled }}
             - containerPort: 443
               name: https
           {{- end }}
@@ -68,13 +66,13 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
           resources:
-            {{- toYaml .Values.oidc.resources | nindent 12 }}
-        {{- if .Values.oidc.insecureScheme.enabled }}
+            {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.insecureScheme.enabled }}
         - name: nginx
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spire.image" .Values.oidc.insecureScheme.nginx }}
-          imagePullPolicy: {{ .Values.oidc.insecureScheme.nginx.image.pullPolicy }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" .Values.insecureScheme.nginx }}
+          imagePullPolicy: {{ .Values.insecureScheme.nginx.image.pullPolicy }}
           ports:
             - containerPort: 80
               name: http
@@ -87,7 +85,7 @@ spec:
               subPath: default.conf.template
               readOnly: true
           resources:
-            {{- toYaml .Values.oidc.insecureScheme.nginx.resources | nindent 12 }}
+            {{- toYaml .Values.insecureScheme.nginx.resources | nindent 12 }}
         {{- end }}
       volumes:
         - name: spiffe-workload-api
@@ -100,17 +98,16 @@ spec:
             type: DirectoryOrCreate
         - name: spire-oidc-config
           configMap:
-            name: {{ include "spire.fullname" . }}-oidc-discovery-provider
-      {{- with .Values.oidc.nodeSelector }}
+            name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.oidc.affinity }}
+      {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.oidc.tolerations }}
+      {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{ end }}
