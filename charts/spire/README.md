@@ -80,8 +80,8 @@ Kubernetes: `>=1.21.0-0`
 | oidc.config.logLevel | string | `"info"` |  |
 | oidc.enabled | bool | `false` |  |
 | oidc.image.pullPolicy | string | `"IfNotPresent"` |  |
-| oidc.image.registry | string | `"gcr.io"` |  |
-| oidc.image.repository | string | `"spiffe-io/oidc-discovery-provider"` |  |
+| oidc.image.registry | string | `"ghcr.io"` |  |
+| oidc.image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
 | oidc.image.version | string | `""` |  |
 | oidc.insecureScheme.enabled | bool | `false` |  |
 | oidc.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |

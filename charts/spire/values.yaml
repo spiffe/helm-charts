@@ -165,10 +165,10 @@ oidc:
   replicaCount: 1
 
   image:
-    registry: gcr.io
-    repository: spiffe-io/oidc-discovery-provider
-    # registry: ghcr.io
-    # repository: spiffe/oidc-discovery-provider
+    # registry: gcr.io
+    # repository: spiffe-io/oidc-discovery-provider
+    registry: ghcr.io
+    repository: spiffe/oidc-discovery-provider
     pullPolicy: IfNotPresent
     version: ""
 
