@@ -13,7 +13,7 @@ spec:
       {{- include "spire.server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.oidc.podAnnotations }}
+      {{- with .Values.server.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

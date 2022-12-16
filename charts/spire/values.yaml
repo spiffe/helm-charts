@@ -69,6 +69,8 @@ server:
     port: 8081
     annotations: {}
 
+  podAnnotations: {}
+
   podSecurityContext: {}
     # fsGroup: 2000
 

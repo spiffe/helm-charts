@@ -114,6 +114,7 @@ Kubernetes: `>=1.21.0-0`
 | server.image.repository | string | `"spiffe/spire-server"` |  |
 | server.image.version | string | `""` |  |
 | server.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| server.podAnnotations | object | `{}` |  |
 | server.podSecurityContext | object | `{}` |  |
 | server.replicaCount | int | `1` |  |
 | server.resources | object | `{}` |  |
