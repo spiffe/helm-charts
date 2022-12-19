@@ -1,12 +1,14 @@
-# Default values for spire-agent.
+# Default values for spire-server.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+replicaCount: 1
+
 image:
   # registry: gcr.io
-  # repository: spiffe-io/spire-agent
+  # repository: spiffe-io/spire-server
   registry: ghcr.io
-  repository: spiffe/spire-agent
+  repository: spiffe/spire-server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   version: ""
@@ -37,36 +39,69 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+service:
+  type: ClusterIP
+  port: 8081
+  annotations: {}
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # requests:
-  #   cpu: 50m
-  #   memory: 64Mi
+  #   cpu: 200m
+  #   memory: 256Mi
   # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 200m
+  #   memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector:
   kubernetes.io/arch: amd64
 
+tolerations: []
+
+affinity: {}
+
+topologySpreadConstraints: []
+
+dataStorage:
+  enabled: true
+  size: 1Gi
+  accessMode: ReadWriteOnce
+  storageClass: null
+
 logLevel: info
-socketPath: /run/spire/agent-sockets/spire-agent.sock
+socketPath: /run/spire/server-sockets/spire-server.sock
+jwtIssuer: oidc-discovery.example.org
+
 clusterName: example-cluster
 trustDomain: example.org
 
-bundleConfigMap: spire-bundle
+bundleConfigMap: spire-server
 
-server:
-  host: spire-server
-  port: 8081
+ca_subject:
+  country: NL
+  organization: Example
+  common_name: example.org
 
-waitForIt:
-  image:
-    registry: cgr.dev
-    repository: chainguard/wait-for-it
-    pullPolicy: IfNotPresent
-    version: latest-20221215
-  resources: {}
+upstreamAuthority:
+  disk:
+    enabled: false
+    secret:
+      # -- If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself.
+      create: true
+      # -- If secret creation is disabled, the secret with this name will be used.
+      name: "spiffe-upstream-ca"
+      # -- If secret creation is enabled, will create a secret with following certificate info
+      data:
+        certificate: ""
+        key: ""
+        bundle: ""

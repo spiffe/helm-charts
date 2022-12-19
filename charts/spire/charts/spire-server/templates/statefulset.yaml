@@ -1,0 +1,121 @@
+{{- $fullname := include "spire-server.fullname" . }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "spire-server.fullname" . }}
+  labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  serviceName: {{ include "spire-server.fullname" . }}
+  selector:
+    matchLabels:
+      {{- include "spire-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "spire-server.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "spire-server.serviceAccountName" . }}
+      shareProcessNamespace: true
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - -config
+            - /run/spire/config/server.conf
+          ports:
+            - name: grpc
+              containerPort: 8081
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: 8080
+            failureThreshold: 2
+            initialDelaySeconds: 15
+            periodSeconds: 60
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: spire-server-socket
+              mountPath: /run/spire/server-sockets
+              readOnly: false
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+            - name: spire-data
+              mountPath: /run/spire/data
+              readOnly: false
+            {{- end }}
+            {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
+            - name: upstream-ca
+              mountPath: /run/spire/upstream_ca
+              readOnly: false
+            {{ end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: spire-config
+          configMap:
+            name: {{ include "spire-server.fullname" . }}
+        - name: spire-server-socket
+          hostPath:
+            path: /run/spire/server-sockets
+            type: DirectoryOrCreate
+        {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
+        - name: upstream-ca
+          secret:
+            secretName: {{ include "spire-server.upstream-ca-secret" . }}
+        {{- end }}
+  volumeClaimTemplates:
+    {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+    - metadata:
+        name: spire-data
+      spec:
+        accessModes:
+          - {{ .Values.dataStorage.accessMode | default "ReadWriteOnce" }}
+        resources:
+          requests:
+            storage: {{ .Values.dataStorage.size }}
+        {{- if .Values.dataStorage.storageClass }}
+        storageClassName: {{ .Values.dataStorage.storageClass }}
+        {{- end }}
+    {{ end }}

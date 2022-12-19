@@ -58,39 +58,14 @@ Kubernetes: `>=1.21.0-0`
 | imagePullSecrets | list | `[]` |  |
 | k8s-workload-registrar.enabled | bool | `true` |  |
 | nameOverride | string | `""` |  |
-| server.config.ca_subject.common_name | string | `"example.org"` |  |
-| server.config.ca_subject.country | string | `"NL"` |  |
-| server.config.ca_subject.organization | string | `"Example"` |  |
-| server.config.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
-| server.config.logLevel | string | `"info"` |  |
-| server.config.socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
-| server.config.upstreamAuthority.disk.enabled | bool | `false` |  |
-| server.config.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
-| server.config.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
-| server.config.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
-| server.dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
-| server.dataStorage.enabled | bool | `true` |  |
-| server.dataStorage.size | string | `"1Gi"` |  |
-| server.dataStorage.storageClass | string | `nil` |  |
-| server.image.pullPolicy | string | `"IfNotPresent"` |  |
-| server.image.registry | string | `"ghcr.io"` |  |
-| server.image.repository | string | `"spiffe/spire-server"` |  |
-| server.image.version | string | `""` |  |
-| server.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
-| server.podAnnotations | object | `{}` |  |
-| server.podSecurityContext | object | `{}` |  |
-| server.replicaCount | int | `1` |  |
-| server.resources | object | `{}` |  |
-| server.securityContext | object | `{}` |  |
-| server.service.annotations | object | `{}` |  |
-| server.service.port | int | `8081` |  |
-| server.service.type | string | `"ClusterIP"` |  |
-| server.topologySpreadConstraints | list | `[]` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
+| spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.nameOverride | string | `"agent"` |  |
+| spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
+| spire-server.nameOverride | string | `"server"` |  |
 | spire.clusterName | string | `"example-cluster"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |

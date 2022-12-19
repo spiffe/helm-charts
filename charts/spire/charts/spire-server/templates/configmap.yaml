@@ -1,27 +1,26 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "spire.fullname" . }}-server
+  name: {{ include "spire-server.fullname" . }}
   namespace: {{ .Release.Namespace }}
 data:
   server.conf: |
     server {
       bind_address = "0.0.0.0"
       bind_port = "8081"
-      socket_path = {{ .Values.server.config.socketPath | quote }}
-      trust_domain = {{ .Values.spire.trustDomain | quote }}
+      socket_path = {{ .Values.socketPath | quote }}
+      trust_domain = {{ .Values.trustDomain | quote }}
       data_dir = "/run/spire/data"
-      log_level = "{{ .Values.server.config.logLevel }}"
+      log_level = "{{ .Values.logLevel }}"
       # AWS requires the use of RSA.  EC cryptography is not supported
       ca_key_type = "rsa-2048"
 
-      {{- if eq (index .Values "spiffe-oidc-discovery-provider" "enabled" | toString) "true" }}
-      jwt_issuer = "{{ .Values.server.config.jwtIssuer }}"
-      {{ end }}
+      jwt_issuer = "{{ .Values.jwtIssuer }}"
+
       default_x509_svid_ttl = "1h"
       default_jwt_svid_ttl = "1h"
       ca_subject = {
-        {{- with .Values.server.config.ca_subject }}
+        {{- with .Values.ca_subject }}
         country = [{{ .country | quote }}],
         organization = [{{ .organization | quote }}],
         common_name = {{ .common_name | quote }},
@@ -40,8 +39,8 @@ data:
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
-            {{ .Values.spire.clusterName | quote }} = {
-              service_account_allow_list = ["{{ .Release.Namespace }}:{{ include "spire.serviceAccountName" . }}-agent"]
+            {{ .Values.clusterName | quote }} = {
+              service_account_allow_list = ["{{ .Release.Namespace }}:spire-agent"]
             }
           }
         }
@@ -56,11 +55,11 @@ data:
       Notifier "k8sbundle" {
         plugin_data {
           namespace = "{{ .Release.Namespace }}"
-          config_map = "{{ include "spire.fullname" . }}-bundle"
+          config_map = {{ .Values.bundleConfigMap | quote }}
         }
       }
 
-      {{- with .Values.server.config.upstreamAuthority.disk }}
+      {{- with .Values.upstreamAuthority.disk }}
       {{- if eq (.enabled | toString) "true" }}
       UpstreamAuthority "disk" {
         plugin_data {
