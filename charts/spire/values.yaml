@@ -88,37 +88,8 @@ server:
             key: ""
             bundle: ""
 
-agent:
-  image:
-    # registry: gcr.io
-    # repository: spiffe-io/spire-agent
-    registry: ghcr.io
-    repository: spiffe/spire-agent
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    version: ""
-
-  nodeSelector:
-    kubernetes.io/arch: amd64
-
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # requests:
-    #   cpu: 50m
-    #   memory: 64Mi
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  service:
-    annotations: {}
-
-  config:
-    logLevel: info
-    socketPath: /run/spire/agent-sockets/spire-agent.sock
+spire-agent:
+  nameOverride: agent
 
 spiffe-oidc-discovery-provider:
   enabled: false

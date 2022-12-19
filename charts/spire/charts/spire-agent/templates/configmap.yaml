@@ -1,24 +1,24 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "spire.fullname" . }}-agent
+  name: {{ include "spire-agent.fullname" . }}
   namespace: {{ .Release.Namespace }}
 data:
   agent.conf: |
     agent {
       data_dir = "/run/spire"
-      log_level = {{ .Values.agent.config.logLevel | quote }}
-      server_address = "{{ include "spire.fullname" . }}-server"
-      server_port = {{ .Values.server.service.port | quote }}
-      socket_path = {{ .Values.agent.config.socketPath | quote }}
+      log_level = {{ .Values.logLevel | quote }}
+      server_address = {{ .Values.server.host | quote }}
+      server_port = {{ .Values.server.port | quote }}
+      socket_path = {{ .Values.socketPath | quote }}
       trust_bundle_path = "/run/spire/bundle/bundle.crt"
-      trust_domain = {{ .Values.spire.trustDomain | quote }}
+      trust_domain = {{ .Values.trustDomain | quote }}
     }
 
     plugins {
       NodeAttestor "k8s_psat" {
         plugin_data {
-          cluster = {{ .Values.spire.clusterName | quote }}
+          cluster = {{ .Values.clusterName | quote }}
         }
       }
 

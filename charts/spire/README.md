@@ -54,15 +54,6 @@ Kubernetes: `>=1.21.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| agent.config.logLevel | string | `"info"` |  |
-| agent.config.socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
-| agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| agent.image.registry | string | `"ghcr.io"` |  |
-| agent.image.repository | string | `"spiffe/spire-agent"` |  |
-| agent.image.version | string | `""` |  |
-| agent.nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
-| agent.resources | object | `{}` |  |
-| agent.service.annotations | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | k8s-workload-registrar.enabled | bool | `true` |  |
@@ -99,6 +90,7 @@ Kubernetes: `>=1.21.0-0`
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
+| spire-agent.nameOverride | string | `"agent"` |  |
 | spire.clusterName | string | `"example-cluster"` |  |
 | spire.trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |

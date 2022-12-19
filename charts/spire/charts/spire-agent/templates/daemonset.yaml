@@ -1,47 +1,47 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ include "spire.fullname" . }}-agent
+  name: {{ include "spire-agent.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "spire.agent.labels" . | nindent 4 }}
+    {{- include "spire-agent.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "spire.agent.selectorLabels" . | nindent 6 }}
-  updateStrategy:
-    type: RollingUpdate
+      {{- include "spire-agent.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.agent.service.annotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "spire.agent.selectorLabels" . | nindent 8 }}
+        {{- include "spire-agent.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       hostPID: true
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-      serviceAccountName: {{ include "spire.serviceAccountName" . }}-agent
+      serviceAccountName: {{ include "spire-agent.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: init
           # This is a small image with wait-for-it, choose whatever image
           # you prefer that waits for a service to be up. This image is built
           # from https://github.com/vishnubob/wait-for-it
-          image: {{ template "spire.image" .Values.waitForIt }}
+          image: {{ template "spire-agent.image" .Values.waitForIt }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
-          args: ["-t", "30", "-h", "{{ include "spire.fullname" . }}-server", "-p", "8081"]
+          args: ["-t", "30", "-h", {{ .Values.server.host | quote }}, "-p", {{ .Values.server.port | quote }}]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
-      {{- with .Values.agent.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}-agent
-          image: {{ template "spire.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.agent.image) }}
-          imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
+        - name: {{ .Chart.Name }}
+          image: {{ template "spire-agent.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-config", "/run/spire/config/agent.conf"]
           volumeMounts:
             - name: spire-config
@@ -51,7 +51,7 @@ spec:
               mountPath: /run/spire/bundle
               readOnly: true
             - name: spire-agent-socket-dir
-              mountPath: {{ dir .Values.agent.config.socketPath }}
+              mountPath: {{ dir .Values.socketPath }}
               readOnly: false
             - name: spire-token
               mountPath: /var/run/secrets/tokens
@@ -68,18 +68,18 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 60
           resources:
-            {{- toYaml .Values.agent.resources | nindent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: spire-config
           configMap:
-            name: {{ include "spire.fullname" . }}-agent
+            name: {{ include "spire-agent.fullname" . }}
         - name: spire-bundle
           configMap:
-            name: {{ include "spire.fullname" . }}-bundle
-        - name: spire-agent-sockets
-          hostPath:
-            path: {{ dir .Values.agent.config.socketPath }}
-            type: DirectoryOrCreate
+            name: spire-bundle
         - name: spire-token
           projected:
             sources:
@@ -89,5 +89,5 @@ spec:
                 audience: spire-server
         - name: spire-agent-socket-dir
           hostPath:
-            path: {{ dir .Values.agent.config.socketPath }}
+            path: {{ dir .Values.socketPath }}
             type: DirectoryOrCreate
