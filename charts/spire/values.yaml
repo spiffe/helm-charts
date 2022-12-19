@@ -21,16 +21,13 @@ spire-agent:
   socketPath: &agentSocketPath /run/spire/agent-sockets/spire-agent.sock
 
 spiffe-csi-driver:
-  fullNameOverride: spiffe-csi-driver
   agentSocketPath: *agentSocketPath
 
 spiffe-oidc-discovery-provider:
-  fullNameOverride: spiffe-oidc-discovery-provider
   enabled: false
   trustDomain: *trustDomain
 
 k8s-workload-registrar:
-  fullNameOverride: k8s-workload-registrar
   enabled: true
 
   clusterName: *clusterName

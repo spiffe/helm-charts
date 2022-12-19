@@ -57,14 +57,11 @@ Kubernetes: `>=1.21.0-0`
 | fullnameOverride | string | `""` |  |
 | k8s-workload-registrar.clusterName | string | `"example-cluster"` |  |
 | k8s-workload-registrar.enabled | bool | `true` |  |
-| k8s-workload-registrar.fullNameOverride | string | `"k8s-workload-registrar"` |  |
 | k8s-workload-registrar.server.socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
 | k8s-workload-registrar.trustDomain | string | `"example.org"` |  |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
-| spiffe-csi-driver.fullNameOverride | string | `"spiffe-csi-driver"` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
-| spiffe-oidc-discovery-provider.fullNameOverride | string | `"spiffe-oidc-discovery-provider"` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.clusterName | string | `"example-cluster"` |  |
