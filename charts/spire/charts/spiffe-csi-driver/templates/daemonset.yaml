@@ -63,7 +63,7 @@ spec:
         # of all the little details required to register a CSI driver with
         # the kubelet.
         - name: node-driver-registrar
-          image: {{ template "spire.image" .Values.nodeDriverRegistrar }}
+          image: {{ template "spiffe-csi-driver.image" .Values.nodeDriverRegistrar }}
           imagePullPolicy: {{ .Values.nodeDriverRegistrar.image.pullPolicy }}
           args: [
             "-csi-address", "/spiffe-csi/csi.sock",
