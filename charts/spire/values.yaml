@@ -1,45 +1,40 @@
 nameOverride: ""
 fullnameOverride: ""
 
-waitForIt:
-  image:
-    registry: cgr.dev
-    repository: chainguard/wait-for-it
-    pullPolicy: IfNotPresent
-    version: latest-20221223
-  resources: {}
-
-k8s-workload-registrar:
-  enabled: true
-
+# subcharts
 spire-server:
   nameOverride: server
   bundleConfigMap: &bundleConfigMap spire-bundle
+
+  clusterName: &clusterName "example-cluster"
+  trustDomain: &trustDomain "example.org"
+
+  socketPath: &serverSocketPath /run/spire/server-sockets/spire-server.sock
 
 spire-agent:
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
+  clusterName: *clusterName
+  trustDomain: *trustDomain
+
+  socketPath: &agentSocketPath /run/spire/agent-sockets/spire-agent.sock
+
+spiffe-csi-driver:
+  fullNameOverride: spiffe-csi-driver
+  agentSocketPath: *agentSocketPath
+
 spiffe-oidc-discovery-provider:
+  fullNameOverride: spiffe-oidc-discovery-provider
   enabled: false
+  trustDomain: *trustDomain
 
-imagePullSecrets: []
-  # - name: my-docker-registry
-  #   username: my-docker-user
-  #   password: my-docker-password
-  #   registryURL: my-private.docker-registry.com
+k8s-workload-registrar:
+  fullNameOverride: k8s-workload-registrar
+  enabled: true
 
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  clusterName: *clusterName
+  trustDomain: *trustDomain
 
-# spireSettings
-
-spire:
-  clusterName: "example-cluster"
-  trustDomain: "example.org"
+  server:
+    socketPath: *serverSocketPath
