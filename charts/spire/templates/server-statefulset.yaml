@@ -59,6 +59,11 @@ spec:
               mountPath: /run/spire/data
               readOnly: false
             {{ end }}
+            {{- if eq (.Values.server.caSecretStorage.enabled | toString) "true" }}
+            - name: secret-data
+              mountPath: {{ .Values.server.caSecretStorage.path }}
+              readOnly: false
+            {{ end }}
           livenessProbe:
             httpGet:
               path: /live
@@ -122,6 +127,11 @@ spec:
           hostPath:
             path: /run/spire/server-sockets
             type: DirectoryOrCreate
+        {{- if eq (.Values.server.caSecretStorage.enabled | toString) "true" }}
+        - name: secret-data
+          secret:
+            secretName: {{ .Values.server.caSecretStorage.secretName }}
+        {{- end }}
   volumeClaimTemplates:
     {{- if eq (.Values.server.dataStorage.enabled | toString) "true" }}
     - metadata:
