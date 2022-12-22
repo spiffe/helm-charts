@@ -64,10 +64,10 @@ data:
       {{- if eq (.enabled | toString) "true" }}
       UpstreamAuthority "disk" {
         plugin_data {
-          cert_file_path = "{{ .certFilePath }}"
-          key_file_path = "{{ .keyFilePath }}"
-          {{- if ne .bundleFilePath "" }}
-          bundle_file_path = "{{ .bundleFilePath }}"
+          cert_file_path = "/run/spire/upstream_ca/tls.crt"
+          key_file_path = "/run/spire/upstream_ca/tls.key"
+          {{- if ne .bundle "" }}
+          bundle_file_path = "/run/spire/upstream_ca/bundle.crt"
           {{- end }}
         }
       }

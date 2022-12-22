@@ -59,9 +59,9 @@ spec:
               mountPath: /run/spire/data
               readOnly: false
             {{ end }}
-            {{- if eq (.Values.server.caSecretStorage.enabled | toString) "true" }}
-            - name: secret-data
-              mountPath: {{ .Values.server.caSecretStorage.path }}
+            {{- if eq (.Values.server.config.upstreamAuthority.disk.enabled | toString) "true" }}
+            - name: upstream-ca
+              mountPath: /run/spire/upstream_ca
               readOnly: false
             {{ end }}
           livenessProbe:
@@ -127,10 +127,10 @@ spec:
           hostPath:
             path: /run/spire/server-sockets
             type: DirectoryOrCreate
-        {{- if eq (.Values.server.caSecretStorage.enabled | toString) "true" }}
-        - name: secret-data
+        {{- if eq (.Values.server.config.upstreamAuthority.disk.enabled | toString) "true" }}
+        - name: upstream-ca
           secret:
-            secretName: {{ .Values.server.caSecretStorage.secretName }}
+            secretName: {{ include "spire.fullname" . }}-upstream-ca
         {{- end }}
   volumeClaimTemplates:
     {{- if eq (.Values.server.dataStorage.enabled | toString) "true" }}

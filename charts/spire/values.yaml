@@ -84,11 +84,6 @@ server:
 
   topologySpreadConstraints: []
 
-  caSecretStorage:
-    enabled: false
-    path: /conf/server/
-    secretName: "csi-driver-spiffe-ca"
-
   config:
     logLevel: info
     socketPath: /run/spire/server-sockets/spire-server.sock
@@ -102,9 +97,9 @@ server:
     upstreamAuthority:
       disk:
         enabled: false
-        certFilePath: /conf/server/tls.crt
-        keyFilePath: /conf/server/tls.key
-        bundleFilePath: ""
+        certificate: ""
+        key: ""
+        bundle: ""
 
 agent:
   image:
