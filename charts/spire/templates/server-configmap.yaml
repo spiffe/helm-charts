@@ -66,7 +66,7 @@ data:
         plugin_data {
           cert_file_path = "/run/spire/upstream_ca/tls.crt"
           key_file_path = "/run/spire/upstream_ca/tls.key"
-          {{- if ne .bundle "" }}
+          {{- if ne .secret.data.bundle "" }}
           bundle_file_path = "/run/spire/upstream_ca/bundle.crt"
           {{- end }}
         }

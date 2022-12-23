@@ -132,3 +132,14 @@ Create the name of the service account to use
 {{- printf "%s/%s" .image.registry .image.repository -}}
 {{- end -}}
 {{- end }}
+
+{{- define "spire.server-upstream-ca-secret" -}}
+{{- $root := . }}
+{{- with .Values.server.config.upstreamAuthority.disk -}}
+{{- if eq (.secret.create | toString) "true" -}}
+{{ include "spire.fullname" $root }}-upstream-ca
+{{- else -}}
+{{ default (include "spire.fullname" $root) .secret.name }}
+{{- end -}}
+{{- end -}}
+{{- end }}

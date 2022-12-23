@@ -63,7 +63,7 @@ spec:
             - name: upstream-ca
               mountPath: /run/spire/upstream_ca
               readOnly: false
-            {{ end }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /live
@@ -130,7 +130,7 @@ spec:
         {{- if eq (.Values.server.config.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca
           secret:
-            secretName: {{ include "spire.fullname" . }}-upstream-ca
+            secretName: {{ include "spire.server-upstream-ca-secret" . }}
         {{- end }}
   volumeClaimTemplates:
     {{- if eq (.Values.server.dataStorage.enabled | toString) "true" }}

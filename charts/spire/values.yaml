@@ -97,9 +97,16 @@ server:
     upstreamAuthority:
       disk:
         enabled: false
-        certificate: ""
-        key: ""
-        bundle: ""
+        secret:
+          # -- If disabled requires you to create a secret with the given keys yourself.
+          create: true
+          # -- If secret creation is disabled will look for a secret with this name.
+          name: "spiffe-upstream-ca"
+          # -- If secret creation is enabled will create a secret with following certificate info
+          data:
+            certificate: ""
+            key: ""
+            bundle: ""
 
 agent:
   image:
