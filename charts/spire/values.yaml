@@ -6,7 +6,7 @@ waitForIt:
     registry: cgr.dev
     repository: chainguard/wait-for-it
     pullPolicy: IfNotPresent
-    version: latest-20221215
+    version: latest-20221223
   resources: {}
 
 workloadRegistrar:
