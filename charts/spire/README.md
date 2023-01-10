@@ -106,9 +106,9 @@ Kubernetes: `>=1.21.0-0`
 | server.config.logLevel | string | `"info"` |  |
 | server.config.socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
 | server.config.upstreamAuthority.disk.enabled | bool | `false` |  |
-| server.config.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys yourself. |
-| server.config.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled will create a secret with following certificate info |
-| server.config.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled will look for a secret with this name. |
+| server.config.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
+| server.config.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
+| server.config.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
 | server.dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | server.dataStorage.enabled | bool | `true` |  |
 | server.dataStorage.size | string | `"1Gi"` |  |

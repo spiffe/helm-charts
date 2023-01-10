@@ -98,11 +98,11 @@ server:
       disk:
         enabled: false
         secret:
-          # -- If disabled requires you to create a secret with the given keys yourself.
+          # -- If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself.
           create: true
-          # -- If secret creation is disabled will look for a secret with this name.
+          # -- If secret creation is disabled, the secret with this name will be used.
           name: "spiffe-upstream-ca"
-          # -- If secret creation is enabled will create a secret with following certificate info
+          # -- If secret creation is enabled, will create a secret with following certificate info
           data:
             certificate: ""
             key: ""
