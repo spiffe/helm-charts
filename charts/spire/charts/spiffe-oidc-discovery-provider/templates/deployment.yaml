@@ -51,7 +51,8 @@ spec:
               mountPath: /run/spire/oidc-sockets
               readOnly: false
             - name: spire-oidc-config
-              mountPath: /run/spire/oidc/config/
+              mountPath: /run/spire/oidc/config/oidc-discovery-provider.conf
+              subPath: oidc-discovery-provider.conf
               readOnly: true
           readinessProbe:
             httpGet:
