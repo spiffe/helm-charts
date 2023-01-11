@@ -1,1 +1,0 @@
-Installed {{ include "k8s-workload-registrar.fullname" . }}…

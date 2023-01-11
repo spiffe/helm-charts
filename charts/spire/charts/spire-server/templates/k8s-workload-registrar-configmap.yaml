@@ -1,14 +1,16 @@
+{{- if eq (.Values.k8sWorkloadRegistrar.enabled | toString) "true" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "k8s-workload-registrar.fullname" . }}
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
   namespace: {{ .Release.Namespace }}
 data:
   workload-registrar.conf: |
-    log_level       = "{{ .Values.logLevel }}"
+    log_level       = "{{ .Values.k8sWorkloadRegistrar.logLevel }}"
     mode            = "reconcile"
     trust_domain    = {{ .Values.trustDomain | quote }}
     cluster         = {{ .Values.clusterName | quote }}
-    server_address  = "unix://{{ .Values.server.socketPath }}"
+    server_address  = "unix://{{ .Values.socketPath }}"
     leader_election = true
     metrics_addr    = "0.0.0.0:18080"
+{{- end }}

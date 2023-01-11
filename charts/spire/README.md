@@ -46,7 +46,6 @@ Kubernetes: `>=1.21.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://./charts/k8s-workload-registrar | k8s-workload-registrar | 0.1.0 |
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
@@ -57,10 +56,6 @@ Kubernetes: `>=1.21.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
-| k8s-workload-registrar.clusterName | string | `"example-cluster"` |  |
-| k8s-workload-registrar.enabled | bool | `true` |  |
-| k8s-workload-registrar.server.socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
-| k8s-workload-registrar.trustDomain | string | `"example.org"` |  |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |

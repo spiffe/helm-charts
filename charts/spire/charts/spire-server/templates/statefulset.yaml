@@ -76,6 +76,25 @@ spec:
               mountPath: /run/spire/upstream_ca
               readOnly: false
             {{ end }}
+        {{- if eq (.Values.k8sWorkloadRegistrar.enabled | toString) "true" }}
+        - name: spire-k8s-workload-registrar
+          securityContext:
+            {{- toYaml .Values.k8sWorkloadRegistrar.securityContext | nindent 12 }}
+          image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.k8sWorkloadRegistrar.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - -config
+            - /run/spire/k8s-workload-registrar/config/workload-registrar.conf
+          resources:
+            {{- toYaml .Values.k8sWorkloadRegistrar.resources | nindent 12 }}
+          volumeMounts:
+            - name: spire-server-socket
+              mountPath: /run/spire/server-sockets
+              readOnly: true
+            - name: k8s-workload-registrar-config
+              mountPath: /run/spire/k8s-workload-registrar/config
+              readOnly: true
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -104,6 +123,11 @@ spec:
         - name: upstream-ca
           secret:
             secretName: {{ include "spire-server.upstream-ca-secret" . }}
+        {{- end }}
+        {{- if eq (.Values.k8sWorkloadRegistrar.enabled | toString) "true" }}
+        - name: k8s-workload-registrar-config
+          configMap:
+            name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
         {{- end }}
   volumeClaimTemplates:
     {{- if eq (.Values.dataStorage.enabled | toString) "true" }}

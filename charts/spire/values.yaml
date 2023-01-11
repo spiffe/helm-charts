@@ -26,12 +26,3 @@ spiffe-csi-driver:
 spiffe-oidc-discovery-provider:
   enabled: false
   trustDomain: *trustDomain
-
-k8s-workload-registrar:
-  enabled: true
-
-  clusterName: *clusterName
-  trustDomain: *trustDomain
-
-  server:
-    socketPath: *serverSocketPath

@@ -29,6 +29,14 @@ A Helm chart to install the SPIRE server.
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
+| k8sWorkloadRegistrar.enabled | bool | `true` |  |
+| k8sWorkloadRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
+| k8sWorkloadRegistrar.image.registry | string | `"gcr.io"` |  |
+| k8sWorkloadRegistrar.image.repository | string | `"spiffe-io/k8s-workload-registrar"` |  |
+| k8sWorkloadRegistrar.image.version | string | `""` |  |
+| k8sWorkloadRegistrar.logLevel | string | `"info"` |  |
+| k8sWorkloadRegistrar.resources | object | `{}` |  |
+| k8sWorkloadRegistrar.securityContext | object | `{}` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |

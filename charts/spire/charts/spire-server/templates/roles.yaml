@@ -46,11 +46,14 @@ rules:
     resources: [tokenreviews]
     verbs:
       - get
+      - watch
+      - list
       - create
   - apiGroups: [""]
-    resources: [nodes]
+    resources: [nodes, pods]
     verbs:
       - get
+      - list
 ---
 # Binds above cluster role to spire-server service account
 kind: ClusterRoleBinding

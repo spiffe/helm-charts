@@ -1,0 +1,56 @@
+{{- if eq (.Values.k8sWorkloadRegistrar.enabled | toString) "true" }}
+# This is copied directly from the spire/support/k8s/k8s-workload-registrar tree.
+# These roles are needed for the k8s registrar to work properly in reconciling mode.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "nodes", "endpoints"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "spire-server.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
+  namespace: {{ .Release.Namespace }}
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["create"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["controller-leader-election-helper"]
+    verbs: ["update", "get"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ include "spire-server.fullname" . }}-k8s-workload-registrar
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "spire-server.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}

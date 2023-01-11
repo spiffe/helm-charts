@@ -52,7 +52,3 @@ dependencies:
     condition: spiffe-oidc-discovery-provider.enabled
     repository: file://./charts/spiffe-oidc-discovery-provider
     version: 0.1.0
-  - name: k8s-workload-registrar
-    condition: k8s-workload-registrar.enabled
-    repository: file://./charts/k8s-workload-registrar
-    version: 0.1.0
