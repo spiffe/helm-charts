@@ -18,7 +18,7 @@ Unless otherwise noted in an application chart README, the following dependencie
 compatibility rules.
 
 | Dependency | Supported Versions |
-|:-----------|:-------------------|
+| :--------- | :----------------- |
 | SPIRE      | `1.4.x`, `1.5.x`   |
 | Helm       | `3.x`              |
 
@@ -27,92 +27,122 @@ in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supporte
 
 ## SPIRE Server configuration support
 
-| **Type**                 |                                                               **HPE**                                                                | **Phillips-labs** |
-|--------------------------|:------------------------------------------------------------------------------------------------------------------------------------:|:-----------------:|
-| **Built-in plugins**     |                                                                                                                                      |                   |
-| DataStore                |                                                               sql (✔)                                                                |         -         |
-| KeyManager               |                                                  aws_kms (x), disk (✔), memory (✔)                                                   |         -         |
-| NodeAttestor             | aws_iid (x), azure_msi (x), gcp_iit (x),<br/> join_token (✔), k8s_sat (✔), k8s_psat (✔),<br/> sshpop (x), tpm_devid (x), x509pop (x) |         -         |
-| Notifier                 |                                                    gcs_bundle (x), k8sbundle (✔)                                                     |         -         |
-| UpstreamAuthority        |                    disk (✔), aws_pca (x), awssecret (x),<br/> gcp_cas (x), vault (x), spire (✔), cert-manager (x)                    |         -         |
-| **Server Configuration** |                                                                                                                                      |                   |
-| admin_ids                |                                                                 (x)                                                                  |         -         |
-| agent_ttl                |                                                                 (x)                                                                  |         -         |
-| audit_log_enabled        |                                                                 (x)                                                                  |         -         |
-| bind_address             |                                                                 (✔)                                                                  |         -         |
-| bind_port                |                                                                 (✔)                                                                  |         -         |
-| ca_key_type              |                                                                 (✔)                                                                  |         -         |
-| ca_subject               |                                                                 (✔)                                                                  |         -         |
-| ca_ttl                   |                                                                 (✔)                                                                  |         -         |
-| data_dir                 |                                                                 (✔)                                                                  |         -         |
-| default_svid_ttl         |                                                                 (x)                                                                  |         -         |
-| default_x509_svid_ttl    |                                                                 (✔)                                                                  |         -         |
-| default_jwt_svid_ttl     |                                                                 (✔)                                                                  |         -         |
-| experimental             |                                                                 (x)                                                                  |         -         |
-| federation               |                                                                 (✔)                                                                  |         -         |
-| jwt_key_type             |                                                                 (✔)                                                                  |         -         |
-| jwt_issuer               |                                                                 (✔)                                                                  |         -         |
-| log_file                 |                                                                 (x)                                                                  |         -         |
-| log_level                |                                                                 (✔)                                                                  |         -         |
-| log_format               |                                                                 (✔)                                                                  |         -         |
-| omit_x509svid_uid        |                                                                 (x)                                                                  |         -         |
-| profiling_enabled        |                                                                 (x)                                                                  |         -         |
-| profiling_freq           |                                                                 (x)                                                                  |         -         |
-| profiling_names          |                                                                 (x)                                                                  |         -         |
-| profiling_port           |                                                                 (x)                                                                  |         -         |
-| ratelimit                |                                                                 (x)                                                                  |         -         |
-| socket_path              |                                                                 (✔)                                                                  |         -         |
-| trust_domain             |                                                                 (✔)                                                                  |         -         |
-| **Telemetry**            |                                                                 (✔)                                                                  |         -         |
-| health_checks            |                                                                 (✔)                                                                  |         -         |
-| Prometheus               |                                                                 (x)                                                                  |         -         |
-| DogStatsd                |                                                                 (x)                                                                  |         -         |
-| Statsd                   |                                                                 (x)                                                                  |         -         |
-| M3                       |                                                                 (x)                                                                  |         -         |
-| In-Mem                   |                                                                 (x)                                                                  |         -         |
-| **Controller Manager**   |                                                                 (✔)                                                                  |         -         |
+| **Type**                       | **HPE** | **Phillips-labs** |
+| ------------------------------ | :-----: | :---------------: |
+| **Built-in plugins**           |         |                   |
+| DataStore sqlite3              |   (?)   |        (✔)        |
+| DataStore postgres             |   (?)   |        (✔)        |
+| KeyManager aws_kms             |   (x)   |        (x)        |
+| KeyManager disk                |   (✔)   |        (✔)        |
+| KeyManager memory              |   (✔)   |        (x)        |
+| NodeAttestor aws_iid           |   (x)   |        (x)        |
+| NodeAttestor azure_msi         |   (x)   |        (x)        |
+| NodeAttestor gcp_iit           |   (x)   |        (x)        |
+| NodeAttestor join_token        |   (✔)   |        (x)        |
+| NodeAttestor k8s_sat           |   (✔)   |        (x)        |
+| NodeAttestor k8s_psat          |   (✔)   |        (✔)        |
+| NodeAttestor sshpop            |   (x)   |        (x)        |
+| NodeAttestor tpm_devid         |   (x)   |        (x)        |
+| NodeAttestor x509pop           |   (x)   |        (x)        |
+| Notifier gcs_bundle            |   (x)   |        (x)        |
+| Notifier k8sbundle             |   (✔)   |        (✔)        |
+| UpstreamAuthority disk         |   (✔)   |        (✔)        |
+| UpstreamAuthority aws_pca      |   (x)   |        (x)        |
+| UpstreamAuthority awssecret    |   (x)   |        (x)        |
+| UpstreamAuthority gcp_cas      |   (x)   |        (x)        |
+| UpstreamAuthority vault        |   (x)   |        (x)        |
+| UpstreamAuthority spire        |   (✔)   |        (x)        |
+| UpstreamAuthority cert-manager |   (x)   |        (x)        |
+| **Server Configuration**       |         |                   |
+| admin_ids                      |   (x)   |        (x)        |
+| agent_ttl                      |   (x)   |        (x)        |
+| audit_log_enabled              |   (x)   |        (x)        |
+| bind_address                   |   (✔)   |        (x)        |
+| bind_port                      |   (✔)   |        (x)        |
+| ca_key_type                    |   (✔)   |        (x)        |
+| ca_subject                     |   (✔)   |        (x)        |
+| ca_ttl                         |   (✔)   |        (x)        |
+| data_dir                       |   (✔)   |        (x)        |
+| default_svid_ttl               |   (x)   |        (x)        |
+| default_x509_svid_ttl          |   (✔)   |        (✔)        |
+| default_jwt_svid_ttl           |   (✔)   |        (✔)        |
+| experimental                   |   (x)   |        (x)        |
+| federation                     |   (✔)   |        (x)        |
+| jwt_key_type                   |   (✔)   |        (x)        |
+| jwt_issuer                     |   (✔)   |        (✔)        |
+| log_file                       |   (x)   |        (x)        |
+| log_level                      |   (✔)   |        (✔)        |
+| log_format                     |   (✔)   |        (x)        |
+| omit_x509svid_uid              |   (x)   |        (x)        |
+| profiling_enabled              |   (x)   |        (x)        |
+| profiling_freq                 |   (x)   |        (x)        |
+| profiling_names                |   (x)   |        (x)        |
+| profiling_port                 |   (x)   |        (x)        |
+| ratelimit                      |   (x)   |        (x)        |
+| socket_path                    |   (✔)   |        (✔)        |
+| trust_domain                   |   (✔)   |        (✔)        |
+| **Telemetry**                  |         |                   |
+| health_checks                  |   (✔)   |        (✔)        |
+| Prometheus                     |   (x)   |        (x)        |
+| DogStatsd                      |   (x)   |        (x)        |
+| Statsd                         |   (x)   |        (x)        |
+| M3                             |   (x)   |        (x)        |
+| In-Mem                         |   (x)   |        (x)        |
+| **k8s workload registrar**     |   (?)   |        (✔)        |
+| **Controller Manager**         |   (✔)   |        (x)        |
 
 ## SPIRE Agent configuration support
 
-| **Type**                        |                                                       **HPE**                                                        | **Phillips-labs** |
-|---------------------------------|:--------------------------------------------------------------------------------------------------------------------:|:-----------------:|
-| **Built-in plugins**            |                                                                                                                      |                   |
-| KeyManager                      |                                                 disk (✔), memory (✔)                                                 |         -         |
-| NodeAttestor                    | aws_iid (x), azure_msi (x), gcp_iit (x),<br/> join_token (✔), k8s_sat (✔), k8s_psat (✔)<br/> sshpop (x), x509pop (x) |         -         |
-| WorkloadAttestor                |                                            docker (✔), k8s (✔), unix (✔)                                             |         -         |
-| SVIDStore                       |                                    aws_secretsmanager (x), gcp_secretmanager (x)                                     |         -         |
-| **Agent Configuration**         |                                                                                                                      |                   |
-| admin_socket_path               |                                                         (x)                                                          |         -         |
-| allow_unauthenticated_verifiers |                                                         (x)                                                          |         -         |
-| allowed_foreign_jwt_claims      |                                                         (x)                                                          |         -         |
-| authorized_delegates            |                                                         (x)                                                          |         -         |
-| data_dir                        |                                                         (✔)                                                          |         -         |
-| experimental                    |                                                         (x)                                                          |         -         |
-| insecure_bootstrap              |                                                         (x)                                                          |         -         |
-| join_token                      |                                                         (x)                                                          |         -         |
-| log_file                        |                                                         (x)                                                          |         -         |
-| log_level                       |                                                         (✔)                                                          |         -         |
-| log_format                      |                                                         (x)                                                          |         -         |
-| profiling_enabled               |                                                         (x)                                                          |         -         |
-| profiling_freq                  |                                                         (x)                                                          |         -         |
-| profiling_names                 |                                                         (x)                                                          |         -         |
-| profiling_port                  |                                                         (x)                                                          |         -         |
-| server_address                  |                                                         (✔)                                                          |         -         |
-| server_port                     |                                                         (✔)                                                          |         -         |
-| socket_path                     |                                                         (✔)                                                          |         -         |
-| sds                             |                                                         (✔)                                                          |         -         |
-| trust_bundle_path               |                                                         (✔)                                                          |         -         |
-| trust_bundle_url                |                                                         (x)                                                          |         -         |
-| trust_domain                    |                                                         (✔)                                                          |         -         |
-| workload_x509_svid_key_type     |                                                         (x)                                                          |         -         |
-| **Telemetry**                   |                                                         (✔)                                                          |         -         |
-| health_checks                   |                                                         (✔)                                                          |         -         |
-| Prometheus                      |                                                         (x)                                                          |         -         |
-| DogStatsd                       |                                                         (x)                                                          |         -         |
-| Statsd                          |                                                         (x)                                                          |         -         |
-| M3                              |                                                         (x)                                                          |         -         |
-| In-Mem                          |                                                         (x)                                                          |         -         |
-| **spiffe-csi-driver**           |                                                         (✔)                                                          |         -         |
+| **Type**                        | **HPE** | **Phillips-labs** |
+| ------------------------------- | :-----: | :---------------: |
+| **Built-in plugins**            |         |                   |
+| KeyManager disk                 |   (✔)   |        (x)        |
+| KeyManager memory               |   (✔)   |        (✔)        |
+| NodeAttestor aws_iid            |   (x)   |        (x)        |
+| NodeAttestor azure_msi          |   (x)   |        (x)        |
+| NodeAttestor gcp_iit            |   (x)   |        (x)        |
+| NodeAttestor join_token         |   (✔)   |        (x)        |
+| NodeAttestor k8s_sat            |   (✔)   |        (x)        |
+| NodeAttestor k8s_psat           |   (✔)   |        (✔)        |
+| NodeAttestor sshpop             |   (x)   |        (x)        |
+| NodeAttestor x509pop            |   (x)   |        (x)        |
+| WorkloadAttestor docker         |   (✔)   |        (x)        |
+| WorkloadAttestor k8s            |   (✔)   |        (✔)        |
+| WorkloadAttestor unix           |   (✔)   |        (✔)        |
+| SVIDStore aws_secretsmanager    |   (x)   |        (x)        |
+| SVIDStore gcp_secretmanager     |   (x)   |        (x)        |
+| **Agent Configuration**         |         |                   |
+| admin_socket_path               |   (x)   |        (x)        |
+| allow_unauthenticated_verifiers |   (x)   |        (x)        |
+| allowed_foreign_jwt_claims      |   (x)   |        (x)        |
+| authorized_delegates            |   (x)   |        (x)        |
+| data_dir                        |   (✔)   |        (✔)        |
+| experimental                    |   (x)   |        (x)        |
+| insecure_bootstrap              |   (x)   |        (x)        |
+| join_token                      |   (x)   |        (x)        |
+| log_file                        |   (x)   |        (x)        |
+| log_level                       |   (✔)   |        (✔)        |
+| log_format                      |   (x)   |        (x)        |
+| profiling_enabled               |   (x)   |        (x)        |
+| profiling_freq                  |   (x)   |        (x)        |
+| profiling_names                 |   (x)   |        (x)        |
+| profiling_port                  |   (x)   |        (x)        |
+| server_address                  |   (✔)   |        (✔)        |
+| server_port                     |   (✔)   |        (✔)        |
+| socket_path                     |   (✔)   |        (✔)        |
+| sds                             |   (✔)   |        (x)        |
+| trust_bundle_path               |   (✔)   |        (x)        |
+| trust_bundle_url                |   (x)   |        (x)        |
+| trust_domain                    |   (✔)   |        (✔)        |
+| workload_x509_svid_key_type     |   (x)   |        (x)        |
+| **Telemetry**                   |         |                   |
+| health_checks                   |   (✔)   |        (x)        |
+| Prometheus                      |   (x)   |        (x)        |
+| DogStatsd                       |   (x)   |        (x)        |
+| Statsd                          |   (x)   |        (x)        |
+| M3                              |   (x)   |        (x)        |
+| In-Mem                          |   (x)   |        (x)        |
+| **spiffe-csi-driver**           |   (✔)   |        (✔)        |
 
 ## Contributing
 
