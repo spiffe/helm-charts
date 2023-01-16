@@ -1,0 +1,19 @@
+{{- $root := . }}
+{{- with .Values.controllerManager }}
+{{- if and (eq (.enabled | toString) "true") (eq (.identities.enabled | toString) "true") }}
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterSPIFFEID
+metadata:
+  name: {{ include "spire-controller-manager.fullname" $root }}-service-account-based
+spec:
+  spiffeIDTemplate: {{ .identities.spiffeIDTemplate | quote }}
+  {{- with .identities.podSelector }}
+  podSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .identities.dnsNameTemplates }}
+  dnsNameTemplates:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
+{{- end }}

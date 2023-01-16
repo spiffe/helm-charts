@@ -28,5 +28,8 @@ data:
       - kube-public
       - {{ .Release.Namespace }}
       - local-path-storage
+      {{- with .Values.controllerManager.ignoreNamespaces }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
     spireServerSocketPath: {{ .Values.socketPath | quote }}
 {{- end }}

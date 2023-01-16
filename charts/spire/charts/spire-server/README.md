@@ -19,6 +19,11 @@ A Helm chart to install the SPIRE server.
 | ca_subject.organization | string | `"Example"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | controllerManager.enabled | bool | `false` |  |
+| controllerManager.identities.dnsNameTemplates | list | `[]` |  |
+| controllerManager.identities.enabled | bool | `true` |  |
+| controllerManager.identities.podSelector | object | `{}` |  |
+| controllerManager.identities.spiffeIDTemplate | string | `"spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}"` |  |
+| controllerManager.ignoreNamespaces | list | `[]` |  |
 | controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
 | controllerManager.image.registry | string | `"ghcr.io"` |  |
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |

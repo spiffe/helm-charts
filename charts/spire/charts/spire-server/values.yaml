@@ -142,6 +142,18 @@ controllerManager:
     port: 443
     annotations: {}
 
+  ignoreNamespaces: []
+
+  identities:
+    enabled: true
+
+    spiffeIDTemplate: spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}
+    podSelector: {}
+      # matchLabels:
+      #   spiffe.io/spiffe-id: "true"
+    dnsNameTemplates: []
+      # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+
 k8sWorkloadRegistrar:
   # -- The `k8s-workload-registrar` is deprecated in favor of the `spire-controller-manager`
   # A next release will switch to use the `spire-controller-manager` by default.
