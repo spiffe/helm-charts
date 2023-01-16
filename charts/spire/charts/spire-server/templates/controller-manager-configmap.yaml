@@ -24,10 +24,6 @@ data:
     clusterName: {{ .Values.clusterName }}
     trustDomain: {{ .Values.trustDomain }}
     ignoreNamespaces:
-      - kube-system
-      - kube-public
-      - {{ .Release.Namespace }}
-      - local-path-storage
       {{- with .Values.controllerManager.ignoreNamespaces }}
       {{- toYaml . | nindent 6 }}
       {{- end }}

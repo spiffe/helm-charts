@@ -23,7 +23,9 @@ A Helm chart to install the SPIRE server.
 | controllerManager.identities.enabled | bool | `true` |  |
 | controllerManager.identities.podSelector | object | `{}` |  |
 | controllerManager.identities.spiffeIDTemplate | string | `"spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}"` |  |
-| controllerManager.ignoreNamespaces | list | `[]` |  |
+| controllerManager.ignoreNamespaces[0] | string | `"kube-system"` |  |
+| controllerManager.ignoreNamespaces[1] | string | `"kube-public"` |  |
+| controllerManager.ignoreNamespaces[2] | string | `"local-path-storage"` |  |
 | controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
 | controllerManager.image.registry | string | `"ghcr.io"` |  |
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |

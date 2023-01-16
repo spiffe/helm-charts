@@ -142,7 +142,10 @@ controllerManager:
     port: 443
     annotations: {}
 
-  ignoreNamespaces: []
+  ignoreNamespaces:
+    - kube-system
+    - kube-public
+    - local-path-storage
 
   identities:
     enabled: true
