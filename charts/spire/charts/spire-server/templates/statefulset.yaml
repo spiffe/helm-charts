@@ -81,7 +81,7 @@ spec:
           securityContext:
             {{- toYaml .Values.k8sWorkloadRegistrar.securityContext | nindent 12 }}
           image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.k8sWorkloadRegistrar.image) }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.k8sWorkloadRegistrar.image.pullPolicy }}
           args:
             - -config
             - /run/spire/k8s-workload-registrar/config/workload-registrar.conf
