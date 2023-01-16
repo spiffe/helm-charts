@@ -107,7 +107,44 @@ upstreamAuthority:
         key: ""
         bundle: ""
 
+controllerManager:
+  enabled: false
+
+  image:
+    registry: ghcr.io
+    repository: spiffe/spire-controller-manager
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    version: "0.2.1"
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  service:
+    type: ClusterIP
+    port: 443
+    annotations: {}
+
 k8sWorkloadRegistrar:
+  # -- The `k8s-workload-registrar` is deprecated in favor of the `spire-controller-manager`
+  # A next release will switch to use the `spire-controller-manager` by default.
   enabled: true
 
   image:

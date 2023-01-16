@@ -9,8 +9,6 @@ spire-server:
   clusterName: &clusterName "example-cluster"
   trustDomain: &trustDomain "example.org"
 
-  socketPath: &serverSocketPath /run/spire/server-sockets/spire-server.sock
-
 spire-agent:
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap

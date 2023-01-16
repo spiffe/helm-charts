@@ -85,6 +85,10 @@ Create the name of the service account to use
 {{- end -}}
 {{- end }}
 
+{{- define "spire-controller-manager.fullname" -}}
+{{ include "spire-server.fullname" . | trimSuffix "-server" }}-controller-manager
+{{- end }}
+
 {{- define "spire-k8s-workload-registrar.fullname" -}}
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
 {{- end }}

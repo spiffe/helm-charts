@@ -18,6 +18,16 @@ A Helm chart to install the SPIRE server.
 | ca_subject.country | string | `"NL"` |  |
 | ca_subject.organization | string | `"Example"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| controllerManager.enabled | bool | `false` |  |
+| controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
+| controllerManager.image.registry | string | `"ghcr.io"` |  |
+| controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |
+| controllerManager.image.version | string | `"0.2.1"` |  |
+| controllerManager.resources | object | `{}` |  |
+| controllerManager.securityContext | object | `{}` |  |
+| controllerManager.service.annotations | object | `{}` |  |
+| controllerManager.service.port | int | `443` |  |
+| controllerManager.service.type | string | `"ClusterIP"` |  |
 | dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
@@ -29,7 +39,7 @@ A Helm chart to install the SPIRE server.
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
-| k8sWorkloadRegistrar.enabled | bool | `true` |  |
+| k8sWorkloadRegistrar.enabled | bool | `true` | The `k8s-workload-registrar` is deprecated in favor of the `spire-controller-manager` A next release will switch to use the `spire-controller-manager` by default. |
 | k8sWorkloadRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
 | k8sWorkloadRegistrar.image.registry | string | `"gcr.io"` |  |
 | k8sWorkloadRegistrar.image.repository | string | `"spiffe-io/k8s-workload-registrar"` |  |

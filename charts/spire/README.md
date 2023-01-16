@@ -68,7 +68,6 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.nameOverride | string | `"server"` |  |
-| spire-server.socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
 | spire-server.trustDomain | string | `"example.org"` |  |
 
 ----------------------------------------------
