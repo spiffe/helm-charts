@@ -84,3 +84,7 @@ Create the name of the service account to use
 {{- end -}}
 {{- end -}}
 {{- end }}
+
+{{- define "spire-k8s-workload-registrar.fullname" -}}
+{{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
+{{- end }}
