@@ -78,9 +78,9 @@ Create the name of the service account to use
 {{- $root := . }}
 {{- with .Values.upstreamAuthority.disk -}}
 {{- if eq (.secret.create | toString) "true" -}}
-{{ include "spire.fullname" $root }}-upstream-ca
+{{ include "spire-server.fullname" $root }}-upstream-ca
 {{- else -}}
-{{ default (include "spire.fullname" $root) .secret.name }}
+{{ default (include "spire-server.fullname" $root) .secret.name }}
 {{- end -}}
 {{- end -}}
 {{- end }}
