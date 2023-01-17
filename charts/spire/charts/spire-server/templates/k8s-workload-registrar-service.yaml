@@ -1,0 +1,22 @@
+{{- if eq (.Values.k8sWorkloadRegistrar.enabled | toString) "true" }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spire-k8s-workload-registrar.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+  labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: https
+      port: 443
+      targetPort: k8s-registrar
+      protocol: TCP
+  selector:
+    {{- include "spire-server.selectorLabels" . | nindent 4 }}
+{{- end }}
