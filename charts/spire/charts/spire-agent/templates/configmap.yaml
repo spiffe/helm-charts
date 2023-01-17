@@ -8,7 +8,7 @@ data:
     agent {
       data_dir = "/run/spire"
       log_level = {{ .Values.logLevel | quote }}
-      server_address = {{ (include "spire-server-service" .) | quote }}
+      server_address = "{{ .Release.Name }}-server"
       server_port = {{ .Values.server.port | quote }}
       socket_path = {{ .Values.socketPath | quote }}
       trust_bundle_path = "/run/spire/bundle/bundle.crt"
