@@ -35,7 +35,7 @@ spec:
           # from https://github.com/vishnubob/wait-for-it
           image: {{ template "spire-agent.image" .Values.waitForIt }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
-          args: ["-t", "30", "-h", {{ .Values.server.host | quote }}, "-p", {{ .Values.server.port | quote }}]
+          args: ["-t", "30", "-h", "{{ .Release.Name }}-server", "-p", {{ .Values.server.port | quote }}]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
       containers:

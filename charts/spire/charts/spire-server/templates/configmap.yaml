@@ -40,7 +40,7 @@ data:
         plugin_data {
           clusters = {
             {{ .Values.clusterName | quote }} = {
-              service_account_allow_list = ["{{ .Release.Namespace }}:spire-agent"]
+              service_account_allow_list = ["{{ .Release.Namespace }}:{{ .Release.Name }}-agent"]
             }
           }
         }

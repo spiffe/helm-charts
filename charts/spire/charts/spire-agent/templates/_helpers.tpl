@@ -72,3 +72,7 @@ Create the name of the service account to use
 {{- printf "%s/%s" .image.registry .image.repository -}}
 {{- end -}}
 {{- end }}
+
+{{- define "spire-server-service" -}}
+{{ include "spire-agent.fullname" . | trimSuffix "-agent" }}-server
+{{- end }}

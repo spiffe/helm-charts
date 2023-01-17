@@ -23,7 +23,6 @@ A Helm chart to install the SPIRE agent.
 | podSecurityContext | object | `{}` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| server.host | string | `"spire-server"` |  |
 | server.port | int | `8081` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

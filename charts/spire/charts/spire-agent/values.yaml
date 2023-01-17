@@ -60,7 +60,6 @@ trustDomain: example.org
 bundleConfigMap: spire-bundle
 
 server:
-  host: spire-server
   port: 8081
 
 waitForIt:
