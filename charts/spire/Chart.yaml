@@ -33,6 +33,7 @@ keywords: ["spiffe", "spire", "spire-server", "spire-agent", "oidc"]
 home: https://github.com/philips-labs/helm-charts/charts/spire
 sources:
   - https://github.com/philips-labs/helm-charts/charts/spire
+icon: https://spiffe.io/img/logos/spire/icon/color/spire-icon-color.png
 maintainers:
   - name: marcofranssen
     email: marco.franssen@gmail.com
