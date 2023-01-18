@@ -10,7 +10,8 @@ data:
 
     domains = [
       "{{ include "spiffe-oidc-discovery-provider.fullname" . }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.svc.cluster.local",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local",
     {{- if gt (len .Values.config.domains) 0 }}
       "{{- join "\",\n      \"" .Values.config.domains }}"
     {{- end }}
