@@ -11,6 +11,10 @@ spec:
   podSelector:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .identities.namespaceSelector }}
+  namespaceSelector:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with .identities.dnsNameTemplates }}
   dnsNameTemplates:
     {{- toYaml . | nindent 4 }}

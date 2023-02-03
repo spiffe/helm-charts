@@ -154,6 +154,9 @@ controllerManager:
     podSelector: {}
       # matchLabels:
       #   spiffe.io/spiffe-id: "true"
+    namespaceSelector: {}
+      # matchLabels:
+      #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
 
