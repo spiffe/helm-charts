@@ -16,10 +16,7 @@ spire-agent:
   clusterName: *clusterName
   trustDomain: *trustDomain
 
-  socketPath: &agentSocketPath /run/spire/agent-sockets/spire-agent.sock
-
-spiffe-csi-driver:
-  agentSocketPath: *agentSocketPath
+spiffe-csi-driver: {}
 
 spiffe-oidc-discovery-provider:
   enabled: false

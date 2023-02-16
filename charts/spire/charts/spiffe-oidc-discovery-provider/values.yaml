@@ -109,5 +109,4 @@ tolerations: []
 
 affinity: {}
 
-agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
 trustDomain: "example.org"

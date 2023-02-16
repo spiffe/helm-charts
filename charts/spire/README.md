@@ -59,13 +59,12 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
 | nameOverride | string | `""` |  |
-| spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
+| spiffe-csi-driver | object | `{}` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.clusterName | string | `"example-cluster"` |  |
 | spire-agent.nameOverride | string | `"agent"` |  |
-| spire-agent.socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | spire-agent.trustDomain | string | `"example.org"` |  |
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.clusterName | string | `"example-cluster"` |  |

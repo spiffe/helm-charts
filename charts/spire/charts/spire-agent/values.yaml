@@ -53,7 +53,6 @@ nodeSelector:
   kubernetes.io/arch: amd64
 
 logLevel: info
-socketPath: /run/spire/agent-sockets/spire-agent.sock
 clusterName: example-cluster
 trustDomain: example.org
 

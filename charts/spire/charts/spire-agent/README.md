@@ -29,7 +29,6 @@ A Helm chart to install the SPIRE agent.
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
 | waitForIt.image.registry | string | `"cgr.dev"` |  |

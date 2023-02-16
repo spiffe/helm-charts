@@ -96,11 +96,11 @@ spec:
       volumes:
         - name: spire-agent-sockets
           hostPath:
-            path: {{ dir .Values.agentSocketPath }}
+            path: {{ include "spire.agent-socket-path" . | dir }}
             type: DirectoryOrCreate
         - name: spire-agent-socket-dir
           hostPath:
-            path: {{ dir .Values.agentSocketPath }}
+            path: {{ include "spire.agent-socket-path" . | dir }}
             type: DirectoryOrCreate
         # This volume is where the socket for kubelet->driver communication lives
         - name: spiffe-csi-socket-dir

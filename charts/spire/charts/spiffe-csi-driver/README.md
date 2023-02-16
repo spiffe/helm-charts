@@ -10,7 +10,6 @@ A Helm chart to install the SPIFFE CSI driver.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
