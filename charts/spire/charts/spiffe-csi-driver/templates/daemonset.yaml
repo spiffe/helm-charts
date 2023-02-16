@@ -56,6 +56,10 @@ spec:
               mountPropagation: Bidirectional
               name: mountpoint-dir
           securityContext:
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
             privileged: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
