@@ -6,7 +6,7 @@ on:
     paths:
       - 'charts/**'
       - '.github/workflows/helm-chart-ci.yml'
-      - '.github/scripts/*.sh'
+      - 'helm-docs.sh'
       - '.github/kind/conf/kind-config.yaml'
 
 concurrency:
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v3.3.0
 
       - name: Verify Docs updated
-        run: .github/scripts/helm-docs.sh
+        run: ./helm-docs.sh
 
   lint-chart:
     runs-on: ubuntu-22.04

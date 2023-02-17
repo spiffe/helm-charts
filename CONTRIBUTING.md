@@ -39,7 +39,7 @@ git rebase main
 Any changes to Chart.yaml or values.yaml require an update of the README.md. This update can easily be generated using [helm-docs][].
 
 ```shell
-helm-docs -g charts/«chart-name» -t .github/README.md.tmpl
+./helm-docs.sh charts/«chart-name»
 ```
 
 [helm-docs]: https://github.com/norwoodj/helm-docs "Generate documentation for your Helm chart."
