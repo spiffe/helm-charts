@@ -94,10 +94,6 @@ spec:
           resources:
             {{- toYaml .Values.nodeDriverRegistrar.resources | nindent 12 }}
       volumes:
-        - name: spire-agent-sockets
-          hostPath:
-            path: {{ include "spire.agent-socket-path" . | dir }}
-            type: DirectoryOrCreate
         - name: spire-agent-socket-dir
           hostPath:
             path: {{ include "spire.agent-socket-path" . | dir }}
