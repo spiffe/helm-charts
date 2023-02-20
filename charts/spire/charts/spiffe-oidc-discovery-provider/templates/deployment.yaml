@@ -94,9 +94,7 @@ spec:
             driver: "csi.spiffe.io"
             readOnly: true
         - name: spire-oidc-sockets
-          hostPath:
-            path: /run/spire/oidc-sockets
-            type: DirectoryOrCreate
+          emptyDir: {}
         - name: spire-oidc-config
           configMap:
             name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
