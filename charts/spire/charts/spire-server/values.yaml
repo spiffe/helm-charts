@@ -159,3 +159,7 @@ controllerManager:
       #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+
+telemetry:
+  prometheus:
+    enabled: false

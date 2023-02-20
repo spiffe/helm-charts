@@ -79,3 +79,7 @@ workloadAttestors:
   unix:
     # -- enables the Unix workload attestor
     enabled: false
+
+telemetry:
+  prometheus:
+    enabled: false
