@@ -36,10 +36,12 @@ data:
         }
       }
 
+      {{- if .Values.workloadAttesters.unix.enabled }}
       WorkloadAttestor "unix" {
           plugin_data {
           }
       }
+      {{- end }}
     }
 
     health_checks {

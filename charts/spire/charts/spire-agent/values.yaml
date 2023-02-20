@@ -68,3 +68,7 @@ waitForIt:
     pullPolicy: IfNotPresent
     version: latest-20230113
   resources: {}
+
+workloadAttesters:
+  unix:
+    enabled: false
