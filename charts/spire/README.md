@@ -68,6 +68,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.trustDomain | string | `"example.org"` |  |
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.clusterName | string | `"example-cluster"` |  |
+| spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
 | spire-server.trustDomain | string | `"example.org"` |  |
 
