@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "spire-agent.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "spire-agent.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "spire-agent.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "spire-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      serviceAccountName: {{ include "spire-agent.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: init
+          # This is a small image with wait-for-it, choose whatever image
+          # you prefer that waits for a service to be up. This image is built
+          # from https://github.com/vishnubob/wait-for-it
+          image: {{ template "spire-agent.image" .Values.waitForIt }}
+          imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
+          args: ["-t", "30", "-h", "{{ .Release.Name }}-server", "-p", {{ .Values.server.port | quote }}]
+          resources:
+            {{- toYaml .Values.waitForIt.resources | nindent 12 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ template "spire-agent.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["-config", "/run/spire/config/agent.conf"]
+          volumeMounts:
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            - name: spire-bundle
+              mountPath: /run/spire/bundle
+              readOnly: true
+            - name: spire-agent-socket-dir
+              mountPath: {{ include "spire.agent-socket-path" . | dir }}
+              readOnly: false
+            - name: spire-token
+              mountPath: /var/run/secrets/tokens
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 60
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: spire-config
+          configMap:
+            name: {{ include "spire-agent.fullname" . }}
+        - name: spire-bundle
+          configMap:
+            name: {{ .Values.bundleConfigMap }}
+        - name: spire-token
+          projected:
+            sources:
+            - serviceAccountToken:
+                path: spire-agent
+                expirationSeconds: 7200
+                audience: spire-server
+        - name: spire-agent-socket-dir
+          hostPath:
+            path: {{ include "spire.agent-socket-path" . | dir }}
+            type: DirectoryOrCreate

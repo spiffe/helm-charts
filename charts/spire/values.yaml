@@ -1,0 +1,23 @@
+nameOverride: ""
+fullnameOverride: ""
+
+# subcharts
+spire-server:
+  nameOverride: server
+  bundleConfigMap: &bundleConfigMap spire-bundle
+
+  clusterName: &clusterName "example-cluster"
+  trustDomain: &trustDomain "example.org"
+
+spire-agent:
+  nameOverride: agent
+  bundleConfigMap: *bundleConfigMap
+
+  clusterName: *clusterName
+  trustDomain: *trustDomain
+
+spiffe-csi-driver: {}
+
+spiffe-oidc-discovery-provider:
+  enabled: false
+  trustDomain: *trustDomain

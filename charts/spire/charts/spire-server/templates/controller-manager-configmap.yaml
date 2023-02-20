@@ -1,0 +1,32 @@
+{{- if eq (.Values.controllerManager.enabled | toString) "true" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spire-controller-manager.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+data:
+  controller-manager-config.yaml: |
+    apiVersion: spire.spiffe.io/v1alpha1
+    kind: ControllerManagerConfig
+    metadata:
+      name: {{ include "spire-controller-manager.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      labels:
+        {{- include "spire-server.labels" . | nindent 8 }}
+    metrics:
+      bindAddress: 127.0.0.1:8082
+    healthProbe:
+      bindAddress: 127.0.0.1:8083
+    leaderElection:
+      leaderElect: true
+      resourceName: {{ .Release.Name | sha256sum | trunc 8 }}.spiffe.io
+      resourceNamespace: {{ .Release.Namespace }}
+    validatingWebhookConfigurationName: {{ include "spire-controller-manager.fullname" . }}-webhook
+    clusterName: {{ .Values.clusterName }}
+    trustDomain: {{ .Values.trustDomain }}
+    ignoreNamespaces:
+      {{- with .Values.controllerManager.ignoreNamespaces }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+    spireServerSocketPath: {{ .Values.socketPath | quote }}
+{{- end }}

@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
+  labels:
+    {{- include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "spiffe-oidc-discovery-provider.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "spiffe-oidc-discovery-provider.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "spiffe-oidc-discovery-provider.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - -config
+            - /run/spire/oidc/config/oidc-discovery-provider.conf
+          ports:
+            - containerPort: 8008
+              name: health
+          {{- if not .Values.insecureScheme.enabled }}
+            - containerPort: 443
+              name: https
+          {{- end }}
+          volumeMounts:
+            - name: spiffe-workload-api
+              mountPath: /spiffe-workload-api
+              readOnly: true
+            - name: spire-oidc-sockets
+              mountPath: /run/spire/oidc-sockets
+              readOnly: false
+            - name: spire-oidc-config
+              mountPath: /run/spire/oidc/config/oidc-discovery-provider.conf
+              subPath: oidc-discovery-provider.conf
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: health
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: health
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.insecureScheme.enabled }}
+        - name: nginx
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" .Values.insecureScheme.nginx }}
+          imagePullPolicy: {{ .Values.insecureScheme.nginx.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: spire-oidc-sockets
+              mountPath: /run/spire/oidc-sockets
+              readOnly: true
+            - name: spire-oidc-config
+              mountPath: /etc/nginx/templates/default.conf.template
+              subPath: default.conf.template
+              readOnly: true
+          resources:
+            {{- toYaml .Values.insecureScheme.nginx.resources | nindent 12 }}
+        {{- end }}
+      volumes:
+        - name: spiffe-workload-api
+          csi:
+            driver: "csi.spiffe.io"
+            readOnly: true
+        - name: spire-oidc-sockets
+          hostPath:
+            path: /run/spire/oidc-sockets
+            type: DirectoryOrCreate
+        - name: spire-oidc-config
+          configMap:
+            name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

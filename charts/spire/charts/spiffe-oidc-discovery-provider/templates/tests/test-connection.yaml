@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "spiffe-oidc-discovery-provider.fullname" . }}-test-connection"
+  labels:
+    {{- include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget-service-name
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "spiffe-oidc-discovery-provider.fullname" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
+    - name: wget-service-name-namespace
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }}/.well-known/openid-configuration']
+    - name: wget-service-name-namespace-svc-cluster-local
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/.well-known/openid-configuration']
+  restartPolicy: Never
