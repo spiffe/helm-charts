@@ -18,12 +18,20 @@ spire-server:
   controllerManager:
     enabled: true
 
+  telemetry:
+    prometheus:
+      enabled: true
+
 spire-agent:
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
   clusterName: *clusterName
   trustDomain: *trustDomain
+
+  telemetry:
+    prometheus:
+      enabled: true
 
 spiffe-csi-driver: {}
 
