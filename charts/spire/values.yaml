@@ -28,10 +28,6 @@ spire-agent:
   clusterName: *clusterName
   trustDomain: *trustDomain
 
-  telemetry:
-    prometheus:
-      enabled: true
-
 spiffe-csi-driver: {}
 
 spiffe-oidc-discovery-provider:
