@@ -30,6 +30,35 @@ spec:
       shareProcessNamespace: true
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.extraInit.enabled }}
+      initContainers:
+        - name: extrainit
+          image: {{ .Values.extraInit.registry }}/{{ .Values.extraInit.repository }}:{{ .Values.extraInit.version }}
+          imagePullPolicy: {{ .Values.extraInit.pullPolicy }}
+          command:
+            {{ .Values.extraInit.command | toYaml | nindent 12 }}
+          args:
+            {{ .Values.extraInit.args | toYaml | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: spire-server-socket
+              mountPath: /run/spire/server-sockets
+              readOnly: false
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+            - name: spire-data
+              mountPath: /run/spire/data
+              readOnly: false
+            {{- end }}
+            {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
+            - name: upstream-ca
+              mountPath: /run/spire/upstream_ca
+              readOnly: false
+            {{ end }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

@@ -14,6 +14,15 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   version: ""
 
+extraInit:
+  enabled: false
+  registry: docker.io
+  repository: busybox
+  pullPolicy: IfNotPresent
+  version: latest
+  command: []
+  args: []
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -159,3 +168,6 @@ controllerManager:
       #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+
+nodeAttestors:
+  extra: {}
