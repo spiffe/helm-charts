@@ -5,9 +5,9 @@ on:
   pull_request:
     paths:
       - 'charts/**'
-      - '.github/workflows/helm-chart-ci.yml'
-      - 'helm-docs.sh'
+      - '.github/workflows/helm-chart-ci.yaml'
       - '.github/kind/conf/kind-config.yaml'
+      - 'helm-docs.sh'
 
 concurrency:
   group: ${{ github.ref }}
