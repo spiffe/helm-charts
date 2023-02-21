@@ -57,7 +57,7 @@ jobs:
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --target-branch main)
+          changed=$(ct list-changed --target-branch ${{ github.base_ref }})
           if [[ -n "$changed" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
@@ -65,7 +65,7 @@ jobs:
       - name: Run chart-testing (lint)
         run: |
           ct lint --debug \
-            --target-branch main
+            --target-branch ${{ github.base_ref }}
 
     outputs:
       changed: ${{ steps.list-changed.outputs.changed }}
@@ -150,7 +150,7 @@ jobs:
       - name: Run chart-testing (install)
         run: |
           ct install --debug \
-            --target-branch main \
+            --target-branch ${{ github.base_ref }} \
             --exclude-deprecated \
             ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=.github/tests/$VALUES/values.yaml"') || '' }}
         env:
