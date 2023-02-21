@@ -9,4 +9,4 @@ spiffe-oidc-discovery-provider:
       - oidc-discovery.example.org
 
     acme:
-      tosAccepted: true
+      tosAccepted: false
