@@ -71,6 +71,6 @@ waitForIt:
 
 # workloadAttestors determine a workload's properties and then generate a set of selectors associated with it.
 workloadAttestors:
-  # unix is a workload attestor which generates unix-based selectors like 'uid' and 'gid'.
+  # -- unix is a workload attestor which generates unix-based selectors like 'uid' and 'gid'.
   unix:
     enabled: false
