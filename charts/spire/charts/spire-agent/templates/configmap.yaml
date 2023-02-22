@@ -36,7 +36,7 @@ data:
         }
       }
 
-      {{- if .Values.workloadAttesters.unix.enabled }}
+      {{- if .Values.workloadAttestors.unix.enabled }}
       WorkloadAttestor "unix" {
           plugin_data {
           }
