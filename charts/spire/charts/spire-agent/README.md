@@ -35,6 +35,6 @@ A Helm chart to install the SPIRE agent.
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` |  |
 | waitForIt.image.version | string | `"latest-20230113"` |  |
 | waitForIt.resources | object | `{}` |  |
-| workloadAttestors.unix | object | `{"enabled":false}` | unix is a workload attestor which generates unix-based selectors like 'uid' and 'gid'. |
+| workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
 
 ----------------------------------------------
