@@ -35,5 +35,6 @@ A Helm chart to install the SPIRE agent.
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` |  |
 | waitForIt.image.version | string | `"latest-20230113"` |  |
 | waitForIt.resources | object | `{}` |  |
+| workloadAttestors.unix.enabled | bool | `false` |  |
 
 ----------------------------------------------
