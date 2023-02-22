@@ -65,7 +65,7 @@ jobs:
 
       - name: Run chart-testing (lint)
         run: |
-          ct lint --debug ${{ github.base_ref != 'main' && '--check-version-increment=false' || '' }} \
+          ct lint --debug ${{ github.base_ref != 'release' && '--check-version-increment=false' || '' }} \
             --target-branch ${{ github.base_ref }}
 
     outputs:
