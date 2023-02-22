@@ -64,6 +64,7 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
+| telemetry.prometheus.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | trustDomain | string | `"example.org"` |  |
