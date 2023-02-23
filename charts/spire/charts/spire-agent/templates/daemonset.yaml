@@ -60,6 +60,13 @@ spec:
               readOnly: false
             - name: spire-token
               mountPath: /var/run/secrets/tokens
+          ports:
+            - containerPort: {{ .Values.healthChecks.port }}
+              name: health
+            {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+            - containerPort: {{ .Values.telemetry.prometheus.port }}
+              name: prom
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /live

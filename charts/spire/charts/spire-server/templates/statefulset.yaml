@@ -47,6 +47,10 @@ spec:
               protocol: TCP
             - containerPort: 8080
               name: healthz
+            {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+            - containerPort: 9988
+              name: prom
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /live
