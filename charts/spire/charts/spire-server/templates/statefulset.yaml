@@ -32,8 +32,8 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if .Values.extraInit.enabled }}
       initContainers:
-        - name: extrainit
-          image: {{ .Values.extraInit.registry }}/{{ .Values.extraInit.repository }}:{{ .Values.extraInit.version }}
+        - name: extra-init
+          image: {{ template "spire-server.extra-image" (dict "image" .Values.extraInit.image) }}
           imagePullPolicy: {{ .Values.extraInit.pullPolicy }}
           command:
             {{ .Values.extraInit.command | toYaml | nindent 12 }}

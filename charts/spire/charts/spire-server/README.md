@@ -42,6 +42,13 @@ A Helm chart to install the SPIRE server.
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
 | dataStorage.storageClass | string | `nil` |  |
+| extraInit.args | list | `[]` |  |
+| extraInit.command | list | `[]` |  |
+| extraInit.enabled | bool | `false` |  |
+| extraInit.image.pullPolicy | string | `"IfNotPresent"` |  |
+| extraInit.image.registry | string | `"docker.io"` |  |
+| extraInit.image.repository | string | `"busybox"` |  |
+| extraInit.image.version | string | `"latest"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -51,6 +58,7 @@ A Helm chart to install the SPIRE server.
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
+| nodeAttestors.extra | object | `{}` |  |
 | nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |

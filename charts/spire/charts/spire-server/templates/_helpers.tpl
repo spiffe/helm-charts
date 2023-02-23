@@ -73,6 +73,15 @@ Create the name of the service account to use
 {{- end -}}
 {{- end }}
 
+{{- define "spire-server.extra-image" -}}
+{{- if eq (substr 0 7 .image.version) "sha256:" -}}
+{{- printf "%s/%s@%s" .image.registry .image.repository .image.version -}}
+{{- else if .image.version -}}
+{{- printf "%s/%s:%s" .image.registry .image.repository .image.version -}}
+{{- else -}}
+{{- printf "%s/%s" .image.registry .image.repository -}}
+{{- end -}}
+{{- end }}
 
 {{- define "spire-server.upstream-ca-secret" -}}
 {{- $root := . }}
