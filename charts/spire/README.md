@@ -70,6 +70,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
+| spire-server.telemetry.prometheus.enabled | bool | `true` |  |
 | spire-server.trustDomain | string | `"example.org"` |  |
 
 ----------------------------------------------

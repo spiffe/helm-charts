@@ -1,7 +1,7 @@
 #global:
 #  telemetry:
 #    prometheus:
-#      enabled: false|true
+#      enabled: true
 
 nameOverride: ""
 fullnameOverride: ""
