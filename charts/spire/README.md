@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.4](https://img.shields.io/badge/AppVersion-1.5.4-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.5](https://img.shields.io/badge/AppVersion-1.5.5-informational?style=flat-square)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
 
@@ -68,6 +68,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.trustDomain | string | `"example.org"` |  |
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.clusterName | string | `"example-cluster"` |  |
+| spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
 | spire-server.trustDomain | string | `"example.org"` |  |
 

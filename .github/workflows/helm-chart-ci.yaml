@@ -7,6 +7,7 @@ on:
       - 'charts/**'
       - '.github/workflows/helm-chart-ci.yaml'
       - '.github/kind/conf/kind-config.yaml'
+      - '.github/tests/**/*.yaml'
       - 'helm-docs.sh'
 
 concurrency:
@@ -14,8 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  HELM_VERSION: v3.10.2
-  PYTHON_VERSION: 3.11.1
+  HELM_VERSION: v3.11.1
+  PYTHON_VERSION: 3.11.2
   CHART_TESTING_VERSION: v3.7.1
 
 jobs:
@@ -69,10 +70,34 @@ jobs:
     outputs:
       changed: ${{ steps.list-changed.outputs.changed }}
 
+  build-matrix:
+    name: Build matrix
+    runs-on: ubuntu-22.04
+
+    needs: [lint-chart]
+
+    if: needs.lint-chart.outputs.changed == 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.2.0
+
+      - id: set-matrix
+        name: Collect all tests
+        run: |
+          tests="$(echo -e "default\n$(find .github/tests -maxdepth 1 -type d | grep -Ev 'tests$' | xargs -I % basename % | sort | uniq)")"
+          tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
+          echo "tests=$tests_json" >> $GITHUB_OUTPUT
+
+    outputs:
+      tests: ${{ steps.set-matrix.outputs.tests }}
+
   test:
     runs-on: ubuntu-22.04
+
     needs:
       - lint-chart
+      - build-matrix
 
     if: needs.lint-chart.outputs.changed == 'true'
 
@@ -89,6 +114,8 @@ jobs:
           - v1.23.13
           - v1.22.15
           - v1.21.14
+        values:
+          - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
     steps:
       - name: Checkout
@@ -124,4 +151,7 @@ jobs:
         run: |
           ct install --debug \
             --target-branch main \
-            --exclude-deprecated
+            --exclude-deprecated \
+            ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=.github/tests/$VALUES/values.yaml"') || '' }}
+        env:
+          VALUES: ${{ matrix.values }}

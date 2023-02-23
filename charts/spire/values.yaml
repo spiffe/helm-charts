@@ -9,6 +9,9 @@ spire-server:
   clusterName: &clusterName "example-cluster"
   trustDomain: &trustDomain "example.org"
 
+  controllerManager:
+    enabled: true
+
 spire-agent:
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap
