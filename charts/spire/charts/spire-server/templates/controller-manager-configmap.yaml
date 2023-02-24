@@ -13,8 +13,10 @@ data:
       namespace: {{ .Release.Namespace }}
       labels:
         {{- include "spire-server.labels" . | nindent 8 }}
+    {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
     metrics:
-      bindAddress: 127.0.0.1:8082
+      bindAddress: 0.0.0.0:8082
+    {{- end }}
     healthProbe:
       bindAddress: 127.0.0.1:8083
     leaderElection:
