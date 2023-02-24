@@ -1,3 +1,4 @@
+{{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
 apiVersion: apps/v1
 kind: StatefulSet
@@ -15,10 +16,11 @@ spec:
       {{- include "spire-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        checksum/config: {{ $configSum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "spire-server.selectorLabels" . | nindent 8 }}
     spec:
@@ -45,6 +47,10 @@ spec:
               protocol: TCP
             - containerPort: 8080
               name: healthz
+            {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+            - containerPort: 9988
+              name: prom
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /live
@@ -92,6 +98,10 @@ spec:
               protocol: TCP
             - containerPort: 8008
               name: healthz
+            {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+            - containerPort: 8082
+              name: prom2
+            {{- end }}
           # TODO: implement probes
           # livenessProbe:
           #   httpGet:

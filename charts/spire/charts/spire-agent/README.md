@@ -30,6 +30,8 @@ A Helm chart to install the SPIRE agent.
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| telemetry.prometheus.enabled | bool | `false` |  |
+| telemetry.prometheus.port | int | `9988` |  |
 | trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
 | waitForIt.image.registry | string | `"cgr.dev"` |  |

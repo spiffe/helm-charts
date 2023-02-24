@@ -87,6 +87,20 @@ spec:
               readOnly: true
           resources:
             {{- toYaml .Values.insecureScheme.nginx.resources | nindent 12 }}
+        {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+        - name: nginx-exporter
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" .Values.telemetry.prometheus.nginxExporter }}
+          imagePullPolicy: {{ .Values.telemetry.prometheus.nginxExporter.image.pullPolicy }}
+          args:
+          - -nginx.scrape-uri=http://127.0.0.1/stub_status
+          resources:
+            {{- toYaml .Values.telemetry.prometheus.nginxExporter.resources | nindent 12 }}
+          ports:
+            - containerPort: 9113
+              name: prom
+        {{- end }}
         {{- end }}
       volumes:
         - name: spiffe-workload-api
