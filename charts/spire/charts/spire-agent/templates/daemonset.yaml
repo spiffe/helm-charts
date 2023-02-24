@@ -48,6 +48,10 @@ spec:
           ports:
             - containerPort: {{ .Values.healthChecks.port }}
               name: healthz
+            {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+            - containerPort: {{ .Values.telemetry.prometheus.port }}
+              name: prom
+            {{- end }}
           volumeMounts:
             - name: spire-config
               mountPath: /run/spire/config
@@ -60,13 +64,6 @@ spec:
               readOnly: false
             - name: spire-token
               mountPath: /var/run/secrets/tokens
-          ports:
-            - containerPort: {{ .Values.healthChecks.port }}
-              name: health
-            {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
-            - containerPort: {{ .Values.telemetry.prometheus.port }}
-              name: prom
-            {{- end }}
           livenessProbe:
             httpGet:
               path: /live
