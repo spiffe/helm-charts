@@ -1,3 +1,4 @@
+# You can enable features that affect all services here.
 # global:
 #   telemetry:
 #     prometheus:
