@@ -47,7 +47,7 @@ data:
     health_checks {
       listener_enabled = true
       bind_address = "0.0.0.0"
-      bind_port = "8080"
+      bind_port = {{ .Values.healthChecks.port | quote }}
       live_path = "/live"
       ready_path = "/ready"
     }
