@@ -3,6 +3,7 @@ name: Helm Chart CI
 on:
   workflow_dispatch:
   pull_request:
+    types: [synchronize, opened, reopened, edited]
     paths:
       - 'charts/**'
       - '.github/workflows/helm-chart-ci.yaml'
@@ -57,15 +58,15 @@ jobs:
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --target-branch main)
+          changed=$(ct list-changed --target-branch ${{ github.base_ref }})
           if [[ -n "$changed" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Run chart-testing (lint)
         run: |
-          ct lint --debug \
-            --target-branch main
+          ct lint --debug ${{ github.base_ref != 'release' && '--check-version-increment=false' || '' }} \
+            --target-branch ${{ github.base_ref }}
 
     outputs:
       changed: ${{ steps.list-changed.outputs.changed }}
@@ -150,7 +151,7 @@ jobs:
       - name: Run chart-testing (install)
         run: |
           ct install --debug \
-            --target-branch main \
+            --target-branch ${{ github.base_ref }} \
             --exclude-deprecated \
             ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=.github/tests/$VALUES/values.yaml"') || '' }}
         env:
