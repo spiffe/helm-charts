@@ -27,6 +27,8 @@ csi-driver-main:
 # Useful when you are setting up a Federated spire
 csi-driver-upstream:
   enabled: false
+  healthChecks:
+    port: 9810
   # @ignored
   pluginName: upstream.csi.spiffe.io
   # @ignored
