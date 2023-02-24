@@ -67,6 +67,9 @@ nodeDriverRegistrar:
     #   cpu: 100m
     #   memory: 64Mi
 
+healthChecks:
+    port: 9809
+
 # -- Override where the driver looks for the socket. Only used if socketMacroName is unchanged.
 agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
 
