@@ -19,9 +19,18 @@ spire-agent:
   clusterName: *clusterName
   trustDomain: *trustDomain
 
-spiffe-csi-driver:
+csi-driver-main:
+  enabled: true
   # @ignored
-  socketMacroName: "spire.agent-socket-path"
+  socketMacroName: "spire.agent-socket-path.main"
+
+# Useful when you are setting up a Federated spire
+csi-driver-upstream:
+  enabled: false
+  # @ignored
+  pluginName: upstream.csi.spiffe.io
+  # @ignored
+  socketMacroName: "spire.agent-socket-path.upstream"
 
 spiffe-oidc-discovery-provider:
   enabled: false
