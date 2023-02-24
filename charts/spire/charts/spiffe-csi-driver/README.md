@@ -12,6 +12,7 @@ A Helm chart to install the SPIFFE CSI driver.
 |-----|------|---------|-------------|
 | agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | Override where the driver looks for the socket. Only used if socketMacroName is unchanged. |
 | fullnameOverride | string | `""` |  |
+| healthChecks.port | int | `9809` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
