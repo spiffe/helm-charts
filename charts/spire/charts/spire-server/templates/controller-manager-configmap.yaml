@@ -15,8 +15,8 @@ data:
         {{- include "spire-server.labels" . | nindent 8 }}
     metrics:
       bindAddress: 0.0.0.0:8082
-    healthProbe:
-      bindAddress: 127.0.0.1:8083
+    health:
+      healthProbeBindAddress: 0.0.0.0:8083
     leaderElection:
       leaderElect: true
       resourceName: {{ .Release.Name | sha256sum | trunc 8 }}.spiffe.io
