@@ -1,3 +1,4 @@
+# -- Set the csi driver name deployed to Kubernetes.
 pluginName: csi.spiffe.io
 
 image:
@@ -65,3 +66,9 @@ nodeDriverRegistrar:
     # limits:
     #   cpu: 100m
     #   memory: 64Mi
+
+# -- Override where the driver looks for the socket. Only used if socketMacroName is unchanged.
+agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+
+# @ignored
+socketMacroName: spiffe-csi-driver.agent-socket-path-standalone

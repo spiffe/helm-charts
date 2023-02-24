@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.1](https://img.shields.io/badge/AppVersion-0.2.1-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.2](https://img.shields.io/badge/AppVersion-0.2.2-informational?style=flat-square)
 
 A Helm chart to install the SPIFFE CSI driver.
 
@@ -10,6 +10,7 @@ A Helm chart to install the SPIFFE CSI driver.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | Override where the driver looks for the socket. Only used if socketMacroName is unchanged. |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -24,6 +25,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
 | nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | resources | object | `{}` |  |
