@@ -38,7 +38,7 @@ spec:
             - /run/spire/oidc/config/oidc-discovery-provider.conf
           ports:
             - containerPort: 8008
-              name: health
+              name: healthz
           {{- if not .Values.insecureScheme.enabled }}
             - containerPort: 443
               name: https
@@ -57,13 +57,13 @@ spec:
           readinessProbe:
             httpGet:
               path: /ready
-              port: health
+              port: healthz
             initialDelaySeconds: 5
             periodSeconds: 5
           livenessProbe:
             httpGet:
               path: /live
-              port: health
+              port: healthz
             initialDelaySeconds: 5
             periodSeconds: 5
           resources:

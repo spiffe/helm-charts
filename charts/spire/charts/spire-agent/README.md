@@ -13,6 +13,7 @@ A Helm chart to install the SPIRE agent.
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | fullnameOverride | string | `""` |  |
+| healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-agent"` |  |

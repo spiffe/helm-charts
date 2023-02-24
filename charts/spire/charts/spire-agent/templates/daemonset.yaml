@@ -43,6 +43,9 @@ spec:
           image: {{ template "spire-agent.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-config", "/run/spire/config/agent.conf"]
+          ports:
+            - containerPort: {{ .Values.healthChecks.port }}
+              name: healthz
           volumeMounts:
             - name: spire-config
               mountPath: /run/spire/config
@@ -58,13 +61,13 @@ spec:
           livenessProbe:
             httpGet:
               path: /live
-              port: 8080
+              port: healthz
             initialDelaySeconds: 15
             periodSeconds: 60
           readinessProbe:
             httpGet:
               path: /ready
-              port: 8080
+              port: healthz
             initialDelaySeconds: 15
             periodSeconds: 60
           resources:

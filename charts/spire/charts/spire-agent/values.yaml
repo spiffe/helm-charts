@@ -61,6 +61,10 @@ bundleConfigMap: spire-bundle
 server:
   port: 8081
 
+healthChecks:
+  # -- override the host port used for health checking
+  port: 9980
+
 waitForIt:
   image:
     registry: cgr.dev
