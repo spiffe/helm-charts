@@ -1,3 +1,5 @@
+pluginName: csi.spiffe.io
+
 image:
   registry: ghcr.io
   repository: spiffe/spiffe-csi-driver
