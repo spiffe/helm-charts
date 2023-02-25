@@ -30,7 +30,7 @@ data:
     {{- end }}
 
     workload_api {
-      socket_path = "/spiffe-workload-api/{{ include "spire.agent-socket-path" . | splitList "/" | last }}"
+      socket_path = "/spiffe-workload-api/{{ include "spire.agent-socket-path.main" . | splitList "/" | last }}"
       trust_domain = "{{ .Values.trustDomain }}"
     }
 

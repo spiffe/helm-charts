@@ -20,17 +20,24 @@ dependencies:
     repository: file://./charts/spire-server
     version: 0.1.0
   - name: spire-agent
+    alias: agent-main
+    condition: agent-main.enabled
+    repository: file://./charts/spire-agent
+    version: 0.1.0
+  - name: spire-agent
+    alias: agent-upstream
+    condition: agent-upsream.enabled
     repository: file://./charts/spire-agent
     version: 0.1.0
   - name: spiffe-csi-driver
     alias: csi-driver-main
     condition: csi-driver-main.enabled
-    repository: file://../spiffe-csi-driver
+    repository: file://./charts/spiffe-csi-driver
     version: 0.1.0
   - name: spiffe-csi-driver
     alias: csi-driver-upstream
     condition: csi-driver-upstream.enabled
-    repository: file://../spiffe-csi-driver
+    repository: file://./charts/spiffe-csi-driver
     version: 0.1.0
   - name: spiffe-oidc-discovery-provider
     condition: spiffe-oidc-discovery-provider.enabled

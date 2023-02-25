@@ -18,15 +18,31 @@ spire-server:
   controllerManager:
     enabled: true
 
-spire-agent:
-  nameOverride: agent
+agent-main:
+  #FIXME  nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
   clusterName: *clusterName
   trustDomain: *trustDomain
 
   # @ignored
-  socketMacroName: "spire.agent-socket-path"
+  socketMacroName: "spire.agent-socket-path.main"
+
+agent-upstream:
+  #FIXME  nameOverride: agent
+  bundleConfigMap: spire-upstream-bundle
+
+  clusterName: *clusterName
+  trustDomain: *trustDomain
+
+  # @ignored
+  socketMacroName: "spire.agent-socket-path.upstream"
+
+  healthChecks:
+    port: 9981
+  telemetry:
+    prometheus:
+      port: 9989
 
 csi-driver-main:
   enabled: true
