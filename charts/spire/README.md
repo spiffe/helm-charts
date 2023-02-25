@@ -48,16 +48,25 @@ Kubernetes: `>=1.21.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../spiffe-csi-driver | csi-driver-main(spiffe-csi-driver) | 0.1.0 |
-| file://../spiffe-csi-driver | csi-driver-upstream(spiffe-csi-driver) | 0.1.0 |
+| file://./charts/spiffe-csi-driver | csi-driver-main(spiffe-csi-driver) | 0.1.0 |
+| file://./charts/spiffe-csi-driver | csi-driver-upstream(spiffe-csi-driver) | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
-| file://./charts/spire-agent | spire-agent | 0.1.0 |
+| file://./charts/spire-agent | agent-main(spire-agent) | 0.1.0 |
+| file://./charts/spire-agent | agent-upstream(spire-agent) | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| agent-main.bundleConfigMap | string | `"spire-bundle"` |  |
+| agent-main.clusterName | string | `"example-cluster"` |  |
+| agent-main.trustDomain | string | `"example.org"` |  |
+| agent-upstream.bundleConfigMap | string | `"spire-upstream-bundle"` |  |
+| agent-upstream.clusterName | string | `"example-cluster"` |  |
+| agent-upstream.healthChecks.port | int | `9981` |  |
+| agent-upstream.telemetry.prometheus.port | int | `9989` |  |
+| agent-upstream.trustDomain | string | `"example.org"` |  |
 | csi-driver-main.enabled | bool | `true` |  |
 | csi-driver-upstream.enabled | bool | `false` |  |
 | csi-driver-upstream.healthChecks.port | int | `9810` |  |
@@ -65,10 +74,6 @@ Kubernetes: `>=1.21.0-0`
 | nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
-| spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
-| spire-agent.clusterName | string | `"example-cluster"` |  |
-| spire-agent.nameOverride | string | `"agent"` |  |
-| spire-agent.trustDomain | string | `"example.org"` |  |
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.controllerManager.enabled | bool | `true` |  |
