@@ -1,0 +1,8 @@
+spiffe-oidc-discovery-provider:
+  enabled: true
+  insecureScheme:
+    enabled: true
+
+csi-driver-upstream:
+  enabled: true
+

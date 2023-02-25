@@ -1,0 +1,6 @@
+agent-main:
+  enabled: false
+
+csi-driver-main:
+  enabled: false
+
