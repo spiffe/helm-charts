@@ -30,10 +30,21 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{/* # FIXME remove once everything migrated to main and upstream */}}
 {{- define "spire.agent-socket-path" -}}
 {{- print "/run/spire/agent-sockets/spire-agent.sock" }}
 {{- end }}
 
 {{- define "spire.server-socket-path" -}}
 {{- print "/run/spire/server-sockets/spire-server.sock" }}
+{{- end }}
+
+{{/* #FIXME make the dir structure better here */}}
+{{- define "spire.agent-socket-path.main" -}}
+{{- print "/run/spire/agent-sockets/spire-agent.sock" }}
+{{- end }}
+
+{{/* #FIXME make the dir structure better here */}}
+{{- define "spire.agent-socket-path.upstream" -}}
+{{- print "/run/spire/agent-sockets-upstream/spire-agent.sock" }}
 {{- end }}
