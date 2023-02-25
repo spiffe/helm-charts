@@ -4,89 +4,68 @@ metadata:
   name: {{ include "spire-server.fullname" . }}
   namespace: {{ .Release.Namespace }}
 data:
-  server.conf: |
-    server {
-      bind_address = "0.0.0.0"
-      bind_port = "8081"
-      socket_path = {{ .Values.socketPath | quote }}
-      trust_domain = {{ .Values.trustDomain | quote }}
-      data_dir = "/run/spire/data"
-      log_level = "{{ .Values.logLevel }}"
-      # AWS requires the use of RSA.  EC cryptography is not supported
-      ca_key_type = "rsa-2048"
 
-      jwt_issuer = "{{ .Values.jwtIssuer }}"
-
-      default_x509_svid_ttl = "1h"
-      default_jwt_svid_ttl = "1h"
-      ca_subject = {
-        {{- with .Values.ca_subject }}
-        country = [{{ .country | quote }}],
-        organization = [{{ .organization | quote }}],
-        common_name = {{ .common_name | quote }},
-        {{- end }}
-      }
-    }
-
-    plugins {
-      DataStore "sql" {
-        plugin_data {
-          database_type = "sqlite3"
-          connection_string = "/run/spire/data/datastore.sqlite3"
-        }
-      }
-
-      NodeAttestor "k8s_psat" {
-        plugin_data {
-          clusters = {
-            {{ .Values.clusterName | quote }} = {
-              service_account_allow_list = ["{{ .Release.Namespace }}:{{ .Release.Name }}-agent"]
-            }
-          }
-        }
-      }
-
-      KeyManager "disk" {
-        plugin_data {
-          keys_path = "/run/spire/data/keys.json"
-        }
-      }
-
-      Notifier "k8sbundle" {
-        plugin_data {
-          namespace = "{{ .Release.Namespace }}"
-          config_map = {{ .Values.bundleConfigMap | quote }}
-        }
-      }
-
-      {{- with .Values.upstreamAuthority.disk }}
-      {{- if eq (.enabled | toString) "true" }}
-      UpstreamAuthority "disk" {
-        plugin_data {
-          cert_file_path = "/run/spire/upstream_ca/tls.crt"
-          key_file_path = "/run/spire/upstream_ca/tls.key"
-          {{- if ne .secret.data.bundle "" }}
-          bundle_file_path = "/run/spire/upstream_ca/bundle.crt"
-          {{- end }}
-        }
-      }
+{{- define "spire-server.config-plugins-template" }}
+DataStore:
+  sql:
+    plugin_data:
+    - database_type: sqlite3
+      connection_string: /run/spire/data/datastore.sqlite3
+NodeAttestor:
+  k8s_psat:
+    plugin_data:
+    - clusters:
+      - {{ .Values.clusterName | quote }}:
+        - "service_account_allow_list":
+          - "{{ .Release.Namespace }}:{{ .Release.Name }}-agent"
+KeyManager:
+  disk:
+    plugin_data:
+    - keys_path: /run/spire/data/keys.json
+Notifier:
+  k8sbundle:
+    plugin_data:
+      namespace: "{{ .Release.Namespace }}"
+      config_map: {{ .Values.bundleConfigMap | quote }}
+{{- with .Values.upstreamAuthority.disk }}
+{{- if eq (.enabled | toString) "true" }}
+UpstreamAuthority:
+  disk:
+    plugin_data:
+    - cert_file_path": "/run/spire/upstream_ca/tls.crt"
+      key_file_path": "/run/spire/upstream_ca/tls.key"
+      {{- if ne .secret.data.bundle "" }}
+      bundle_file_path: "/run/spire/upstream_ca/bundle.crt"
       {{- end }}
-      {{- end }}
-    }
+{{- end }}
+{{- end }}
+{{- end }}
 
-    health_checks {
-      listener_enabled = true
-      bind_address = "0.0.0.0"
-      bind_port = "8080"
-      live_path = "/live"
-      ready_path = "/ready"
-    }
-
-    {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
-    telemetry {
-      Prometheus {
-        host = "0.0.0.0"
-        port = 9988
-      }
-    }
+{{- define "spire-server.config-main-template" }}
+{{- $pluginsStruct := tpl (include "spire-server.config-plugins-template" . ) . | fromYaml }}
+{{- $pluginsMerged := $pluginsStruct | mustMerge .Values.plugins }}
+server:
+  {{- .Values.config | toPrettyJson | nindent 2}}
+plugins:
+  {{- range $type, $v := $pluginsMerged }}
+  {{ $type }}:
+    {{- range $name, $v2 := $v }}
+    - {{ $name }}: {{ $v2 | toYaml | nindent 8 }}
     {{- end }}
+  {{- end }}
+health_checks:
+  listener_enabled: true
+  bind_address: 0.0.0.0
+  bind_port: "8080"
+  live_path: /live
+  ready_path: /ready
+{{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+telemetry:
+- Prometheus:
+  - host: 0.0.0.0
+    port: 9988
+{{- end }}
+{{- end }}
+
+  server.conf: |
+    {{- include "spire-server.config-main-template" . | fromYaml | toPrettyJson | nindent 4}}

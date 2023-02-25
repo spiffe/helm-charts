@@ -79,19 +79,28 @@ dataStorage:
   accessMode: ReadWriteOnce
   storageClass: null
 
-logLevel: info
-socketPath: /run/spire/server-sockets/spire-server.sock
-jwtIssuer: oidc-discovery.example.org
-
 clusterName: example-cluster
-trustDomain: example.org
 
 bundleConfigMap: spire-server
 
-ca_subject:
-  country: NL
-  organization: Example
-  common_name: example.org
+config:
+  bind_address: "0.0.0.0"
+  bind_port: "8081"
+  socket_path: /run/spire/server-sockets/spire-server.sock
+  trust_domain: example.org
+  data_dir: /run/spire/data
+  log_level: info
+  ca_key_type: rsa-2048
+
+  jwt_issuer: oidc-discovery.example.org
+
+  default_x509_svid_ttl: 1h
+  default_jwt_svid_ttl: 1h
+
+  ca_subject:
+  - country: [NL]
+    organization: [Example]
+    common_name: example.org
 
 upstreamAuthority:
   disk:
@@ -163,3 +172,10 @@ controllerManager:
 telemetry:
   prometheus:
     enabled: false
+
+plugins: {}
+# For example
+# NodeAttestor:
+#   join_token:
+#      plugin_data:
+#      - {}
