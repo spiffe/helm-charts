@@ -168,3 +168,10 @@ controllerManager:
       #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+
+plugins: {}
+# For example
+# NodeAttestor:
+#   join_token:
+#      plugin_data:
+#      - {}
