@@ -10,6 +10,7 @@ A Helm chart to install the SPIRE agent.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | Override where the agent looks for the socket. Only used if socketMacroName is unchanged. |
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | fullnameOverride | string | `""` |  |

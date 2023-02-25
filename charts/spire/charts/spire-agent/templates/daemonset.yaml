@@ -60,7 +60,7 @@ spec:
               mountPath: /run/spire/bundle
               readOnly: true
             - name: spire-agent-socket-dir
-              mountPath: {{ include "spire.agent-socket-path" . | dir }}
+              mountPath: {{ include "spire-agent.agent-socket-path" . | dir }}
               readOnly: false
             - name: spire-token
               mountPath: /var/run/secrets/tokens
@@ -98,5 +98,5 @@ spec:
                 audience: spire-server
         - name: spire-agent-socket-dir
           hostPath:
-            path: {{ include "spire.agent-socket-path" . | dir }}
+            path: {{ include "spire-agent.agent-socket-path" . | dir }}
             type: DirectoryOrCreate

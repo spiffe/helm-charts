@@ -25,6 +25,9 @@ spire-agent:
   clusterName: *clusterName
   trustDomain: *trustDomain
 
+  # @ignored
+  socketMacroName: "spire.agent-socket-path"
+
 spiffe-csi-driver:
   # @ignored
   socketMacroName: "spire.agent-socket-path"
