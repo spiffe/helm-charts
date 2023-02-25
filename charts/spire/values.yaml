@@ -25,7 +25,9 @@ spire-agent:
   clusterName: *clusterName
   trustDomain: *trustDomain
 
-spiffe-csi-driver: {}
+spiffe-csi-driver:
+  # @ignored
+  socketMacroName: "spire.agent-socket-path"
 
 spiffe-oidc-discovery-provider:
   enabled: false

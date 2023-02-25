@@ -84,3 +84,11 @@ Create the name of the service account to use
 {{- printf "%s/%s" .image.registry .image.repository -}}
 {{- end -}}
 {{- end }}
+
+{{- define "spiffe-csi-driver.agent-socket-path" -}}
+{{ include .Values.socketMacroName . }}
+{{- end }}
+
+{{- define "spiffe-csi-driver.agent-socket-path-standalone" -}}
+{{- print .Values.agentSocketPath }}
+{{- end }}

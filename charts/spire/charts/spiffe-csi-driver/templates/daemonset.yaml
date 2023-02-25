@@ -32,6 +32,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: [
             "-workload-api-socket-dir", "/spire-agent-socket",
+            "-plugin-name", "{{ .Values.pluginName }}",
             "-csi-socket-path", "/spiffe-csi/csi.sock",
           ]
           env:
@@ -71,8 +72,8 @@ spec:
           imagePullPolicy: {{ .Values.nodeDriverRegistrar.image.pullPolicy }}
           args: [
             "-csi-address", "/spiffe-csi/csi.sock",
-            "-kubelet-registration-path", "/var/lib/kubelet/plugins/csi.spiffe.io/csi.sock",
-            "-health-port", "9809"
+            "-kubelet-registration-path", "/var/lib/kubelet/plugins/{{ .Values.pluginName }}/csi.sock",
+            "-health-port", "{{ .Values.healthChecks.port }}"
           ]
           volumeMounts:
             # The registrar needs access to the SPIFFE CSI driver socket
@@ -83,7 +84,7 @@ spec:
             - name: kubelet-plugin-registration-dir
               mountPath: /registration
           ports:
-            - containerPort: 9809
+            - containerPort: {{ .Values.healthChecks.port }}
               name: healthz
           livenessProbe:
             httpGet:
@@ -96,12 +97,12 @@ spec:
       volumes:
         - name: spire-agent-socket-dir
           hostPath:
-            path: {{ include "spire.agent-socket-path" . | dir }}
+            path: {{ include "spiffe-csi-driver.agent-socket-path" . | dir }}
             type: DirectoryOrCreate
         # This volume is where the socket for kubelet->driver communication lives
         - name: spiffe-csi-socket-dir
           hostPath:
-            path: /var/lib/kubelet/plugins/csi.spiffe.io
+            path: /var/lib/kubelet/plugins/{{ .Values.pluginName }}
             type: DirectoryOrCreate
         # This volume is where the SPIFFE CSI driver mounts volumes
         - name: mountpoint-dir
