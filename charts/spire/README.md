@@ -60,6 +60,7 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | csi-driver-main.enabled | bool | `true` |  |
 | csi-driver-upstream.enabled | bool | `false` |  |
+| csi-driver-upstream.healthChecks.port | int | `9810` |  |
 | fullnameOverride | string | `""` |  |
 | nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
