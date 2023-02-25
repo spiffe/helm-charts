@@ -86,7 +86,7 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spiffe-csi-driver.agent-socket-path" -}}
-{{ include .Values.socketMacroName }}
+{{ include .Values.socketMacroName . }}
 {{- end }}
 
 {{- define "spiffe-csi-driver.agent-socket-path-standalone" -}}
