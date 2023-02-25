@@ -16,10 +16,20 @@ A Helm chart to install the SPIRE server.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | bundleConfigMap | string | `"spire-server"` |  |
-| ca_subject.common_name | string | `"example.org"` |  |
-| ca_subject.country | string | `"NL"` |  |
-| ca_subject.organization | string | `"Example"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| config.bind_address | string | `"0.0.0.0"` |  |
+| config.bind_port | string | `"8081"` |  |
+| config.ca_key_type | string | `"rsa-2048"` |  |
+| config.ca_subject[0].common_name | string | `"example.org"` |  |
+| config.ca_subject[0].country[0] | string | `"NL"` |  |
+| config.ca_subject[0].organization[0] | string | `"Example"` |  |
+| config.data_dir | string | `"/run/spire/data"` |  |
+| config.default_jwt_svid_ttl | string | `"1h"` |  |
+| config.default_x509_svid_ttl | string | `"1h"` |  |
+| config.jwt_issuer | string | `"oidc-discovery.example.org"` |  |
+| config.log_level | string | `"info"` |  |
+| config.socket_path | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
+| config.trust_domain | string | `"example.org"` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
@@ -48,8 +58,6 @@ A Helm chart to install the SPIRE server.
 | image.repository | string | `"spiffe/spire-server"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
-| jwtIssuer | string | `"oidc-discovery.example.org"` |  |
-| logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | podAnnotations | object | `{}` |  |
@@ -63,10 +71,8 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| socketPath | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
-| trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.disk.enabled | bool | `false` |  |
 | upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |

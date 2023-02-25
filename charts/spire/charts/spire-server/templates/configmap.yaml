@@ -6,27 +6,7 @@ metadata:
 data:
   server.conf: |
     {
-      "server": {
-          "bind_address": "0.0.0.0",
-          "bind_port": "8081",
-          "socket_path": {{ .Values.socketPath | quote }},
-          "trust_domain" : {{ .Values.trustDomain | quote }},
-          "data_dir": "/run/spire/data",
-          "log_level": "{{ .Values.logLevel }}",
-          "ca_key_type": "rsa-2048",
-
-          "jwt_issuer": "{{ .Values.jwtIssuer }}",
-
-          "default_x509_svid_ttl": "1h",
-          "default_jwt_svid_ttl": "1h",
-          "ca_subject": [{
-            {{- with .Values.ca_subject }}
-            "country": [{{ .country | quote }}],
-            "organization": [{{ .organization | quote }}],
-            "common_name": {{ .common_name | quote }}
-            {{- end }}
-          }]
-      },
+      "server": {{ .Values.config | toPrettyJson | nindent 8}},
 
       "plugins": [{
           "DataStore": [{
