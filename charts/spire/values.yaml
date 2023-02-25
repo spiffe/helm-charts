@@ -19,7 +19,6 @@ spire-server:
     enabled: true
 
 agent-main:
-  #FIXME  nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
   clusterName: *clusterName
@@ -29,7 +28,6 @@ agent-main:
   socketMacroName: "spire.agent-socket-path.main"
 
 agent-upstream:
-  #FIXME  nameOverride: agent
   bundleConfigMap: spire-upstream-bundle
 
   clusterName: *clusterName
