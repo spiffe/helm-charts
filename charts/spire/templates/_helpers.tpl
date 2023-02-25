@@ -39,7 +39,7 @@ Create chart name and version as used by the chart label.
 {{- print "/run/spire/server-sockets/spire-server.sock" }}
 {{- end }}
 
-{{/* #FIXME make the dir structure better here /*}}
+{{/* #FIXME make the dir structure better here */}}
 {{- define "spire.agent-socket-path.main" -}}
 {{- print "/run/spire/agent-sockets/spire-agent.sock" }}
 {{- end }}
