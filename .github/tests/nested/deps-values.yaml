@@ -1,3 +1,7 @@
+spire-server:
+  controllerManager:
+    enabled: false
+
 agent-main:
   enabled: false
 

@@ -38,7 +38,7 @@ roleRef:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
 rules:
     # allow TokenReview requests (to verify service account tokens for PSAT
     # attestation)
@@ -59,7 +59,7 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -67,5 +67,5 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
