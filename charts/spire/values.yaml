@@ -28,6 +28,7 @@ agent-main:
   socketMacroName: "spire.agent-socket-path.main"
 
 agent-upstream:
+  enabled: false
   bundleConfigMap: spire-upstream-bundle
 
   clusterName: *clusterName
