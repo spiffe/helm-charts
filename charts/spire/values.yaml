@@ -19,6 +19,7 @@ spire-server:
     enabled: true
 
 agent-main:
+  enabled: true
   bundleConfigMap: *bundleConfigMap
 
   clusterName: *clusterName

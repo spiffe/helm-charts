@@ -61,6 +61,7 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | agent-main.bundleConfigMap | string | `"spire-bundle"` |  |
 | agent-main.clusterName | string | `"example-cluster"` |  |
+| agent-main.enabled | bool | `true` |  |
 | agent-main.trustDomain | string | `"example.org"` |  |
 | agent-upstream.bundleConfigMap | string | `"spire-upstream-bundle"` |  |
 | agent-upstream.clusterName | string | `"example-cluster"` |  |

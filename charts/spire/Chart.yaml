@@ -26,7 +26,7 @@ dependencies:
     version: 0.1.0
   - name: spire-agent
     alias: agent-upstream
-    condition: agent-upsream.enabled
+    condition: agent-upstream.enabled
     repository: file://./charts/spire-agent
     version: 0.1.0
   - name: spiffe-csi-driver
