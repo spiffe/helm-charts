@@ -19,6 +19,9 @@ agent-upstream:
   enabled: true
   server:
     address: spire-server.nested-deps
+  serviceAccount:
+    name: "spire-agent-upstream"
+
 
 csi-driver-upstream:
   enabled: true
