@@ -4,7 +4,7 @@ kubectl create namespace "${VALUES}-deps"
 helm install -n "${VALUES}-deps" spire charts/spire --wait -f $SCRIPT_DIR/deps-values.yaml
 kubectl get all -n "${VALUES}-deps"
 while true; do
-	kubectl get configmap spire-bundle -o go-template='{{ index .data "bundle.crt" }}' > bundle
+	kubectl -n "${VALUES}-deps" get configmap spire-bundle -o go-template='{{ index .data "bundle.crt" }}' > bundle
 	[ $? -eq 0 ] && break
 	sleep 1;
 done
