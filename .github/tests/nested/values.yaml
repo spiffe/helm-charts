@@ -3,6 +3,10 @@ spiffe-oidc-discovery-provider:
   insecureScheme:
     enabled: true
 
+agent-upstream:
+  enabled: true
+  server:
+    address: spire-server.nested-deps
+
 csi-driver-upstream:
   enabled: true
-

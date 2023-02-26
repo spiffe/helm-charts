@@ -163,3 +163,5 @@ controllerManager:
 telemetry:
   prometheus:
     enabled: false
+
+serviceAccountAllowed: ""

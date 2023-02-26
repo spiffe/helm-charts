@@ -40,7 +40,7 @@ data:
         plugin_data {
           clusters = {
             {{ .Values.clusterName | quote }} = {
-              service_account_allow_list = ["{{ .Release.Namespace }}:{{ .Release.Name }}-agent-main"]
+              service_account_allow_list = [{{ .Values.serviceAccountAllowed | default (printf "%s:%s-agent-main" .Release.Namespace .Release.Name) | quote}}]
             }
           }
         }
