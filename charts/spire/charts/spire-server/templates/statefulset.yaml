@@ -84,6 +84,11 @@ spec:
               mountPath: /run/spire/upstream_ca
               readOnly: false
             {{ end }}
+            {{- if eq (.Values.upstreamAuthority.spire.enabled | toString) "true" }}
+            - name: upstream-agent
+              mountPath: /run/spire/upstream_agent
+              readOnly: true
+            {{ end }}
         {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
         - name: spire-controller-manager
           securityContext:
@@ -143,13 +148,17 @@ spec:
           configMap:
             name: {{ include "spire-server.fullname" . }}
         - name: spire-server-socket
-          hostPath:
-            path: /run/spire/server-sockets
-            type: DirectoryOrCreate
+          emptyDir: {}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca
           secret:
             secretName: {{ include "spire-server.upstream-ca-secret" . }}
+        {{- end }}
+        {{- if eq (.Values.upstreamAuthority.spire.enabled | toString) "true" }}
+        - name: upstream-agent
+          csi:
+            driver: {{ .Values.upstreamAuthority.spire.upstreamDriver }}
+            readOnly: true
         {{- end }}
         {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
         - name: controller-manager-config

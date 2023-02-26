@@ -1,3 +1,15 @@
+spire-server:
+  enabled: true
+  upstreamAuthority:
+    spire:
+      enabled: true
+      server:
+        address: spire-server.nested-deps
+  controllerManager:
+    enabled: true
+    identities:
+      spiffeIDTemplate: spiffe://{{ .TrustDomain }}/k8s/example-cluster/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}
+
 spiffe-oidc-discovery-provider:
   enabled: true
   insecureScheme:

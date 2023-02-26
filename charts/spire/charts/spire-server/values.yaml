@@ -106,6 +106,12 @@ upstreamAuthority:
         certificate: ""
         key: ""
         bundle: ""
+  spire:
+    enabled: false
+    upstreamDriver: upstream.csi.spiffe.io
+    server:
+      address: ""
+      port: 8081
 
 controllerManager:
   enabled: false
