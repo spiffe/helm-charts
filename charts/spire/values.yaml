@@ -30,7 +30,7 @@ agent-main:
 
 agent-upstream:
   enabled: false
-  bundleConfigMap: spire-upstream-bundle
+  bundleConfigMap: spire-bundle-upstream
 
   clusterName: *clusterName
   trustDomain: *trustDomain

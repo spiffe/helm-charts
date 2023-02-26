@@ -63,7 +63,7 @@ Kubernetes: `>=1.21.0-0`
 | agent-main.clusterName | string | `"example-cluster"` |  |
 | agent-main.enabled | bool | `true` |  |
 | agent-main.trustDomain | string | `"example.org"` |  |
-| agent-upstream.bundleConfigMap | string | `"spire-upstream-bundle"` |  |
+| agent-upstream.bundleConfigMap | string | `"spire-bundle-upstream"` |  |
 | agent-upstream.clusterName | string | `"example-cluster"` |  |
 | agent-upstream.enabled | bool | `false` |  |
 | agent-upstream.healthChecks.port | int | `9981` |  |

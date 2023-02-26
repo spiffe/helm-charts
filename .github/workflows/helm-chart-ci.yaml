@@ -150,8 +150,8 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
+          [ "x$VALUES" != "xdefault" ] && kubectl create namespace "$VALUES"
           [ -x .github/tests/$VALUES/prep.sh ] && .github/tests/$VALUES/prep.sh
-          [ "x$VALUES" != "default" ] && kubectl create namespace "$VALUES"
           ct install --debug \
             --namespace $VALUES \
             --target-branch ${{ github.base_ref }} \
