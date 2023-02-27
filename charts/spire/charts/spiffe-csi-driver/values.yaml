@@ -63,3 +63,6 @@ nodeDriverRegistrar:
     # limits:
     #   cpu: 100m
     #   memory: 64Mi
+
+# -- Priority class assigned to daemonset pods
+priorityClassName: ""
