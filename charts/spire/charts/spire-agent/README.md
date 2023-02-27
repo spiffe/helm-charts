@@ -25,6 +25,7 @@ A Helm chart to install the SPIRE agent.
 | nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| priorityClassName | string | `""` | Priority class assigned to daemonset pods |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | server.address | string | `""` |  |

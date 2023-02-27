@@ -91,3 +91,6 @@ agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
 
 # @ignored
 socketMacroName: spire-agent.agent-socket-path-standalone
+
+# -- Priority class assigned to daemonset pods
+priorityClassName: ""
