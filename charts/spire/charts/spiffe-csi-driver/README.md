@@ -29,6 +29,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| priorityClassName | string | `""` | Priority class assigned to daemonset pods |
 | resources | object | `{}` |  |
 | securityContext.privileged | bool | `true` |  |
 | securityContext.readOnlyRootFilesystem | bool | `true` |  |

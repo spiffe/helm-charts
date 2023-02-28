@@ -25,6 +25,9 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
       containers:
         # This is the container which runs the SPIFFE CSI driver.
         - name: {{ .Chart.Name }}
