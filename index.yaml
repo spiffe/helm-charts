@@ -6,6 +6,50 @@ entries:
       artifacthub.io/license: Apache-2.0
     apiVersion: v2
     appVersion: 1.5.5
+    created: "2023-02-28T18:46:19.844257184Z"
+    dependencies:
+    - name: spire-server
+      repository: file://./charts/spire-server
+      version: 0.1.0
+    - name: spire-agent
+      repository: file://./charts/spire-agent
+      version: 0.1.0
+    - name: spiffe-csi-driver
+      repository: file://./charts/spiffe-csi-driver
+      version: 0.1.0
+    - condition: spiffe-oidc-discovery-provider.enabled
+      name: spiffe-oidc-discovery-provider
+      repository: file://./charts/spiffe-oidc-discovery-provider
+      version: 0.1.0
+    description: 'A Helm chart for deploying the complete Spire stack including: spire-server,
+      spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager. '
+    digest: 9e861fa5a6f16abb91ee4f5978922f9cb27cb25bcb48ac6686277360b6794c91
+    home: https://github.com/philips-labs/helm-charts/tree/main/charts/spire
+    icon: https://spiffe.io/img/logos/spire/icon/color/spire-icon-color.png
+    keywords:
+    - spiffe
+    - spire
+    - spire-server
+    - spire-agent
+    - oidc
+    - spire-controller-manager
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - email: marco.franssen@gmail.com
+      name: marcofranssen
+      url: https://marcofranssen.nl
+    name: spire
+    sources:
+    - https://github.com/philips-labs/helm-charts/tree/main/charts/spire
+    type: application
+    urls:
+    - https://github.com/spiffe/helm-charts/releases/download/spire-0.3.0/spire-0.3.0.tgz
+    version: 0.3.0
+  - annotations:
+      artifacthub.io/category: security
+      artifacthub.io/license: Apache-2.0
+    apiVersion: v2
+    appVersion: 1.5.5
     created: "2023-02-23T17:08:42.30559352Z"
     dependencies:
     - name: spire-server
@@ -86,4 +130,4 @@ entries:
     urls:
     - https://github.com/spiffe/helm-charts/releases/download/spire-0.1.0/spire-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-23T17:08:42.305609021Z"
+generated: "2023-02-28T18:46:19.844271284Z"
