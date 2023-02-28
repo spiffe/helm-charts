@@ -80,7 +80,6 @@ dataStorage:
   storageClass: null
 
 logLevel: info
-socketPath: /run/spire/server-sockets/spire-server.sock
 jwtIssuer: oidc-discovery.example.org
 
 clusterName: example-cluster
