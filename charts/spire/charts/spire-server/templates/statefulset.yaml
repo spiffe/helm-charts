@@ -45,6 +45,9 @@ spec:
           args:
             - -config
             - /run/spire/config/server.conf
+          env:
+          - name: PATH
+            value: "/opt/spire/bin:/bin"
           ports:
             - name: grpc
               containerPort: 8081
@@ -73,7 +76,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
+              mountPath: /tmp/spire-server/private
               readOnly: false
             - name: spire-config
               mountPath: /run/spire/config
@@ -121,7 +124,7 @@ spec:
             {{- toYaml .Values.controllerManager.resources | nindent 12 }}
           volumeMounts:
             - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
+              mountPath: /tmp/spire-server/private
               readOnly: true
             - name: controller-manager-config
               mountPath: /controller-manager-config.yaml
