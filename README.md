@@ -1,3 +1,6 @@
+> **Note**
+> These helm charts are beta. We encourage you to try it out and contribute. The API may change as we move towards a production ready release.
+
 # SPIFFE Helm Charts
 
 [![Apache 2.0 License](https://img.shields.io/github/license/spiffe/helm-charts?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
