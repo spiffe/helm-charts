@@ -161,3 +161,9 @@ controllerManager:
 telemetry:
   prometheus:
     enabled: false
+
+extraVolumes: []
+extraVolumeMounts: []
+extraContainers: []
+
+initContainers: []
