@@ -1,4 +1,4 @@
-> **Note**: These helm charts are beta. We encourage you to try it out and contribute. The API may change as we move towards a production ready release.
+> **Note**: All the helm charts in this repo are beta. We encourage you to try them out and contribute. The API may change as we move towards a production ready release.
 
 # SPIFFE Helm Charts
 
