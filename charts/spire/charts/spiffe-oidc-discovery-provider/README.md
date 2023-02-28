@@ -34,6 +34,13 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
+| ingress.className | string | `""` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.tls | list | `[]` |  |
 | insecureScheme.enabled | bool | `false` |  |
 | insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
