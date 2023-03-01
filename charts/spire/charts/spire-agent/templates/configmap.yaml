@@ -42,6 +42,8 @@ data:
           }
       }
       {{- end }}
+
+{{ .Values.customPluginConfig | indent 6 }}
     }
 
     health_checks {

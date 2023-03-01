@@ -80,6 +80,14 @@ workloadAttestors:
     # -- enables the Unix workload attestor
     enabled: false
 
+# -- Config for custom plugins, make sure to indent each line by 2 spaces
+customPluginConfig: |-
+#   NodeAttestor "my-custom-attestor" {
+#     plugin_data {
+#       my-data: "test"
+#     }
+#   }
+
 telemetry:
   prometheus:
     enabled: false

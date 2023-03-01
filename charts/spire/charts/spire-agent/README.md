@@ -12,6 +12,7 @@ A Helm chart to install the SPIRE agent.
 |-----|------|---------|-------------|
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| customPluginConfig | string | `""` | Config for custom plugins, make sure to indent each line by 2 spaces |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
