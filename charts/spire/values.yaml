@@ -30,3 +30,6 @@ spiffe-csi-driver: {}
 spiffe-oidc-discovery-provider:
   enabled: false
   trustDomain: *trustDomain
+
+# @ignored
+donothing: true
