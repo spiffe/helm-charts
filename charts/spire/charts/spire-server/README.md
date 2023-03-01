@@ -2,9 +2,16 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.4](https://img.shields.io/badge/AppVersion-1.5.4-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 A Helm chart to install the SPIRE server.
+
+> **Note**: Minimum Spire version is `1.5.3`.
+> The recommended version is `1.6.0` to support arm64 nodes. If running with any
+> prior version to `1.6.0` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
+>
+> The recommended spire-controller-manager version is `0.2.2` to support arm64 nodes. If running with any
+> prior version to `0.2.2` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
 
 ## Values
 
@@ -32,7 +39,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
 | controllerManager.image.registry | string | `"ghcr.io"` |  |
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |
-| controllerManager.image.version | string | `"0.2.1"` |  |
+| controllerManager.image.version | string | `"0.2.2"` |  |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |
@@ -51,7 +58,7 @@ A Helm chart to install the SPIRE server.
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
-| nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |

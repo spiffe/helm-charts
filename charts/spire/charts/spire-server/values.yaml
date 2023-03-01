@@ -64,8 +64,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector:
-  kubernetes.io/arch: amd64
+nodeSelector: {}
 
 tolerations: []
 
@@ -114,7 +113,7 @@ controllerManager:
     repository: spiffe/spire-controller-manager
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    version: "0.2.1"
+    version: "0.2.2"
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
