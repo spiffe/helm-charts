@@ -157,6 +157,8 @@ jobs:
             --target-branch ${{ github.base_ref }} \
             --exclude-deprecated \
             ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=.github/tests/$VALUES/values.yaml"') || '' }}
+          res=$?
           [ -x .github/tests/$VALUES/post-install.sh ] && .github/tests/$VALUES/post-install.sh
+          exit $res
         env:
           VALUES: ${{ matrix.values }}
