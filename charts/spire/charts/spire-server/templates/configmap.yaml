@@ -10,11 +10,11 @@ data:
       bind_port = "8081"
       trust_domain = {{ .Values.trustDomain | quote }}
       data_dir = "/run/spire/data"
-      log_level = "{{ .Values.logLevel }}"
+      log_level = {{ .Values.logLevel | quote }}
       # AWS requires the use of RSA.  EC cryptography is not supported
       ca_key_type = "rsa-2048"
 
-      jwt_issuer = "{{ .Values.jwtIssuer }}"
+      jwt_issuer = {{ .Values.jwtIssuer | quote  }}
 
       default_x509_svid_ttl = "1h"
       default_jwt_svid_ttl = "1h"
@@ -53,7 +53,7 @@ data:
 
       Notifier "k8sbundle" {
         plugin_data {
-          namespace = "{{ .Release.Namespace }}"
+          namespace = {{ .Release.Namespace | quote }}
           config_map = {{ .Values.bundleConfigMap | quote }}
         }
       }
