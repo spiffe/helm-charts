@@ -32,6 +32,10 @@ spec:
       shareProcessNamespace: true
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if gt (len .Values.initContainers) 0 }}
+      initContainers:
+        {{- toYaml .Values.initContainers | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -87,6 +91,9 @@ spec:
               mountPath: /run/spire/upstream_ca
               readOnly: false
             {{ end }}
+            {{- if gt (len .Values.extraVolumeMounts) 0 }}
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
         {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
         - name: spire-controller-manager
           securityContext:
@@ -124,6 +131,9 @@ spec:
               subPath: controller-manager-config.yaml
               readOnly: true
         {{- end }}
+        {{- if gt (len .Values.extraContainers) 0 }}
+        {{- toYaml .Values.extraContainers | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -155,6 +165,9 @@ spec:
         - name: controller-manager-config
           configMap:
             name: {{ include "spire-controller-manager.fullname" . }}
+        {{- end }}
+        {{- if gt (len .Values.extraVolumes) 0 }}
+        {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
     {{- if eq (.Values.dataStorage.enabled | toString) "true" }}

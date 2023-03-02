@@ -86,3 +86,9 @@ telemetry:
 
 # -- Priority class assigned to daemonset pods
 priorityClassName: ""
+
+extraVolumes: []
+extraVolumeMounts: []
+extraContainers: []
+
+initContainers: []

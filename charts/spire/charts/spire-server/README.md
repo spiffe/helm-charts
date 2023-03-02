@@ -58,12 +58,16 @@ A Helm chart to install the SPIRE server.
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
 | dataStorage.storageClass | string | `nil` |  |
+| extraContainers | list | `[]` |  |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-server"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| initContainers | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | plugins | object | `{}` |  |
