@@ -49,8 +49,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-nodeSelector:
-  kubernetes.io/arch: amd64
+nodeSelector: {}
 
 logLevel: info
 clusterName: example-cluster
@@ -84,3 +83,6 @@ telemetry:
   prometheus:
     enabled: false
     port: 9988
+
+# -- Priority class assigned to daemonset pods
+priorityClassName: ""

@@ -41,6 +41,9 @@ spec:
           args:
             - -config
             - /run/spire/config/server.conf
+          env:
+          - name: PATH
+            value: "/opt/spire/bin:/bin"
           ports:
             - name: grpc
               containerPort: 8081
@@ -69,7 +72,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
+              mountPath: /tmp/spire-server/private
               readOnly: false
             - name: spire-config
               mountPath: /run/spire/config
@@ -96,26 +99,25 @@ spec:
             - name: https
               containerPort: 9443
               protocol: TCP
-            - containerPort: 8008
+            - containerPort: 8083
               name: healthz
             {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
             - containerPort: 8082
               name: prom2
             {{- end }}
-          # TODO: implement probes
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: healthz
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: healthz
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: healthz
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: healthz
           resources:
             {{- toYaml .Values.controllerManager.resources | nindent 12 }}
           volumeMounts:
             - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
+              mountPath: /tmp/spire-server/private
               readOnly: true
             - name: controller-manager-config
               mountPath: /controller-manager-config.yaml
@@ -143,9 +145,7 @@ spec:
           configMap:
             name: {{ include "spire-server.fullname" . }}
         - name: spire-server-socket
-          hostPath:
-            path: /run/spire/server-sockets
-            type: DirectoryOrCreate
+          emptyDir: {}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca
           secret:

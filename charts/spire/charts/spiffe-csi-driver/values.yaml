@@ -43,8 +43,7 @@ securityContext:
   #   drop:
   #   - ALL
 
-nodeSelector:
-  kubernetes.io/arch: amd64
+nodeSelector: {}
 
 nodeDriverRegistrar:
   image:
@@ -63,3 +62,6 @@ nodeDriverRegistrar:
     # limits:
     #   cpu: 100m
     #   memory: 64Mi
+
+# -- Priority class assigned to daemonset pods
+priorityClassName: ""
