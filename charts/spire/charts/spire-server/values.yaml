@@ -78,9 +78,6 @@ dataStorage:
   accessMode: ReadWriteOnce
   storageClass: null
 
-logLevel: info
-jwtIssuer: oidc-discovery.example.org
-
 clusterName: example-cluster
 
 bundleConfigMap: spire-server

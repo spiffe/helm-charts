@@ -35,7 +35,6 @@ A Helm chart to install the SPIRE server.
 | config.default_x509_svid_ttl | string | `"1h"` |  |
 | config.jwt_issuer | string | `"oidc-discovery.example.org"` |  |
 | config.log_level | string | `"info"` |  |
-| config.socket_path | string | `"/run/spire/server-sockets/spire-server.sock"` |  |
 | config.trust_domain | string | `"example.org"` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
