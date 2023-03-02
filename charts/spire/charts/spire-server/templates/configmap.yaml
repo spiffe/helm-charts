@@ -50,6 +50,8 @@ UpstreamAuthority:
 {{- end }}
 
 server:
+  bind_address: 0.0.0.0
+  bind_port: "8081"
   {{- .Values.config | toPrettyJson | nindent 2}}
 plugins:
   {{- range $type, $v := $pluginsMerged }}

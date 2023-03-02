@@ -24,8 +24,6 @@ A Helm chart to install the SPIRE server.
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | bundleConfigMap | string | `"spire-server"` |  |
 | clusterName | string | `"example-cluster"` |  |
-| config.bind_address | string | `"0.0.0.0"` |  |
-| config.bind_port | string | `"8081"` |  |
 | config.ca_key_type | string | `"rsa-2048"` |  |
 | config.ca_subject[0].common_name | string | `"example.org"` |  |
 | config.ca_subject[0].country[0] | string | `"NL"` |  |

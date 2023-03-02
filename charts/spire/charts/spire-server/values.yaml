@@ -83,8 +83,6 @@ clusterName: example-cluster
 bundleConfigMap: spire-server
 
 config:
-  bind_address: "0.0.0.0"
-  bind_port: "8081"
   trust_domain: example.org
   data_dir: /run/spire/data
   log_level: info
