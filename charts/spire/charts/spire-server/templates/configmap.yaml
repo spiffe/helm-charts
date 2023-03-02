@@ -44,6 +44,11 @@ UpstreamAuthority:
 {{- define "spire-server.config-main-template" }}
 {{- $pluginsStruct := tpl (include "spire-server.config-plugins-template" . ) . | fromYaml }}
 {{- $pluginsMerged := $pluginsStruct | mustMerge .Values.plugins }}
+
+{{- if gt (len $pluginsMerged.DataStore) 1 }}
+{{- fail "You can only have one DataStore configured" }}
+{{- end }}
+
 server:
   {{- .Values.config | toPrettyJson | nindent 2}}
 plugins:
