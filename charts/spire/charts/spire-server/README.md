@@ -49,6 +49,9 @@ A Helm chart to install the SPIRE server.
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
 | dataStorage.storageClass | string | `nil` |  |
+| extraContainers | list | `[]` |  |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -62,6 +65,7 @@ A Helm chart to install the SPIRE server.
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
+| initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
