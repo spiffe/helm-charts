@@ -43,6 +43,9 @@ spec:
           args: ["-t", "30", "-h", "{{ .Release.Name }}-server", "-p", {{ .Values.server.port | quote }}]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
+        {{- if gt (len .Values.initContainers) 0 }}
+        {{- toYaml .Values.initContainers | nindent 8 }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "spire-agent.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
@@ -67,6 +70,9 @@ spec:
               readOnly: false
             - name: spire-token
               mountPath: /var/run/secrets/tokens
+            {{- if gt (len .Values.extraVolumeMounts) 0 }}
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /live
@@ -81,6 +87,9 @@ spec:
             periodSeconds: 60
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        {{- if gt (len .Values.extraContainers) 0 }}
+        {{- toYaml .Values.extraContainers | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -103,3 +112,6 @@ spec:
           hostPath:
             path: {{ include "spire.agent-socket-path" . | dir }}
             type: DirectoryOrCreate
+        {{- if gt (len .Values.extraVolumes) 0 }}
+        {{- toYaml .Values.extraVolumes | nindent 8 }}
+        {{- end }}

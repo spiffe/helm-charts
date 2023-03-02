@@ -32,6 +32,10 @@ spec:
       shareProcessNamespace: true
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if gt (len .Values.initContainers) 0 }}
+      initContainers:
+        {{- toYaml .Values.initContainers | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -41,6 +45,9 @@ spec:
           args:
             - -config
             - /run/spire/config/server.conf
+          env:
+          - name: PATH
+            value: "/opt/spire/bin:/bin"
           ports:
             - name: grpc
               containerPort: 8081
@@ -69,7 +76,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
+              mountPath: /tmp/spire-server/private
               readOnly: false
             - name: spire-config
               mountPath: /run/spire/config
@@ -84,6 +91,9 @@ spec:
               mountPath: /run/spire/upstream_ca
               readOnly: false
             {{ end }}
+            {{- if gt (len .Values.extraVolumeMounts) 0 }}
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
         {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
         - name: spire-controller-manager
           securityContext:
@@ -114,12 +124,15 @@ spec:
             {{- toYaml .Values.controllerManager.resources | nindent 12 }}
           volumeMounts:
             - name: spire-server-socket
-              mountPath: /run/spire/server-sockets
+              mountPath: /tmp/spire-server/private
               readOnly: true
             - name: controller-manager-config
               mountPath: /controller-manager-config.yaml
               subPath: controller-manager-config.yaml
               readOnly: true
+        {{- end }}
+        {{- if gt (len .Values.extraContainers) 0 }}
+        {{- toYaml .Values.extraContainers | nindent 8 }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -142,9 +155,7 @@ spec:
           configMap:
             name: {{ include "spire-server.fullname" . }}
         - name: spire-server-socket
-          hostPath:
-            path: /run/spire/server-sockets
-            type: DirectoryOrCreate
+          emptyDir: {}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca
           secret:
@@ -154,6 +165,9 @@ spec:
         - name: controller-manager-config
           configMap:
             name: {{ include "spire-controller-manager.fullname" . }}
+        {{- end }}
+        {{- if gt (len .Values.extraVolumes) 0 }}
+        {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
     {{- if eq (.Values.dataStorage.enabled | toString) "true" }}

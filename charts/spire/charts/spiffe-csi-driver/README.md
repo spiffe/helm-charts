@@ -6,6 +6,9 @@
 
 A Helm chart to install the SPIFFE CSI driver.
 
+> **Note**: The recommended version is `0.2.3` to support arm64 nodes. If running with any
+> prior version to `0.2.3` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -25,7 +28,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` |  |
 | nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
-| nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| nodeSelector | object | `{}` |  |
 | pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |

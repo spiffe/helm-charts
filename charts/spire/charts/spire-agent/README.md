@@ -2,9 +2,13 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.4](https://img.shields.io/badge/AppVersion-1.5.4-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.0](https://img.shields.io/badge/AppVersion-1.6.0-informational?style=flat-square)
 
 A Helm chart to install the SPIRE agent.
+
+> **Note**: Minimum Spire version is `1.5.3`.
+> The recommended version is `1.6.0` to support arm64 nodes. If running with any
+> prior version to `1.6.0` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
 
 ## Values
 
@@ -12,6 +16,9 @@ A Helm chart to install the SPIRE agent.
 |-----|------|---------|-------------|
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| extraContainers | list | `[]` |  |
+| extraVolumeMounts | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -19,9 +26,10 @@ A Helm chart to install the SPIRE agent.
 | image.repository | string | `"spiffe/spire-agent"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| initContainers | list | `[]` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
-| nodeSelector."kubernetes.io/arch" | string | `"amd64"` |  |
+| nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | priorityClassName | string | `""` | Priority class assigned to daemonset pods |
