@@ -9,19 +9,19 @@ data:
 DataStore:
   sql:
     plugin_data:
-    - database_type: sqlite3
+      database_type: sqlite3
       connection_string: /run/spire/data/datastore.sqlite3
 NodeAttestor:
   k8s_psat:
     plugin_data:
-    - clusters:
-      - {{ .Values.clusterName | quote }}:
-        - "service_account_allow_list":
+      clusters:
+        {{ .Values.clusterName | quote }}:
+          "service_account_allow_list":
           - "{{ .Release.Namespace }}:{{ .Release.Name }}-agent"
 KeyManager:
   disk:
     plugin_data:
-    - keys_path: /run/spire/data/keys.json
+      keys_path: /run/spire/data/keys.json
 Notifier:
   k8sbundle:
     plugin_data:
@@ -32,7 +32,7 @@ Notifier:
 UpstreamAuthority:
   disk:
     plugin_data:
-    - cert_file_path": "/run/spire/upstream_ca/tls.crt"
+      cert_file_path": "/run/spire/upstream_ca/tls.crt"
       key_file_path": "/run/spire/upstream_ca/tls.key"
       {{- if ne .secret.data.bundle "" }}
       bundle_file_path: "/run/spire/upstream_ca/bundle.crt"
