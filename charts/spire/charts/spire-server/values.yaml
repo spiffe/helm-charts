@@ -93,9 +93,10 @@ ca_subject:
 
 nodeAttestor:
   k8s:
-    enabled: true
-    rbac:
-      create: true
+    psat:
+      enabled: true
+      rbac:
+        create: true
 
 upstreamAuthority:
   disk:

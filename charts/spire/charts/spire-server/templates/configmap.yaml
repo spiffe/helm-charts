@@ -1,4 +1,4 @@
-{{ $dot := . }}
+{{ $server := . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,13 +36,13 @@ data:
         }
       }
 
-      {{- with .Values.nodeAttestor.k8s }}
+      {{- with .Values.nodeAttestor.k8s.psat }}
       {{- if eq (.enabled | toString) "true" }}
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
-            {{ $dot.Values.clusterName | quote }} = {
-              service_account_allow_list = ["{{ $dot.Release.Namespace }}:{{ $dot.Release.Name }}-agent"]
+            {{ $server.Values.clusterName | quote }} = {
+              service_account_allow_list = ["{{ $server.Release.Namespace }}:{{ $server.Release.Name }}-agent"]
             }
           }
         }
@@ -84,7 +84,7 @@ data:
           issuer_name = {{ .issuer_name | quote }}
           issuer_kind = {{ .issuer_kind | quote }}
           issuer_group = {{ .issuer_group | quote }}
-          namespace = {{ default $dot.Release.Namespace .namespace | quote }}
+          namespace = {{ default $server.Release.Namespace .namespace | quote }}
           {{- if ne .kube_config_file "" }}
           kube_config_file = {{ .kube_config_file | quote }}
           {{- end }}
