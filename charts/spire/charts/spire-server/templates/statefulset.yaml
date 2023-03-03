@@ -1,4 +1,5 @@
 {{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
+{{- $configSum2 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
 apiVersion: apps/v1
 kind: StatefulSet
@@ -18,6 +19,7 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ $configSum }}
+        checksum/config2: {{ $configSum2 }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
