@@ -1,3 +1,4 @@
+{{ $release := .Release }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -35,15 +36,19 @@ data:
         }
       }
 
+      {{- with .Values.nodeAttestor.k8s }}
+      {{- if eq (.enabled | toString) "true" }}
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
             {{ .Values.clusterName | quote }} = {
-              service_account_allow_list = ["{{ .Release.Namespace }}:{{ .Release.Name }}-agent"]
+              service_account_allow_list = ["{{ $release.Namespace }}:{{ $release.Name }}-agent"]
             }
           }
         }
       }
+      {{- end }}
+      {{- end }}
 
       KeyManager "disk" {
         plugin_data {

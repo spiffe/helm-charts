@@ -32,13 +32,15 @@ roleRef:
   kind: Role
   name: {{ include "spire-server.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
+
+{{- if and .Values.nodeAttestor.k8s.enabled .Values.nodeAttestor.k8s.rbac.create }}
 ---
 # ClusterRole to allow spire-server node attestor to query Token Review API
 # and to be able to push certificate bundles to a configmap
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
 rules:
     # allow TokenReview requests (to verify service account tokens for PSAT
     # attestation)
@@ -59,13 +61,13 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "spire-server.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
+{{- end }}

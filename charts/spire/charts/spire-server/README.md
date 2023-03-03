@@ -62,6 +62,8 @@ A Helm chart to install the SPIRE server.
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
+| nodeAttestor.k8s.enabled | bool | `true` |  |
+| nodeAttestor.k8s.rbac.create | bool | `true` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
