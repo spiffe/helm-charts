@@ -18,6 +18,18 @@ rules:
     verbs:
       - get
       - patch
+  {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.rbac.create }}
+  - apiGroups: ["cert-manager.io"]
+    resources:
+      - certificaterequests
+    verbs:
+      - list
+      - get
+      - create
+      - delete
+      - patch
+      - update
+  {{- end }}
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
