@@ -104,6 +104,16 @@ upstreamAuthority:
         certificate: ""
         key: ""
         bundle: ""
+  certManager:
+    enabled: false
+    rbac:
+      create: true
+    issuer_name: "spire-ca"
+    issuer_kind: "Issuer"
+    issuer_group: "cert-manager.io"
+    # -- Specify to use a namespace other then the one the chart is installed into
+    namespace: ""
+    kube_config_file: ""
 
 controllerManager:
   enabled: false

@@ -1,0 +1,7 @@
+spire-server:
+  upstreamAuthority:
+    disk:
+      enabled: false
+    certManager:
+      enabled: true
+      issuer_name: "demo-ca"
