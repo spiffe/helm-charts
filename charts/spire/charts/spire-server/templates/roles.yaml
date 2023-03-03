@@ -21,7 +21,6 @@ rules:
   {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.rbac.create }}
   - apiGroups: ["cert-manager.io"]
     resources:
-      - certificates
       - certificaterequests
     verbs:
       - list
