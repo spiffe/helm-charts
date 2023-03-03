@@ -78,6 +78,13 @@ A Helm chart to install the SPIRE server.
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | trustDomain | string | `"example.org"` |  |
+| upstreamAuthority.certManager.enabled | bool | `false` |  |
+| upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
+| upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
+| upstreamAuthority.certManager.issuer_name | string | `"spire-ca"` |  |
+| upstreamAuthority.certManager.kube_config_file | string | `""` |  |
+| upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
+| upstreamAuthority.certManager.rbac.create | bool | `true` |  |
 | upstreamAuthority.disk.enabled | bool | `false` |  |
 | upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
