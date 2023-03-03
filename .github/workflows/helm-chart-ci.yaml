@@ -110,6 +110,7 @@ jobs:
         # Kubernetes, but can go back farther as long as we don't need heroics
         # to pull it off (i.e. kubectl version juggling).
         k8s:
+          - v1.26.0
           - v1.25.3
           - v1.24.7
           - v1.23.13
@@ -150,7 +151,15 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
+          [ "$VALUES" != "default" ] && kubectl create namespace "$VALUES"
+          post-install() {
+            [ -x .github/tests/$VALUES/post-install.sh ] && .github/tests/$VALUES/post-install.sh
+            exit $1
+          }
+          trap 'post-install $? $LINENO' EXIT
+          [ -x .github/tests/$VALUES/pre-install.sh ] && .github/tests/$VALUES/pre-install.sh
           ct install --debug \
+            --namespace $VALUES \
             --target-branch ${{ github.base_ref }} \
             --exclude-deprecated \
             ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=.github/tests/$VALUES/values.yaml"') || '' }}

@@ -52,8 +52,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-nodeSelector:
-  kubernetes.io/arch: amd64
+nodeSelector: {}
 
 logLevel: info
 clusterName: example-cluster
@@ -96,3 +95,9 @@ socketMacroName: spire-agent.agent-socket-path-standalone
 
 # -- Priority class assigned to daemonset pods
 priorityClassName: ""
+
+extraVolumes: []
+extraVolumeMounts: []
+extraContainers: []
+
+initContainers: []

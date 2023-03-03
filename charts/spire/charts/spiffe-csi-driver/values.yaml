@@ -46,8 +46,7 @@ securityContext:
   #   drop:
   #   - ALL
 
-nodeSelector:
-  kubernetes.io/arch: amd64
+nodeSelector: {}
 
 nodeDriverRegistrar:
   image:
