@@ -80,6 +80,6 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ .Release.Namespace }}-{{ include "spire-server.fullname" . }}
+  name: {{ include "spire-server.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}
