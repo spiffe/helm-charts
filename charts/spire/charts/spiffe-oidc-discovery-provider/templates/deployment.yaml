@@ -77,16 +77,19 @@ spec:
           image: {{ template "spiffe-oidc-discovery-provider.image" .Values.insecureScheme.nginx }}
           imagePullPolicy: {{ .Values.insecureScheme.nginx.image.pullPolicy }}
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               name: http
           volumeMounts:
             - name: spire-oidc-sockets
               mountPath: /run/spire/oidc-sockets
               readOnly: true
             - name: spire-oidc-config
-              mountPath: /etc/nginx/templates/default.conf.template
-              subPath: default.conf.template
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
               readOnly: true
+            - name: nginx-tmp
+              mountPath: /tmp
+              readOnly: false
           resources:
             {{- toYaml .Values.insecureScheme.nginx.resources | nindent 12 }}
         {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
@@ -96,7 +99,7 @@ spec:
           image: {{ template "spiffe-oidc-discovery-provider.image" .Values.telemetry.prometheus.nginxExporter }}
           imagePullPolicy: {{ .Values.telemetry.prometheus.nginxExporter.image.pullPolicy }}
           args:
-          - -nginx.scrape-uri=http://127.0.0.1/stub_status
+          - -nginx.scrape-uri=http://127.0.0.1:8080/stub_status
           resources:
             {{- toYaml .Values.telemetry.prometheus.nginxExporter.resources | nindent 12 }}
           ports:
@@ -114,6 +117,8 @@ spec:
         - name: spire-oidc-config
           configMap:
             name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
+        - name: nginx-tmp
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
