@@ -92,11 +92,10 @@ ca_subject:
   common_name: example.org
 
 nodeAttestor:
-  k8s:
-    psat:
-      enabled: true
-      rbac:
-        create: true
+  k8sPsat:
+    enabled: true
+    rbac:
+      create: true
 
 upstreamAuthority:
   disk:
