@@ -38,7 +38,7 @@ data:
 
       {{- with .Values.nodeAttestor.k8sPsat }}
       {{- if eq (.enabled | toString) "true" }}
-      NodeAttestor "k8sPsat" {
+      NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
             {{ $server.Values.clusterName | quote }} = {
