@@ -40,7 +40,7 @@ spec:
 
 ## Source Code
 
-* <https://github.com/philips-labs/helm-charts/tree/main/charts/spire>
+* <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 ## Requirements
 
