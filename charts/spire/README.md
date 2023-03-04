@@ -6,7 +6,7 @@
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
 
-**Homepage:** <https://github.com/philips-labs/helm-charts/tree/main/charts/spire>
+**Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 > **Warning**: Please note this chart requires Projected Service Account Tokens which has to be enabled on your k8s api server.
 
@@ -40,7 +40,7 @@ spec:
 
 ## Source Code
 
-* <https://github.com/philips-labs/helm-charts/tree/main/charts/spire>
+* <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 ## Requirements
 
