@@ -17,12 +17,15 @@ maintainers:
 kubeVersion: ">=1.21.0-0"
 dependencies:
   - name: spire-server
+    condition: spire-server.enabled
     repository: file://./charts/spire-server
     version: 0.1.0
   - name: spire-agent
+    condition: spire-agent.enabled
     repository: file://./charts/spire-agent
     version: 0.1.0
   - name: spiffe-csi-driver
+    condition: spiffe-csi-driver.enabled
     repository: file://./charts/spiffe-csi-driver
     version: 0.1.0
   - name: spiffe-oidc-discovery-provider
