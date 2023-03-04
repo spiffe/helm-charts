@@ -9,6 +9,7 @@ fullnameOverride: ""
 
 # subcharts
 spire-server:
+  enabled: true
   nameOverride: server
   bundleConfigMap: &bundleConfigMap spire-bundle
 
@@ -19,13 +20,15 @@ spire-server:
     enabled: true
 
 spire-agent:
+  enabled: true
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
   clusterName: *clusterName
   trustDomain: *trustDomain
 
-spiffe-csi-driver: {}
+spiffe-csi-driver:
+  enabled: true
 
 spiffe-oidc-discovery-provider:
   enabled: false
