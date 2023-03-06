@@ -35,6 +35,7 @@ A Helm chart to install the SPIRE agent.
 | priorityClassName | string | `""` | Priority class assigned to daemonset pods |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
+| server.address | string | `""` |  |
 | server.port | int | `8081` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

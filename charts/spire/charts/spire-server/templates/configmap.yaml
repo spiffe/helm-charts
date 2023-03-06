@@ -1,4 +1,4 @@
-{{ $server := . }}
+{{ $root := . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -41,8 +41,8 @@ data:
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
-            {{ $server.Values.clusterName | quote }} = {
-              service_account_allow_list = ["{{ $server.Release.Namespace }}:{{ $server.Release.Name }}-agent"]
+            {{ $root.Values.clusterName | quote }} = {
+              service_account_allow_list = {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
             }
           }
         }

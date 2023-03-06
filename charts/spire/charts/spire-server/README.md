@@ -63,7 +63,7 @@ A Helm chart to install the SPIRE server.
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
-| nodeAttestor.k8sPsat.rbac.create | bool | `true` |  |
+| nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |

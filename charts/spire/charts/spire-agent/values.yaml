@@ -58,6 +58,7 @@ trustDomain: example.org
 bundleConfigMap: spire-bundle
 
 server:
+  address: ""
   port: 8081
 
 healthChecks:

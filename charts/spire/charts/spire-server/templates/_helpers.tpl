@@ -92,3 +92,11 @@ Create the name of the service account to use
 {{- define "spire-k8s-workload-registrar.fullname" -}}
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
 {{- end }}
+
+{{- define "spire-server.serviceAccountAllowedList" }}
+{{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
+{{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
+{{- else }}
+[{{ printf "%s:%s-agent" .Release.Namespace .Release.Name | quote }}]
+{{- end }}
+{{- end }}
