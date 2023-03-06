@@ -15,8 +15,7 @@ data:
 
       jwt_issuer = {{ .Values.jwtIssuer | quote }}
 
-      # AWS requires the use of RSA.  EC cryptography is not supported
-      ca_key_type = "rsa-2048"
+      ca_key_type = {{ .Values.caKeyType | quote }}
       ca_ttl = {{ .Values.caTTL | quote }}
 
       default_x509_svid_ttl = {{ .Values.defaultX509SvidTTL | quote }}
