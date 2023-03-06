@@ -45,7 +45,7 @@ roleRef:
   name: {{ include "spire-server.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
 
-{{- if and .Values.nodeAttestor.k8sPsat.enabled .Values.nodeAttestor.k8sPsat.rbac.create }}
+{{- if and .Values.nodeAttestor.k8sPsat.enabled }}
 ---
 # ClusterRole to allow spire-server node attestor to query Token Review API
 # and to be able to push certificate bundles to a configmap
