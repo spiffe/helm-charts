@@ -1,4 +1,4 @@
-{{ $namespace := .Release.Namespace }}
+{{ $root := . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,15 +36,19 @@ data:
         }
       }
 
+      {{- with .Values.nodeAttestor.k8sPsat }}
+      {{- if eq (.enabled | toString) "true" }}
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
-            {{ .Values.clusterName | quote }} = {
-              service_account_allow_list = {{ include "spire-server.serviceAccountAllowedList" . | trim }}
+            {{ $root.Values.clusterName | quote }} = {
+              service_account_allow_list = {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
             }
           }
         }
       }
+      {{- end }}
+      {{- end }}
 
       KeyManager "disk" {
         plugin_data {
@@ -80,7 +84,7 @@ data:
           issuer_name = {{ .issuer_name | quote }}
           issuer_kind = {{ .issuer_kind | quote }}
           issuer_group = {{ .issuer_group | quote }}
-          namespace = {{ default $namespace .namespace | quote }}
+          namespace = {{ default $root.Release.Namespace .namespace | quote }}
           {{- if ne .kube_config_file "" }}
           kube_config_file = {{ .kube_config_file | quote }}
           {{- end }}
