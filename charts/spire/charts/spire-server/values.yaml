@@ -91,10 +91,6 @@ ca_subject:
   organization: Example
   common_name: example.org
 
-nodeAttestor:
-  k8sPsat:
-    enabled: true
-
 upstreamAuthority:
   disk:
     enabled: false
@@ -184,4 +180,5 @@ initContainers: []
 
 nodeAttestor:
   k8sPsat:
+    enabled: true
     serviceAccountAllowList: []
