@@ -180,4 +180,4 @@ initContainers: []
 
 nodeAttestor:
   k8sPsat:
-    serviceAccountsAllowed: []
+    serviceAccountAllowList: []
