@@ -12,13 +12,16 @@ data:
       trust_domain = {{ .Values.trustDomain | quote }}
       data_dir = "/run/spire/data"
       log_level = {{ .Values.logLevel | quote }}
+
+      jwt_issuer = {{ .Values.jwtIssuer | quote }}
+
       # AWS requires the use of RSA.  EC cryptography is not supported
       ca_key_type = "rsa-2048"
+      ca_ttl = {{ .Values.caTTL | quote }}
 
-      jwt_issuer = {{ .Values.jwtIssuer | quote  }}
+      default_x509_svid_ttl = {{ .Values.defaultX509SvidTTL | quote }}
+      default_jwt_svid_ttl = {{ .Values.defaultJwtSvidTTL | quote }}
 
-      default_x509_svid_ttl = "1h"
-      default_jwt_svid_ttl = "1h"
       ca_subject = {
         {{- with .Values.ca_subject }}
         country = [{{ .country | quote }}],
