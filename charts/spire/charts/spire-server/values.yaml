@@ -178,6 +178,10 @@ extraContainers: []
 
 initContainers: []
 
+caTTL: 24h
+defaultX509SvidTTL: 4h
+defaultJwtSvidTTL: 1h
+
 nodeAttestor:
   k8sPsat:
     enabled: true
