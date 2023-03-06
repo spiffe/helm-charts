@@ -94,8 +94,8 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spire-server.serviceAccountAllowedList" }}
-{{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountsAllowed) 0 }}
-{{- .Values.nodeAttestor.k8sPsat.serviceAccountsAllowed | toJson }}
+{{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
+{{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
 {{- else }}
 [{{ printf "%s:%s-agent" .Release.Namespace .Release.Name | quote }}]
 {{- end }}
