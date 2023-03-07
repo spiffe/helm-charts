@@ -29,6 +29,17 @@ data:
         common_name = {{ .common_name | quote }},
         {{- end }}
       }
+
+      {{- with .Values.federation }}
+      {{- if eq (.enabled | toString) "true" }}
+      federation {
+        bundle_endpoint {
+          address = "{{ .bundleEndpoint.address }}"
+          port = {{ .bundleEndpoint.port }}
+        }
+      }
+      {{- end }}
+      {{- end }}
     }
 
     plugins {

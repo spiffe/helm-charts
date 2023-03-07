@@ -56,6 +56,9 @@ A Helm chart to install the SPIRE server.
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
+| federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
+| federation.bundleEndpoint.port | int | `8443` |  |
+| federation.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
