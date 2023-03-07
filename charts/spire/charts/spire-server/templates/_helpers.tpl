@@ -92,3 +92,18 @@ Create the name of the service account to use
 {{- define "spire-k8s-workload-registrar.fullname" -}}
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
 {{- end }}
+
+{{- define "customPlugin" -}}
+{{ $root := . }}
+{{- range $key, $value := $root }}
+  {{- if eq (kindOf $value) "map" }}
+    {{ $key | quote }} = {
+      {{- include "customPlugin" $value | indent 2}}
+    }
+  {{- else if eq (kindOf $value) "string" }}
+    {{ $key }} = {{ $value | quote }}
+  {{- else }}
+    {{ $key }} = {{ $value }}
+  {{- end -}}
+{{- end -}}
+{{- end }}

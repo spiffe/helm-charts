@@ -106,13 +106,16 @@ upstreamAuthority:
         key: ""
         bundle: ""
 
-# -- Config for custom plugins, make sure to indent each line by 2 spaces
-customPluginConfig: |-
-#   NodeAttestor "my-custom-attestor" {
-#     plugin_data {
-#       my-data: "test"
-#     }
-#   }
+# -- Config for custom Node Attestors
+customNodeAttestors:
+  attestor1:
+    a: true
+    b: 5
+    c: "custom"
+    d:
+      e:
+        f: "true"
+        g: true
 
 controllerManager:
   enabled: false
