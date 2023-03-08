@@ -37,6 +37,7 @@ spec:
 | Name | Email | Url |
 | ---- | ------ | --- |
 | marcofranssen | <marco.franssen@gmail.com> | <https://marcofranssen.nl> |
+| kfox1111 | <Kevin.Fox@pnnl.gov> |  |
 
 ## Source Code
 
