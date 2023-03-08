@@ -152,17 +152,18 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          [ "$VALUES" != "default" ] && kubectl create namespace "$VALUES"
+          scenario="$(basename "${TEST_DIR}")"
+          [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           post-install() {
-            [ -x .github/tests/$VALUES/post-install.sh ] && .github/tests/$VALUES/post-install.sh
+            [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh"
             exit $1
           }
           trap 'post-install $? $LINENO' EXIT
-          [ -x .github/tests/$VALUES/pre-install.sh ] && .github/tests/$VALUES/pre-install.sh
+          [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
           ct install --debug \
-            --namespace $VALUES \
+            --namespace "${scenario}" \
             --target-branch ${{ github.base_ref }} \
             --exclude-deprecated \
-            ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=.github/tests/$VALUES/values.yaml"') || '' }}
+            ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=${TEST_DIR}/values.yaml"') || '' }}
         env:
-          VALUES: ${{ matrix.values }}
+          TEST_DIR: .github/tests/${{ matrix.values }}
