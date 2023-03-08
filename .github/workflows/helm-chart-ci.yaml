@@ -9,6 +9,7 @@ on:
       - '.github/workflows/helm-chart-ci.yaml'
       - '.github/kind/conf/kind-config.yaml'
       - '.github/tests/**/*.yaml'
+      - '.github/tests/**/*.sh'
       - 'helm-docs.sh'
 
 concurrency:

@@ -23,6 +23,8 @@ A Helm chart to install the SPIRE server.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | bundleConfigMap | string | `"spire-server"` |  |
+| caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
+| caTTL | string | `"24h"` |  |
 | ca_subject.common_name | string | `"example.org"` |  |
 | ca_subject.country | string | `"NL"` |  |
 | ca_subject.organization | string | `"Example"` |  |
@@ -49,6 +51,8 @@ A Helm chart to install the SPIRE server.
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
 | dataStorage.storageClass | string | `nil` |  |
+| defaultJwtSvidTTL | string | `"1h"` |  |
+| defaultX509SvidTTL | string | `"4h"` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
@@ -69,6 +73,8 @@ A Helm chart to install the SPIRE server.
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
+| nodeAttestor.k8sPsat.enabled | bool | `true` |  |
+| nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
