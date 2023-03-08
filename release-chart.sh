@@ -100,9 +100,11 @@ if [ ! -f "charts/${chart}/Chart.yaml" ] ; then
   print_error_and_exit "no chart named '${chart}' in charts folder"
 fi
 
+branch_name="bump-${chart}-version"
+
 git checkout main
 git pull
-git checkout --track -B "bump-${chart}-version" main
+git checkout --track -B "${branch_name}" main
 commits_since_previous_release="$(git log "${chart}-${current_version}..HEAD" --pretty=format:'* %h %s')"
 "${SED}" -i "s/version: ${current_version}/version: ${new_version}/" "charts/${chart}/Chart.yaml"
 ./helm-docs.sh
@@ -130,6 +132,20 @@ Please review the below changelog to ensure this matches up with the semantic ve
 
 ${commits_since_previous_release}
 EOF
+
+if [ -n "${dry_run}" ] ; then
+  echo >&2
+  echo >&2 "If you choose not to submit the PR please run following commands to cleanup the branch:"
+  echo >&2
+  echo >&2 "  git checkout main"
+  echo >&2 "  git push origin :${branch_name}"
+  echo >&2 "  git branch -D ${branch_name}"
+  echo >&2
+  echo >&2 'If you choose to submit the PR, please run following:'
+  echo >&2
+  echo >&2 "  gh pr merge --auto -r -d"
+  exit
+fi
 
 gh pr merge --auto -r -d
 git checkout main
