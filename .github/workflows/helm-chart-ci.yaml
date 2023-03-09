@@ -153,17 +153,23 @@ jobs:
       - name: Run chart-testing (install)
         run: |
           export scenario="$(basename "${TEST_DIR}")"
+          export EXTRA_HELM_ARGS=""
           [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           post-install() {
-            [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh"
+            [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh" $1
             exit $1
           }
           trap 'post-install $? $LINENO' EXIT
           [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
-          ct install --debug \
-            --namespace "${scenario}" \
-            --target-branch ${{ github.base_ref }} \
-            --exclude-deprecated \
-            ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=${TEST_DIR}/values.yaml"') || '' }}
+          [ -f "${TEST_DIR}/.env" ] && source "${TEST_DIR}/.env"
+          if [ -x {${TEST_DIR}/install.sh ]; then
+            ./${TEST_DIR}/install.sh
+          else
+            ct install --debug \
+              --namespace "${scenario}" \
+              --target-branch ${{ github.base_ref }} \
+              --exclude-deprecated \
+              ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=${TEST_DIR}/values.yaml ${EXTRA_HELM_ARGS}"') || '' }}
+          fi
         env:
           TEST_DIR: .github/tests/${{ matrix.values }}
