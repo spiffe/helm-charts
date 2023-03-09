@@ -152,7 +152,7 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          scenario="$(basename "${TEST_DIR}")"
+          export scenario="$(basename "${TEST_DIR}")"
           [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           post-install() {
             [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh"
