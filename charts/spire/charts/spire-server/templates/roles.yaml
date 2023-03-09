@@ -1,20 +1,25 @@
-# ClusterRole to allow spire-server node attestor to query Token Review API
-# and to be able to push certificate bundles to a configmap
+# Role to be able to push certificate bundles to a configmap
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  name: {{ include "spire-server.fullname" . }}-bundle
+  namespace: {{ .Values.notifier.k8sbundle.namespace | default .Release.Namespace }}
 rules:
-    # allow access to "get" and "patch" the spire-bundle ConfigMap (for SPIRE
-    # agent bootstrapping, see the spire-bundle ConfigMap below)
   - apiGroups: [""]
     resources: [configmaps]
     resourceNames: [{{ .Values.bundleConfigMap }}]
     verbs:
       - get
       - patch
-  {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.rbac.create }}
+{{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.rbac.create }}
+---
+# Role to be able to manage cert requests with Cert-Manager
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "spire-server.fullname" . }}-cm
+  namespace: {{ .Release.Namespace }}
+rules:
   - apiGroups: ["cert-manager.io"]
     resources:
       - certificaterequests
@@ -25,12 +30,11 @@ rules:
       - delete
       - patch
       - update
-  {{- end }}
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ include "spire-server.fullname" . }}-cm
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -38,20 +42,32 @@ subjects:
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ include "spire-server.fullname" . }}-cm
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "spire-server.fullname" . }}-bundle
+  namespace: {{ .Values.notifier.k8sbundle.namespace | default .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "spire-server.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ include "spire-server.fullname" . }}-bundle
   apiGroup: rbac.authorization.k8s.io
 
 {{- if and .Values.nodeAttestor.k8sPsat.enabled }}
 ---
 # ClusterRole to allow spire-server node attestor to query Token Review API
-# and to be able to push certificate bundles to a configmap
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "spire-server.fullname" . }}
 rules:
-    # allow TokenReview requests (to verify service account tokens for PSAT
-    # attestation)
   - apiGroups: [authentication.k8s.io]
     resources: [tokenreviews]
     verbs:

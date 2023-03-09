@@ -115,6 +115,11 @@ upstreamAuthority:
     namespace: ""
     kube_config_file: ""
 
+notifier:
+  k8sbundle:
+    # -- Namespace to push the bundle into, if blank will default to SPIRE Server namespace
+    namespace: ""
+
 controllerManager:
   enabled: false
 
