@@ -66,7 +66,7 @@ roleRef:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace}}-{{ include "spire-server.fullname" . }}
 rules:
   - apiGroups: [authentication.k8s.io]
     resources: [tokenreviews]
@@ -85,13 +85,13 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace}}-{{ include "spire-server.fullname" . }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "spire-server.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ include "spire-server.fullname" . }}
+  name: {{ .Release.Namespace}}-{{ include "spire-server.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}
