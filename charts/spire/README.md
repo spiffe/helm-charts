@@ -2,11 +2,11 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.5](https://img.shields.io/badge/AppVersion-1.5.5-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.5](https://img.shields.io/badge/AppVersion-1.5.5-informational?style=flat-square)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
 
-**Homepage:** <https://github.com/philips-labs/helm-charts/tree/main/charts/spire>
+**Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 > **Warning**: Please note this chart requires Projected Service Account Tokens which has to be enabled on your k8s api server.
 
@@ -37,10 +37,11 @@ spec:
 | Name | Email | Url |
 | ---- | ------ | --- |
 | marcofranssen | <marco.franssen@gmail.com> | <https://marcofranssen.nl> |
+| kfox1111 | <Kevin.Fox@pnnl.gov> |  |
 
 ## Source Code
 
-* <https://github.com/philips-labs/helm-charts/tree/main/charts/spire>
+* <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 ## Requirements
 
@@ -59,16 +60,18 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
 | nameOverride | string | `""` |  |
-| spiffe-csi-driver | object | `{}` |  |
+| spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.clusterName | string | `"example-cluster"` |  |
+| spire-agent.enabled | bool | `true` |  |
 | spire-agent.nameOverride | string | `"agent"` |  |
 | spire-agent.trustDomain | string | `"example.org"` |  |
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.controllerManager.enabled | bool | `true` |  |
+| spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
 | spire-server.trustDomain | string | `"example.org"` |  |
 

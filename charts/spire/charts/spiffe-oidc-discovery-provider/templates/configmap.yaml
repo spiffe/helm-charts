@@ -40,14 +40,14 @@ data:
       live_path = "/live"
     }
   {{- if .Values.insecureScheme.enabled }}
-  default.conf.template: |
+  default.conf: |
     upstream oidc {
       server unix:{{ $oidcSocket }};
     }
 
     server {
-      listen            80;
-      listen       [::]:80;
+      listen            8080;
+      listen       [::]:8080;
 
       location / {
         proxy_pass http://oidc;

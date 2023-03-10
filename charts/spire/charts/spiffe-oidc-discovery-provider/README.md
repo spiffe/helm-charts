@@ -36,7 +36,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.enabled | bool | `false` |  |
 | insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
-| insecureScheme.nginx.image.repository | string | `"nginx"` |  |
+| insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
 | insecureScheme.nginx.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |

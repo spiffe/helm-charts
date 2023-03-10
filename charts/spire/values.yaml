@@ -9,6 +9,7 @@ fullnameOverride: ""
 
 # subcharts
 spire-server:
+  enabled: true
   nameOverride: server
   bundleConfigMap: &bundleConfigMap spire-bundle
 
@@ -19,6 +20,7 @@ spire-server:
     enabled: true
 
 spire-agent:
+  enabled: true
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
@@ -26,6 +28,7 @@ spire-agent:
   trustDomain: *trustDomain
 
 spiffe-csi-driver:
+  enabled: true
   # @ignored
   socketMacroName: "spire.agent-socket-path"
 

@@ -72,3 +72,11 @@ Create the name of the service account to use
 {{- printf "%s/%s" .image.registry .image.repository -}}
 {{- end -}}
 {{- end }}
+
+{{- define "spire-agent.server-address" }}
+{{- if .Values.server.address }}
+{{- .Values.server.address }}
+{{- else }}
+{{ .Release.Name }}-server
+{{- end }}
+{{- end }}
