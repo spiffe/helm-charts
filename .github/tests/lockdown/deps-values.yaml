@@ -1,0 +1,54 @@
+global:
+  telemetry:
+    prometheus:
+      enabled: true
+
+spiffe-csi-driver:
+  enabled: false
+
+spire-agent:
+  enabled: false
+
+spiffe-oidc-discovery-provider:
+  enabled: true
+  insecureScheme:
+    enabled: true
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
+
+spire-server:
+  nodeAttestor:
+    k8sPsat:
+      serviceAccountAllowList: ["lockdown:spire-agent"]
+  notifier:
+    k8sbundle:
+      namespace: lockdown
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
+  controllerManager:
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop: [ALL]
+      seccompProfile:
+        type: RuntimeDefault
