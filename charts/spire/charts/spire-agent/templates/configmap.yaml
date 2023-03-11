@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "spire-agent.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-agent.namespace" . }}
 data:
   agent.conf: |
     agent {

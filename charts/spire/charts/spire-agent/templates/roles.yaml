@@ -16,11 +16,10 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "spire-agent.fullname" . }}
-  namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "spire-agent.fullname" . }}
-    namespace: {{ .Release.Namespace }}
+    name: {{ include "spire-agent.serviceAccountName" . }}
+    namespace: {{ include "spire-agent.namespace" . }}
 roleRef:
   kind: ClusterRole
   name: {{ include "spire-agent.fullname" . }}

@@ -13,6 +13,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
+namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
@@ -60,6 +61,7 @@ bundleConfigMap: spire-bundle
 server:
   address: ""
   port: 8081
+  namespaceOverride: ""
 
 healthChecks:
   # -- override the host port used for health checking

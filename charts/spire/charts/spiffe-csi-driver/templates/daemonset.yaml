@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ include "spiffe-csi-driver.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spiffe-csi-driver.namespace" . }}
   labels:
     {{- include "spiffe-csi-driver.labels" . | nindent 4 }}
 spec:

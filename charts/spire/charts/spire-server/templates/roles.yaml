@@ -1,9 +1,10 @@
+{{- $namespace := include "spire-server.namespace" . }}
 # Role to be able to push certificate bundles to a configmap
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "spire-server.fullname" . }}-bundle
-  namespace: {{ .Values.notifier.k8sbundle.namespace | default .Release.Namespace }}
+  namespace: {{ .Values.notifier.k8sbundle.namespace | default $namespace }}
 rules:
   - apiGroups: [""]
     resources: [configmaps]
@@ -18,7 +19,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "spire-server.fullname" . }}-cm
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ $namespace }}
 rules:
   - apiGroups: ["cert-manager.io"]
     resources:
@@ -35,11 +36,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "spire-server.fullname" . }}-cm
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ $namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "spire-server.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ $namespace }}
 roleRef:
   kind: Role
   name: {{ include "spire-server.fullname" . }}-cm
@@ -50,11 +51,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "spire-server.fullname" . }}-bundle
-  namespace: {{ .Values.notifier.k8sbundle.namespace | default .Release.Namespace }}
+  namespace: {{ .Values.notifier.k8sbundle.namespace | default $namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "spire-server.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ $namespace }}
 roleRef:
   kind: Role
   name: {{ include "spire-server.fullname" . }}-bundle
@@ -89,7 +90,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{ include "spire-server.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
+    namespace: {{ $namespace }}
 roleRef:
   kind: ClusterRole
   name: {{ .Release.Namespace}}-{{ include "spire-server.fullname" . }}
