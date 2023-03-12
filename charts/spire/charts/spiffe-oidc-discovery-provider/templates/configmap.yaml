@@ -1,4 +1,35 @@
 {{- $oidcSocket := "/run/spire/oidc-sockets/spire-oidc-server.sock" }}
+{{- define "spiffe-oidc-discovery-provider.yaml-config" -}}
+log_level: {{ .Values.config.logLevel | quote }}
+
+domains:
+  - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}"
+  - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}"
+  - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local"
+  {{- if gt (len .Values.config.domains) 0 }}
+  {{- .Values.config.domains | toYaml | nindent 2 }}
+  {{- end }}
+
+{{- if .Values.insecureScheme.enabled }}
+allow_insecure_scheme: {{ .Values.insecureScheme.enabled }}
+listen_socket_path: {{ .oidcSocket | quote }}
+{{- else }}
+acme:
+  directory_url: {{ .Values.config.acme.directoryUrl | quote }}
+  cache_dir: {{ .Values.config.acme.cacheDir | quote }}
+  tos_accepted: {{ .Values.config.acme.tosAccepted }}
+  email: {{ .Values.config.acme.emailAddress | quote }}
+{{- end }}
+
+workload_api:
+  socket_path: {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
+  trust_domain: "{{ .Values.trustDomain }}"
+
+health_checks:
+  bind_port: "8008"
+  ready_path: "/ready"
+  live_path: "/live"
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,39 +37,7 @@ metadata:
   namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
 data:
   oidc-discovery-provider.conf: |
-    log_level = "{{ .Values.config.logLevel }}"
-
-    domains = [
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local",
-    {{- if gt (len .Values.config.domains) 0 }}
-      "{{- join "\",\n      \"" .Values.config.domains }}"
-    {{- end }}
-    ]
-
-    {{- if .Values.insecureScheme.enabled }}
-    allow_insecure_scheme = {{ .Values.insecureScheme.enabled }}
-    listen_socket_path = {{ $oidcSocket | quote }}
-    {{- else }}
-    acme {
-      directory_url = "{{ .Values.config.acme.directoryUrl }}"
-      cache_dir = "{{ .Values.config.acme.cacheDir }}"
-      tos_accepted = {{ .Values.config.acme.tosAccepted }}
-      email = "{{ .Values.config.acme.emailAddress }}"
-    }
-    {{- end }}
-
-    workload_api {
-      socket_path = {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
-      trust_domain = "{{ .Values.trustDomain }}"
-    }
-
-    health_checks {
-      bind_port = "8008"
-      ready_path = "/ready"
-      live_path = "/live"
-    }
+    {{- include "spiffe-oidc-discovery-provider.yaml-config" (merge (dict) (dict "oidcSocket" $oidcSocket) .) | fromYaml | toPrettyJson | nindent 4 }}
   {{- if .Values.insecureScheme.enabled }}
   default.conf: |
     upstream oidc {
