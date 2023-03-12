@@ -85,6 +85,8 @@ telemetry:
     enabled: false
     port: 9988
 
+agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+
 # -- Priority class assigned to daemonset pods
 priorityClassName: ""
 
