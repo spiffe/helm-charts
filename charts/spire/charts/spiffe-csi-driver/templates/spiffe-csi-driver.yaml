@@ -1,7 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: CSIDriver
 metadata:
-  name: "csi.spiffe.io"
+  name: {{ .Values.pluginName | quote }}
 spec:
   # Only ephemeral, inline volumes are supported. There is no need for a
   # controller to provision and attach volumes.
