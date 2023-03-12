@@ -18,6 +18,9 @@ resources: {}
   #   cpu: 100m
   #   memory: 64Mi
 
+healthChecks:
+    port: 9809
+
 imagePullSecrets: []
 nameOverride: ""
 namespaceOverride: ""

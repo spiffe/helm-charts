@@ -14,6 +14,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
+| healthChecks.port | int | `9809` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
