@@ -1,3 +1,50 @@
+{{- define "spire-agent.yaml-config" -}}
+agent:
+  data_dir: "/run/spire"
+  log_level: {{ .Values.logLevel | quote }}
+  server_address: {{ include "spire-agent.server-address" . | trim | quote }}
+  server_port: {{ .Values.server.port | quote }}
+  socket_path: {{ include "spire-agent.socket-path" . | quote }}
+  trust_bundle_path: "/run/spire/bundle/bundle.crt"
+  trust_domain: {{ include "spire-agent.trust-domain" . | quote }}
+
+plugins:
+  NodeAttestor:
+    - k8s_psat:
+        plugin_data:
+          cluster: {{ include "spire-agent.cluster-name" . | quote }}
+
+  KeyManager:
+    - memory:
+        plugin_data:
+
+  WorkloadAttestor:
+    - k8s:
+        plugin_data:
+          # Defaults to the secure kubelet port by default.
+          # Minikube does not have a cert in the cluster CA bundle that
+          # can authenticate the kubelet cert, so skip validation.
+          skip_kubelet_verification: true
+
+  {{- if .Values.workloadAttestors.unix.enabled }}
+    - unix:
+        plugin_data:
+  {{- end }}
+
+health_checks:
+  listener_enabled: true
+  bind_address: "0.0.0.0"
+  bind_port: {{ .Values.healthChecks.port | quote }}
+  live_path: "/live"
+  ready_path: "/ready"
+
+{{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
+telemetry:
+  - Prometheus:
+      - host: "0.0.0.0"
+        port: {{ .Values.telemetry.prometheus.port }}
+{{- end }}
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,58 +52,4 @@ metadata:
   namespace: {{ include "spire-agent.namespace" . }}
 data:
   agent.conf: |
-    agent {
-      data_dir = "/run/spire"
-      log_level = {{ .Values.logLevel | quote }}
-      server_address = {{ include "spire-agent.server-address" . | trim | quote }}
-      server_port = {{ .Values.server.port | quote }}
-      socket_path = {{ include "spire-agent.socket-path" . | quote }}
-      trust_bundle_path = "/run/spire/bundle/bundle.crt"
-      trust_domain = {{ include "spire-agent.trust-domain" . | quote }}
-    }
-
-    plugins {
-      NodeAttestor "k8s_psat" {
-        plugin_data {
-          cluster = {{ include "spire-agent.cluster-name" . | quote }}
-        }
-      }
-
-      KeyManager "memory" {
-        plugin_data {
-        }
-      }
-
-      WorkloadAttestor "k8s" {
-        plugin_data {
-          # Defaults to the secure kubelet port by default.
-          # Minikube does not have a cert in the cluster CA bundle that
-          # can authenticate the kubelet cert, so skip validation.
-          skip_kubelet_verification = true
-        }
-      }
-
-      {{- if .Values.workloadAttestors.unix.enabled }}
-      WorkloadAttestor "unix" {
-          plugin_data {
-          }
-      }
-      {{- end }}
-    }
-
-    health_checks {
-      listener_enabled = true
-      bind_address = "0.0.0.0"
-      bind_port = {{ .Values.healthChecks.port | quote }}
-      live_path = "/live"
-      ready_path = "/ready"
-    }
-
-    {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
-    telemetry {
-      Prometheus {
-        host = "0.0.0.0"
-        port = {{ .Values.telemetry.prometheus.port }}
-      }
-    }
-    {{- end }}
+    {{- include "spire-agent.yaml-config" . | fromYaml | toPrettyJson | nindent 4 }}
