@@ -100,7 +100,7 @@ spec:
       volumes:
         - name: spire-agent-socket-dir
           hostPath:
-            path: {{ include "spire.agent-socket-path" . | dir }}
+            path: {{ include "spiffe-csi-driver.agent-socket-path" . | dir }}
             type: DirectoryOrCreate
         # This volume is where the socket for kubelet->driver communication lives
         - name: spiffe-csi-socket-dir

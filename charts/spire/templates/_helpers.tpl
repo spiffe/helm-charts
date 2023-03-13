@@ -30,10 +30,6 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "spire.agent-socket-path" -}}
-{{- print "/run/spire/agent-sockets/spire-agent.sock" }}
-{{- end }}
-
 {{- define "spire.server-socket-path" -}}
 {{- print "/run/spire/server-sockets/spire-server.sock" }}
 {{- end }}

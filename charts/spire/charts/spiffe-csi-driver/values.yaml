@@ -69,5 +69,7 @@ nodeDriverRegistrar:
     #   cpu: 100m
     #   memory: 64Mi
 
+agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+
 # -- Priority class assigned to daemonset pods
 priorityClassName: ""

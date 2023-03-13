@@ -80,3 +80,7 @@ Create the name of the service account to use
 {{ .Release.Name }}-server
 {{- end }}
 {{- end }}
+
+{{- define "spire-agent.agent-socket-path" -}}
+{{- print .Values.agentSocketPath }}
+{{- end }}
