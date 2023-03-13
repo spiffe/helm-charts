@@ -14,7 +14,7 @@ cat <<EOF >>"$GITHUB_STEP_SUMMARY"
 | -------- | ------ |
 | spire-server | $("${k_rollout_status[@]}" spire-server statefulset spire-server) |
 | spire-spiffe-csi-driver | $("${k_rollout_status[@]}" spire-system daemonset spire-spiffe-csi-driver) |
-| spire-agent | $("${k_rollout_status[@]}" spire-server daemonset spire-agent) |
+| spire-agent | $("${k_rollout_status[@]}" spire-system daemonset spire-agent) |
 | spire-spiffe-oidc-discovery-provider | $("${k_wait[@]}" spire-server deployments.apps spire-spiffe-oidc-discovery-provider) |
 EOF
 
