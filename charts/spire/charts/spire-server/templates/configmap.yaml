@@ -1,9 +1,10 @@
-{{ $root := . }}
+{{- $root := . }}
+{{- $namespace := include "spire-server.namespace" . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "spire-server.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-server.namespace" . }}
 data:
   server.conf: |
     server {
@@ -60,7 +61,7 @@ data:
 
       Notifier "k8sbundle" {
         plugin_data {
-          namespace = {{ .Values.notifier.k8sbundle.namespace | default .Release.Namespace | quote }}
+          namespace = {{ .Values.notifier.k8sbundle.namespace | default $namespace | quote }}
           config_map = {{ .Values.bundleConfigMap | quote }}
         }
       }

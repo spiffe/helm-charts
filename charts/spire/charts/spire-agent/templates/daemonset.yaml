@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ include "spire-agent.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-agent.namespace" . }}
   labels:
     {{- include "spire-agent.labels" . | nindent 4 }}
 spec:

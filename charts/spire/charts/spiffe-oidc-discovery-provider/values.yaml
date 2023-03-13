@@ -6,6 +6,8 @@ agentSocket: spire-agent.sock
 
 replicaCount: 1
 
+namespaceOverride: ""
+
 image:
   # registry: gcr.io
   # repository: spiffe-io/oidc-discovery-provider

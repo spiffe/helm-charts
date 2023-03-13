@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "spire-controller-manager.fullname" . }}-leader-election
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-server.namespace" . }}
 rules:
   - apiGroups: [""]
     resources: ["configmaps"]
@@ -19,7 +19,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: {{ include "spire-controller-manager.fullname" . }}-leader-election
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-server.namespace" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -27,7 +27,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ include "spire-server.serviceAccountName" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-server.namespace" . }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -76,5 +76,5 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ include "spire-server.serviceAccountName" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-server.namespace" . }}
 {{- end }}

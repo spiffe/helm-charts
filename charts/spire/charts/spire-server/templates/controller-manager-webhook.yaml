@@ -8,7 +8,7 @@ webhooks:
     clientConfig:
       service:
         name: {{ include "spire-controller-manager.fullname" . }}-webhook
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ include "spire-server.namespace" . }}
         path: /validate-spire-spiffe-io-v1alpha1-clusterfederatedtrustdomain
     failurePolicy: Fail
     name: vclusterfederatedtrustdomain.kb.io
@@ -22,7 +22,7 @@ webhooks:
     clientConfig:
       service:
         name: {{ include "spire-controller-manager.fullname" . }}-webhook
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ include "spire-server.namespace" . }}
         path: /validate-spire-spiffe-io-v1alpha1-clusterspiffeid
     failurePolicy: Fail
     name: vclusterspiffeid.kb.io

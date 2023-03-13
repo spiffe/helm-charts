@@ -41,6 +41,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
 | insecureScheme.nginx.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
+| namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |

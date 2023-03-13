@@ -3,14 +3,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "spire-controller-manager.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-server.namespace" . }}
 data:
   controller-manager-config.yaml: |
     apiVersion: spire.spiffe.io/v1alpha1
     kind: ControllerManagerConfig
     metadata:
       name: {{ include "spire-controller-manager.fullname" . }}
-      namespace: {{ .Release.Namespace }}
+      namespace: {{ include "spire-server.namespace" . }}
       labels:
         {{- include "spire-server.labels" . | nindent 8 }}
     metrics:
@@ -20,7 +20,7 @@ data:
     leaderElection:
       leaderElect: true
       resourceName: {{ .Release.Name | sha256sum | trunc 8 }}.spiffe.io
-      resourceNamespace: {{ .Release.Namespace }}
+      resourceNamespace: {{ include "spire-server.namespace" . }}
     validatingWebhookConfigurationName: {{ include "spire-controller-manager.fullname" . }}-webhook
     clusterName: {{ .Values.clusterName }}
     trustDomain: {{ .Values.trustDomain }}

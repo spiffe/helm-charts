@@ -16,6 +16,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
+namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
