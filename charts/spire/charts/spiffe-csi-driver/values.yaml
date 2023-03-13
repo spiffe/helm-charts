@@ -1,3 +1,6 @@
+# -- Set the csi driver name deployed to Kubernetes.
+pluginName: csi.spiffe.io
+
 image:
   registry: ghcr.io
   repository: spiffe/spiffe-csi-driver
@@ -14,6 +17,9 @@ resources: {}
   # limits:
   #   cpu: 100m
   #   memory: 64Mi
+
+healthChecks:
+  port: 9809
 
 imagePullSecrets: []
 nameOverride: ""
