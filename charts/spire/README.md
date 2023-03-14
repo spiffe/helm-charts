@@ -32,6 +32,40 @@ spec:
         - --service-account-signing-key-file=/run/config/pki/sa.key
 ```
 
+## Usage
+
+To utilize Spire in your own workloads you should add the following to your workload:
+
+```diff
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: my-app
+ spec:
+   containers:
+     - name: my-app
+       image: "my-app:latest"
+       imagePullPolicy: Always
++      volumeMounts:
++        - name: spiffe-workload-api
++          mountPath: /spiffe-workload-api
++          readOnly: true
+       resources:
+         requests:
+           cpu: 200m
+           memory: 32Mi
+         limits:
+           cpu: 500m
+           memory: 64Mi
++  volumes:
++    - name: spiffe-workload-api
++      csi:
++        driver: "csi.spiffe.io"
++        readOnly: true
+```
+
+Now you can interact with the Spire agent socket from your own application. The socket is mounted on `/spiffe-workload-api/spire-agent.sock`.
+
 ## Maintainers
 
 | Name | Email | Url |
