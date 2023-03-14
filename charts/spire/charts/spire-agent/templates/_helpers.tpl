@@ -100,6 +100,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "spire-agent.agent-socket-path" -}}
-{{- print .Values.agentSocketPath }}
+{{- define "spire-agent.socket-path" -}}
+{{- print .Values.socketPath }}
 {{- end }}
