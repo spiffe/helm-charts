@@ -71,5 +71,7 @@ nodeDriverRegistrar:
 
 agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
 
+kubeletPath: /var/lib/kubelet
+
 # -- Priority class assigned to daemonset pods
 priorityClassName: ""
