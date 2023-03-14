@@ -30,7 +30,7 @@ data:
     {{- end }}
 
     workload_api {
-      socket_path = "/spiffe-workload-api/{{ .Values.agentSocket }}"
+      socket_path = {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
       trust_domain = "{{ .Values.trustDomain }}"
     }
 

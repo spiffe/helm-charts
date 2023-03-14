@@ -14,7 +14,6 @@ A Helm chart to install the SPIRE agent.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | extraContainers | list | `[]` |  |
@@ -43,6 +42,7 @@ A Helm chart to install the SPIRE agent.
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
 | telemetry.prometheus.port | int | `9988` |  |
 | trustDomain | string | `"example.org"` |  |
