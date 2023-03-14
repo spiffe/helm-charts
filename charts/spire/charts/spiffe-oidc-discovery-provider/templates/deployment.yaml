@@ -48,7 +48,7 @@ spec:
           {{- end }}
           volumeMounts:
             - name: spiffe-workload-api
-              mountPath: /spiffe-workload-api
+              mountPath: {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | dir }}
               readOnly: true
             - name: spire-oidc-sockets
               mountPath: /run/spire/oidc-sockets
