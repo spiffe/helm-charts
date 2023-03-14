@@ -50,6 +50,7 @@ spire-server:
 spiffe-csi-driver:
   enabled: true
   namespaceOverride: spire-system
+  priorityClassName: system-node-critical
 
 spire-agent:
   enabled: true
@@ -58,3 +59,4 @@ spire-agent:
     name: spire-agent
   server:
     namespaceOverride: spire-server
+  priorityClassName: system-node-critical
