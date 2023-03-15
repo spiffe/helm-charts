@@ -174,6 +174,9 @@ controllerManager:
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
 
+  validatingWebhookConfiguration:
+    failurePolicy: Fail
+
 telemetry:
   prometheus:
     enabled: false
