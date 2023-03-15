@@ -21,6 +21,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| kubeletPath | string | `"/var/lib/kubelet"` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |

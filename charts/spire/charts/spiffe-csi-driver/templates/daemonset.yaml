@@ -56,7 +56,7 @@ spec:
             - mountPath: /spiffe-csi
               name: spiffe-csi-socket-dir
             # The volume containing mount points for containers.
-            - mountPath: /var/lib/kubelet/pods
+            - mountPath: {{ .Values.kubeletPath }}/pods
               mountPropagation: Bidirectional
               name: mountpoint-dir
           securityContext:
@@ -75,7 +75,7 @@ spec:
           imagePullPolicy: {{ .Values.nodeDriverRegistrar.image.pullPolicy }}
           args: [
             "-csi-address", "/spiffe-csi/csi.sock",
-            "-kubelet-registration-path", "/var/lib/kubelet/plugins/{{ .Values.pluginName }}/csi.sock",
+            "-kubelet-registration-path", "{{ .Values.kubeletPath }}/plugins/{{ .Values.pluginName }}/csi.sock",
             "-health-port", "{{ .Values.healthChecks.port }}"
           ]
           volumeMounts:
@@ -105,16 +105,16 @@ spec:
         # This volume is where the socket for kubelet->driver communication lives
         - name: spiffe-csi-socket-dir
           hostPath:
-            path: /var/lib/kubelet/plugins/{{ .Values.pluginName }}
+            path: {{ .Values.kubeletPath }}/plugins/{{ .Values.pluginName }}
             type: DirectoryOrCreate
         # This volume is where the SPIFFE CSI driver mounts volumes
         - name: mountpoint-dir
           hostPath:
-            path: /var/lib/kubelet/pods
+            path: {{ .Values.kubeletPath }}/pods
             type: Directory
         # This volume is where the node-driver-registrar registers the plugin
         # with kubelet
         - name: kubelet-plugin-registration-dir
           hostPath:
-            path: /var/lib/kubelet/plugins_registry
+            path: {{ .Values.kubeletPath }}/plugins_registry
             type: Directory
