@@ -16,6 +16,14 @@ spec:
       port: {{ .Values.service.port }}
       targetPort: grpc
       protocol: TCP
+    {{- with .Values.federation }}
+    {{- if eq (.enabled | toString) "true" }}
+    - name: federation
+      port: {{ .bundleEndpoint.port }}
+      targetPort: federation
+      protocol: TCP
+    {{- end }}
+    {{- end }}
   selector:
     {{- include "spire-server.selectorLabels" . | nindent 4 }}
 

@@ -87,6 +87,12 @@ trustDomain: example.org
 
 bundleConfigMap: spire-server
 
+federation:
+  enabled: false
+  bundleEndpoint:
+    port: 8443
+    address: "0.0.0.0"
+
 ca_subject:
   country: NL
   organization: Example
