@@ -112,7 +112,7 @@ tolerations: []
 
 affinity: {}
 
-trustDomain: "example.org"
+trustDomain: example.org
 
 telemetry:
   prometheus:
@@ -137,3 +137,21 @@ telemetry:
         # limits:
         #   cpu: 100m
         #   memory: 64Mi
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: oidc-discovery.example.org
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - oidc-discovery.example.org
