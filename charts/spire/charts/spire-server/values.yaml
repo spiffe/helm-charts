@@ -197,3 +197,49 @@ nodeAttestor:
   k8sPsat:
     enabled: true
     serviceAccountAllowList: []
+
+# tornjak - Tornjak specific configuration
+tornjak:
+  enabled: true
+  config:
+    # enableUserMgmt - when true, IAM configuration must be specified
+    enableUserMgmt: false
+    # separateFrontend - when true, the frontend component is created under
+    # a separate container
+    separateFrontend: false
+    # img - Tornjak image (frontend + backend) if not separated above
+    img: ghcr.io/spiffe/tornjak
+    # version - the Tornjak version for all images 
+    # TODO we should use a specific version instead of 'latest'
+    version: latest
+    # Front-end specific configuration:
+    frontend:
+      # img - Tornjak frontend image, if separate from backend
+      img: ghcr.io/spiffe/tornjak-fe
+      # ingress - if Ingress required, don't use 'http://' prefix
+      # keep empty if local, or direct access available
+      ingress:  # 👈 Use it with Cloud Ingress for Frontend
+      # authServerURL - URL of the authentication server 
+      authServerURL: "http://keycloak.tornjak.appdomain.cloud" 
+      # apiServerURL - URL of the Tornjak back-end
+      apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
+     # Back-end specific configuration
+    backend:
+    # img - Tornjak backend image
+      img: ghcr.io/spiffe/tornjak-be
+      # socketDir - path to the socket file on the host (and in the container) 
+      # socketDir: /run/spire-server/private
+      socketDir: /tmp/spire-server/private
+      # socketFile - name of the socket file
+      socketFile: api.sock
+      # ingress - if Ingress required, don't use 'http://' prefix
+      # keep empty if local, or direct access available
+      ingress:  # 👈 Use it with Cloud Ingress for Backend
+      # jwksURL - URL for JWKS verification
+      jwksURL: "http://keycloak.tornjak.appdomain.cloud/realms/tornjak/protocol/openid-connect/certs"
+      # redirectURL - URL for redirecting after successful authentication
+      redirectURL: "http://keycloak.tornjak.appdomain.cloud/realms/tornjak/protocol/openid-connect/auth?client_id=Tornjak-React-auth"
+      # dataStore - persistent DB for storing Tornjak specific information
+      dataStore:
+        driver: "sqlite3"
+        file: "./agentlocaldb"
