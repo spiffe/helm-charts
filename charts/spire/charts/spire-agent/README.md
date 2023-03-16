@@ -29,6 +29,7 @@ A Helm chart to install the SPIRE agent.
 | initContainers | list | `[]` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
+| namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
@@ -36,10 +37,12 @@ A Helm chart to install the SPIRE agent.
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | server.address | string | `""` |  |
+| server.namespaceOverride | string | `""` |  |
 | server.port | int | `8081` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
 | telemetry.prometheus.port | int | `9988` |  |
 | trustDomain | string | `"example.org"` |  |

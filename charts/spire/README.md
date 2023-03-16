@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.5](https://img.shields.io/badge/AppVersion-1.5.5-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5.5](https://img.shields.io/badge/AppVersion-1.5.5-informational?style=flat-square)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
 
@@ -31,6 +31,40 @@ spec:
         - --service-account-key-file=/run/config/pki/sa.pub
         - --service-account-signing-key-file=/run/config/pki/sa.key
 ```
+
+## Usage
+
+To utilize Spire in your own workloads you should add the following to your workload:
+
+```diff
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: my-app
+ spec:
+   containers:
+     - name: my-app
+       image: "my-app:latest"
+       imagePullPolicy: Always
++      volumeMounts:
++        - name: spiffe-workload-api
++          mountPath: /spiffe-workload-api
++          readOnly: true
+       resources:
+         requests:
+           cpu: 200m
+           memory: 32Mi
+         limits:
+           cpu: 500m
+           memory: 64Mi
++  volumes:
++    - name: spiffe-workload-api
++      csi:
++        driver: "csi.spiffe.io"
++        readOnly: true
+```
+
+Now you can interact with the Spire agent socket from your own application. The socket is mounted on `/spiffe-workload-api/spire-agent.sock`.
 
 ## Maintainers
 

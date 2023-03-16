@@ -8,9 +8,9 @@ webhooks:
     clientConfig:
       service:
         name: {{ include "spire-controller-manager.fullname" . }}-webhook
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ include "spire-server.namespace" . }}
         path: /validate-spire-spiffe-io-v1alpha1-clusterfederatedtrustdomain
-    failurePolicy: Fail
+    failurePolicy: {{ .Values.controllerManager.validatingWebhookConfiguration.failurePolicy }}
     name: vclusterfederatedtrustdomain.kb.io
     rules:
       - apiGroups: ["spire.spiffe.io"]
@@ -22,9 +22,9 @@ webhooks:
     clientConfig:
       service:
         name: {{ include "spire-controller-manager.fullname" . }}-webhook
-        namespace: {{ .Release.Namespace }}
+        namespace: {{ include "spire-server.namespace" . }}
         path: /validate-spire-spiffe-io-v1alpha1-clusterspiffeid
-    failurePolicy: Fail
+    failurePolicy: {{ .Values.controllerManager.validatingWebhookConfiguration.failurePolicy }}
     name: vclusterspiffeid.kb.io
     rules:
       - apiGroups: ["spire.spiffe.io"]

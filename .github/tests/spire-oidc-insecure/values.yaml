@@ -26,7 +26,16 @@ spiffe-oidc-discovery-provider:
 
   config:
     domains:
-      - oidc-discovery.example.org
+      - ingress-nginx-controller
 
     acme:
       tosAccepted: false
+
+  ingress:
+    enabled: true
+    className: nginx
+    hosts:
+    - host: ingress-nginx-controller
+      paths:
+        - path: /
+          pathType: Prefix

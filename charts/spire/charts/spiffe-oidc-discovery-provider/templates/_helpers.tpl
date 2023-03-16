@@ -24,6 +24,17 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden for multi-namespace deployments in combined charts
+*/}}
+{{- define "spiffe-oidc-discovery-provider.namespace" -}}
+  {{- if .Values.namespaceOverride -}}
+    {{- .Values.namespaceOverride -}}
+  {{- else -}}
+    {{- .Release.Namespace -}}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "spiffe-oidc-discovery-provider.chart" -}}
@@ -71,4 +82,8 @@ Create the name of the service account to use
 {{- else -}}
 {{- printf "%s/%s" .image.registry .image.repository -}}
 {{- end -}}
+{{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.workload-api-socket-path" -}}
+{{- printf "/spiffe-workload-api/%s" .Values.agentSocketName }}
 {{- end }}

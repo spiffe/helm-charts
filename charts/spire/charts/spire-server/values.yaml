@@ -16,6 +16,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
+namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
@@ -115,6 +116,11 @@ upstreamAuthority:
     namespace: ""
     kube_config_file: ""
 
+notifier:
+  k8sbundle:
+    # -- Namespace to push the bundle into, if blank will default to SPIRE Server namespace
+    namespace: ""
+
 controllerManager:
   enabled: false
 
@@ -167,6 +173,9 @@ controllerManager:
       #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+
+  validatingWebhookConfiguration:
+    failurePolicy: Fail
 
 telemetry:
   prometheus:

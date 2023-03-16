@@ -24,6 +24,25 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Allow the release namespace to be overridden for multi-namespace deployments in combined charts
+*/}}
+{{- define "spire-agent.namespace" -}}
+  {{- if .Values.namespaceOverride -}}
+    {{- .Values.namespaceOverride -}}
+  {{- else -}}
+    {{- .Release.Namespace -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "spire-agent.server.namespace" -}}
+  {{- if .Values.server.namespaceOverride -}}
+    {{- .Values.server.namespaceOverride -}}
+  {{- else -}}
+    {{- .Release.Namespace -}}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "spire-agent.chart" -}}
@@ -77,6 +96,10 @@ Create the name of the service account to use
 {{- if .Values.server.address }}
 {{- .Values.server.address }}
 {{- else }}
-{{ .Release.Name }}-server
+{{ .Release.Name }}-server.{{ include "spire-agent.server.namespace" . }}
 {{- end }}
+{{- end }}
+
+{{- define "spire-agent.socket-path" -}}
+{{- print .Values.socketPath }}
 {{- end }}

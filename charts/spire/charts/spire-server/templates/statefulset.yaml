@@ -5,6 +5,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ include "spire-server.fullname" . }}
+  namespace: {{ include "spire-server.namespace" . }}
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}
 spec:
@@ -132,6 +133,9 @@ spec:
               mountPath: /controller-manager-config.yaml
               subPath: controller-manager-config.yaml
               readOnly: true
+            - name: spire-controller-manager-tmp
+              mountPath: /tmp
+              readOnly: false
         {{- end }}
         {{- if gt (len .Values.extraContainers) 0 }}
         {{- toYaml .Values.extraContainers | nindent 8 }}
@@ -157,6 +161,8 @@ spec:
           configMap:
             name: {{ include "spire-server.fullname" . }}
         - name: spire-server-socket
+          emptyDir: {}
+        - name: spire-controller-manager-tmp
           emptyDir: {}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca

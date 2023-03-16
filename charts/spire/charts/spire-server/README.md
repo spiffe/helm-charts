@@ -47,6 +47,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.annotations | object | `{}` |  |
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
+| controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
@@ -73,9 +74,11 @@ A Helm chart to install the SPIRE server.
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
+| namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
 | nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
+| notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |

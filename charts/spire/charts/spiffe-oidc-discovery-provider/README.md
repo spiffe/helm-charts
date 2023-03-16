@@ -15,6 +15,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| agentSocketName | string | `"spire-agent.sock"` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `5` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -33,6 +34,13 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
+| ingress.className | string | `""` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.hosts[0].host | string | `"oidc-discovery.example.org"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.tls | list | `[]` |  |
 | insecureScheme.enabled | bool | `false` |  |
 | insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
 | insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
@@ -40,6 +48,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
 | insecureScheme.nginx.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
+| namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |

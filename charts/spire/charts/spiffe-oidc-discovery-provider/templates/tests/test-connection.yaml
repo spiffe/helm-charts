@@ -2,22 +2,39 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: "{{ include "spiffe-oidc-discovery-provider.fullname" . }}-test-connection"
+  namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
   labels:
     {{- include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
+  securityContext:
+    {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: wget-service-name
       image: busybox
       command: ['wget']
-      args: ['{{ include "spiffe-oidc-discovery-provider.fullname" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
+      args: ['-O', '/dev/null', '{{ include "spiffe-oidc-discovery-provider.fullname" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
     - name: wget-service-name-namespace
       image: busybox
       command: ['wget']
-      args: ['{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }}/.well-known/openid-configuration']
+      args: ['-O', '/dev/null', '{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
     - name: wget-service-name-namespace-svc-cluster-local
       image: busybox
       command: ['wget']
-      args: ['{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.port }}/.well-known/openid-configuration']
+      args: ['-O', '/dev/null', '{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local:{{ .Values.service.port }}/.well-known/openid-configuration']
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+    {{- if .Values.ingress.enabled }}
+    - name: wget-ingress
+      image: busybox
+      command: ['wget']
+      args: ['-O', '/dev/null', '{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+    {{- end }}
   restartPolicy: Never

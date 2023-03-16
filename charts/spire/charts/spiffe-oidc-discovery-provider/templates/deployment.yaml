@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
+  namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
   labels:
     {{- include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
 spec:
@@ -47,7 +48,7 @@ spec:
           {{- end }}
           volumeMounts:
             - name: spiffe-workload-api
-              mountPath: /spiffe-workload-api
+              mountPath: {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | dir }}
               readOnly: true
             - name: spire-oidc-sockets
               mountPath: /run/spire/oidc-sockets

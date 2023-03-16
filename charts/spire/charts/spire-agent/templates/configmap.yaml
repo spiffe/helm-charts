@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "spire-agent.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spire-agent.namespace" . }}
 data:
   agent.conf: |
     agent {
@@ -10,7 +10,7 @@ data:
       log_level = {{ .Values.logLevel | quote }}
       server_address = {{ include "spire-agent.server-address" . | trim | quote }}
       server_port = {{ .Values.server.port | quote }}
-      socket_path = {{ include "spire.agent-socket-path" . | quote }}
+      socket_path = {{ include "spire-agent.socket-path" . | quote }}
       trust_bundle_path = "/run/spire/bundle/bundle.crt"
       trust_domain = {{ .Values.trustDomain | quote }}
     }

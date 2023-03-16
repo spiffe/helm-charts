@@ -13,6 +13,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
+namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
@@ -60,6 +61,7 @@ bundleConfigMap: spire-bundle
 server:
   address: ""
   port: 8081
+  namespaceOverride: ""
 
 healthChecks:
   # -- override the host port used for health checking
@@ -84,6 +86,8 @@ telemetry:
   prometheus:
     enabled: false
     port: 9988
+
+socketPath: /run/spire/agent-sockets/spire-agent.sock
 
 # -- Priority class assigned to daemonset pods
 priorityClassName: ""

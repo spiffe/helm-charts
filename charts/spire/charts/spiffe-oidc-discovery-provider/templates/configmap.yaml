@@ -3,15 +3,15 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
 data:
   oidc-discovery-provider.conf: |
     log_level = "{{ .Values.config.logLevel }}"
 
     domains = [
       "{{ include "spiffe-oidc-discovery-provider.fullname" . }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local",
     {{- if gt (len .Values.config.domains) 0 }}
       "{{- join "\",\n      \"" .Values.config.domains }}"
     {{- end }}
@@ -30,7 +30,7 @@ data:
     {{- end }}
 
     workload_api {
-      socket_path = "/spiffe-workload-api/{{ include "spire.agent-socket-path" . | splitList "/" | last }}"
+      socket_path = {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
       trust_domain = "{{ .Values.trustDomain }}"
     }
 

@@ -13,12 +13,15 @@ A Helm chart to install the SPIFFE CSI driver.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | fullnameOverride | string | `""` |  |
+| healthChecks.port | int | `9809` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| kubeletPath | string | `"/var/lib/kubelet"` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -27,6 +30,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
 | nodeSelector | object | `{}` |  |
+| pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | priorityClassName | string | `""` | Priority class assigned to daemonset pods |

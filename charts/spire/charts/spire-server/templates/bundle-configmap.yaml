@@ -1,5 +1,6 @@
+{{- $namespace := include "spire-server.namespace" . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.bundleConfigMap }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.notifier.k8sbundle.namespace | default $namespace }}
