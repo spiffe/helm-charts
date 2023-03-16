@@ -57,6 +57,13 @@ spec:
               protocol: TCP
             - containerPort: 8080
               name: healthz
+            {{- with .Values.federation }}
+            {{- if eq (.enabled | toString) "true" }}
+            - name: federation
+              containerPort: {{ .bundleEndpoint.port }}
+              protocol: TCP
+            {{- end }}
+            {{- end }}
             {{- if (dig "telemetry" "prometheus" "enabled" .Values.telemetry.prometheus.enabled .Values.global) }}
             - containerPort: 9988
               name: prom
