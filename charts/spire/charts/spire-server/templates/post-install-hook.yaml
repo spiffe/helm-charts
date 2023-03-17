@@ -21,6 +21,7 @@ metadata:
 rules:
   - apiGroups: ["admissionregistration.k8s.io"]
     resources: ["validatingwebhookconfigurations"]
+    resourceNames: [{{ printf "%s-webhook"  (include "spire-controller-manager.fullname" .) | quote }}]
     verbs: ["get", "patch"]
 ---
 kind: ClusterRoleBinding
