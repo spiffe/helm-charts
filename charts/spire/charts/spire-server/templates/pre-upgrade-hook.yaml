@@ -1,4 +1,5 @@
 {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
+{{- if eq .Values.controllerManager.validatingWebhookConfiguration.failurePolicy "Fail" }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -63,4 +64,5 @@ spec:
         - -c
         - |
           kubectl patch validatingwebhookconfiguration {{ include "spire-controller-manager.fullname" . }}-webhook --type='strategic' -p '{"webhooks":[{"name":"vclusterspiffeid.kb.io","failurePolicy":"Ignore"}]}'
+{{- end }}
 {{- end }}
