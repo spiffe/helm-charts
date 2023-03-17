@@ -14,3 +14,10 @@ spiffe-oidc-discovery-provider:
   enabled: true
   insecureScheme:
     enabled: true
+
+upstream:
+  enabled: true
+
+upstream-spire-agent:
+  server:
+    address: spire-server.nested-root-server
