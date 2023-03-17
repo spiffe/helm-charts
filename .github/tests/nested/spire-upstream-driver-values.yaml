@@ -1,0 +1,21 @@
+spire-server:
+  enabled: false
+
+spire-agent:
+  enabled: true
+  server:
+    address: spire-server.nested-root-server
+  serviceAccount:
+    name: spire-agent-upstream
+  socketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  bundleConfigMap: spire-bundle-upstream
+  healthChecks:
+    port: 9981
+
+spiffe-csi-driver:
+  enabled: true
+  pluginName: upstream.csi.spiffe.io
+  agentSocketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  healthChecks:
+    port: 9810
+
