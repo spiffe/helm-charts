@@ -208,14 +208,26 @@ tornjak:
     # a separate container
     separateFrontend: false
     # img - Tornjak image (frontend + backend) if not separated above
-    img: ghcr.io/spiffe/tornjak
+    image: # ghcr.io/spiffe/tornjak
+      registry: ghcr.io
+      repository: spiffe/tornjak
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      version: "latest"
     # version - the Tornjak version for all images 
     # TODO we should use a specific version instead of 'latest'
     version: latest
     # Front-end specific configuration:
     frontend:
       # img - Tornjak frontend image, if separate from backend
-      img: ghcr.io/spiffe/tornjak-fe
+      # img: ghcr.io/spiffe/tornjak-fe
+      image: 
+        registry: ghcr.io
+        repository: spiffe/tornjak-fe
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        version: "latest"
+
       # ingress - if Ingress required, don't use 'http://' prefix
       # keep empty if local, or direct access available
       ingress:  # 👈 Use it with Cloud Ingress for Frontend
@@ -225,13 +237,14 @@ tornjak:
       apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
      # Back-end specific configuration
     backend:
-    # img - Tornjak backend image
-      img: ghcr.io/spiffe/tornjak-be
-      # socketDir - path to the socket file on the host (and in the container) 
-      # socketDir: /run/spire-server/private
-      socketDir: /tmp/spire-server/private
-      # socketFile - name of the socket file
-      socketFile: api.sock
+      # image - Tornjak backend image
+      # img: ghcr.io/spiffe/tornjak-be
+      image: 
+        registry: ghcr.io
+        repository: spiffe/tornjak-be
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        version: "latest"      
       # ingress - if Ingress required, don't use 'http://' prefix
       # keep empty if local, or direct access available
       ingress:  # 👈 Use it with Cloud Ingress for Backend
