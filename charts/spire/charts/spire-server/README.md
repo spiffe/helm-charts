@@ -54,6 +54,7 @@ A Helm chart to install the SPIRE server.
 | dataStorage.storageClass | string | `nil` |  |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
+| existingConfigMap | bool | `false` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |

@@ -8,6 +8,8 @@ replicaCount: 1
 
 namespaceOverride: ""
 
+existingConfigMap: false
+
 image:
   # registry: gcr.io
   # repository: spiffe-io/oidc-discovery-provider

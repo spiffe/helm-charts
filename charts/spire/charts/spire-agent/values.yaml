@@ -16,6 +16,8 @@ nameOverride: ""
 namespaceOverride: ""
 fullnameOverride: ""
 
+existingConfigMap: false
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

@@ -1,3 +1,4 @@
+{{- if not .Values.existingConfigMap }}
 {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
 apiVersion: v1
 kind: ConfigMap
@@ -29,4 +30,5 @@ data:
       {{- toYaml . | nindent 6 }}
       {{- end }}
     spireServerSocketPath: "/tmp/spire-server/private/api.sock"
+{{- end }}
 {{- end }}

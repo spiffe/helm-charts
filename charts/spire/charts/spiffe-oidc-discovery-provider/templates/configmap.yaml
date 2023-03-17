@@ -1,3 +1,4 @@
+{{- if not .Values.existingConfigMap }}
 {{- $oidcSocket := "/run/spire/oidc-sockets/spire-oidc-server.sock" }}
 apiVersion: v1
 kind: ConfigMap
@@ -60,4 +61,5 @@ data:
         stub_status on;
       }
     }
+  {{- end }}
   {{- end }}
