@@ -185,6 +185,13 @@ controllerManager:
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
+    upgradeHook:
+      image:
+        registry: "bitnami"
+        repository: kubectl
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        version: "latest"
 
 telemetry:
   prometheus:

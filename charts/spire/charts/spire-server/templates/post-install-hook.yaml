@@ -59,7 +59,7 @@ spec:
       serviceAccountName: {{ include "spire-server.serviceAccountName" . }}-post-install
       containers:
       - name: post-install-job
-        image: bitnami/kubectl
+        image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image) }}
         command:
         - /bin/sh
         - -c
