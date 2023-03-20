@@ -68,6 +68,18 @@ spec:
         - /bin/sh
         - -c
         - |-
-          kubectl patch validatingwebhookconfiguration {{ include "spire-controller-manager.fullname" . }}-webhook --type='strategic' -p '{"webhooks":[{"name":"vclusterspiffeid.kb.io","failurePolicy":"Ignore"}]}'
+          kubectl patch validatingwebhookconfiguration {{ include "spire-controller-manager.fullname" . }}-webhook --type='strategic' -p '
+          {
+            "webhooks":[
+              {
+                "name":"vclusterspiffeid.kb.io",
+                "failurePolicy":"Ignore"
+              },
+              {
+                "name":"vclusterfederatedtrustdomain.kb.io",
+                "failurePolicy":"Ignore"
+              }
+            ]
+          }'
 {{- end }}
 {{- end }}
