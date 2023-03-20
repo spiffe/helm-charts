@@ -165,10 +165,6 @@ spec:
           ports:
           - containerPort: 3000
             protocol: TCP
-          securityContext:
-            # privileged is needed to access mounted files (e.g. /run/spire/data)
-            # not needed if using volumeClaimTemplates and sockets
-            privileged: true
           volumeMounts:
           - name: tornjak-config
             mountPath: /run/spire/tornjak-config
