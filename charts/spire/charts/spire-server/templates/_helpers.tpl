@@ -84,7 +84,6 @@ Create the name of the service account to use
 {{- end -}}
 {{- end }}
 
-
 {{- define "spire-server.upstream-ca-secret" -}}
 {{- $root := . }}
 {{- with .Values.upstreamAuthority.disk -}}
@@ -110,6 +109,10 @@ Create the name of the service account to use
 {{- else }}
 [{{ printf "%s:%s-agent" .Release.Namespace .Release.Name | quote }}]
 {{- end }}
+{{- end }}
+
+{{- define "spire-tornjak.fullname" -}}
+{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
 {{- end }}
 
 {{/*
