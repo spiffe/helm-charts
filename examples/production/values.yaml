@@ -10,6 +10,7 @@ spiffe-oidc-discovery-provider:
   podSecurityContext:
     runAsUser: 1000
     runAsGroup: 1000
+    fsGroup: 1000
   securityContext:
     allowPrivilegeEscalation: false
     runAsNonRoot: true
@@ -29,6 +30,7 @@ spire-server:
   podSecurityContext:
     runAsUser: 1000
     runAsGroup: 1000
+    fsGroup: 1000
   securityContext:
     allowPrivilegeEscalation: false
     runAsNonRoot: true
