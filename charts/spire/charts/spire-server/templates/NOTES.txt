@@ -8,13 +8,13 @@ Installed {{ .Chart.Name }}…
 {{- if not .Values.tornjak.config.backend.ingress }}
 No Tornjak Backend Ingress provided. 
 Use port forwarding to access the Tornjak Backend port:
-      kubectl -n {{ .Values.namespace }} port-forward spire-server-0 10000:10000
+      kubectl -n {{ .Release.Namespace }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
 {{- end }}
 
 {{- if not .Values.tornjak.config.frontend.ingress }}
 No Tornjak Frontend Ingress provided. 
 Use port forwarding to access the Tornjak Frontend port:
-      kubectl -n {{ .Values.namespace }} port-forward spire-server-0 3000:3000
+      kubectl -n {{ .Release.Namespace }} port-forward {{ include "spire-server.fullname" . }}-0 3000:3000
 {{- end }}
 
 Tornjak API (Backend) access:   {{ include "tornjak.apiURL" . }}
