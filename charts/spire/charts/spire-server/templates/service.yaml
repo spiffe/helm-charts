@@ -18,3 +18,36 @@ spec:
       protocol: TCP
   selector:
     {{- include "spire-server.selectorLabels" . | nindent 4 }}
+
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ include "spire-server.namespace" . }}
+  name: {{ include "spire-tornjak.frontend" . }}
+spec:
+  type: LoadBalancer
+  selector:
+    {{- include "spire-server.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ include "spire-tornjak.frontend" . }}
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ include "spire-server.namespace" . }}
+  name: {{ include "spire-tornjak.backend" . }}
+spec:
+  type: LoadBalancer
+  selector:
+   {{- include "spire-server.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ include "spire-tornjak.backend" . }}
+      port: 10000
+      targetPort: 10000
+      protocol: TCP
+{{- end }}      

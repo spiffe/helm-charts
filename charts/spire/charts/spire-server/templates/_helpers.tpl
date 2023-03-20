@@ -114,6 +114,15 @@ Create the name of the service account to use
 {{- define "spire-tornjak.fullname" -}}
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
 {{- end }}
+{{- define "spire-tornjak.config" -}}
+{{ include "spire-tornjak.fullname" . }}-config
+{{- end }}
+{{- define "spire-tornjak.frontend" -}}
+{{ include "spire-tornjak.fullname" . }}-fe
+{{- end }}
+{{- define "spire-tornjak.backend" -}}
+{{ include "spire-tornjak.fullname" . }}-be
+{{- end }}
 
 {{/*
 Create URL for accessing Tornjak Backend

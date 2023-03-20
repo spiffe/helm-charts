@@ -140,7 +140,6 @@ spec:
 
         {{- if eq (.Values.tornjak.enabled | toString) "true" }}
         - name: tornjak
-          # image: {{ .Values.tornjak.config.image }}:{{ .Values.tornjak.config.version }}
           image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
           startupProbe:
@@ -166,7 +165,7 @@ spec:
           - containerPort: 3000
             protocol: TCP
           volumeMounts:
-          - name: tornjak-config
+          - name: {{ include "spire-tornjak.config" . }}
             mountPath: /run/spire/tornjak-config
           - name: spire-server-socket
             mountPath: /tmp/spire-server/private
@@ -215,10 +214,10 @@ spec:
         {{- end }}
         {{- if eq (.Values.tornjak.enabled | toString) "true" }}
         {{- if .Values.tornjak.config }}
-        - name: tornjak-config
+        - name: {{ include "spire-tornjak.config" . }}
           configMap:
             defaultMode: 420
-            name: tornjak-config
+            name: {{ include "spire-tornjak.config" . }}
         {{- end }}
         {{- end }}
         {{- if gt (len .Values.extraVolumes) 0 }}

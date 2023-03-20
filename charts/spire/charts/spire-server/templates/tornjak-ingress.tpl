@@ -8,8 +8,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tornjak-fe-ingress
-  namespace: {{ .Release.Namespace }} 
+  name: {{ include "spire-tornjak.frontend" . }}
+  namespace: {{ include "spire-server.namespace" . }} 
 spec:
   rules:
   - host: {{ .Values.tornjak.config.frontend.ingress }}
@@ -19,7 +19,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: tornjak-fe
+            name: {{ include "spire-tornjak.frontend" . }}
             port: 
               number: 3000
 {{- end }}
@@ -31,8 +31,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tornjak-be-ingress
-  namespace: {{ .Release.Namespace }} 
+  name: {{ include "spire-tornjak.backend" . }}
+  namespace: {{ include "spire-server.namespace" . }} 
 spec:
   rules:
   - host: {{ .Values.tornjak.config.backend.ingress }}
@@ -42,7 +42,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: tornjak-be-http
+            name: {{ include "spire-tornjak.backend" . }}
             port: 
               number: 10000
 {{- end }}

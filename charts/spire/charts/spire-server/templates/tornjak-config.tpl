@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tornjak-config
-  namespace: {{ .Values.namespace }}
+  name: {{ include "spire-tornjak.config" . }}
+  namespace: {{ include "spire-server.namespace" . }}
 data:
   server.conf: |
     server {
