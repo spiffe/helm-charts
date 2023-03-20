@@ -49,6 +49,10 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"bitnami"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"kubectl"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
 | dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
