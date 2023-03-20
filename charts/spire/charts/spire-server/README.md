@@ -86,6 +86,16 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
+| tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |
+| tornjak.config.backend.dataStore.file | string | `"./agentlocaldb"` |  |
+| tornjak.config.backend.ingress | string | `nil` |  |
+| tornjak.config.frontend.apiServerURL | string | `"http://localhost:10000"` |  |
+| tornjak.config.frontend.ingress | string | `nil` |  |
+| tornjak.enabled | bool | `true` |  |
+| tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
+| tornjak.image.registry | string | `"ghcr.io"` |  |
+| tornjak.image.repository | string | `"spiffe/tornjak"` |  |
+| tornjak.image.version | string | `"latest"` |  |
 | trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
