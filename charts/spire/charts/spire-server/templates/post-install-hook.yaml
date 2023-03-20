@@ -57,8 +57,12 @@ spec:
     spec:
       restartPolicy: Never
       serviceAccountName: {{ include "spire-server.serviceAccountName" . }}-post-install
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
       - name: post-install-job
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
         image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image) }}
         command:
         - /bin/sh
