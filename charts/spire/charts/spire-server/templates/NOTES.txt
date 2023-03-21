@@ -7,12 +7,18 @@ Installed {{ .Chart.Name }}…
 
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
 
-Use port forwarding to access the Tornjak Backend:
+### WARNING ### 
+For demo purpose we can enable Kubernetes Port Forwarding 
+to get access to Tornjak APIs (Backend) and Tornjak UI (Frontend). 
+
+Tornjak Backend:
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
 
-Use port forwarding to access the Tornjak Frontend:
+Tornjak Frontend:
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 3000:3000
 
-Tornjak API (Backend) access:   {{ include "tornjak.apiURL" . }}
-Tornjak UI (Frontend) access:   {{ include "tornjak.FrontendURL" . }}
+Tornjak API access:  {{ include "tornjak.apiURL" . }}
+Tornjak UI access:   {{ include "tornjak.FrontendURL" . }}
+
+Installed {{ include "spire-tornjak.fullname" . }}…
 {{- end }}
