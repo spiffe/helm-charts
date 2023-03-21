@@ -91,9 +91,7 @@ A Helm chart to install the SPIRE server.
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |
 | tornjak.config.backend.dataStore.file | string | `"./agentlocaldb"` |  |
-| tornjak.config.backend.ingress | string | `nil` |  |
 | tornjak.config.frontend.apiServerURL | string | `"http://localhost:10000"` |  |
-| tornjak.config.frontend.ingress | string | `nil` |  |
 | tornjak.enabled | bool | `true` |  |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
 | tornjak.image.registry | string | `"ghcr.io"` |  |

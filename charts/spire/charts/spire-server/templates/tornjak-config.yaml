@@ -11,8 +11,6 @@ data:
     }
 
     plugins {
-    {{- if .Values.tornjak.config }}
-    {{- if .Values.tornjak.config.backend }}
     {{- if .Values.tornjak.config.backend.dataStore }}
       DataStore "sql" {
         plugin_data {
@@ -20,8 +18,6 @@ data:
           filename = "{{ .Values.tornjak.config.backend.dataStore.file }}"
         }
       }
-    {{- end }}
-    {{- end }}
     {{- end }}
     }
     {{- end }}
