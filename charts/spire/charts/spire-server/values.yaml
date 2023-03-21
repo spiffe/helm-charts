@@ -218,16 +218,10 @@ tornjak:
   config:
     # Front-end specific configuration:
     frontend:
-      # ingress - if Ingress required, don't use 'http://' prefix
-      # keep empty if local, or direct access available
-      ingress:  # 👈 Use it with Cloud Ingress for Frontend
       # apiServerURL - URL of the Tornjak back-end
       apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
      # Back-end specific configuration
     backend:
-      # ingress - if Ingress required, don't use 'http://' prefix
-      # keep empty if local, or direct access available
-      ingress:  # 👈 Use it with Cloud Ingress for Backend
       # dataStore - persistent DB for storing Tornjak specific information
       dataStore:
         driver: "sqlite3"

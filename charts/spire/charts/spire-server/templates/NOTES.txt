@@ -5,17 +5,14 @@ Installed {{ .Chart.Name }}…
   kubectl exec -n {{ .Release.Namespace }} {{ include "spire-server.fullname" . }}-0 -c spire-server -- \
     spire-server entry show
 
-{{- if not .Values.tornjak.config.backend.ingress }}
-No Tornjak Backend Ingress provided. 
-Use port forwarding to access the Tornjak Backend port:
-      kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
-{{- end }}
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
 
-{{- if not .Values.tornjak.config.frontend.ingress }}
-No Tornjak Frontend Ingress provided. 
-Use port forwarding to access the Tornjak Frontend port:
+Use port forwarding to access the Tornjak Backend:
+      kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
+
+Use port forwarding to access the Tornjak Frontend:
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 3000:3000
-{{- end }}
 
 Tornjak API (Backend) access:   {{ include "tornjak.apiURL" . }}
 Tornjak UI (Frontend) access:   {{ include "tornjak.FrontendURL" . }}
+{{- end }}
