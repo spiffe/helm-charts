@@ -5,7 +5,7 @@ set -x
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
-ct install --debug \
+helm install \
   --namespace spire-server \
   --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
   spire charts/spire
