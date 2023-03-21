@@ -1,5 +1,0 @@
-spiffe-oidc-discovery-provider:
-  namespaceOverride: spire-server
-
-spire-server:
-  namespaceOverride: spire-server
