@@ -1,8 +1,6 @@
 spiffe-oidc-discovery-provider:
   enabled: true
   namespaceOverride: spire-server
-  insecureScheme:
-    enabled: true
 
 spire-server:
   namespaceOverride: spire-server
@@ -16,7 +14,6 @@ spire-server:
 spiffe-csi-driver:
   enabled: true
   namespaceOverride: spire-system
-  priorityClassName: system-node-critical
 
 spire-agent:
   enabled: true
