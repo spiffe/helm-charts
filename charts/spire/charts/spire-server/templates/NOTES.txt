@@ -8,8 +8,8 @@ Installed {{ .Chart.Name }}…
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
 
 ### WARNING ### 
-For demo purpose we can enable Kubernetes Port Forwarding 
-to get access to Tornjak APIs (Backend) and Tornjak UI (Frontend). 
+Tornjak is configured without authentication. It is only intended for
+testing for now. Please do not use it in production.
 
 Tornjak Backend:
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
