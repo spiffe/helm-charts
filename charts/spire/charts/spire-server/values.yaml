@@ -212,7 +212,7 @@ nodeAttestor:
 
 # tornjak - Tornjak specific configuration
 tornjak:
-  enabled: true
+  enabled: false
   # image - Tornjak image (frontend + backend) if not separated above
   image: # ghcr.io/spiffe/tornjak
     registry: ghcr.io
