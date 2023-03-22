@@ -49,6 +49,7 @@ jobs:
             echo The previously listed templates were found to be using statically defined images and not overridable ones. Please fix.
             exit 1
           fi
+          exit 0
 
   lint-chart:
     runs-on: ubuntu-22.04
