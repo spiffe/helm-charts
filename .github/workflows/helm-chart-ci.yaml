@@ -43,6 +43,7 @@ jobs:
           fetch-depth: 0
       - name: Check objects for images without overrides
         run: |
+          set +e
           grep -r image: charts/spire  | grep templates/ | grep -v 'image: {{ template "'
           res=$?
           if [ $res -eq 0 ]; then
