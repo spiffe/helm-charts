@@ -92,7 +92,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |
 | tornjak.config.backend.dataStore.file | string | `"/run/spire/data/tornjak.sqlite3"` |  |
 | tornjak.config.frontend.apiServerURL | string | `"http://localhost:10000"` |  |
-| tornjak.enabled | bool | `true` |  |
+| tornjak.enabled | bool | `false` |  |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
 | tornjak.image.registry | string | `"ghcr.io"` |  |
 | tornjak.image.repository | string | `"spiffe/tornjak"` |  |
