@@ -184,6 +184,11 @@ spec:
           - name: spire-config
             mountPath: /run/spire/config
             readOnly: true
+          {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+          - name: spire-data
+            mountPath: /run/spire/data
+            readOnly: false
+          {{- end }}
         {{- end }}
 
         {{- if gt (len .Values.extraContainers) 0 }}

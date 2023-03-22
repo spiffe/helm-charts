@@ -225,4 +225,4 @@ tornjak:
       # dataStore - persistent DB for storing Tornjak specific information
       dataStore:
         driver: "sqlite3"
-        file: "./agentlocaldb"
+        file: "/run/spire/data/tornjak.sqlite3"
