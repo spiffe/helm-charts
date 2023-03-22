@@ -46,7 +46,7 @@ jobs:
           grep -r image: charts/spire  | grep templates/ | grep -v 'image: {{ template "'
           res=$?
           if [ $res -eq 0 ]; then
-            echo The following templates were found to be using statically defined images and not overridable ones. Please fix.
+            echo The previously listed templates were found to be using statically defined images and not overridable ones. Please fix.
             exit 1
           fi
 
