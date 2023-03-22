@@ -1,5 +1,6 @@
 {{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
 {{- $configSum2 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
+{{- $configSumTornjak := (include (print $.Template.BasePath "/tornjak-config.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
 apiVersion: apps/v1
 kind: StatefulSet
@@ -21,6 +22,7 @@ spec:
       annotations:
         checksum/config: {{ $configSum }}
         checksum/config2: {{ $configSum2 }}
+        checksum/configTornjak: {{ $configSumTornjak }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -144,6 +146,51 @@ spec:
               mountPath: /tmp
               readOnly: false
         {{- end }}
+
+        {{- if eq (.Values.tornjak.enabled | toString) "true" }}
+        - name: tornjak
+          securityContext:
+            {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
+          image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image) }}
+          imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
+          startupProbe:
+            httpGet:
+              scheme: HTTP
+              port: 3000  
+            failureThreshold: 6
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          env:
+          {{- if .Values.tornjak.config.frontend }}
+          - name: REACT_APP_API_SERVER_URI
+            value: {{ include "tornjak.apiURL" . | required "Either .Values.tornjak.config.backend.ingress or .Values.tornjak.config.frontend.apiServerURL is required." }}          
+          {{- end }}
+          args:
+          - -c
+          - /run/spire/config/server.conf
+          - -t
+          - /run/spire/tornjak-config/server.conf
+          ports:
+          - containerPort: 3000
+            protocol: TCP
+          volumeMounts:
+          - name: {{ include "spire-tornjak.config" . }}
+            mountPath: /run/spire/tornjak-config
+          - name: spire-server-socket
+            mountPath: /tmp/spire-server/private
+            readOnly: true
+          - name: spire-config
+            mountPath: /run/spire/config
+            readOnly: true
+          {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+          - name: spire-data
+            mountPath: /run/spire/data
+            readOnly: false
+          {{- end }}
+        {{- end }}
+
         {{- if gt (len .Values.extraContainers) 0 }}
         {{- toYaml .Values.extraContainers | nindent 8 }}
         {{- end }}
@@ -180,6 +227,14 @@ spec:
         - name: controller-manager-config
           configMap:
             name: {{ include "spire-controller-manager.fullname" . }}
+        {{- end }}
+        {{- if eq (.Values.tornjak.enabled | toString) "true" }}
+        {{- if .Values.tornjak.config }}
+        - name: {{ include "spire-tornjak.config" . }}
+          configMap:
+            defaultMode: 420
+            name: {{ include "spire-tornjak.config" . }}
+        {{- end }}
         {{- end }}
         {{- if gt (len .Values.extraVolumes) 0 }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
