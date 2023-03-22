@@ -8,13 +8,13 @@ Installed {{ .Chart.Name }}…
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
 
 ### WARNING ### 
-Tornjak is configured without authentication. It is only intended for
-testing for now. Please do not use it in production.
+This Tornjak is configured without authentication and it is intended for
+testing only. Please do not use this version in production.
 
-Tornjak Backend:
+Tornjak APIs (Backend):
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
 
-Tornjak Frontend:
+Tornjak UI (Frontend):
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 3000:3000
 
 Tornjak API access:  {{ include "tornjak.apiURL" . }}
