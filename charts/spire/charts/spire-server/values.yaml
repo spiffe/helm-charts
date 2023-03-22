@@ -226,3 +226,10 @@ tornjak:
       dataStore:
         driver: "sqlite3"
         file: "/run/spire/data/tornjak.sqlite3"
+
+tests:
+  busybox:
+    image:
+      registry: docker.io
+      repository: library/busybox
+      version: latest

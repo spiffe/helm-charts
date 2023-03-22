@@ -155,3 +155,10 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - oidc-discovery.example.org
+
+tests:
+  busybox:
+    image:
+      registry: docker.io
+      repository: library/busybox
+      version: latest
