@@ -9,7 +9,7 @@ image:
   registry: ghcr.io
   repository: spiffe/spire-server
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion.
   version: ""
 
 imagePullSecrets: []
@@ -218,9 +218,9 @@ nodeAttestor:
 
 # tornjak - Tornjak specific configuration
 tornjak:
-  # -- enable, to deploy Tornjak API (backend) component
+  # -- Deploys Tornjak API (backend)
   enabled: false
-  # -- Tornjak API image
+  # Tornjak API image
   image:
     registry: ghcr.io
     repository: spiffe/tornjak-be
@@ -231,7 +231,8 @@ tornjak:
     # Tornjak Backend specific configuration
     backend:
       # -- URL of the Tornjak APIs (backend).
-      # The default value is used when both deployed in the same, local cluster.
+      # Since Tornjak Frontend runs in the browser, this URL must be accessible from
+      # the machine running a browser.
       apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
       # -- persistent DB for storing Tornjak specific information
       dataStore:
