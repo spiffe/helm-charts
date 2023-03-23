@@ -22,7 +22,7 @@ data:
       resourceName: {{ .Release.Name | sha256sum | trunc 8 }}.spiffe.io
       resourceNamespace: {{ include "spire-server.namespace" . }}
     validatingWebhookConfigurationName: {{ include "spire-controller-manager.fullname" . }}-webhook
-    clusterName: {{ .Values.clusterName }}
+    clusterName: {{ include "spire-server.cluster-name" . }}
     trustDomain: {{ .Values.trustDomain }}
     ignoreNamespaces:
       {{- with .Values.controllerManager.ignoreNamespaces }}

@@ -2,6 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  spire:
+    clusterName: example-cluster
+
 image:
   # registry: gcr.io
   # repository: spiffe-io/spire-agent
@@ -53,7 +57,7 @@ resources: {}
 nodeSelector: {}
 
 logLevel: info
-clusterName: example-cluster
+clusterName: ""
 trustDomain: example.org
 
 bundleConfigMap: spire-bundle

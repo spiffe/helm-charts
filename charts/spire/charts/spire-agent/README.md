@@ -15,11 +15,12 @@ A Helm chart to install the SPIRE agent.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | bundleConfigMap | string | `"spire-bundle"` |  |
-| clusterName | string | `"example-cluster"` |  |
+| clusterName | string | `""` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
+| global.spire.clusterName | string | `"example-cluster"` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |

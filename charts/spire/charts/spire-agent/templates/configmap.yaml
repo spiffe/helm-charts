@@ -18,7 +18,7 @@ data:
     plugins {
       NodeAttestor "k8s_psat" {
         plugin_data {
-          cluster = {{ .Values.clusterName | quote }}
+          cluster = {{ include "spire-agent.cluster-name" . | quote }}
         }
       }
 
