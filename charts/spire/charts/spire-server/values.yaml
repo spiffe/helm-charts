@@ -227,8 +227,7 @@ tornjak:
     repository: spiffe/tornjak
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    # TODO we should use a specific Tornjak version instead of 'latest'
-    version: "latest"
+    version: "v1.0.1"
   config:
     # Front-end specific configuration:
     frontend:
