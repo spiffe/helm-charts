@@ -105,8 +105,9 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spire-agent.cluster-name" }}
-{{- if ne (len .Values.clusterName) }}
-{{ .Values.clusterName }}
+{{- if ne (len .Values.clusterName) 0 }}
+{{- .Values.clusterName }}
 {{- else }}
-{{ .Values.global.spire.clusterName }}
+{{- .Values.global.spire.clusterName }}
+{{- end }}
 {{- end }}
