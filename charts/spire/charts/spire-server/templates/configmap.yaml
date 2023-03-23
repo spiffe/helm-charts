@@ -55,7 +55,7 @@ data:
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
-            {{ $root.Values.clusterName | quote }} = {
+            {{ include "spire-server.cluster-name" $root | quote }} = {
               service_account_allow_list = {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
             }
           }

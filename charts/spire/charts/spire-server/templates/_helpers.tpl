@@ -111,6 +111,13 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.cluster-name" }}
+{{- if ne (len .Values.clusterName) }}
+{{ .Values.clusterName }}
+{{- else }}
+{{ .Values.global.spire.clusterName }}
+{{- end }}
+
 {{/*
 Tornjak specific section
 */}}

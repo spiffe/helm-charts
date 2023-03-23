@@ -103,3 +103,10 @@ Create the name of the service account to use
 {{- define "spire-agent.socket-path" -}}
 {{- print .Values.socketPath }}
 {{- end }}
+
+{{- define "spire-agent.cluster-name" }}
+{{- if ne (len .Values.clusterName) }}
+{{ .Values.clusterName }}
+{{- else }}
+{{ .Values.global.spire.clusterName }}
+{{- end }}

@@ -28,7 +28,7 @@ A Helm chart to install the SPIRE server.
 | ca_subject.common_name | string | `"example.org"` |  |
 | ca_subject.country | string | `"NL"` |  |
 | ca_subject.organization | string | `"Example"` |  |
-| clusterName | string | `"example-cluster"` |  |
+| clusterName | string | `""` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
@@ -61,6 +61,7 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
+| global.spire.clusterName | string | `"example-cluster"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-server"` |  |

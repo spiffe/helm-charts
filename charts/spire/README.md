@@ -93,17 +93,16 @@ Kubernetes: `>=1.21.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
+| global.spire.clusterName | string | `"example-cluster"` |  |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
-| spire-agent.clusterName | string | `"example-cluster"` |  |
 | spire-agent.enabled | bool | `true` |  |
 | spire-agent.nameOverride | string | `"agent"` |  |
 | spire-agent.trustDomain | string | `"example.org"` |  |
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
-| spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
