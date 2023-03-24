@@ -10,6 +10,7 @@ on:
       - '.github/kind/conf/kind-config.yaml'
       - '.github/tests/**/*.yaml'
       - '.github/tests/**/*.sh'
+      - 'examples/**/*.yaml'
       - 'helm-docs.sh'
 
 concurrency:
@@ -116,7 +117,6 @@ jobs:
           - v1.24.7
           - v1.23.13
           - v1.22.15
-          - v1.21.14
         values:
           - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
@@ -152,18 +152,22 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          export scenario="$(basename "${TEST_DIR}")"
-          export EXTRA_HELM_ARGS=""
-          [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           post-install() {
             [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh" $1
             exit $1
           }
+
           trap 'post-install $? $LINENO' EXIT
+
+          export scenario="$(basename "${TEST_DIR}")"
+          export EXTRA_HELM_ARGS=""
+
+          [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
           [ -f "${TEST_DIR}/.env" ] && source "${TEST_DIR}/.env"
-          if [ -x {${TEST_DIR}/install.sh ]; then
-            ./${TEST_DIR}/install.sh
+
+          if [ -x "${TEST_DIR}/install.sh" ]; then
+            "${TEST_DIR}/install.sh"
           else
             ct install --debug \
               --namespace "${scenario}" \

@@ -16,5 +16,46 @@ spec:
       port: {{ .Values.service.port }}
       targetPort: grpc
       protocol: TCP
+    {{- with .Values.federation }}
+    {{- if eq (.enabled | toString) "true" }}
+    - name: federation
+      port: {{ .bundleEndpoint.port }}
+      targetPort: federation
+      protocol: TCP
+    {{- end }}
+    {{- end }}
   selector:
     {{- include "spire-server.selectorLabels" . | nindent 4 }}
+
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ include "spire-server.namespace" . }}
+  name: {{ include "spire-tornjak.frontend" . }}
+spec:
+  type: {{ .Values.service.type }} # ClusterIP
+  selector:
+    {{- include "spire-server.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ include "spire-tornjak.frontend" . }}
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ include "spire-server.namespace" . }}
+  name: {{ include "spire-tornjak.backend" . }}
+spec:
+  type: {{ .Values.service.type }} # ClusterIP
+  selector:
+   {{- include "spire-server.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: {{ include "spire-tornjak.backend" . }}
+      port: 10000
+      targetPort: 10000
+      protocol: TCP
+{{- end }}      
