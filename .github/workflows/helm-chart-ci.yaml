@@ -48,8 +48,13 @@ jobs:
           grep -r "image:" "charts/spire"  | grep "templates/" | grep -v 'image: {{ template "' > /tmp/findings
           res=$?
           if [ $res -eq 0 ]; then
-            (echo These templates were found to be using statically defined images and not overridable ones. Please fix.
-            cat /tmp/findings) >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo "## Hardcoded images"
+              echo 
+              echo ":x: These templates were found to be using statically defined images and not overridable ones. Please fix."
+              echo
+              cat /tmp/findings
+            } >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
 
