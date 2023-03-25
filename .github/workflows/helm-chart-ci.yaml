@@ -46,7 +46,11 @@ jobs:
           for FILE in spiffe-oidc-discovery-provider spire-agent spire-server; do
             VER=$(yq .appVersion charts/spire/charts/$FILE/Chart.yaml)
             if [ "$VER" != "$BASEVER" ]; then
-              echo "There is a mismatch between the chart versions (excluding the csi-driver). Please fix."
+              {
+                echo "## Version mismatch"
+                echo
+                echo "There is a mismatch between the chart versions (excluding the csi-driver). Please fix."
+              } >> "$GITHUB_STEP_SUMMARY"
               exit 1
             fi
           done
