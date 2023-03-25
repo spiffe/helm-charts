@@ -86,6 +86,7 @@ clusterName: example-cluster
 trustDomain: example.org
 
 bundleConfigMap: spire-server
+serviceDnsDomain: cluster.local
 
 federation:
   enabled: false

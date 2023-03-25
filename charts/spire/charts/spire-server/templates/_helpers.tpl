@@ -142,3 +142,7 @@ Create URL for accessing Tornjak Frontend
 {{- $feurl := print "http://localhost:3000" }}
 {{- $feurl }}
 {{- end }}
+
+{{- define "spire-server.service-dns-domain" -}}
+{{- .Values.serviceDnsDomain }}
+{{- end }}

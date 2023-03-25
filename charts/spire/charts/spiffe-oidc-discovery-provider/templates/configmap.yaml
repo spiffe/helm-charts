@@ -11,7 +11,7 @@ data:
     domains = [
       "{{ include "spiffe-oidc-discovery-provider.fullname" . }}",
       "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spiffe-oidc-discovery-provider.service-dns-domain" . }}",
     {{- if gt (len .Values.config.domains) 0 }}
       "{{- join "\",\n      \"" .Values.config.domains }}"
     {{- end }}
