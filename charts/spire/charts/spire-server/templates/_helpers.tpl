@@ -160,6 +160,9 @@ Create URL for accessing Tornjak Frontend
   {{- if eq (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList ) 0}}
     {{- $_ := set $tmp.Values.nodeAttestor.k8sPsat "serviceAccountAllowList" (list "spire-system:spire-agent") }}
   {{- end }}
+  {{- if has "expose-spire-server-ingress-nginx" $l }}
+    {{- $_ := set $tmp.Values.ingress "enabled" true }}
+  {{- end }}
 {{- end }}
 {{- $tmp.Values | toYaml }}
 {{- end }}

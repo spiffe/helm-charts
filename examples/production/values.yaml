@@ -42,6 +42,7 @@ global:
   spire:
     profiles:
     - production
+    #- expose-spire-server-ingress-nginx
 
   telemetry:
     prometheus:
