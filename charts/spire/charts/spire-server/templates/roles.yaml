@@ -1,3 +1,4 @@
+{{ $_ := set . "Values" ( include "spire-server.profile-values" . | fromYaml ) }}
 {{- $namespace := include "spire-server.namespace" . }}
 # Role to be able to push certificate bundles to a configmap
 kind: Role

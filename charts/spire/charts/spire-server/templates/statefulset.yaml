@@ -1,3 +1,4 @@
+{{ $_ := set . "Values" ( include "spire-server.profile-values" . | fromYaml ) }}
 {{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
 {{- $configSum2 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $configSumTornjak := (include (print $.Template.BasePath "/tornjak-config.yaml") . | sha256sum) }}

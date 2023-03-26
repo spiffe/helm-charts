@@ -142,3 +142,15 @@ Create URL for accessing Tornjak Frontend
 {{- $feurl := print "http://localhost:3000" }}
 {{- $feurl }}
 {{- end }}
+
+{{ define "spire-server.profile-values" }}
+{{- $files := .Files }}
+{{- $tmp := dict "Values" (deepCopy .Values) }}
+{{- $l := concat .Values.global.spire.profiles .Values.profiles }}
+{{- range $l }}
+  {{- $n := $files.Get ( printf "profiles/%s.yaml" . ) | fromYaml }}
+  {{- $nv := mustMerge $tmp.Values $n }}
+  {{- $_ := set $tmp "Values" $nv }}
+{{- end }}
+{{- $tmp.Values | toYaml }}
+{{- end }}
