@@ -3,6 +3,11 @@
 #   telemetry:
 #     prometheus:
 #       enabled: true
+#       podMonitor:
+#         enabled: true
+#         # Use if you want to install the podMonitor into a namespace other then the one the services are in
+#         namespace: "kube-prometheus-system"
+#         labels: {}
 
 nameOverride: ""
 fullnameOverride: ""

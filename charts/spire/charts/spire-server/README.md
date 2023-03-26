@@ -87,6 +87,9 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| telemetry.prometheus.podMonitor.namespace | string | `""` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |
