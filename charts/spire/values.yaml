@@ -1,8 +1,12 @@
+global:
+  spire:
+    profiles: []
+#    - production
+
 # You can enable features that affect all services here.
-# global:
-#   telemetry:
-#     prometheus:
-#       enabled: true
+#  telemetry:
+#    prometheus:
+#      enabled: true
 
 nameOverride: ""
 fullnameOverride: ""
