@@ -149,8 +149,17 @@ Create URL for accessing Tornjak Frontend
 {{- $l := concat .Values.global.spire.profiles .Values.profiles }}
 {{- range $l }}
   {{- $n := $files.Get ( printf "profiles/%s.yaml" . ) | fromYaml }}
-  {{- $nv := mustMerge $tmp.Values $n }}
+  {{- $nv := mustMergeOverwrite $n $tmp.Values }}
   {{- $_ := set $tmp "Values" $nv }}
+{{- end }}
+{{/* Any value that is still default after the user can override should be overridden by our profile setting. */}}
+{{- if has "production" $l }}
+  {{- if eq .Values.notifier.k8sbundle.namespace ""}}
+    {{- $_ := set $tmp.Values.notifier.k8sbundle "namespace" "spire-system" }}
+  {{- end }}
+  {{- if eq (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList ) 0}}
+    {{- $_ := set $tmp.Values.nodeAttestor.k8sPsat "serviceAccountAllowList" (list "spire-system:spire-agent") }}
+  {{- end }}
 {{- end }}
 {{- $tmp.Values | toYaml }}
 {{- end }}
