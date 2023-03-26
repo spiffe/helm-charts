@@ -186,6 +186,11 @@ controllerManager:
 telemetry:
   prometheus:
     enabled: false
+    podMonitor:
+      enabled: false
+      # - Override where to install the podMonitor
+      namespace: ""
+      labels: {}
 
 extraVolumes: []
 extraVolumeMounts: []
