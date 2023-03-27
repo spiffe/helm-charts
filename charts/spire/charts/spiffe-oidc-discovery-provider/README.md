@@ -21,6 +21,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| clusterDomain | string | `"cluster.local"` |  |
 | config.acme.cacheDir | string | `"/run/spire"` |  |
 | config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
@@ -61,7 +62,6 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| serviceDnsDomain | string | `"cluster.local"` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
 | telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` |  |
 | telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` |  |

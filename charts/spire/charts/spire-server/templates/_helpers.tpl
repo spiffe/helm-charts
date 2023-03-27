@@ -143,6 +143,6 @@ Create URL for accessing Tornjak Frontend
 {{- $feurl }}
 {{- end }}
 
-{{- define "spire-server.service-dns-domain" -}}
-{{- .Values.serviceDnsDomain }}
+{{- define "spire-server.cluster-domain" -}}
+{{- .Values.clusterDomain }}
 {{- end }}

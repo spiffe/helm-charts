@@ -114,7 +114,7 @@ affinity: {}
 
 trustDomain: example.org
 # -- Update this if you used the kubeadm init --service-dns-domain flag
-serviceDnsDomain: cluster.local
+clusterDomain: cluster.local
 
 telemetry:
   prometheus:

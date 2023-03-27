@@ -87,7 +87,7 @@ trustDomain: example.org
 
 bundleConfigMap: spire-server
 # -- Update this if you used the kubeadm init --service-dns-domain flag
-serviceDnsDomain: cluster.local
+clusterDomain: cluster.local
 
 federation:
   enabled: false

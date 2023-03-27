@@ -88,6 +88,6 @@ Create the name of the service account to use
 {{- printf "/spiffe-workload-api/%s" .Values.agentSocketName }}
 {{- end }}
 
-{{- define "spiffe-oidc-discovery-provider.service-dns-domain" -}}
-{{- .Values.serviceDnsDomain }}
+{{- define "spiffe-oidc-discovery-provider.cluster-domain" -}}
+{{- .Values.clusterDomain }}
 {{- end }}
