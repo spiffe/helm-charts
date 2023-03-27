@@ -48,7 +48,6 @@ jobs:
               exit 1
             fi
           done
-        directory: charts/spire
 
   lint-chart:
     runs-on: ubuntu-22.04
