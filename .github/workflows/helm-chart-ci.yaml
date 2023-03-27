@@ -43,7 +43,7 @@ jobs:
               {
                 echo "## Version mismatch"
                 echo
-                echo "There is a mismatch between the chart versions (excluding the csi-driver and spire-controller-manager). Please fix."
+                echo "There is a mismatch between the chart version ($BASEVER) and subchart version ($VER). The issue may be in file $FILE. Please fix."
               } >> "$GITHUB_STEP_SUMMARY"
               exit 1
             fi
