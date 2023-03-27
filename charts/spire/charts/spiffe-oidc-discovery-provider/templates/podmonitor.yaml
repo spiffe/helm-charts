@@ -20,7 +20,7 @@ spec:
     matchLabels:
       {{- include "spire-agent.selectorLabels" . | nindent 6 }}
   podMetricsEndpoints:
-  - port: prom
+    - port: prom
   {{- if ne $namespace $podNamespace }}
   namespaceSelector:
     kubernetes.io/metadata.name: {{ $podNamespace }}
