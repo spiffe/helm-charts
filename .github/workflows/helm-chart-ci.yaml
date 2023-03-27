@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Verify Docs updated
         run: ./helm-docs.sh
@@ -64,6 +64,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.4.0
+      - name: Check objects for images without overrides
+        run: |
+          set +e
+          set -o pipefail
+          # Look for image: defintions that are not templated. If we find none, exit is not 0 and we invert the error code to get the
+          # test to pass
+          grep -r "image:" "charts/spire"  | grep "templates/" | grep -v 'image: {{ template "' > /tmp/findings
+          res=$?
+          if [ $res -eq 0 ]; then
+            {
+              echo "## Hardcoded images"
+              echo 
+              echo ":x: These templates were found to be using statically defined images and not overridable ones. Please fix."
+              echo
+              cat /tmp/findings
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+  lint-chart:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -78,7 +103,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
@@ -108,7 +133,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - id: set-matrix
         name: Collect all tests
@@ -147,7 +172,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -162,7 +187,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
