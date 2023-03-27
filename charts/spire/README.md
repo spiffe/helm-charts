@@ -3,14 +3,26 @@
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
 ![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.1](https://img.shields.io/badge/AppVersion-1.6.1-informational?style=flat-square)
+[![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
 
 **Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
-> **Warning**: Please note this chart requires Projected Service Account Tokens which has to be enabled on your k8s api server.
+## Version support
 
-> **Note**: Minimum Spire version is `v1.5.3`.
+> **Note**: This Chart is still in development and still subject to change the API (`values.yaml`).
+> Until we reach a `1.0.0` version of the chart we can't guarantee backwards compatibility although
+> we do aim for as much stability as possible.
+
+| Dependency | Supported Versions |
+|:-----------|:-------------------|
+| SPIRE      | `1.5.3+`, `1.6.x`  |
+| Helm       | `3.x`              |
+
+## Prerequisites
+
+Please note this chart requires `Projected Service Account Tokens` which has to be enabled on your k8s api server.
 
 To enable Projected Service Account Tokens on Docker for Mac/Windows run the following
 command to SSH into the Docker Desktop K8s VM.
