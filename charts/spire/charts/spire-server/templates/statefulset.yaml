@@ -157,7 +157,7 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
-              port: 3000  
+              port: 3000
             failureThreshold: 6
             initialDelaySeconds: 60
             periodSeconds: 30
@@ -166,7 +166,7 @@ spec:
           env:
           {{- if .Values.tornjak.config.frontend }}
           - name: REACT_APP_API_SERVER_URI
-            value: {{ include "tornjak.apiURL" . | required "Either .Values.tornjak.config.backend.ingress or .Values.tornjak.config.frontend.apiServerURL is required." }}          
+            value: {{ include "tornjak.apiURL" . | required "Either .Values.tornjak.config.backend.ingress or .Values.tornjak.config.frontend.apiServerURL is required." }}
           {{- end }}
           args:
           - -c
