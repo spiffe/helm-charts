@@ -72,23 +72,16 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-
 {{/*
-Create URL for accessing Tornjak Backend
+Create the name of the service
 */}}
-{{- define "tornjak.apiURL" -}}
-{{- default .Values.tornjakFrontend.apiServerURL }}
+{{- define "tornjak-frontend.service" -}}
+{{ include "tornjak-frontend.fullname" . }}-service
 {{- end }}
 
 {{/*
-Create URL for accessing Tornjak Frontend
+Create an image name
 */}}
-{{- define "tornjak.FrontendURL" -}}
-{{- $feurl := print "http://localhost:3000" }}
-{{- $feurl }}
-{{- end }}
-
-
 {{- define "tornjak-frontend.image" -}}
 {{- if eq (substr 0 7 .image.version) "sha256:" -}}
 {{- printf "%s/%s@%s" .image.registry 
@@ -111,3 +104,25 @@ Create URL for accessing Tornjak Frontend
     .Values.tornjakFrontend.image.repository -}}
 {{- end -}}
 {{- end }}
+
+{{/*
+Create URL for accessing Tornjak APIs
+*/}}
+{{- define "tornjak-frontend.apiURL" -}}
+{{- if .Values.tornjakFrontend.apiServerURL -}}
+{{-  .Values.tornjakFrontend.apiServerURL -}}
+{{- else }}
+{{- $feurl := print "http://localhost:" .Values.service.port }}
+{{- $feurl }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create URL for accessing Tornjak UI
+*/}}
+{{- define "tornjak-frontend.frontendURL" -}}
+{{- $feurl := print "http://localhost:" .Values.service.port }}
+{{- $feurl }}
+{{- end }}
+
+

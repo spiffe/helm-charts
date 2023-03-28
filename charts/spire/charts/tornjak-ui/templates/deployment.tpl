@@ -23,7 +23,7 @@ spec:
         image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
-        - containerPort: {{ .Values.service.port }}
+        - containerPort: 3000
         env:
         - name: REACT_APP_API_SERVER_URI
           value: {{ .Values.tornjakFrontend.apiServerURL }}          

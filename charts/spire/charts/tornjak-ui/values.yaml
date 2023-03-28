@@ -29,10 +29,10 @@ image:
 service:
   type: ClusterIP
   port: 3000
-  annotations: {}
 
 # tornjak - Tornjak specific configuration
 tornjakFrontend:
-  enabled: true 
+  enabled: false
   # apiServerURL - URL of the Tornjak back-end
-  apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
+  apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind when running in the same cluster
+  
