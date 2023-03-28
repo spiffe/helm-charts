@@ -23,7 +23,7 @@ env:
   CHART_TESTING_VERSION: v3.7.1
 
 jobs:
-  check-docs:
+  checks:
     runs-on: ubuntu-22.04
 
     steps:
@@ -33,12 +33,6 @@ jobs:
       - name: Verify Docs updated
         run: ./helm-docs.sh
 
-  ensure-image-overrides:
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.5.0
       - name: Check objects for images without overrides
         run: |
           set +e
