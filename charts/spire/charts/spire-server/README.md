@@ -61,7 +61,6 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
-| global.spire.clusterName | string | `"example-cluster"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-server"` |  |
