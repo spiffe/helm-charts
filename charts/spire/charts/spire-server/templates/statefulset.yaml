@@ -156,25 +156,17 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
-              port: 3000
-            failureThreshold: 6
-            initialDelaySeconds: 60
-            periodSeconds: 30
+              port: 10000
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 10
-          env:
-          {{- if .Values.tornjak.config.frontend }}
-          - name: REACT_APP_API_SERVER_URI
-            value: {{ include "tornjak.apiURL" . | required "Either .Values.tornjak.config.backend.ingress or .Values.tornjak.config.frontend.apiServerURL is required." }}
-          {{- end }}
+            timeoutSeconds: 5
           args:
           - -c
           - /run/spire/config/server.conf
           - -t
           - /run/spire/tornjak-config/server.conf
-          ports:
-          - containerPort: 3000
-            protocol: TCP
           volumeMounts:
           - name: {{ include "spire-tornjak.config" . }}
             mountPath: /run/spire/tornjak-config

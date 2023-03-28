@@ -169,14 +169,14 @@ Tornjak specific section
 {{/*
 Create URL for accessing Tornjak Backend
 */}}
-{{- define "tornjak.apiURL" -}}
+{{- define "spire-tornjak.apiURL" -}}
 {{- default .Values.tornjak.config.frontend.apiServerURL }}
 {{- end }}
 
 {{/*
 Create URL for accessing Tornjak Frontend
 */}}
-{{- define "tornjak.FrontendURL" -}}
+{{- define "spire-tornjak.FrontendURL" -}}
 {{- $feurl := print "http://localhost:3000" }}
 {{- $feurl }}
 {{- end }}

@@ -224,7 +224,7 @@ tornjak:
   # image - Tornjak image (frontend + backend) if not separated above
   image: # ghcr.io/spiffe/tornjak
     registry: ghcr.io
-    repository: spiffe/tornjak
+    repository: spiffe/tornjak-be
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     version: "v1.0.1"
