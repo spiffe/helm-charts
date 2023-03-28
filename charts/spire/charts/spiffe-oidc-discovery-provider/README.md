@@ -68,9 +68,9 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.nginxExporter.image.version | string | `"0.11.0"` |  |
 | telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
 | telemetry.prometheus.port | int | `9988` |  |
-| tests.busybox.image.registry | string | `"docker.io"` |  |
-| tests.busybox.image.repository | string | `"library/busybox"` |  |
-| tests.busybox.image.version | string | `"latest"` |  |
+| tests.busybox.image.registry | string | `"cgr.dev"` |  |
+| tests.busybox.image.repository | string | `"chainguard/busybox"` |  |
+| tests.busybox.image.version | string | `"latest-glibc"` |  |
 | tolerations | list | `[]` |  |
 | trustDomain | string | `"example.org"` |  |
 

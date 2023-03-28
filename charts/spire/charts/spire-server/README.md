@@ -87,9 +87,9 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
-| tests.busybox.image.registry | string | `"docker.io"` |  |
-| tests.busybox.image.repository | string | `"library/busybox"` |  |
-| tests.busybox.image.version | string | `"latest"` |  |
+| tests.busybox.image.registry | string | `"cgr.dev"` |  |
+| tests.busybox.image.repository | string | `"chainguard/busybox"` |  |
+| tests.busybox.image.version | string | `"latest-glibc"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |

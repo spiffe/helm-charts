@@ -159,6 +159,6 @@ ingress:
 tests:
   busybox:
     image:
-      registry: docker.io
-      repository: library/busybox
-      version: latest
+      registry: cgr.dev
+      repository: chainguard/busybox
+      version: latest-glibc
