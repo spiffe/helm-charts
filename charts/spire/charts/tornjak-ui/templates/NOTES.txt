@@ -1,0 +1,27 @@
+The installation of the Tornjak UI (Frontend) for
+Universal Trusted Workload Identity Service.
+
+      Chart Name: {{ .Chart.Name }}
+      Name: {{ include "tornjak-frontend.name" . }}
+      Fullname: {{ include "tornjak-frontend.fullname" . }}
+      Your release is named: {{ .Release.Name }}
+      Namespace: {{ include "tornjak-frontend.namespace" . }}
+{{- if eq (.Values.tornjakFrontend.enabled | toString) "true" }}
+      Tornjak Frontend 
+           image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+           pull policy: {{ .Values.image.pullPolicy }}
+      
+      ### WARNING ### 
+      This Tornjak is configured without authentication and it is intended for
+      testing only. Please do not use this version in production.
+      
+      You can use port forwarding to access UI:
+        kubectl -n {{ include "tornjak-frontend.namespace" . }} port-forward service/{{ include "tornjak-frontend.fullname" . }} {{ .Values.service.port }}:{{ .Values.service.port }}
+      Tornjak UI Access:    {{ include "tornjak.FrontendURL" . }}
+      
+{{- end }}
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
