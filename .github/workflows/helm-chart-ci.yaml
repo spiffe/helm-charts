@@ -23,22 +23,38 @@ env:
   CHART_TESTING_VERSION: v3.7.1
 
 jobs:
-  check-docs:
+  checks:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Verify Docs updated
         run: ./helm-docs.sh
+
+      - name: Verify Spire appVersion
+        run: |
+          set +e
+          BASEVER=$(yq e .appVersion Chart.yaml)
+          for FILE in spiffe-oidc-discovery-provider spire-agent spire-server; do
+            VER=$(yq .appVersion charts/$FILE/Chart.yaml)
+            if [ "$VER" != "$BASEVER" ]; then
+              {
+                echo "## Version mismatch"
+                echo
+                echo "There is a mismatch between the chart version ($BASEVER) and subchart version ($VER). The issue may be in file $FILE. Please fix."
+              } >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+          done
 
   lint-chart:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -53,7 +69,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
@@ -83,7 +99,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - id: set-matrix
         name: Collect all tests
@@ -122,7 +138,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -137,7 +153,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 

@@ -4,6 +4,7 @@
 
 [![Apache 2.0 License](https://img.shields.io/github/license/spiffe/helm-charts)](https://opensource.org/licenses/Apache-2.0)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/spiffe)](https://artifacthub.io/packages/search?repo=spiffe)
 
 A suite of [Helm Charts](https://helm.sh/docs) for standardized installations of SPIRE components in Kubernetes environments.
 
@@ -20,7 +21,7 @@ Unless otherwise noted in an application chart README, the following dependencie
 
 | Dependency | Supported Versions |
 |:-----------|:-------------------|
-| SPIRE      | `1.5.x`, `1.6.x`   |
+| SPIRE      | `1.5.3`+, `1.6.x`  |
 | Helm       | `3.x`              |
 
 For Kubernetes we will officially try to support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions).
