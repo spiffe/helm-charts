@@ -103,7 +103,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.enabled | bool | `false` |  |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
 | tornjak.image.registry | string | `"ghcr.io"` |  |
-| tornjak.image.repository | string | `"spiffe/tornjak"` |  |
+| tornjak.image.repository | string | `"spiffe/tornjak-be"` |  |
 | tornjak.image.version | string | `"v1.0.1"` |  |
 | trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
