@@ -10,6 +10,8 @@ fullnameOverride: ""
 # subcharts
 spire-server:
   enabled: true
+  # -- Update this if you used the kubeadm init --service-dns-domain flag
+  clusterDomain: local
   nameOverride: server
   bundleConfigMap: &bundleConfigMap spire-bundle
 
@@ -21,6 +23,8 @@ spire-server:
 
 spire-agent:
   enabled: true
+  # -- Update this if you used the kubeadm init --service-dns-domain flag
+  clusterDomain: local
   nameOverride: agent
   bundleConfigMap: *bundleConfigMap
 
@@ -31,5 +35,7 @@ spiffe-csi-driver:
   enabled: true
 
 spiffe-oidc-discovery-provider:
+  # -- Update this if you used the kubeadm init --service-dns-domain flag
+  clusterDomain: local
   enabled: false
   trustDomain: *trustDomain
