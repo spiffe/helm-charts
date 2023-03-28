@@ -3,11 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: {{ include "tornjak-frontend.namespace" . }}
-  name: {{ include "tornjak-frontend.fullname" . }}
-  {{- with .Values.service.annotations }}
-  annotations:
-    {{- toYaml . | nindent 8 }}
-  {{- end }}
+  name: {{ include "tornjak-frontend.service" . }}
   labels:
     {{- include "tornjak-frontend.labels" . | nindent 4 }}
 spec:
@@ -17,5 +13,5 @@ spec:
   ports:
     - name: {{ include "tornjak-frontend.fullname" . }}
       port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
+      targetPort: 3000
 {{- end }}
