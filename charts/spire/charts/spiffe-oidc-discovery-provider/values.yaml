@@ -120,7 +120,7 @@ telemetry:
     port: 9988
     podMonitor:
       enabled: false
-      # - Override where to install the podMonitor
+      # -- Override where to install the podMonitor, if not set will use the same namespace as oidc
       namespace: ""
       labels: {}
 
