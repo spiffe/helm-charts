@@ -1,0 +1,38 @@
+# Default values for deployment of Tornjak Frontend
+# This is a YAML-formatted file.
+
+# namespaceOverride - the namespace for deploying the Tornjak Frontend
+#             using default Helm Release namespace if not set
+namespaceOverride: ""
+# nameOverride - specify the name, otherwise the Chart name will be used
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+labels: {}
+
+# image - Tornjak image (frontend + backend) if not separated above
+image:
+  registry: ghcr.io
+  repository: spiffe/tornjak-fe
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  version: "v1.0.1"
+
+service:
+  type: ClusterIP
+  port: 3000
+  annotations: {}
+
+# tornjak - Tornjak specific configuration
+tornjakFrontend:
+  enabled: true 
+  # apiServerURL - URL of the Tornjak back-end
+  apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
