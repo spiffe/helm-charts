@@ -14,13 +14,7 @@ spec:
     - name: wget-tornjak-backend
       image: busybox
       command: ['wget']
-      args: ['--no-check-certificate', '-O', '/dev/null', 'http://{{ include "spire-tornjak.backend" . }}:10000/api/tornjak/serverinfo']
-      securityContext:
-        {{- toYaml .Values.securityContext | nindent 8 }}
-    - name: wget-tornjak-frontend
-      image: busybox
-      command: ['wget']
-      args: ['--no-check-certificate', '-O', '/dev/null', 'http://{{ include "spire-tornjak.frontend" . }}:3000']
+      args: ['--no-check-certificate', '-O', '/dev/null', 'http://{{ include "spire-tornjak.backend" . }}:10000/']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
   restartPolicy: Never
