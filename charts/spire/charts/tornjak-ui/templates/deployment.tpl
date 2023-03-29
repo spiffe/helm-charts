@@ -1,4 +1,3 @@
-{{- if eq (.Values.tornjakFrontend.enabled | toString) "true" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,4 +38,3 @@ spec:
             periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 10
-{{- end }}

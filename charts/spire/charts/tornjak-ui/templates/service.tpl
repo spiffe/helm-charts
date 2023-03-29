@@ -1,4 +1,3 @@
-{{- if eq (.Values.tornjakFrontend.enabled | toString) "true" }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,4 +13,3 @@ spec:
     - name: {{ include "tornjak-frontend.fullname" . }}
       port: {{ .Values.service.port }}
       targetPort: 3000
-{{- end }}
