@@ -46,9 +46,8 @@ port forwarding. See the chart NOTES output for more details.
 | securityContext | object | `{}` |  |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjakFrontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend). The default value is used when both deployed in the same, local cluster. |
-| tornjakFrontend.enabled | bool | `false` |  |
 ----------------------------------------------

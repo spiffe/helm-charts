@@ -1,4 +1,3 @@
-{{- if eq (.Values.tornjakFrontend.enabled | toString) "true" }}
 {{- if .Values.serviceAccount.create -}}
 apiVersion: v1
 kind: ServiceAccount
@@ -11,5 +10,4 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
 {{- end }}
