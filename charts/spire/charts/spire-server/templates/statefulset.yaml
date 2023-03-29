@@ -163,24 +163,24 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5
           args:
-          - -c
-          - /run/spire/config/server.conf
-          - -t
-          - /run/spire/tornjak-config/server.conf
+            - -c
+            - /run/spire/config/server.conf
+            - -t
+            - /run/spire/tornjak-config/server.conf
           volumeMounts:
-          - name: {{ include "spire-tornjak.config" . }}
-            mountPath: /run/spire/tornjak-config
-          - name: spire-server-socket
-            mountPath: /tmp/spire-server/private
-            readOnly: true
-          - name: spire-config
-            mountPath: /run/spire/config
-            readOnly: true
-          {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
-          - name: spire-data
-            mountPath: /run/spire/data
-            readOnly: false
-          {{- end }}
+            - name: {{ include "spire-tornjak.config" . }}
+              mountPath: /run/spire/tornjak-config
+            - name: spire-server-socket
+              mountPath: /tmp/spire-server/private
+              readOnly: true
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+            - name: spire-data
+              mountPath: /run/spire/data
+              readOnly: false
+            {{- end }}
         {{- end }}
 
         {{- if gt (len .Values.extraContainers) 0 }}

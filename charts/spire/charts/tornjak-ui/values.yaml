@@ -35,4 +35,3 @@ tornjakFrontend:
   enabled: false
   # apiServerURL - URL of the Tornjak back-end
   apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind when running in the same cluster
-  
