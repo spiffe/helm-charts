@@ -4,7 +4,7 @@ kind: Pod
 metadata:
   name: "{{ include "tornjak-frontend.fullname" . }}-test-connection"
   namespace: {{ include "tornjak-frontend.namespace" . }}
-  labels:  
+  labels:
   annotations:
     "helm.sh/hook": test
 spec:

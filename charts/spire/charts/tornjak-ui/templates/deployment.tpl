@@ -17,23 +17,23 @@ spec:
         {{- include "tornjak-frontend.selectorLabels" . | nindent 8 }}
     spec:
       shareProcessNamespace: true
-      serviceAccountName: {{ include "tornjak-frontend.serviceAccountName" . }}   
+      serviceAccountName: {{ include "tornjak-frontend.serviceAccountName" . }}
       containers:
-      - name:  {{ include "tornjak-frontend.fullname" . }}
-        image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        ports:
-        - containerPort: 3000
-        env:
-        - name: REACT_APP_API_SERVER_URI
-          value: {{ .Values.tornjakFrontend.apiServerURL }}          
-        startupProbe:
-          httpGet:
-            scheme: HTTP
-            port: {{ .Values.service.port }} 
-          failureThreshold: 6
-          initialDelaySeconds: 60
-          periodSeconds: 30
-          successThreshold: 1
-          timeoutSeconds: 10
+        - name:  {{ include "tornjak-frontend.fullname" . }}
+          image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_API_SERVER_URI
+              value: {{ .Values.tornjakFrontend.apiServerURL }}
+          startupProbe:
+            httpGet:
+              scheme: HTTP
+              port: {{ .Values.service.port }}
+            failureThreshold: 6
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
 {{- end }}
