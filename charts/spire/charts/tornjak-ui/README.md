@@ -19,12 +19,14 @@ A Helm chart to deploy Tornjak UI (frontend) component
 | Helm       | `3.x`              |
 
 ## Prerequisites
+
 This chart requires access to Tornjak API (Backend) component (`tornjakFrontend.apiServerURL`).
 Obtain the URL for Tornjak APIs. If deployed in the same cluster, locally,
 Tornjak APIs are typically available at `http://localhost:10000`.
 Review Tornjak documentation for more details.
 
 ## Usage
+
 Since this is just a demo version, to access Tornjak APIs you can use
 port forwarding. See the chart NOTES output for more details.
 
