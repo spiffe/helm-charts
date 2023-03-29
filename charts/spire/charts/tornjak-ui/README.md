@@ -38,15 +38,17 @@ port forwarding. See the chart NOTES output for more details.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/tornjak-fe"` |  |
-| image.version | string | `"v1.0.1"` |  |
-| labels | object | `{}` |  |
+| image.version | string | `"v1.0.1"` | Overrides the image tag whose default is the chart appVersion. |
+| imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
+| podSecurityContext | object | `{}` |  |
+| securityContext | object | `{}` |  |
 | service.port | int | `3000` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| tornjakFrontend.apiServerURL | string | `"http://localhost:10000/"` |  |
+| tornjakFrontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend). The default value is used when both deployed in the same, local cluster. |
 | tornjakFrontend.enabled | bool | `false` |  |
 ----------------------------------------------

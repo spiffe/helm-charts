@@ -1,11 +1,19 @@
-# Default values for deployment of Tornjak Frontend
+# Default values for Tornjak UI (Frontend).
 # This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
-# namespaceOverride - the namespace for deploying the Tornjak Frontend
-#             using default Helm Release namespace if not set
-namespaceOverride: ""
-# nameOverride - specify the name, otherwise the Chart name will be used
+image:
+  # registry: gcr.io
+  # repository: spiffe-io/tornjak-fe
+  registry: ghcr.io
+  repository: spiffe/tornjak-fe
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  version: "v1.0.1"
+
+imagePullSecrets: []
 nameOverride: ""
+namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
@@ -16,15 +24,19 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-labels: {}
 
-# image - Tornjak image (frontend + backend) if not separated above
-image:
-  registry: ghcr.io
-  repository: spiffe/tornjak-fe
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  version: "v1.0.1"
+#labels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -33,5 +45,6 @@ service:
 # tornjak - Tornjak specific configuration
 tornjakFrontend:
   enabled: false
-  # apiServerURL - URL of the Tornjak back-end
-  apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind when running in the same cluster
+  # -- URL of the Tornjak APIs (backend).
+  # The default value is used when both deployed in the same, local cluster.
+  apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind

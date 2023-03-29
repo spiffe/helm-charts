@@ -220,22 +220,25 @@ nodeAttestor:
 
 # tornjak - Tornjak specific configuration
 tornjak:
+  # -- enable, to deploy Tornjak API (backend) component
   enabled: false
-  # image - Tornjak image (frontend + backend) if not separated above
-  image: # ghcr.io/spiffe/tornjak
+  image:
+    # registry: gcr.io
+    # repository: spiffe-io/tornjak-be
     registry: ghcr.io
     repository: spiffe/tornjak-be
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # -- Overrides the image tag whose default is the chart appVersion.
     version: "v1.0.1"
   config:
-    # Front-end specific configuration:
+    # Tornjak Frontend specific configuration:
     frontend:
-      # apiServerURL - URL of the Tornjak back-end
-      apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
-     # Back-end specific configuration
+      # -- URL of the Tornjak APIs (backend).
+      # The default value is used when both deployed in the same, local cluster.
+      apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
+    # Tornjak Backend specific configuration
     backend:
-      # dataStore - persistent DB for storing Tornjak specific information
+      # -- persistent DB for storing Tornjak specific information
       dataStore:
         driver: "sqlite3"
         file: "/run/spire/data/tornjak.sqlite3"
