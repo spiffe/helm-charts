@@ -16,7 +16,6 @@ spec:
       labels:
         {{- include "tornjak-frontend.selectorLabels" . | nindent 8 }}
     spec:
-      shareProcessNamespace: true
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
