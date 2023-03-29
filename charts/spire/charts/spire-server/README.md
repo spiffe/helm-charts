@@ -97,10 +97,12 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
-| tornjak.config.backend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend). The default value is used when both deployed in the same, local cluster. |
 | tornjak.config.backend.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| tornjak.config.frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend). The default value is used when both deployed in the same, local cluster. |
 | tornjak.enabled | bool | `false` | enable, to deploy Tornjak API (backend) component |
-| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-be","version":"v1.0.1"}` | Tornjak API image |
+| tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
+| tornjak.image.registry | string | `"ghcr.io"` |  |
+| tornjak.image.repository | string | `"spiffe/tornjak-be"` |  |
 | tornjak.image.version | string | `"v1.0.1"` | Overrides the image tag whose default is the chart appVersion. |
 | trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |

@@ -17,6 +17,10 @@ spec:
         {{- include "tornjak-frontend.selectorLabels" . | nindent 8 }}
     spec:
       shareProcessNamespace: true
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       serviceAccountName: {{ include "tornjak-frontend.serviceAccountName" . }}
       containers:
         - name:  {{ include "tornjak-frontend.fullname" . }}
