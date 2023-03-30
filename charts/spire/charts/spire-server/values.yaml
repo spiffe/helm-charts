@@ -6,8 +6,6 @@
 replicaCount: 1
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/spire-server
   registry: ghcr.io
   repository: spiffe/spire-server
   pullPolicy: IfNotPresent
@@ -222,9 +220,8 @@ nodeAttestor:
 tornjak:
   # -- enable, to deploy Tornjak API (backend) component
   enabled: false
+  # -- Tornjak API image
   image:
-    # registry: gcr.io
-    # repository: spiffe-io/tornjak-be
     registry: ghcr.io
     repository: spiffe/tornjak-be
     pullPolicy: IfNotPresent
