@@ -4,3 +4,21 @@ Installed {{ .Chart.Name }}…
 
   kubectl exec -n {{ .Release.Namespace }} {{ include "spire-server.fullname" . }}-0 -c spire-server -- \
     spire-server entry show
+
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
+
+### WARNING ###
+This Tornjak is configured without authentication and it is intended for
+testing only. Please do not use this version in production.
+
+Tornjak APIs (Backend):
+      kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
+
+Tornjak UI (Frontend):
+      kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 3000:3000
+
+Tornjak API access:  {{ include "tornjak.apiURL" . }}
+Tornjak UI access:   {{ include "tornjak.FrontendURL" . }}
+
+Installed {{ include "spire-tornjak.fullname" . }}…
+{{- end }}
