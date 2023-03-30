@@ -231,13 +231,11 @@ tornjak:
     # -- Overrides the image tag whose default is the chart appVersion.
     version: "v1.0.1"
   config:
-    # Tornjak Frontend specific configuration:
-    frontend:
+    # Tornjak Backend specific configuration
+    backend:
       # -- URL of the Tornjak APIs (backend).
       # The default value is used when both deployed in the same, local cluster.
       apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
-    # Tornjak Backend specific configuration
-    backend:
       # -- persistent DB for storing Tornjak specific information
       dataStore:
         driver: "sqlite3"
