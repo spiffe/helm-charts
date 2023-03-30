@@ -8,7 +8,6 @@ Installed {{ .Chart.Name }}…
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
 
 ### WARNING ###
-
 This Tornjak is configured without authentication and it is intended for
 testing only. Please do not use this version in production.
 
