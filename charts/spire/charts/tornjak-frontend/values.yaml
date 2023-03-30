@@ -42,8 +42,7 @@ service:
   type: ClusterIP
   port: 3000
 
-# tornjak - Tornjak specific configuration
-tornjakFrontend:
-  # -- URL of the Tornjak APIs (backend).
-  # The default value is used when both deployed in the same, local cluster.
-  apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
+
+# -- URL of the Tornjak APIs (backend).
+# The default value is used when both deployed in the same, local cluster.
+apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
