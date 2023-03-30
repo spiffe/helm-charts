@@ -220,7 +220,7 @@ nodeAttestor:
 tornjak:
   # -- Deploys Tornjak API (backend)
   enabled: false
-  # Tornjak API image
+  # -- Tornjak API image
   image:
     registry: ghcr.io
     repository: spiffe/tornjak-be
