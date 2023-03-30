@@ -86,7 +86,7 @@ clusterName: example-cluster
 trustDomain: example.org
 
 bundleConfigMap: spire-server
-# -- Update this if you used the kubeadm init --service-dns-domain flag
+# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
 clusterDomain: cluster.local
 
 federation:

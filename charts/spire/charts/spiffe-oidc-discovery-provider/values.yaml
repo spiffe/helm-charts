@@ -113,7 +113,7 @@ tolerations: []
 affinity: {}
 
 trustDomain: example.org
-# -- Update this if you used the kubeadm init --service-dns-domain flag
+# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
 clusterDomain: cluster.local
 
 telemetry:
