@@ -30,7 +30,7 @@ spec:
             - containerPort: 3000
           env:
             - name: REACT_APP_API_SERVER_URI
-              value: {{ .Values.tornjakFrontend.apiServerURL }}
+              value: {{ include "tornjak-frontend.apiURL" . }}
           startupProbe:
             httpGet:
               scheme: HTTP
