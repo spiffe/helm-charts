@@ -34,9 +34,9 @@ dependencies:
     condition: spiffe-oidc-discovery-provider.enabled
     repository: file://./charts/spiffe-oidc-discovery-provider
     version: 0.1.0
-  - name: tornjak-ui
-    condition: tornjak-ui.enabled
-    repository: file://./charts/tornjak-ui
+  - name: tornjak-frontend
+    condition: tornjak-frontend.disabled
+    repository: file://./charts/tornjak-frontend
     version: 0.1.0
 annotations:
   artifacthub.io/category: security

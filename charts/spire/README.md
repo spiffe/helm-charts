@@ -102,7 +102,7 @@ Kubernetes: `>=1.21.0-0`
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
-| file://./charts/tornjak-ui | tornjak-ui | 0.1.0 |
+| file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
 
 ## Values
 
