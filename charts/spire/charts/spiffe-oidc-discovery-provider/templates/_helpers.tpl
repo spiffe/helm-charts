@@ -104,6 +104,7 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spiffe-oidc-discovery-provider.cluster-domain" }}
 {{- if ne (len (dig "spire" "clusterDomain" "" .Values.global)) 0 }}
 {{- .Values.global.spire.clusterDomain }}
 {{- else }}
