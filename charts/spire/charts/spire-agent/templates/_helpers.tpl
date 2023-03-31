@@ -105,7 +105,7 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spire-agent.cluster-name" }}
-{{- dig "spire" "clusterName" .Values.clusterName .Values.global) }}
+{{- dig "spire" "clusterName" .Values.clusterName .Values.global }}
 {{- end }}
 
 {{- define "spire-agent.trust-domain" }}
