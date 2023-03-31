@@ -1,5 +1,5 @@
 # You can enable config/features that affect all services here.
-#global:
+global:
 #  spire:
 #    clusterName: example-cluster
 #    trustDomain: example.org
