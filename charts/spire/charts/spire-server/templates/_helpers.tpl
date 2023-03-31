@@ -111,6 +111,34 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.cluster-name" }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.trust-domain" }}
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.bundle-configmap" }}
+{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
+{{- .Values.global.spire.bundleConfigMap }}
+{{- else }}
+{{- .Values.bundleConfigMap }}
+{{- end }}
+{{- end }}
+
 {{- define "spire-server.cluster-domain" -}}
+{{- if ne (len (dig "spire" "clusterDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterDomain }}
+{{- else }}
 {{- .Values.clusterDomain }}
+{{- end }}
 {{- end }}

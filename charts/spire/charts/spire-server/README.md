@@ -22,7 +22,7 @@ A Helm chart to install the SPIRE server.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| bundleConfigMap | string | `"spire-server"` |  |
+| bundleConfigMap | string | `"spire-bundle"` |  |
 | caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
 | caTTL | string | `"24h"` |  |
 | ca_subject.common_name | string | `"example.org"` |  |

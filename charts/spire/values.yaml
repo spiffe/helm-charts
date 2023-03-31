@@ -1,8 +1,16 @@
-# You can enable features that affect all services here.
-# global:
-#   telemetry:
-#     prometheus:
-#       enabled: true
+# You can enable config/features that affect all services here.
+global:
+  spire:
+    # -- Override all instances of clusterName
+    clusterName: ""
+    # -- Override all instances of trustDomain
+    trustDomain: ""
+    # -- Override all instances of bundleConfigMap
+    bundleConfigMap: ""
+
+#  telemetry:
+#    prometheus:
+#      enabled: true
 
 nameOverride: ""
 fullnameOverride: ""
@@ -13,10 +21,6 @@ spire-server:
 # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
   clusterDomain: cluster.local
   nameOverride: server
-  bundleConfigMap: &bundleConfigMap spire-bundle
-
-  clusterName: &clusterName "example-cluster"
-  trustDomain: &trustDomain "example.org"
 
   controllerManager:
     enabled: true
@@ -26,10 +30,6 @@ spire-agent:
 # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
   clusterDomain: cluster.local
   nameOverride: agent
-  bundleConfigMap: *bundleConfigMap
-
-  clusterName: *clusterName
-  trustDomain: *trustDomain
 
 spiffe-csi-driver:
   enabled: true
@@ -38,4 +38,3 @@ spiffe-oidc-discovery-provider:
 # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
   clusterDomain: cluster.local
   enabled: false
-  trustDomain: *trustDomain

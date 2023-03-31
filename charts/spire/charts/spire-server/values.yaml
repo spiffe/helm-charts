@@ -85,7 +85,7 @@ jwtIssuer: oidc-discovery.example.org
 clusterName: example-cluster
 trustDomain: example.org
 
-bundleConfigMap: spire-server
+bundleConfigMap: spire-bundle
 # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
 clusterDomain: cluster.local
 
