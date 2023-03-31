@@ -120,35 +120,3 @@ Create the name of the service account to use
 [{{ printf "%s:%s-agent" .Release.Namespace .Release.Name | quote }}]
 {{- end }}
 {{- end }}
-
-{{/*
-Tornjak specific section
-*/}}
-
-{{- define "spire-tornjak.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
-{{- end }}
-{{- define "spire-tornjak.config" -}}
-{{ include "spire-tornjak.fullname" . }}-config
-{{- end }}
-{{- define "spire-tornjak.frontend" -}}
-{{ include "spire-tornjak.fullname" . }}-fe
-{{- end }}
-{{- define "spire-tornjak.backend" -}}
-{{ include "spire-tornjak.fullname" . }}-be
-{{- end }}
-
-{{/*
-Create URL for accessing Tornjak Backend
-*/}}
-{{- define "tornjak.apiURL" -}}
-{{- default .Values.tornjak.config.frontend.apiServerURL }}
-{{- end }}
-
-{{/*
-Create URL for accessing Tornjak Frontend
-*/}}
-{{- define "tornjak.FrontendURL" -}}
-{{- $feurl := print "http://localhost:3000" }}
-{{- $feurl }}
-{{- end }}
