@@ -105,6 +105,9 @@ Kubernetes: `>=1.21.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
+| global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
+| global.spire.clusterName | string | `""` | Override all instances of clusterName |
+| global.spire.trustDomain | string | `""` | Override all instances of trustDomain |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
