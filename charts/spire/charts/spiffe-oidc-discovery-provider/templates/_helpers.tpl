@@ -87,3 +87,11 @@ Create the name of the service account to use
 {{- define "spiffe-oidc-discovery-provider.workload-api-socket-path" -}}
 {{- printf "/spiffe-workload-api/%s" .Values.agentSocketName }}
 {{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.cluster-name" }}
+{{- dig "spire" "clusterName" .Values.clusterName .Values.global }}
+{{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.trust-domain" }}
+{{- dig "spire" "trustDomain" .Values.trustDomain .Values.global }
+{{- end }}

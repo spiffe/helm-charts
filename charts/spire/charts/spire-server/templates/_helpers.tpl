@@ -112,11 +112,15 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spire-server.cluster-name" }}
-{{- if ne (len .Values.clusterName) 0 }}
-{{- .Values.clusterName }}
-{{- else }}
-{{- .Values.global.spire.clusterName }}
+{{- dig "spire" "clusterName" .Values.clusterName .Values.global }}
 {{- end }}
+
+{{- define "spire-server.trust-domain" }}
+{{- dig "spire" "trustDomain" .Values.trustDomain .Values.global }}
+{{- end }}
+
+{{- define "spire-server.bundle-configmap" }}
+{{- dig "spire" "bundleConfigMap" .Values.bundleConfigMap .Values.global }}
 {{- end }}
 
 {{/*

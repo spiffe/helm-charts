@@ -15,7 +15,7 @@ A Helm chart to install the SPIRE agent.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | bundleConfigMap | string | `"spire-bundle"` |  |
-| clusterName | string | `""` |  |
+| clusterName | string | `"example-cluster"` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |

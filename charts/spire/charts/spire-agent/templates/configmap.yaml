@@ -12,7 +12,7 @@ data:
       server_port = {{ .Values.server.port | quote }}
       socket_path = {{ include "spire-agent.socket-path" . | quote }}
       trust_bundle_path = "/run/spire/bundle/bundle.crt"
-      trust_domain = {{ .Values.trustDomain | quote }}
+      trust_domain = {{ include "spire-agent.trust-domain" . | quote }}
     }
 
     plugins {

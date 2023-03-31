@@ -1,8 +1,9 @@
 # You can enable config/features that affect all services here.
-global:
-  spire:
-    clusterName: example-cluster
-
+#global:
+#  spire:
+#    clusterName: example-cluster
+#    trustDomain: example.org
+#    bundleConfigMap: spire-bundle
 #  telemetry:
 #    prometheus:
 #      enabled: true
@@ -14,9 +15,6 @@ fullnameOverride: ""
 spire-server:
   enabled: true
   nameOverride: server
-  bundleConfigMap: &bundleConfigMap spire-bundle
-
-  trustDomain: &trustDomain "example.org"
 
   controllerManager:
     enabled: true
@@ -24,13 +22,9 @@ spire-server:
 spire-agent:
   enabled: true
   nameOverride: agent
-  bundleConfigMap: *bundleConfigMap
-
-  trustDomain: *trustDomain
 
 spiffe-csi-driver:
   enabled: true
 
 spiffe-oidc-discovery-provider:
   enabled: false
-  trustDomain: *trustDomain
