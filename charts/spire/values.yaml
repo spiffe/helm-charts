@@ -1,4 +1,5 @@
 # You can enable config/features that affect all services here.
+# @ignored
 global:
 #  spire:
 #    clusterName: example-cluster
