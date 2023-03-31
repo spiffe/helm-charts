@@ -3,24 +3,6 @@ global:
     prometheus:
       enabled: true
 
-spiffe-oidc-discovery-provider:
-  enabled: true
-  insecureScheme:
-    enabled: true
-  podSecurityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
-    fsGroupChangePolicy: OnRootMismatch
-  securityContext:
-    allowPrivilegeEscalation: false
-    runAsNonRoot: true
-    readOnlyRootFilesystem: true
-    capabilities:
-      drop: [ALL]
-    seccompProfile:
-      type: RuntimeDefault
-
 spire-server:
   nodeAttestor:
     k8sPsat:
@@ -41,6 +23,12 @@ spire-server:
       drop: [ALL]
     seccompProfile:
       type: RuntimeDefault
+
+  dataStorage:
+    enabled: true
+
+  logLevel: info
+
   controllerManager:
     securityContext:
       allowPrivilegeEscalation: false
@@ -50,6 +38,11 @@ spire-server:
         drop: [ALL]
       seccompProfile:
         type: RuntimeDefault
+
+    ignoreNamespaces:
+      - kube-system
+      - kube-public
+      - local-path-storage
 
 spiffe-csi-driver:
   enabled: true
@@ -64,3 +57,23 @@ spire-agent:
   server:
     namespaceOverride: spire-server
   priorityClassName: system-node-critical
+
+  logLevel: info
+
+spiffe-oidc-discovery-provider:
+  enabled: true
+  insecureScheme:
+    enabled: true
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
