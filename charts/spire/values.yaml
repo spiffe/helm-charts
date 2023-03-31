@@ -7,6 +7,8 @@ global:
     trustDomain: ""
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
+    # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+    clusterDomain: ""
 
 #  telemetry:
 #    prometheus:
