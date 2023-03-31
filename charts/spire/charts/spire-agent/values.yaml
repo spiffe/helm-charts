@@ -88,7 +88,7 @@ telemetry:
     port: 9988
     podMonitor:
       enabled: false
-      # -- Override where to install the podMonitor, if not set will use the same namespace as the agent
+      # -- Override where to install the podMonitor, if not set will use the same namespace as the spire-agent
       namespace: ""
       labels: {}
 

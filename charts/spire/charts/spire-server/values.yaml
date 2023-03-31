@@ -188,7 +188,7 @@ telemetry:
     enabled: false
     podMonitor:
       enabled: false
-      # -- Override where to install the podMonitor, if not set will use the same namespace as the server
+      # -- Override where to install the podMonitor, if not set will use the same namespace as the spire-server
       namespace: ""
       labels: {}
 

@@ -5,7 +5,7 @@
 #       enabled: true
 #       podMonitor:
 #         enabled: true
-#         # Use if you want to install the podMonitor into a namespace other then the one the services are in
+#         # Allows to install the PodMonitor in another namespace then the spire components are installed into.
 #         namespace: "kube-prometheus-system"
 #         labels: {}
 

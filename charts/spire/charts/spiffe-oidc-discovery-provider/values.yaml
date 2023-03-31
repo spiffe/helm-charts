@@ -120,7 +120,7 @@ telemetry:
     port: 9988
     podMonitor:
       enabled: false
-      # -- Override where to install the podMonitor, if not set will use the same namespace as oidc
+      # -- Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider
       namespace: ""
       labels: {}
 
