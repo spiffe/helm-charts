@@ -89,9 +89,17 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spiffe-oidc-discovery-provider.cluster-name" }}
-{{- dig "spire" "clusterName" .Values.clusterName .Values.global }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
+{{- end }}
 {{- end }}
 
 {{- define "spiffe-oidc-discovery-provider.trust-domain" }}
-{{- dig "spire" "trustDomain" .Values.trustDomain .Values.global }
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
 {{- end }}
