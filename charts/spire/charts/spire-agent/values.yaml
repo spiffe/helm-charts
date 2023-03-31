@@ -53,7 +53,7 @@ resources: {}
 nodeSelector: {}
 
 logLevel: info
-clusterName: "example-cluster"
+clusterName: example-cluster
 trustDomain: example.org
 
 bundleConfigMap: spire-bundle

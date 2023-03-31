@@ -82,7 +82,7 @@ dataStorage:
 logLevel: info
 jwtIssuer: oidc-discovery.example.org
 
-clusterName: "example-cluster"
+clusterName: example-cluster
 trustDomain: example.org
 
 bundleConfigMap: spire-bundle
