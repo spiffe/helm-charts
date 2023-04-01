@@ -1,0 +1,49 @@
+name: Build
+on:
+  schedule:
+    - cron: '0 8 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  HELM_VERSION: v3.11.1
+
+jobs:
+  ensure-versions:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3.5
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: Update Versions
+        run: |
+          source .github/tests/versions.sh
+          source .github/tests/repos.sh
+          set | grep HELM_REPO | awk -F= '{print $1}' | while read REPO; do
+            REPO_URL=$(printf '%s\n' "${!REPO}")
+            VERSION_VAR=$(echo $REPO | sed 's/HELM_REPO_/VERSION_/')
+            VERSION=$(printf "%s\n" ${!VERSION_VAR})
+            NAME=$(echo $REPO | sed 's/HELM_REPO_//' | tr '_' '-' | tr '[:upper:]' '[:lower:]')
+            echo "$NAME" "$REPO_URL" "$VERSION"
+            helm repo add "$REPO" "$REPO_URL"
+            helm repo update "$REPO"
+            NEW_VERSION=$(helm search repo --regexp "$REPO/$NAME\v" -o json | jq -r '.[0].version')
+            echo $VERSION $NEW_VERSION
+            if [ "x$VERSION" != "x$NEW_VERSION" ]; then
+              echo New version found.
+              echo sed -i "s/$VERSION_VAR=.*/$VERSION_VAR=$NEW_VERSION/" .github/tests/versions.sh
+              sed -i "s/$VERSION_VAR=.*/$VERSION_VAR=$NEW_VERSION/" .github/tests/versions.sh
+            fi
+          done
+          git diff
+
+          #      - name: create pull request
+          #        run: gh pr create -B base_branch -H branch_to_merge --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
+          #        env:
+          #            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
