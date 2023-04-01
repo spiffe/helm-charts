@@ -106,8 +106,8 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
-| global.spire.clusterName | string | `""` | Override all instances of clusterName |
-| global.spire.trustDomain | string | `""` | Override all instances of trustDomain |
+| global.spire.clusterName | string | `"example-cluster"` | Set the name of the Kubernetes cluster |
+| global.spire.trustDomain | string | `"example.org"` | Set the trust domain to use for the spiffe identifiers |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
