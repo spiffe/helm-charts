@@ -199,6 +199,9 @@ jobs:
           export scenario="$(basename "${TEST_DIR}")"
           export EXTRA_HELM_ARGS=""
 
+          source .github/tests/repos.sh
+          source .github/tests/versions.sh
+
           [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
           [ -f "${TEST_DIR}/.env" ] && source "${TEST_DIR}/.env"
