@@ -1,7 +1,7 @@
 # You can enable config/features that affect all services here.
 global:
   k8s:
-    # -- Set to the value of your clusters `kubeadm init --service-dns-domain` flag
+# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
     clusterDomain: "cluster.local"
   spire:
     # -- Set the name of the Kubernetes cluster
