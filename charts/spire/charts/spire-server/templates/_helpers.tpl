@@ -111,36 +111,28 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{/*
-Tornjak specific section
-*/}}
-
-{{- define "spire-tornjak.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
+{{- define "spire-server.cluster-name" }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
 {{- end }}
-{{- define "spire-tornjak.config" -}}
-{{ include "spire-tornjak.fullname" . }}-config
-{{- end }}
-{{- define "spire-tornjak.frontend" -}}
-{{ include "spire-tornjak.fullname" . }}-fe
-{{- end }}
-{{- define "spire-tornjak.backend" -}}
-{{ include "spire-tornjak.fullname" . }}-be
 {{- end }}
 
-{{/*
-Create URL for accessing Tornjak Backend
-*/}}
-{{- define "tornjak.apiURL" -}}
-{{- default .Values.tornjak.config.frontend.apiServerURL }}
+{{- define "spire-server.trust-domain" }}
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
 {{- end }}
 
-{{/*
-Create URL for accessing Tornjak Frontend
-*/}}
-{{- define "tornjak.FrontendURL" -}}
-{{- $feurl := print "http://localhost:3000" }}
-{{- $feurl }}
+{{- define "spire-server.bundle-configmap" }}
+{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
+{{- .Values.global.spire.bundleConfigMap }}
+{{- else }}
+{{- .Values.bundleConfigMap }}
+{{- end }}
 {{- end }}
 
 {{ define "spire-server.profile-values" }}
@@ -163,6 +155,7 @@ Create URL for accessing Tornjak Frontend
   {{- if has "expose-spire-server-ingress-nginx" $l }}
     {{- $_ := set $tmp.Values.ingress "enabled" true }}
   {{- end }}
+  {{- $_ := set $tmp.Values.dataStore "enabled" true }}
 {{- end }}
 {{- $tmp.Values | toYaml }}
 {{- end }}

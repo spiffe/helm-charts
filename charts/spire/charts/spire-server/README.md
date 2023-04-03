@@ -22,7 +22,7 @@ A Helm chart to install the SPIRE server.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| bundleConfigMap | string | `"spire-server"` |  |
+| bundleConfigMap | string | `"spire-bundle"` |  |
 | caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
 | caTTL | string | `"24h"` |  |
 | ca_subject.common_name | string | `"example.org"` |  |
@@ -90,14 +90,6 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
-| tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |
-| tornjak.config.backend.dataStore.file | string | `"/run/spire/data/tornjak.sqlite3"` |  |
-| tornjak.config.frontend.apiServerURL | string | `"http://localhost:10000"` |  |
-| tornjak.enabled | bool | `false` |  |
-| tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
-| tornjak.image.registry | string | `"ghcr.io"` |  |
-| tornjak.image.repository | string | `"spiffe/tornjak"` |  |
-| tornjak.image.version | string | `"latest"` |  |
 | trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |

@@ -105,21 +105,17 @@ Kubernetes: `>=1.21.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
+| global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
+| global.spire.clusterName | string | `"example-cluster"` | Set the name of the Kubernetes cluster |
 | global.spire.profiles | list | `[]` |  |
+| global.spire.trustDomain | string | `"example.org"` | Set the trust domain to use for the spiffe identifiers |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
-| spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
-| spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
-| spire-agent.clusterName | string | `"example-cluster"` |  |
 | spire-agent.enabled | bool | `true` |  |
 | spire-agent.nameOverride | string | `"agent"` |  |
-| spire-agent.trustDomain | string | `"example.org"` |  |
-| spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
-| spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
-| spire-server.trustDomain | string | `"example.org"` |  |
 
 ----------------------------------------------

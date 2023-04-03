@@ -1,21 +1,3 @@
-spiffe-oidc-discovery-provider:
-  enabled: true
-  insecureScheme:
-    enabled: true
-  podSecurityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
-    fsGroupChangePolicy: OnRootMismatch
-  securityContext:
-    allowPrivilegeEscalation: false
-    runAsNonRoot: true
-    readOnlyRootFilesystem: true
-    capabilities:
-      drop: [ALL]
-    seccompProfile:
-      type: RuntimeDefault
-
 spire-server:
 # None needed now...
 
@@ -33,6 +15,25 @@ spire-agent:
     namespaceOverride: spire-server
   priorityClassName: system-node-critical
 
+  logLevel: info
+
+spiffe-oidc-discovery-provider:
+  enabled: true
+  insecureScheme:
+    enabled: true
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
 # Everything above would be merged into the charts. Left alone for now for testing.
 # Everything below would be what the user would have in their own values.yaml
 #
