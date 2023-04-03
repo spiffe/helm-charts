@@ -33,7 +33,7 @@ spec:
     - name: curl-federation-bundle-endpoint
       image: cgr.dev/chainguard/bash:latest
       command: ['curl']
-      args: ['-k', '-s', '-f', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.cluster.local:{{ .Values.federation.bundleEndpoint.port }}']
+      args: ['-k', '-s', '-f', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-server.cluster-domain" . }}:{{ .Values.federation.bundleEndpoint.port }}']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}

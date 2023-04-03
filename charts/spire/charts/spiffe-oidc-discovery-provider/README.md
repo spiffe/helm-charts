@@ -21,6 +21,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| clusterDomain | string | `"cluster.local"` |  |
 | config.acme.cacheDir | string | `"/run/spire"` |  |
 | config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
