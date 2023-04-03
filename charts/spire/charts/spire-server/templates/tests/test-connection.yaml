@@ -11,17 +11,17 @@ spec:
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
-    - name: wget
-      image: busybox
+    - name: netcat
+      image: cgr.dev/chainguard/bash:latest
       command: ['nc']
       args: ['-zvw3', '{{ include "spire-server.fullname" . }}', '{{ .Values.service.port }}']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- if eq (.Values.federation.enabled | toString) "true" }}
-    - name: wget-federation-bundle-endpoint
-      image: busybox
-      command: ['wget']
-      args: ['--no-check-certificate', '-O', '/dev/null', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-server.cluster-domain" . }}:{{ .Values.federation.bundleEndpoint.port }}']
+    - name: curl-federation-bundle-endpoint
+      image: cgr.dev/chainguard/bash:latest
+      command: ['curl']
+      args: ['-k', '-s', '-f', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-server.cluster-domain" . }}:{{ .Values.federation.bundleEndpoint.port }}']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
