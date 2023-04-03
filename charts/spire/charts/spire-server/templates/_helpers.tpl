@@ -130,3 +130,11 @@ Create the name of the service account to use
 {{- .Values.bundleConfigMap }}
 {{- end }}
 {{- end }}
+
+{{- define "spire-server.cluster-domain" -}}
+{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
+{{- .Values.global.k8s.clusterDomain }}
+{{- else }}
+{{- .Values.clusterDomain }}
+{{- end }}
+{{- end }}

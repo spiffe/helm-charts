@@ -11,17 +11,29 @@ spec:
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
-    - name: netcat
+    - name: curl
       image: {{ template "spire-server.image" .Values.tests.bash }}
-      command: ['nc']
-      args: ['-zvw3', '{{ include "spire-server.fullname" . }}', '{{ .Values.service.port }}']
+      command: ['bash']
+      args:
+        - -c
+        - |
+          curl -f -s 'https://{{ include "spire-server.fullname" . }}:{{ .Values.service.port }}'
+          NOCA=$?
+          curl -k -f -s 'https://{{ include "spire-server.fullname" . }}:{{ .Values.service.port }}'
+          IGNORECA=$?
+          echo $NOCA $IGNORECA
+          if [ $NOCA -eq 60 -a $IGNORECA -eq 22 ]; then
+            # We were able to connect to the server but didn't recognize the ca (60) and the page not found (22) because we're not using grpc
+            exit 0
+          fi
+          exit 1
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- if eq (.Values.federation.enabled | toString) "true" }}
     - name: curl-federation-bundle-endpoint
       image: {{ template "spire-server.image" .Values.tests.bash }}
       command: ['curl']
-      args: ['-k', '-s', '-f', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.cluster.local:{{ .Values.federation.bundleEndpoint.port }}']
+      args: ['-k', '-s', '-f', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-server.cluster-domain" . }}:{{ .Values.federation.bundleEndpoint.port }}']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
