@@ -25,7 +25,7 @@ server:
   {{- if eq (.enabled | toString) "true" }}
   federation:
     bundle_endpoint:
-      {{ .bundleEndpoint | toYaml | nindent 6 }}
+    - {{ .bundleEndpoint | toYaml | nindent 6 }}
   {{- end }}
   {{- end }}
 
