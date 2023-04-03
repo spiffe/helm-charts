@@ -4,7 +4,7 @@ kind: Pod
 metadata:
   name: "{{ include "spire-tornjak.fullname" . }}-test-connection"
   namespace: {{ include "spire-server.namespace" . }}
-  labels:  
+  labels:
   annotations:
     "helm.sh/hook": test
 spec:
@@ -12,9 +12,9 @@ spec:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: wget-tornjak-backend
-      image: busybox
-      command: ['wget']
-      args: ['--no-check-certificate', '-O', '/dev/null', 'http://{{ include "spire-tornjak.backend" . }}:10000/']
+      image: cgr.dev/chainguard/bash:latest
+      command: ['curl']
+      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.cluster.local:10000/']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
   restartPolicy: Never
