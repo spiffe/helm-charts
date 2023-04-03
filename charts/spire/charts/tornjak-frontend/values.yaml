@@ -9,7 +9,7 @@ image:
   repository: spiffe/tornjak-fe
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  version: "v1.0.1"
+  version: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -41,8 +41,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 3000
-
+  annotations: {}
 
 # -- URL of the Tornjak APIs (backend).
-# The default value is used when both deployed in the same, local cluster.
 apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: tornjak-frontend
-description: A Helm chart to deploy Tornjak UI (frontend) component
+description: A Helm chart to deploy Tornjak frontend
 type: application
 version: 0.1.0
-appVersion: "1.6.1"
+appVersion: "v1.0.1"
