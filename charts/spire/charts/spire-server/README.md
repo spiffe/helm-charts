@@ -61,12 +61,14 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
+| federation.ingress.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-server"` |  |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
+| ingress.enabled | bool | `false` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |

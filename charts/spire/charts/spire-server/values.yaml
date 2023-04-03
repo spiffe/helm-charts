@@ -98,6 +98,8 @@ federation:
   bundleEndpoint:
     port: 8443
     address: "0.0.0.0"
+  ingress:
+    enabled: false
 
 ca_subject:
   country: NL
@@ -209,3 +211,6 @@ nodeAttestor:
   k8sPsat:
     enabled: true
     serviceAccountAllowList: []
+
+ingress:
+  enabled: false

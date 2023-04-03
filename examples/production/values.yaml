@@ -1,4 +1,4 @@
-spire-server:
+spire-server: {}
 # None needed now...
 
 spiffe-csi-driver:
