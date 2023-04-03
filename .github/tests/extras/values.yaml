@@ -1,7 +1,7 @@
 spire-agent:
   initContainers:
   - name: extra-init
-    image: busybox
+    image: cgr.dev/chainguard/busybox:latest-glibc
     command:
     - sh
     - -xec
@@ -12,7 +12,7 @@ spire-agent:
       mountPath: /extra
   extraContainers:
   - name: extra
-    image: busybox
+    image: cgr.dev/chainguard/busybox:latest-glibc
     command:
     - sh
     - -xec
@@ -32,7 +32,7 @@ spire-agent:
 spire-server:
   initContainers:
   - name: extra-init
-    image: busybox
+    image: cgr.dev/chainguard/busybox:latest-glibc
     command:
     - sh
     - -xec
@@ -43,7 +43,7 @@ spire-server:
       mountPath: /extra
   extraContainers:
   - name: extra
-    image: busybox
+    image: cgr.dev/chainguard/busybox:latest-glibc
     command:
     - sh
     - -xec
