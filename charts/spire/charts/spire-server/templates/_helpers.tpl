@@ -155,7 +155,7 @@ Create the name of the service account to use
   {{- if has "expose-spire-server-ingress-nginx" $l }}
     {{- $_ := set $tmp.Values.ingress "enabled" true }}
   {{- end }}
-  {{- $_ := set $tmp.Values.dataStore "enabled" true }}
+  {{- $_ := set $tmp.Values.dataStorage "enabled" true }}
 {{- end }}
 {{- $tmp.Values | toYaml }}
 {{- end }}
