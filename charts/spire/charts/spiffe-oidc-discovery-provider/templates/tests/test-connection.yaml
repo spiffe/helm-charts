@@ -12,26 +12,26 @@ spec:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: wget-service-name
-      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.busybox }}
+      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.bash }}
       command: ['wget']
       args: ['-O', '/dev/null', '{{ include "spiffe-oidc-discovery-provider.fullname" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     - name: wget-service-name-namespace
-      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.busybox }}
+      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.bash }}
       command: ['wget']
       args: ['-O', '/dev/null', '{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     - name: wget-service-name-namespace-svc-cluster-local
-      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.busybox }}
+      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.bash }}
       command: ['wget']
       args: ['-O', '/dev/null', '{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local:{{ .Values.service.port }}/.well-known/openid-configuration']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- if .Values.ingress.enabled }}
     - name: wget-ingress
-      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.busybox }}
+      image: {{ template "spiffe-oidc-discovery-provider.image" .Values.tests.bash }}
       command: ['wget']
       args: ['-O', '/dev/null', '{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
       securityContext:

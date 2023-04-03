@@ -157,8 +157,8 @@ ingress:
   #      - oidc-discovery.example.org
 
 tests:
-  busybox:
+  bash:
     image:
       registry: cgr.dev
-      repository: chainguard/busybox
-      version: latest-glibc
+      repository: chainguard/bash
+      version: latest
