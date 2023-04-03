@@ -36,7 +36,7 @@ metadata:
   name: oidc
 spec:
   dnsNames:
-  - oidc-discovery.example.org
+    - oidc-discovery.example.org
   secretName: tls-cert
   issuerRef:
     name: selfsigned-issuer

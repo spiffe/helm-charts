@@ -12,10 +12,10 @@ cat <<EOF >>"$GITHUB_STEP_SUMMARY"
 ### spire
 | workload | Status |
 | -------- | ------ |
-| spire-server | $("${k_rollout_status[@]}" spire-server statefulset spire-server) |
-| spire-spiffe-oidc-discovery-provider | $("${k_wait[@]}" spire-server deployments.apps spire-spiffe-oidc-discovery-provider) |
-| spire-spiffe-csi-driver | $("${k_rollout_status[@]}" spire-system daemonset spire-spiffe-csi-driver) |
-| spire-agent | $("${k_rollout_status[@]}" spire-system daemonset spire-agent) |
+| spire-server | <pre>$("${k_rollout_status[@]}" spire-server statefulset spire-server)</pre> |
+| spire-spiffe-oidc-discovery-provider | <pre>$("${k_wait[@]}" spire-server deployments.apps spire-spiffe-oidc-discovery-provider)</pre> |
+| spire-spiffe-csi-driver | <pre>$("${k_rollout_status[@]}" spire-system daemonset spire-spiffe-csi-driver)</pre> |
+| spire-agent | <pre>$("${k_rollout_status[@]}" spire-system daemonset spire-agent)</pre> |
 EOF
 
 if [ $1 -ne 0 ]; then
