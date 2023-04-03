@@ -26,8 +26,8 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | config.acme.tosAccepted | bool | `false` |  |
-| config.domains[0] | string | `"localhost"` |  |
-| config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| config.domains[0] | string | `"oidc-discovery.example.org"` |  |
+| config.domains[1] | string | `"localhost"` |  |
 | config.logLevel | string | `"info"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -72,6 +72,8 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | telemetry.prometheus.port | int | `9988` |  |
+| tests.hostAliases | list | `[]` |  |
+| tests.tls.customCA | string | `""` |  |
 | tolerations | list | `[]` |  |
 | trustDomain | string | `"example.org"` |  |
 

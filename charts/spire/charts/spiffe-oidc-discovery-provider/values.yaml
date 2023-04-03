@@ -77,8 +77,8 @@ insecureScheme:
 config:
   logLevel: info
   domains:
-    - localhost
     - oidc-discovery.example.org
+    - localhost
 
   acme:
     tosAccepted: false
@@ -162,3 +162,8 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - oidc-discovery.example.org
+
+tests:
+  hostAliases: []
+  tls:
+    customCA: ""

@@ -30,11 +30,36 @@ spec:
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- if .Values.ingress.enabled }}
-    - name: curl-ingress
+    - name: ingress
+      {{- if .Values.tests.tls.enabled }}
       image: cgr.dev/chainguard/bash:latest
       command: ['curl']
-      args: ['-s', '-f', 'http://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      {{- if .Values.tests.tls.customCA }}
+      args: ['--cacert', '/ca/ca.crt', 'https://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      {{- else }}
+      args: ['https://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      {{- end }}
+      {{- if .Values.tests.tls.customCA }}
+      volumeMounts:
+        - name: custom-ca
+          mountPoint: /ca
+      {{- end }}
+      {{- else }}
+      image: cgr.dev/chainguard/bash:latest
+      command: ['wget']
+      args: ['-O', '/dev/null', '{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      {{- end }}
+      {{- if ne (len .Values.tests.hostAliases) 0 }}
+      hostAliases:
+        {{- toYaml .Values.tests.hostAliases | nindent 8 }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
+  {{- if .Values.tests.tls.customCA }}
+  volumes:
+    - name: custom-ca
+      secret:
+        secretName: {{ .Values.tests.tls.customCA }}
+  {{- end }}
   restartPolicy: Never
