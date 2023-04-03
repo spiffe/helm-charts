@@ -87,9 +87,9 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
-| tests.busybox.image.registry | string | `"cgr.dev"` |  |
-| tests.busybox.image.repository | string | `"chainguard/busybox"` |  |
-| tests.busybox.image.version | string | `"latest-glibc"` |  |
+| tests.bash.image.registry | string | `"cgr.dev"` |  |
+| tests.bash.image.repository | string | `"chainguard/bash"` |  |
+| tests.bash.image.version | string | `"latest"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | trustDomain | string | `"example.org"` |  |
