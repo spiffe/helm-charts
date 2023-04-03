@@ -11,7 +11,7 @@ image:
   repository: spiffe/tornjak-fe
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  version: "v1.0.1"
+  version: ""
 
 imagePullSecrets: []
 nameOverride: ""
