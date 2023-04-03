@@ -73,13 +73,6 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Create the name of the service
-*/}}
-{{- define "tornjak-frontend.service" -}}
-{{ include "tornjak-frontend.fullname" . }}-service
-{{- end }}
-
-{{/*
 Create an image name
 */}}
 {{- define "tornjak-frontend.image" -}}
