@@ -53,7 +53,7 @@ jobs:
         run: |
           set +e
           set -o pipefail
-# Look for image: definitions that are not templated. If we find none, exit is not 0 and we invert the error code to get the
+          # Look for image: definitions that are not templated. If we find none, exit is not 0 and we invert the error code to get the
           # test to pass. Ignore tests for now...
           grep "image:" charts/spire/charts/*/templates/*.* | grep -v 'image: {{ template "' > /tmp/findings
           res=$?
