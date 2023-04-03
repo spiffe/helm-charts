@@ -1,7 +1,7 @@
 {{- if .Values.insecureScheme.enabled }}
 {{- if (dig "telemetry" "prometheus" "podMonitor" "enabled" .Values.telemetry.prometheus.podMonitor.enabled .Values.global) }}
-{{- $namespace := include "spire-agent.podMonitor.namespace" . }}
-{{- $podNamespace := ( include "spire-agent.namespace" . ) }}
+{{- $namespace := include "spiffe-oidc-discovery-provider.podMonitor.namespace" . }}
+{{- $podNamespace := ( include "spiffe-oidc-discovery-provider.namespace" . ) }}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
