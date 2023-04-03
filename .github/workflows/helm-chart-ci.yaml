@@ -20,7 +20,7 @@ concurrency:
 env:
   HELM_VERSION: v3.11.1
   PYTHON_VERSION: 3.11.2
-  CHART_TESTING_VERSION: v3.7.1
+  CHART_TESTING_VERSION: v3.8.0
 
 jobs:
   checks:
@@ -48,6 +48,25 @@ jobs:
               exit 1
             fi
           done
+
+      - name: Check objects for images without overrides
+        run: |
+          set +e
+          set -o pipefail
+          # Look for image: definitions that are not templated. If we find none, exit is not 0 and we invert the error code to get the
+          # test to pass. Ignore tests for now...
+          grep "image:" charts/spire/charts/*/templates/*.* | grep -v 'image: {{ template "' > /tmp/findings
+          res=$?
+          if [ $res -eq 0 ]; then
+            {
+              echo "## Hardcoded images"
+              echo 
+              echo ":x: These templates were found to be using statically defined images and not overridable ones. Please fix."
+              echo
+              cat /tmp/findings
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   lint-chart:
     runs-on: ubuntu-22.04
@@ -189,6 +208,7 @@ jobs:
               --namespace "${scenario}" \
               --target-branch ${{ github.base_ref }} \
               --exclude-deprecated \
+              --skip-clean-up \
               ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=${TEST_DIR}/values.yaml ${EXTRA_HELM_ARGS}"') || '' }}
           fi
         env:

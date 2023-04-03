@@ -99,10 +99,6 @@ Create the name of the service account to use
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-controller-manager
 {{- end }}
 
-{{- define "spire-k8s-workload-registrar.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
-{{- end }}
-
 {{- define "spire-server.serviceAccountAllowedList" }}
 {{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
 {{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
@@ -135,6 +131,14 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.cluster-domain" -}}
+{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
+{{- .Values.global.k8s.clusterDomain }}
+{{- else }}
+{{- .Values.clusterDomain }}
+{{- end }}
+{{- end }}
+
 {{ define "spire-server.profile-values" }}
 {{- $files := .Files }}
 {{- $tmp := dict "Values" (deepCopy .Values) }}
@@ -152,10 +156,10 @@ Create the name of the service account to use
   {{- if eq (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList ) 0}}
     {{- $_ := set $tmp.Values.nodeAttestor.k8sPsat "serviceAccountAllowList" (list "spire-system:spire-agent") }}
   {{- end }}
-  {{- if has "expose-spire-server-ingress-nginx" $l }}
-    {{- $_ := set $tmp.Values.ingress "enabled" true }}
-  {{- end }}
   {{- $_ := set $tmp.Values.dataStorage "enabled" true }}
+{{- end }}
+{{- if has "expose-spire-server-ingress-nginx" $l }}
+  {{- $_ := set $tmp.Values.ingress "enabled" true }}
 {{- end }}
 {{- $tmp.Values | toYaml }}
 {{- end }}

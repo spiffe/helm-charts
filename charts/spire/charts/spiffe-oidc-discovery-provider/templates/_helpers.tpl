@@ -103,3 +103,11 @@ Create the name of the service account to use
 {{- .Values.trustDomain }}
 {{- end }}
 {{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.cluster-domain" }}
+{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
+{{- .Values.global.k8s.clusterDomain }}
+{{- else }}
+{{- .Values.clusterDomain }}
+{{- end }}
+{{- end }}

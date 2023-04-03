@@ -28,6 +28,7 @@ A Helm chart to install the SPIRE server.
 | ca_subject.common_name | string | `"example.org"` |  |
 | ca_subject.country | string | `"NL"` |  |
 | ca_subject.organization | string | `"Example"` |  |
+| clusterDomain | string | `"cluster.local"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
