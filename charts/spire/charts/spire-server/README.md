@@ -60,6 +60,13 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
+| federation.ingress.annotations | object | `{}` |  |
+| federation.ingress.className | string | `""` |  |
+| federation.ingress.enabled | bool | `false` |  |
+| federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
+| federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| federation.ingress.tls | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -69,7 +76,7 @@ A Helm chart to install the SPIRE server.
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |

@@ -1,6 +1,7 @@
-{{- if .Values.ingress.enabled -}}
 {{- $fullName := include "spire-server.fullname" . -}}
+{{- if .Values.ingress.enabled -}}
 {{- $port := .Values.service.port -}}
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -12,7 +13,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -36,6 +39,49 @@ spec:
                 name: {{ $fullName }}
                 port:
                   number: {{ $port }}
+          {{- end }}
+    {{- end }}
+{{- end }}
+{{ if .Values.federation.ingress.enabled -}}
+---
+{{- $fedPort := .Values.federation.bundleEndpoint.port -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-federation
+  labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
+  {{- with .Values.federation.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.federation.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- if .Values.federation.ingress.tls }}
+  tls:
+    {{- range .Values.federation.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.federation.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $fedPort }}
           {{- end }}
     {{- end }}
 {{- end }}
