@@ -27,8 +27,28 @@ spire-agent:
   enabled: true
   nameOverride: agent
 
+upstream:
+  # -- enable upstream csi driver and agent for use with nested spire.
+  enabled: false
+
+upstream-spire-agent:
+  nameOverride: agent-upstream
+  bundleConfigMap: spire-bundle-upstream
+
+  socketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  serviceAccount:
+    name: spire-agent-upstream
+  healthChecks:
+    port: 9981
+
 spiffe-csi-driver:
   enabled: true
+
+upstream-spiffe-csi-driver:
+  pluginName: upstream.csi.spiffe.io
+  agentSocketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  healthChecks:
+    port: 9810
 
 spiffe-oidc-discovery-provider:
   enabled: false

@@ -96,8 +96,10 @@ Kubernetes: `>=1.21.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
+| file://./charts/spiffe-csi-driver | upstream-spiffe-csi-driver(spiffe-csi-driver) | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
+| file://./charts/spire-agent | upstream-spire-agent(spire-agent) | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
 
 ## Values
@@ -116,5 +118,14 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
+| upstream-spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
+| upstream-spiffe-csi-driver.healthChecks.port | int | `9810` |  |
+| upstream-spiffe-csi-driver.pluginName | string | `"upstream.csi.spiffe.io"` |  |
+| upstream-spire-agent.bundleConfigMap | string | `"spire-bundle-upstream"` |  |
+| upstream-spire-agent.healthChecks.port | int | `9981` |  |
+| upstream-spire-agent.nameOverride | string | `"agent-upstream"` |  |
+| upstream-spire-agent.serviceAccount.name | string | `"spire-agent-upstream"` |  |
+| upstream-spire-agent.socketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
+| upstream.enabled | bool | `false` | enable upstream csi driver and agent for use with nested spire. |
 
 ----------------------------------------------
