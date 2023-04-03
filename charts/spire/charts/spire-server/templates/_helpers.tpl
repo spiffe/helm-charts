@@ -99,14 +99,34 @@ Create the name of the service account to use
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-controller-manager
 {{- end }}
 
-{{- define "spire-k8s-workload-registrar.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
-{{- end }}
-
 {{- define "spire-server.serviceAccountAllowedList" }}
 {{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
 {{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
 {{- else }}
 [{{ printf "%s:%s-agent" .Release.Namespace .Release.Name | quote }}]
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.cluster-name" }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.trust-domain" }}
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.bundle-configmap" }}
+{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
+{{- .Values.global.spire.bundleConfigMap }}
+{{- else }}
+{{- .Values.bundleConfigMap }}
 {{- end }}
 {{- end }}

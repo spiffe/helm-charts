@@ -3,7 +3,7 @@
 server:
   bind_address: "0.0.0.0"
   bind_port: "8081"
-  trust_domain: {{ .Values.trustDomain | quote }}
+  trust_domain: {{ include "spire-server.trust-domain" . | quote }}
   data_dir: "/run/spire/data"
   log_level: {{ .Values.logLevel | quote }}
   jwt_issuer: {{ .Values.jwtIssuer | quote }}
@@ -42,7 +42,7 @@ plugins:
     - k8s_psat:
         plugin_data:
           clusters:
-            {{ $root.Values.clusterName }}:
+            {{ include "spire-server.cluster-name" $root }}:
               service_account_allow_list: {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
   {{- end }}
   {{- end }}
@@ -56,7 +56,7 @@ plugins:
     - k8sbundle:
         plugin_data:
           namespace: {{ .Values.notifier.k8sbundle.namespace | default (include "spire-server.namespace" .) | quote }}
-          config_map: {{ .Values.bundleConfigMap | quote }}
+          config_map: {{ include "spire-server.bundle-configmap" . | quote }}
 
   {{- with .Values.upstreamAuthority.disk }}
   {{- if eq (.enabled | toString) "true" }}
