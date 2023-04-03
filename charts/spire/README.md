@@ -106,17 +106,14 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
-| global.spire.clusterDomain | string | `""` |  |
+| global.spire.clusterDomain | string | `"cluster.local"` |  |
 | global.spire.clusterName | string | `"example-cluster"` | Set the name of the Kubernetes cluster |
 | global.spire.trustDomain | string | `"example.org"` | Set the trust domain to use for the spiffe identifiers |
 | nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
-| spiffe-oidc-discovery-provider.clusterDomain | string | `"cluster.local"` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
-| spire-agent.clusterDomain | string | `"cluster.local"` |  |
 | spire-agent.enabled | bool | `true` |  |
 | spire-agent.nameOverride | string | `"agent"` |  |
-| spire-server.clusterDomain | string | `"cluster.local"` |  |
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
