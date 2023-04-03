@@ -44,6 +44,11 @@ global:
     profiles:
     - production
     #- expose-spire-server-ingress-nginx
+    #- expose-federation-https-web-ingress-nginx
+    #- expose-federation-https-spiffe-ingress-nginx
+
+    clusterName: "example-cluster"
+    trustDomain: "example.org"
 
   telemetry:
     prometheus:

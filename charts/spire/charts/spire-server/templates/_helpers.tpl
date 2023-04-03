@@ -161,5 +161,11 @@ Create the name of the service account to use
 {{- if has "expose-spire-server-ingress-nginx" $l }}
   {{- $_ := set $tmp.Values.ingress "enabled" true }}
 {{- end }}
+{{- if has "expose-federation-https-web-ingress-nginx" $l }}
+  {{- $_ := set $tmp.Values.federation.ingress "enabled" true }}
+{{- end }}
+{{- if has "expose-federation-https-spiffe-ingress-nginx" $l }}
+  {{- $_ := set $tmp.Values.federation.ingress "enabled" true }}
+{{- end }}
 {{- $tmp.Values | toYaml }}
 {{- end }}
