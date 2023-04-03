@@ -1,14 +1,14 @@
 # You can enable config/features that affect all services here.
 global:
   spire:
+    # -- Set to the value of your clusters `kubeadm init --service-dns-domain` flag
+    clusterDomain: "cluster.local"
     # -- Set the name of the Kubernetes cluster
     clusterName: "example-cluster"
     # -- Set the trust domain to use for the spiffe identifiers
     trustDomain: "example.org"
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
-    # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
-    clusterDomain: "cluster.local"
 
 #  telemetry:
 #    prometheus:
@@ -20,8 +20,6 @@ fullnameOverride: ""
 # subcharts
 spire-server:
   enabled: true
-# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
-  clusterDomain: cluster.local
   nameOverride: server
 
   controllerManager:
@@ -29,14 +27,10 @@ spire-server:
 
 spire-agent:
   enabled: true
-# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
-  clusterDomain: cluster.local
   nameOverride: agent
 
 spiffe-csi-driver:
   enabled: true
 
 spiffe-oidc-discovery-provider:
-# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
-  clusterDomain: cluster.local
   enabled: false
