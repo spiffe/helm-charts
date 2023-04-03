@@ -109,10 +109,6 @@ Create the name of the service account to use
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-controller-manager
 {{- end }}
 
-{{- define "spire-k8s-workload-registrar.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
-{{- end }}
-
 {{- define "spire-server.serviceAccountAllowedList" }}
 {{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
 {{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
