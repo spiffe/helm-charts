@@ -187,11 +187,10 @@ controllerManager:
     failurePolicy: Fail
     upgradeHook:
       image:
-        registry: "bitnami"
-        repository: kubectl
+        registry: cgr.dev
+        repository: chainguard/kubectl
         pullPolicy: IfNotPresent
-        # Overrides the image tag whose default is the chart appVersion.
-        version: "latest"
+        version: latest
 
 telemetry:
   prometheus:
