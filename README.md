@@ -23,7 +23,9 @@ Unless otherwise noted in an application chart README, the following dependencie
 |:-----------|:-------------------|
 | SPIRE      | `1.5.3`+, `1.6.x`  |
 | Helm       | `3.x`              |
-| Kubernetes | `1.21` - `1.26`    |
+| Kubernetes | `1.21+`         |
+
+> **Note**: For Kubernetes we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden. *(The first version we tested this chart with is `1.21`)*
 
 ## Contributing
 
