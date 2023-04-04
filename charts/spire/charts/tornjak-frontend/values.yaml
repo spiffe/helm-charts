@@ -2,9 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- enable, to deploy Tornjak Frontend.
+# Disabled for default execution
+enabled: false
+
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/tornjak-fe
   registry: ghcr.io
   repository: spiffe/tornjak-fe
   pullPolicy: IfNotPresent
@@ -43,5 +45,7 @@ service:
   port: 3000
   annotations: {}
 
-# -- URL of the Tornjak APIs (backend).
+# -- URL of the Tornjak APIs (backend)
+# Since Tornjak Frontend runs in the browser, this URL must be accessible from
+# the machine running a browser.
 apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
