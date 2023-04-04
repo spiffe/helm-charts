@@ -22,12 +22,13 @@ A Helm chart to install the SPIRE server.
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| bundleConfigMap | string | `"spire-server"` |  |
+| bundleConfigMap | string | `"spire-bundle"` |  |
 | caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
 | caTTL | string | `"24h"` |  |
 | ca_subject.common_name | string | `"example.org"` |  |
 | ca_subject.country | string | `"NL"` |  |
 | ca_subject.organization | string | `"Example"` |  |
+| clusterDomain | string | `"cluster.local"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
@@ -48,6 +49,10 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
 | dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
@@ -57,6 +62,9 @@ A Helm chart to install the SPIRE server.
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
+| federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
+| federation.bundleEndpoint.port | int | `8443` |  |
+| federation.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
@@ -84,6 +92,9 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | trustDomain | string | `"example.org"` |  |

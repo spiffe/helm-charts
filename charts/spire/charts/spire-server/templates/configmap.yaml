@@ -10,7 +10,7 @@ data:
     server {
       bind_address = "0.0.0.0"
       bind_port = "8081"
-      trust_domain = {{ .Values.trustDomain | quote }}
+      trust_domain = {{ include "spire-server.trust-domain" . | quote }}
       data_dir = "/run/spire/data"
       log_level = {{ .Values.logLevel | quote }}
 
@@ -29,6 +29,17 @@ data:
         common_name = {{ .common_name | quote }},
         {{- end }}
       }
+
+      {{- with .Values.federation }}
+      {{- if eq (.enabled | toString) "true" }}
+      federation {
+        bundle_endpoint {
+          address = "{{ .bundleEndpoint.address }}"
+          port = {{ .bundleEndpoint.port }}
+        }
+      }
+      {{- end }}
+      {{- end }}
     }
 
     plugins {
@@ -44,7 +55,7 @@ data:
       NodeAttestor "k8s_psat" {
         plugin_data {
           clusters = {
-            {{ $root.Values.clusterName | quote }} = {
+            {{ include "spire-server.cluster-name" $root | quote }} = {
               service_account_allow_list = {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
             }
           }
@@ -62,7 +73,7 @@ data:
       Notifier "k8sbundle" {
         plugin_data {
           namespace = {{ .Values.notifier.k8sbundle.namespace | default $namespace | quote }}
-          config_map = {{ .Values.bundleConfigMap | quote }}
+          config_map = {{ include "spire-server.bundle-configmap" . | quote }}
         }
       }
 

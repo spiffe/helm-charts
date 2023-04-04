@@ -10,6 +10,7 @@ on:
       - '.github/kind/conf/kind-config.yaml'
       - '.github/tests/**/*.yaml'
       - '.github/tests/**/*.sh'
+      - 'examples/**/*.yaml'
       - 'helm-docs.sh'
 
 concurrency:
@@ -19,25 +20,60 @@ concurrency:
 env:
   HELM_VERSION: v3.11.1
   PYTHON_VERSION: 3.11.2
-  CHART_TESTING_VERSION: v3.7.1
+  CHART_TESTING_VERSION: v3.8.0
 
 jobs:
-  check-docs:
+  checks:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Verify Docs updated
         run: ./helm-docs.sh
+
+      - name: Verify Spire appVersion
+        run: |
+          set +e
+          BASEVER=$(yq e .appVersion Chart.yaml)
+          for FILE in spiffe-oidc-discovery-provider spire-agent spire-server; do
+            VER=$(yq .appVersion charts/$FILE/Chart.yaml)
+            if [ "$VER" != "$BASEVER" ]; then
+              {
+                echo "## Version mismatch"
+                echo
+                echo "There is a mismatch between the chart version ($BASEVER) and subchart version ($VER). The issue may be in file $FILE. Please fix."
+              } >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+          done
+
+      - name: Check objects for images without overrides
+        run: |
+          set +e
+          set -o pipefail
+          # Look for image: definitions that are not templated. If we find none, exit is not 0 and we invert the error code to get the
+          # test to pass. Ignore tests for now...
+          grep "image:" charts/spire/charts/*/templates/*.* | grep -v 'image: {{ template "' > /tmp/findings
+          res=$?
+          if [ $res -eq 0 ]; then
+            {
+              echo "## Hardcoded images"
+              echo 
+              echo ":x: These templates were found to be using statically defined images and not overridable ones. Please fix."
+              echo
+              cat /tmp/findings
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
 
   lint-chart:
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -52,7 +88,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
@@ -82,7 +118,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - id: set-matrix
         name: Collect all tests
@@ -122,7 +158,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
 
@@ -137,7 +173,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Setup chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@v2.4.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
@@ -152,23 +188,28 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          export scenario="$(basename "${TEST_DIR}")"
-          export EXTRA_HELM_ARGS=""
-          [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           post-install() {
             [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh" $1
             exit $1
           }
+
           trap 'post-install $? $LINENO' EXIT
+
+          export scenario="$(basename "${TEST_DIR}")"
+          export EXTRA_HELM_ARGS=""
+
+          [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
           [ -f "${TEST_DIR}/.env" ] && source "${TEST_DIR}/.env"
-          if [ -x {${TEST_DIR}/install.sh ]; then
-            ./${TEST_DIR}/install.sh
+
+          if [ -x "${TEST_DIR}/install.sh" ]; then
+            "${TEST_DIR}/install.sh"
           else
             ct install --debug \
               --namespace "${scenario}" \
               --target-branch ${{ github.base_ref }} \
               --exclude-deprecated \
+              --skip-clean-up \
               ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=${TEST_DIR}/values.yaml ${EXTRA_HELM_ARGS}"') || '' }}
           fi
         env:

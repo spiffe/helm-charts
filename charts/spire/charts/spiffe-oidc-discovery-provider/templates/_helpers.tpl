@@ -34,6 +34,16 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
   {{- end -}}
 {{- end -}}
 
+{{- define "spiffe-oidc-discovery-provider.podMonitor.namespace" -}}
+  {{- if ne (len .Values.telemetry.prometheus.podMonitor.namespace) 0 }}
+    {{- .Values.telemetry.prometheus.podMonitor.namespace }}
+  {{- else if ne (len (dig "telemetry" "prometheus" "podMonitor" "namespace" "" .Values.global)) 0 }}
+    {{- .Values.global.telemetry.prometheus.podMonitor.namespace }}
+  {{- else }}
+    {{- include "spiffe-oidc-discovery-provider.namespace" . }}
+  {{- end }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -86,4 +96,28 @@ Create the name of the service account to use
 
 {{- define "spiffe-oidc-discovery-provider.workload-api-socket-path" -}}
 {{- printf "/spiffe-workload-api/%s" .Values.agentSocketName }}
+{{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.cluster-name" }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
+{{- end }}
+{{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.trust-domain" }}
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
+{{- end }}
+
+{{- define "spiffe-oidc-discovery-provider.cluster-domain" }}
+{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
+{{- .Values.global.k8s.clusterDomain }}
+{{- else }}
+{{- .Values.clusterDomain }}
+{{- end }}
 {{- end }}

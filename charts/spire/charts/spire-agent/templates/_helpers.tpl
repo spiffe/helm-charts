@@ -42,6 +42,16 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
   {{- end -}}
 {{- end -}}
 
+{{- define "spire-agent.podMonitor.namespace" -}}
+  {{- if ne (len .Values.telemetry.prometheus.podMonitor.namespace) 0 }}
+    {{- .Values.telemetry.prometheus.podMonitor.namespace }}
+  {{- else if ne (len (dig "telemetry" "prometheus" "podMonitor" "namespace" "" .Values.global)) 0 }}
+    {{- .Values.global.telemetry.prometheus.podMonitor.namespace }}
+  {{- else }}
+    {{- include "spire-agent.namespace" . }}
+  {{- end }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -102,4 +112,28 @@ Create the name of the service account to use
 
 {{- define "spire-agent.socket-path" -}}
 {{- print .Values.socketPath }}
+{{- end }}
+
+{{- define "spire-agent.cluster-name" }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-agent.trust-domain" }}
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-agent.bundle-configmap" }}
+{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
+{{- .Values.global.spire.bundleConfigMap }}
+{{- else }}
+{{- .Values.bundleConfigMap }}
+{{- end }}
 {{- end }}
