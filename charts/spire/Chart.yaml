@@ -35,7 +35,7 @@ dependencies:
     repository: file://./charts/spiffe-oidc-discovery-provider
     version: 0.1.0
   - name: tornjak-frontend
-    condition: tornjak-frontend.disabled
+    condition: tornjak-frontend.enabled
     repository: file://./charts/tornjak-frontend
     version: 0.1.0
 annotations:
