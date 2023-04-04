@@ -13,7 +13,7 @@ global:
 #      enabled: true
 #      podMonitor:
 #        enabled: true
-#        # Allows to install the PodMonitor in another namespace then the spire components are installed into.
+#        # -- Allows to install the PodMonitor in another namespace then the spire components are installed into.
 #        namespace: "kube-prometheus-system"
 #        labels: {}
 
