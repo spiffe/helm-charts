@@ -185,6 +185,12 @@ controllerManager:
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
+    upgradeHook:
+      image:
+        registry: cgr.dev
+        repository: chainguard/kubectl
+        pullPolicy: IfNotPresent
+        version: latest
 
 telemetry:
   prometheus:
