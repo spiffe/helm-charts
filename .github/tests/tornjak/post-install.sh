@@ -43,7 +43,7 @@ cat <<EOF >>"$GITHUB_STEP_SUMMARY"
 | tornjak-frontend                     | "$("${k_rollout_status[@]}" tornjak-fe deployments.apps spire-tornjak-frontend)" |
 EOF
 
-kubectl -n tornjak-fe get service spire-tornjak-frontend 
+kubectl -n tornjak-fe get service spire-tornjak-frontend
 
 if [ $1 -ne 0 ]; then
   get_namespace_details spire-server
