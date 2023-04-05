@@ -31,7 +31,7 @@ data:
 
     workload_api {
       socket_path = {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
-      trust_domain = "{{ .Values.trustDomain }}"
+      trust_domain = {{ include "spiffe-oidc-discovery-provider.trust-domain" . | quote }}
     }
 
     health_checks {
