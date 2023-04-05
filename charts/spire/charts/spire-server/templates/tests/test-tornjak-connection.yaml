@@ -5,6 +5,7 @@ metadata:
   name: "{{ include "spire-tornjak.fullname" . }}-test-connection"
   namespace: {{ include "spire-server.namespace" . }}
   labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
