@@ -2,12 +2,12 @@
 global:
   k8s:
     # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
-    clusterDomain: "cluster.local"
+    clusterDomain: cluster.local
   spire:
     # -- Set the name of the Kubernetes cluster
-    clusterName: "example-cluster"
+    clusterName: example-cluster
     # -- Set the trust domain to use for the spiffe identifiers
-    trustDomain: "example.org"
+    trustDomain: example.org
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 
