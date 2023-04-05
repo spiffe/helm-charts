@@ -4,6 +4,7 @@ metadata:
   name: "{{ include "tornjak-frontend.fullname" . }}-test-connection"
   namespace: {{ include "tornjak-frontend.namespace" . }}
   labels:
+    {{- include "tornjak-frontend.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
