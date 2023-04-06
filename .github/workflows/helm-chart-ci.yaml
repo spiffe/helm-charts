@@ -189,6 +189,8 @@ jobs:
         run: |
           post-install() {
             [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh" $1
+            res=$?
+            [ $res != 0 ] && exit $res
             exit $1
           }
 
