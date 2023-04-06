@@ -44,6 +44,9 @@ A Helm chart to install the SPIRE agent.
 | serviceAccount.name | string | `""` |  |
 | socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-agent |
 | telemetry.prometheus.port | int | `9988` |  |
 | trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
