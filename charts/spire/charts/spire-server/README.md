@@ -100,8 +100,8 @@ A Helm chart to install the SPIRE server.
 | tornjak.config.backend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend). Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | tornjak.config.backend.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
-| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-be","version":"v1.0.1"}` | Tornjak API image |
-| tornjak.image.version | string | `"v1.0.1"` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-be","version":"v1.0.2"}` | Tornjak API image |
+| tornjak.image.version | string | `"v1.0.2"` | Overrides the image tag whose default is the chart appVersion. |
 | trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |

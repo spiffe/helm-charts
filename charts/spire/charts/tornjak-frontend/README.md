@@ -43,7 +43,7 @@ port forwarding. See the chart NOTES output for more details.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/tornjak-fe"` |  |
-| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.version | string | `"v1.0.2"` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
