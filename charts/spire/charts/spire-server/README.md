@@ -110,6 +110,7 @@ A Helm chart to install the SPIRE server.
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
+| plugins | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |

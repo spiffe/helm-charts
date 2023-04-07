@@ -178,3 +178,40 @@ Tornjak specific section
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-backend
 {{- end }}
+
+{{/*
+Take a copy of the config and merge in .Values.plugins passed through as root.
+*/}}
+{{- define "spire-server.config_merge" }}
+{{- $pluginsToMerge := dict "plugins" .root.Values.plugins }}
+{{- $newConfig := .config | fromYaml | mustMerge $pluginsToMerge }}
+{{- $newConfig | toYaml }}
+{{- end }}
+
+{{/*
+Take a copy of the plugin section and return a yaml string based version
+reformatted from a dict of dicts to a dict of lists of dicts
+*/}}
+{{- define "spire-server.plugins_reformat" }}
+{{- range $type, $v := . }}
+{{ $type }}:
+  {{- range $name, $v2 := $v }}
+    - {{ $name }}: {{ $v2 | toYaml | nindent 8 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Take a copy of the config as a yaml config and root var.
+Merge in .root.Values.plugin into config,
+Reformat the plugin section from a dict of dicts to a dict of lists of dicts,
+and export it back as as json string.
+This makes it much easier for users to merge in plugin configs, as dicts are easier
+to merge in values, but spire needs arrays.
+*/}}
+{{- define "spire-server.reformat-and-yaml2json" -}}
+{{- $config := include "spire-server.config_merge" . | fromYaml }}
+{{- $plugins := include "spire-server.plugins_reformat" $config.plugins | fromYaml }}
+{{- $_ := set $config "plugins" $plugins }}
+{{- $config | toPrettyJson }}
+{{- end }}
