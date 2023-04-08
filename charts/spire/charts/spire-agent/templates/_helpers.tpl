@@ -90,15 +90,24 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-agent.registry" }}
+{{- if ne (len (dig "spire" "image" "registry" "" .global)) 0 }}
+{{- .global.spire.image.registry }}
+{{- else }}
+{{- .image.registry }}
+{{- end }}
+{{- end }}
+
 {{- define "spire-agent.image" -}}
+{{- $registry := include "spire-agent.registry" . }}
 {{- if eq (substr 0 7 .image.version) "sha256:" -}}
-{{- printf "%s/%s@%s" .image.registry .image.repository .image.version -}}
+{{- printf "%s/%s@%s" $registry .image.repository .image.version -}}
 {{- else if .appVersion -}}
-{{- printf "%s/%s:%s" .image.registry .image.repository (default .appVersion .image.version) -}}
+{{- printf "%s/%s:%s" $registry .image.repository (default .appVersion .image.version) -}}
 {{- else if .image.version -}}
-{{- printf "%s/%s:%s" .image.registry .image.repository .image.version -}}
+{{- printf "%s/%s:%s" $registry .image.repository .image.version -}}
 {{- else -}}
-{{- printf "%s/%s" .image.registry .image.repository -}}
+{{- printf "%s/%s" $registry .image.repository -}}
 {{- end -}}
 {{- end }}
 

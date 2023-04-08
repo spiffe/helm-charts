@@ -31,7 +31,7 @@ spec:
       containers:
         # This is the container which runs the SPIFFE CSI driver.
         - name: {{ .Chart.Name }}
-          image: {{ template "spiffe-csi-driver.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          image: {{ template "spiffe-csi-driver.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: [
             "-workload-api-socket-dir", "/spire-agent-socket",
@@ -71,7 +71,7 @@ spec:
         # of all the little details required to register a CSI driver with
         # the kubelet.
         - name: node-driver-registrar
-          image: {{ template "spiffe-csi-driver.image" .Values.nodeDriverRegistrar }}
+          image: {{ template "spiffe-csi-driver.image" (dict "image" .Values.nodeDriverRegistrar.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.nodeDriverRegistrar.image.pullPolicy }}
           args: [
             "-csi-address", "/spiffe-csi/csi.sock",

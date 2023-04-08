@@ -34,7 +34,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spiffe-oidc-discovery-provider.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
             - -config
@@ -75,7 +75,7 @@ spec:
         - name: nginx
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spiffe-oidc-discovery-provider.image" .Values.insecureScheme.nginx }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" (dict "image" .Values.insecureScheme.nginx.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.insecureScheme.nginx.image.pullPolicy }}
           ports:
             - containerPort: 8080
@@ -97,7 +97,7 @@ spec:
         - name: nginx-exporter
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spiffe-oidc-discovery-provider.image" .Values.telemetry.prometheus.nginxExporter }}
+          image: {{ template "spiffe-oidc-discovery-provider.image" (dict "image" .Values.telemetry.prometheus.nginxExporter.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.telemetry.prometheus.nginxExporter.image.pullPolicy }}
           args:
           - -nginx.scrape-uri=http://127.0.0.1:8080/stub_status

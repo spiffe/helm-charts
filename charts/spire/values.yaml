@@ -11,6 +11,10 @@ global:
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 
+    image:
+      # -- Override all images to point at your own registry
+      registry: ""
+
 #  telemetry:
 #    prometheus:
 #      enabled: true
