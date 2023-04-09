@@ -1,8 +1,24 @@
-# You can enable features that affect all services here.
-# global:
-#   telemetry:
-#     prometheus:
-#       enabled: true
+# You can enable config/features that affect all services here.
+global:
+  k8s:
+    # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+    clusterDomain: cluster.local
+  spire:
+    # -- Set the name of the Kubernetes cluster
+    clusterName: example-cluster
+    # -- Set the trust domain to use for the spiffe identifiers
+    trustDomain: example.org
+    # -- Override all instances of bundleConfigMap
+    bundleConfigMap: ""
+
+#  telemetry:
+#    prometheus:
+#      enabled: true
+#      podMonitor:
+#        enabled: true
+#        # -- Allows to install the PodMonitor in another namespace then the spire components are installed into.
+#        namespace: "kube-prometheus-system"
+#        labels: {}
 
 nameOverride: ""
 fullnameOverride: ""
@@ -11,10 +27,6 @@ fullnameOverride: ""
 spire-server:
   enabled: true
   nameOverride: server
-  bundleConfigMap: &bundleConfigMap spire-bundle
-
-  clusterName: &clusterName "example-cluster"
-  trustDomain: &trustDomain "example.org"
 
   controllerManager:
     enabled: true
@@ -22,14 +34,9 @@ spire-server:
 spire-agent:
   enabled: true
   nameOverride: agent
-  bundleConfigMap: *bundleConfigMap
-
-  clusterName: *clusterName
-  trustDomain: *trustDomain
 
 spiffe-csi-driver:
   enabled: true
 
 spiffe-oidc-discovery-provider:
   enabled: false
-  trustDomain: *trustDomain

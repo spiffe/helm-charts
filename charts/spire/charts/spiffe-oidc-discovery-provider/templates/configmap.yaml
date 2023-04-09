@@ -11,7 +11,7 @@ data:
     domains = [
       "{{ include "spiffe-oidc-discovery-provider.fullname" . }}",
       "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}",
-      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.cluster.local",
+      "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spiffe-oidc-discovery-provider.cluster-domain" . }}",
     {{- if gt (len .Values.config.domains) 0 }}
       "{{- join "\",\n      \"" .Values.config.domains }}"
     {{- end }}
@@ -31,7 +31,7 @@ data:
 
     workload_api {
       socket_path = {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
-      trust_domain = "{{ .Values.trustDomain }}"
+      trust_domain = {{ include "spiffe-oidc-discovery-provider.trust-domain" . | quote }}
     }
 
     health_checks {

@@ -34,6 +34,16 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
   {{- end -}}
 {{- end -}}
 
+{{- define "spire-server.podMonitor.namespace" -}}
+  {{- if ne (len .Values.telemetry.prometheus.podMonitor.namespace) 0 }}
+    {{- .Values.telemetry.prometheus.podMonitor.namespace }}
+  {{- else if ne (len (dig "telemetry" "prometheus" "podMonitor" "namespace" "" .Values.global)) 0 }}
+    {{- .Values.global.telemetry.prometheus.podMonitor.namespace }}
+  {{- else }}
+    {{- include "spire-server.namespace" . }}
+  {{- end }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -99,10 +109,6 @@ Create the name of the service account to use
 {{ include "spire-server.fullname" . | trimSuffix "-server" }}-controller-manager
 {{- end }}
 
-{{- define "spire-k8s-workload-registrar.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-k8s-workload-registrar
-{{- end }}
-
 {{- define "spire-server.serviceAccountAllowedList" }}
 {{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
 {{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
@@ -111,34 +117,34 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{/*
-Tornjak specific section
-*/}}
-
-{{- define "spire-tornjak.fullname" -}}
-{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
+{{- define "spire-server.cluster-name" }}
+{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
+{{- .Values.global.spire.clusterName }}
+{{- else }}
+{{- .Values.clusterName }}
 {{- end }}
-{{- define "spire-tornjak.config" -}}
-{{ include "spire-tornjak.fullname" . }}-config
-{{- end }}
-{{- define "spire-tornjak.frontend" -}}
-{{ include "spire-tornjak.fullname" . }}-fe
-{{- end }}
-{{- define "spire-tornjak.backend" -}}
-{{ include "spire-tornjak.fullname" . }}-be
 {{- end }}
 
-{{/*
-Create URL for accessing Tornjak Backend
-*/}}
-{{- define "tornjak.apiURL" -}}
-{{- default .Values.tornjak.config.frontend.apiServerURL }}
+{{- define "spire-server.trust-domain" }}
+{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
+{{- .Values.global.spire.trustDomain }}
+{{- else }}
+{{- .Values.trustDomain }}
+{{- end }}
 {{- end }}
 
-{{/*
-Create URL for accessing Tornjak Frontend
-*/}}
-{{- define "tornjak.FrontendURL" -}}
-{{- $feurl := print "http://localhost:3000" }}
-{{- $feurl }}
+{{- define "spire-server.bundle-configmap" }}
+{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
+{{- .Values.global.spire.bundleConfigMap }}
+{{- else }}
+{{- .Values.bundleConfigMap }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.cluster-domain" -}}
+{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
+{{- .Values.global.k8s.clusterDomain }}
+{{- else }}
+{{- .Values.clusterDomain }}
+{{- end }}
 {{- end }}
