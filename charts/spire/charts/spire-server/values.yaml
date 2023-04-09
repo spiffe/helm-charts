@@ -243,6 +243,9 @@ notifier:
 
 controllerManager:
   enabled: false
+  upgradeHooks:
+    # -- Enable jobs to run at upgrade time to work around issues with custom resources.
+    enabled: true
 
   image:
     # -- The OCI registry to pull the image from
