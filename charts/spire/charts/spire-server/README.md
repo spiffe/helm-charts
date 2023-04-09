@@ -48,6 +48,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.annotations | object | `{}` |  |
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
+| controllerManager.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with custom resources. |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |

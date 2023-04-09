@@ -1,3 +1,4 @@
+{{- if eq (.Values.controllerManager.upgradeHooks.enabled | toString) "true" }}
 {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
 {{- if eq .Values.controllerManager.validatingWebhookConfiguration.failurePolicy "Fail" }}
 apiVersion: v1
@@ -81,5 +82,6 @@ spec:
               }
             ]
           }'
+{{- end }}
 {{- end }}
 {{- end }}
