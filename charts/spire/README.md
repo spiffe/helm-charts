@@ -122,5 +122,6 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
+| tornjak-frontend.enabled | bool | `false` |  |
 
 ----------------------------------------------
