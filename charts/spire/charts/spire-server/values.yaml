@@ -87,6 +87,9 @@ trustDomain: example.org
 
 bundleConfigMap: spire-bundle
 
+# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+clusterDomain: cluster.local
+
 federation:
   enabled: false
   bundleEndpoint:
@@ -188,10 +191,21 @@ controllerManager:
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
+    upgradeHook:
+      image:
+        registry: cgr.dev
+        repository: chainguard/kubectl
+        pullPolicy: IfNotPresent
+        version: latest
 
 telemetry:
   prometheus:
     enabled: false
+    podMonitor:
+      enabled: false
+      # -- Override where to install the podMonitor, if not set will use the same namespace as the spire-server
+      namespace: ""
+      labels: {}
 
 extraVolumes: []
 extraVolumeMounts: []
