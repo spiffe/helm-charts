@@ -12,7 +12,7 @@ global:
     bundleConfigMap: ""
 
     image:
-      # -- Override all images to point at your own registry
+      # -- Override all Spire image registries at once
       registry: ""
 
 #  telemetry:
