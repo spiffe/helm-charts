@@ -2,16 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- enable, to deploy Tornjak Frontend.
-# Disabled for default execution
-enabled: false
-
 image:
   registry: ghcr.io
   repository: spiffe/tornjak-fe
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  version: "v1.0.2"
+  version: ""
 
 imagePullSecrets: []
 nameOverride: ""
