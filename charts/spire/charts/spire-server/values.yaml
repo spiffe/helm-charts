@@ -185,6 +185,8 @@ controllerManager:
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
+    # -- Force failurePolicy. Useful when disabling helm jobs.
+    forceFailurePolicy: false
     upgradeHook:
       image:
         registry: cgr.dev
