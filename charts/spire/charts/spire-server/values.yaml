@@ -227,14 +227,12 @@ tornjak:
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
     version: "v1.0.2"
+  service:
+    type: ClusterIP
+    port: 10000
+    annotations: {}
   config:
-    # Tornjak Backend specific configuration
-    backend:
-      # -- URL of the Tornjak APIs (backend).
-      # Since Tornjak Frontend runs in the browser, this URL must be accessible from
-      # the machine running a browser.
-      apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
-      # -- persistent DB for storing Tornjak specific information
-      dataStore:
-        driver: "sqlite3"
-        file: "/run/spire/data/tornjak.sqlite3"
+    # -- persistent DB for storing Tornjak specific information
+    dataStore:
+      driver: "sqlite3"
+      file: "/run/spire/data/tornjak.sqlite3"

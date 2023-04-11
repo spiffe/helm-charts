@@ -162,10 +162,3 @@ Tornjak specific section
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-be
 {{- end }}
-
-{{/*
-Create URL for accessing Tornjak Backend
-*/}}
-{{- define "spire-tornjak.apiURL" -}}
-{{- default .Values.tornjak.config.backend.apiServerURL }}
-{{- end }}

@@ -34,13 +34,19 @@ kind: Service
 metadata:
   namespace: {{ include "spire-server.namespace" . }}
   name: {{ include "spire-tornjak.backend" . }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+  labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.tornjak.service.type }}
   selector:
    {{- include "spire-server.selectorLabels" . | nindent 4 }}
   ports:
     - name: {{ include "spire-tornjak.backend" . }}
-      port: 10000
-      targetPort: 10000
+      port: {{ .Values.tornjak.service.port }}
+      targetPort: tornjak
       protocol: TCP
 {{- end }}

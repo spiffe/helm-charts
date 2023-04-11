@@ -167,6 +167,10 @@ spec:
             - /run/spire/config/server.conf
             - -t
             - /run/spire/tornjak-config/server.conf
+          ports:
+            - name: tornjak
+              containerPort: 10000
+              protocol: TCP
           volumeMounts:
             - name: {{ include "spire-tornjak.config" . }}
               mountPath: /run/spire/tornjak-config

@@ -13,9 +13,9 @@ This Tornjak is configured without authentication and it is intended for
 testing only. Please do not use this version in production.
 
 Tornjak APIs (Backend):
-      kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 10000:10000
+      kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 {{ .Values.tornjak.service.port }}:10000
 
-Tornjak API access:  {{ include "spire-tornjak.apiURL" . }}
+Open browser to: http://localhost:10000
 
 Installed {{ include "spire-tornjak.fullname" . }}…
 {{- end }}
