@@ -68,6 +68,9 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` |  |
 | telemetry.prometheus.nginxExporter.image.version | string | `"0.11.0"` |  |
 | telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
+| telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | telemetry.prometheus.port | int | `9988` |  |
 | tests.bash.image.registry | string | `"cgr.dev"` |  |
 | tests.bash.image.repository | string | `"chainguard/bash"` |  |
