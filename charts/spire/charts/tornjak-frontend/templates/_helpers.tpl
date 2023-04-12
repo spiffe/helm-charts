@@ -85,24 +85,14 @@ Create an image name
 */}}
 {{- define "tornjak-frontend.image" -}}
 {{- if eq (substr 0 7 .image.version) "sha256:" -}}
-{{- printf "%s/%s@%s" .image.registry
-    .image.repository .image.version -}}
+{{- printf "%s/%s@%s" .image.registry .image.repository .image.version -}}
 {{- else if .appVersion -}}
-{{- printf "%s/%s:%s"
-   .image.registry
-    .image.repository
-    (default .appVersion
-             .image.version) -}}
+{{- printf "%s/%s:%s" .image.registry .image.repository (default .appVersion .image.version) -}}
 {{- else if
     .Values.tornjakFrontend.image.version -}}
-{{- printf "%s/%s:%s"
-    .Values.tornjakFrontend.image.registry
-    .Values.tornjakFrontend.image.repository
-    .Values.tornjakFrontend.image.version -}}
+{{- printf "%s/%s:%s" .Values.tornjakFrontend.image.registry .Values.tornjakFrontend.image.repository .Values.tornjakFrontend.image.version -}}
 {{- else -}}
-{{- printf "%s/%s"
-    .Values.tornjakFrontend.image.registry
-    .Values.tornjakFrontend.image.repository -}}
+{{- printf "%s/%s" .Values.tornjakFrontend.image.registry .Values.tornjakFrontend.image.repository -}}
 {{- end -}}
 {{- end }}
 
