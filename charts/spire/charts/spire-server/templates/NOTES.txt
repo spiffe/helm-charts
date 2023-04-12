@@ -15,7 +15,7 @@ testing only. Please do not use this version in production.
 Tornjak APIs (Backend):
       kubectl -n {{ include "spire-server.namespace" . }} port-forward {{ include "spire-server.fullname" . }}-0 {{ .Values.tornjak.service.port }}:10000
 
-Open browser to: http://localhost:10000
+Open browser to: http://localhost:{{ .Values.tornjak.service.port }}
 
 Installed {{ include "spire-tornjak.fullname" . }}…
 {{- end }}

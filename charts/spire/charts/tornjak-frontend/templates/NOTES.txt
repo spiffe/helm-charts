@@ -17,7 +17,7 @@ testing only. Please do not use this version in production.
 You can use port forwarding to access UI:
   kubectl -n {{ include "tornjak-frontend.namespace" . }} port-forward service/{{ include "tornjak-frontend.fullname" . }} {{ .Values.service.port }}:3000
 
-Open browser to: {{ include "tornjak-frontend.frontendURL" . }}
+Open browser to: http://localhost:{{ .Values.service.port }}
 
 To learn more about the release, try:
 
