@@ -43,6 +43,19 @@ spec:
           args: ["-t", "30", "-h", "{{ include "spire-agent.server-address" . | trim }}", "-p", {{ .Values.server.port | quote }}]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
+        {{- if and (hasKey .Values.podSecurityContext "fsGroup") (ne .Values.podSecurityContext.fsGroup 0) }}
+        - name: fsgroupfix
+          image: {{ template "spire-agent.image" .Values.bash }}
+          imagePullPolicy: {{ .Values.bash.image.pullPolicy }}
+          command: ["bash", "-c"]
+          args:
+            - "chown -R {{ .Values.podSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }} {{ include "spire-agent.socket-path" . | dir }}"
+          resources:
+            {{- toYaml .Values.fsGroupFix.resources | nindent 12 }}
+          volumeMounts:
+          - name: spire-agent-socket-dir
+            mountPath: {{ include "spire-agent.socket-path" . | dir }}
+        {{- end }}
         {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
         {{- end }}

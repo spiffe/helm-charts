@@ -14,11 +14,16 @@ A Helm chart to install the SPIRE agent.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| bash.image.pullPolicy | string | `"Always"` |  |
+| bash.image.registry | string | `"cgr.dev"` |  |
+| bash.image.repository | string | `"chainguard/bash"` |  |
+| bash.image.version | string | `"latest"` |  |
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
+| fsGroupFix.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
