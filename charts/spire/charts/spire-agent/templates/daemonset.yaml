@@ -43,7 +43,7 @@ spec:
           args: ["-t", "30", "-h", "{{ include "spire-agent.server-address" . | trim }}", "-p", {{ .Values.server.port | quote }}]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
-        {{- if and (hasKey .Values.podSecurityContext "fsGroup") (ne .Values.podSecurityContext.fsGroup 0) }}
+        {{- if gt (dig "fsGroup" 0.0 .Values.podSecurityContext) 0.0 }}
         - name: fsgroupfix
           image: {{ template "spire-agent.image" .Values.bash }}
           imagePullPolicy: {{ .Values.bash.image.pullPolicy }}
@@ -55,6 +55,9 @@ spec:
           volumeMounts:
           - name: spire-agent-socket-dir
             mountPath: {{ include "spire-agent.socket-path" . | dir }}
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
         {{- end }}
         {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
