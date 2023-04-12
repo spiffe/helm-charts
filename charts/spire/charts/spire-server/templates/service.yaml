@@ -34,7 +34,7 @@ kind: Service
 metadata:
   namespace: {{ include "spire-server.namespace" . }}
   name: {{ include "spire-tornjak.backend" . }}
-  {{- with .Values.service.annotations }}
+  {{- with .Values.tornjak.service.annotations }}
   annotations:
     {{- toYaml . | nindent 8 }}
   {{- end }}
