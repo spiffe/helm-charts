@@ -16,7 +16,8 @@ Installed {{ .Chart.Name }}…
 
       You can use port forwarding to access UI:
         kubectl -n {{ include "tornjak-frontend.namespace" . }} port-forward service/{{ include "tornjak-frontend.fullname" . }} {{ .Values.service.port }}:3000
-      Tornjak UI Access:    {{ include "tornjak-frontend.frontendURL" . }}
+
+      Open browser to: {{ include "tornjak-frontend.frontendURL" . }}
 
 To learn more about the release, try:
 

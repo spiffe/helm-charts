@@ -15,7 +15,7 @@ spec:
     - name: wget-tornjak-backend
       image: cgr.dev/chainguard/bash:latest
       command: ['curl']
-      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-server.cluster-domain" . }}:10000/']
+      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-server.cluster-domain" . }}:{{ .Values.tornjak.service.port }}']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
   restartPolicy: Never
