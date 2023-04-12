@@ -111,7 +111,7 @@ Create URL for accessing Tornjak APIs
 */}}
 {{- define "tornjak-frontend.apiURL" -}}
 {{- if .Values.apiServerURL -}}
-{{-  .Values.apiServerURL -}}
+{{- .Values.apiServerURL -}}
 {{- else }}
 {{- $feurl := print "http://localhost:" .Values.service.port }}
 {{- $feurl }}
