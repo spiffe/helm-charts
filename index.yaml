@@ -6,6 +6,57 @@ entries:
       artifacthub.io/license: Apache-2.0
     apiVersion: v2
     appVersion: 1.6.1
+    created: "2023-04-12T09:10:36.763631694Z"
+    dependencies:
+    - condition: spire-server.enabled
+      name: spire-server
+      repository: file://./charts/spire-server
+      version: 0.1.0
+    - condition: spire-agent.enabled
+      name: spire-agent
+      repository: file://./charts/spire-agent
+      version: 0.1.0
+    - condition: spiffe-csi-driver.enabled
+      name: spiffe-csi-driver
+      repository: file://./charts/spiffe-csi-driver
+      version: 0.1.0
+    - condition: spiffe-oidc-discovery-provider.enabled
+      name: spiffe-oidc-discovery-provider
+      repository: file://./charts/spiffe-oidc-discovery-provider
+      version: 0.1.0
+    description: 'A Helm chart for deploying the complete Spire stack including: spire-server,
+      spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager. '
+    digest: 1a0df9e39f32f0ddb3386672d8cf16243989d2bc8df8d34b21ccf839069e3544
+    home: https://github.com/spiffe/helm-charts/tree/main/charts/spire
+    icon: https://spiffe.io/img/logos/spire/icon/color/spire-icon-color.png
+    keywords:
+    - spiffe
+    - spire
+    - spire-server
+    - spire-agent
+    - oidc
+    - spire-controller-manager
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - email: marco.franssen@gmail.com
+      name: marcofranssen
+      url: https://marcofranssen.nl
+    - email: Kevin.Fox@pnnl.gov
+      name: kfox1111
+    - email: fymemon@yahoo.com
+      name: faisal-memon
+    name: spire
+    sources:
+    - https://github.com/spiffe/helm-charts/tree/main/charts/spire
+    type: application
+    urls:
+    - https://github.com/spiffe/helm-charts/releases/download/spire-0.6.2/spire-0.6.2.tgz
+    version: 0.6.2
+  - annotations:
+      artifacthub.io/category: security
+      artifacthub.io/license: Apache-2.0
+    apiVersion: v2
+    appVersion: 1.6.1
     created: "2023-04-06T07:47:03.150159086Z"
     dependencies:
     - condition: spire-server.enabled
@@ -373,4 +424,4 @@ entries:
     urls:
     - https://github.com/spiffe/helm-charts/releases/download/spire-0.1.0/spire-0.1.0.tgz
     version: 0.1.0
-generated: "2023-04-06T07:47:03.150311786Z"
+generated: "2023-04-12T09:10:36.763665195Z"
