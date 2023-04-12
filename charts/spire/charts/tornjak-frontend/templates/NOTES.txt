@@ -1,23 +1,23 @@
 Installed {{ .Chart.Name }}…
 
-      Name: {{ include "tornjak-frontend.name" . }}
-      Fullname: {{ include "tornjak-frontend.fullname" . }}
-      Your release is named: {{ .Release.Name }}
-      Namespace: {{ include "tornjak-frontend.namespace" . }}
+Name: {{ include "tornjak-frontend.name" . }}
+Fullname: {{ include "tornjak-frontend.fullname" . }}
+Your release is named: {{ .Release.Name }}
+Namespace: {{ include "tornjak-frontend.namespace" . }}
 
-      Tornjak UI (Frontend)
-           image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
-           pull policy: {{ .Values.image.pullPolicy }}
-      Configured with Tornjak API (Backend): {{ include "tornjak-frontend.apiURL" . }}
+Tornjak UI (Frontend)
+  image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+  pull policy: {{ .Values.image.pullPolicy }}
+Configured with Tornjak API (Backend): {{ include "tornjak-frontend.apiURL" . }}
 
-      ### WARNING ###
-      This Tornjak is configured without authentication and it is intended for
-      testing only. Please do not use this version in production.
+### WARNING ###
+This Tornjak is configured without authentication and it is intended for
+testing only. Please do not use this version in production.
 
-      You can use port forwarding to access UI:
-        kubectl -n {{ include "tornjak-frontend.namespace" . }} port-forward service/{{ include "tornjak-frontend.fullname" . }} {{ .Values.service.port }}:3000
+You can use port forwarding to access UI:
+  kubectl -n {{ include "tornjak-frontend.namespace" . }} port-forward service/{{ include "tornjak-frontend.fullname" . }} {{ .Values.service.port }}:3000
 
-      Open browser to: {{ include "tornjak-frontend.frontendURL" . }}
+Open browser to: {{ include "tornjak-frontend.frontendURL" . }}
 
 To learn more about the release, try:
 

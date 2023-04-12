@@ -44,6 +44,7 @@ port forwarding. See the chart NOTES output for more details.
 | image.repository | string | `"spiffe/tornjak-fe"` |  |
 | image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
+| labels | object | `{}` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | podSecurityContext | object | `{}` |  |
