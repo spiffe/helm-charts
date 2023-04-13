@@ -164,9 +164,6 @@ Tornjak specific section
 {{- define "spire-tornjak.config" -}}
 {{ include "spire-tornjak.fullname" . }}-config
 {{- end }}
-{{- define "spire-tornjak.frontend" -}}
-{{ include "spire-tornjak.fullname" . }}-fe
-{{- end }}
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-be
 {{- end }}

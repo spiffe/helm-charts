@@ -6,12 +6,10 @@
 replicaCount: 1
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/spire-server
   registry: ghcr.io
   repository: spiffe/spire-server
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion.
   version: ""
 
 imagePullSecrets: []
@@ -249,23 +247,21 @@ nodeAttestor:
 
 # tornjak - Tornjak specific configuration
 tornjak:
+  # -- Deploys Tornjak API (backend)
   enabled: false
-  # image - Tornjak image (frontend + backend) if not separated above
-  image: # ghcr.io/spiffe/tornjak
+  # -- Tornjak API image
+  image:
     registry: ghcr.io
-    repository: spiffe/tornjak
+    repository: spiffe/tornjak-be
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    # TODO we should use a specific Tornjak version instead of 'latest'
-    version: "latest"
+    # -- Overrides the image tag whose default is the chart appVersion.
+    version: "v1.0.2"
+  service:
+    type: ClusterIP
+    port: 10000
+    annotations: {}
   config:
-    # Front-end specific configuration:
-    frontend:
-      # apiServerURL - URL of the Tornjak back-end
-      apiServerURL: "http://localhost:10000"  # 👈 Use it for minikube or kind
-     # Back-end specific configuration
-    backend:
-      # dataStore - persistent DB for storing Tornjak specific information
-      dataStore:
-        driver: "sqlite3"
-        file: "/run/spire/data/tornjak.sqlite3"
+    # -- persistent DB for storing Tornjak specific information
+    dataStore:
+      driver: "sqlite3"
+      file: "/run/spire/data/tornjak.sqlite3"
