@@ -69,7 +69,7 @@ A Helm chart to install the SPIRE server.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-server"` |  |
-| image.version | string | `""` |  |
+| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
@@ -97,14 +97,13 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
-| tornjak.config.backend.dataStore.driver | string | `"sqlite3"` |  |
-| tornjak.config.backend.dataStore.file | string | `"/run/spire/data/tornjak.sqlite3"` |  |
-| tornjak.config.frontend.apiServerURL | string | `"http://localhost:10000"` |  |
-| tornjak.enabled | bool | `false` |  |
-| tornjak.image.pullPolicy | string | `"IfNotPresent"` |  |
-| tornjak.image.registry | string | `"ghcr.io"` |  |
-| tornjak.image.repository | string | `"spiffe/tornjak"` |  |
-| tornjak.image.version | string | `"latest"` |  |
+| tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
+| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-be","version":"v1.0.2"}` | Tornjak API image |
+| tornjak.image.version | string | `"v1.0.2"` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak.service.annotations | object | `{}` |  |
+| tornjak.service.port | int | `10000` |  |
+| tornjak.service.type | string | `"ClusterIP"` |  |
 | trustDomain | string | `"example.org"` |  |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
