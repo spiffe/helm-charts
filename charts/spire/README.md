@@ -104,6 +104,7 @@ Kubernetes: `>=1.21.0-0`
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
+| file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
 
 ## Values
 
@@ -355,5 +356,6 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
+| tornjak-frontend.enabled | bool | `false` |  |
 
 ----------------------------------------------

@@ -167,39 +167,35 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
-              port: 3000
-            failureThreshold: 6
-            initialDelaySeconds: 60
-            periodSeconds: 30
+              port: 10000
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
             successThreshold: 1
-            timeoutSeconds: 10
-          env:
-          {{- if .Values.tornjak.config.frontend }}
-          - name: REACT_APP_API_SERVER_URI
-            value: {{ include "tornjak.apiURL" . | required "Either .Values.tornjak.config.backend.ingress or .Values.tornjak.config.frontend.apiServerURL is required." }}
-          {{- end }}
+            timeoutSeconds: 5
           args:
-          - -c
-          - /run/spire/config/server.conf
-          - -t
-          - /run/spire/tornjak-config/server.conf
+            - -c
+            - /run/spire/config/server.conf
+            - -t
+            - /run/spire/tornjak-config/server.conf
           ports:
-          - containerPort: 3000
-            protocol: TCP
+            - name: tornjak
+              containerPort: 10000
+              protocol: TCP
           volumeMounts:
-          - name: {{ include "spire-tornjak.config" . }}
-            mountPath: /run/spire/tornjak-config
-          - name: spire-server-socket
-            mountPath: /tmp/spire-server/private
-            readOnly: true
-          - name: spire-config
-            mountPath: /run/spire/config
-            readOnly: true
-          {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
-          - name: spire-data
-            mountPath: /run/spire/data
-            readOnly: false
-          {{- end }}
+            - name: {{ include "spire-tornjak.config" . }}
+              mountPath: /run/spire/tornjak-config
+            - name: spire-server-socket
+              mountPath: /tmp/spire-server/private
+              readOnly: true
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+            - name: spire-data
+              mountPath: /run/spire/data
+              readOnly: false
+            {{- end }}
         {{- end }}
 
         {{- if gt (len .Values.extraContainers) 0 }}

@@ -38,6 +38,10 @@ dependencies:
     condition: spiffe-oidc-discovery-provider.enabled
     repository: file://./charts/spiffe-oidc-discovery-provider
     version: 0.1.0
+  - name: tornjak-frontend
+    condition: tornjak-frontend.enabled
+    repository: file://./charts/tornjak-frontend
+    version: 0.1.0
 annotations:
   artifacthub.io/category: security
   artifacthub.io/license: Apache-2.0
