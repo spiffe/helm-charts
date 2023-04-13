@@ -33,7 +33,7 @@ It's easy to appreciate a technically advanced feature. It's harder to appreciat
 
 Maintainers will maintain [milestones](https://github.com/spiffe/helm-charts/milestones) in GitHub as the roadmap to direct feature development. Maintainers will factor in open issues, PRs from the community, and their own judgement to determine the what is priority for the project. Maintainers will discuss these issues at bi-weekly sync meetings, offline on slack, and through discussion on the various issues and PRs. After discussing all the factors, the maintainers will decide on the milestones.
 
-Maintainers will focus development and review efforts towards issues and PRs added in milestones, with the closest milestone getting the highest priority.
+Maintainers will check in with each other before making changes to the milestones. Maintainers will focus development and review efforts towards issues and PRs added in milestones, with the closest milestone getting the highest priority.
 
 ### Community PRs
 
