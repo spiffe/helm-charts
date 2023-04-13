@@ -37,3 +37,6 @@ spiffe-csi-driver:
 
 spiffe-oidc-discovery-provider:
   enabled: false
+
+tornjak-frontend:
+  enabled: false
