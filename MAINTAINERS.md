@@ -6,7 +6,7 @@ For a list of active SPIRE Helm Charts maintainers, please see the [CODEOWNERS](
 
 ## General governance
 
-The SPIRE Helm CHarts project abides by the same [governance procedures][1] as the SPIFFE project, and ultimately reports to the [SPIFFE Steering Committee][3] (SSC) the same way that the SPIFFE project and associated maintainers do.
+The SPIRE Helm Charts project abides by the same [governance procedures][1] as the SPIFFE project, and ultimately reports to the [SPIFFE Steering Committee][3] (SSC) the same way that the SPIFFE project and associated maintainers do.
 
 SSC members do not track day-to-day activity in the SPIFFE/SPIRE projects, and this should be considered when deciding to raise issues to them. While the SSC has the ultimate say, in practice they are only engaged upon serious maintainer disagreement.
 
