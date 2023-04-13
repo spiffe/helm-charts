@@ -4,3 +4,7 @@ description: A Helm chart to deploy Tornjak frontend
 type: application
 version: 0.1.0
 appVersion: "v1.0.2"
+maintainers:
+  - name: mrsabath
+    email: mrsabath@gmail.com
+    url: https://mrsabath.github.io

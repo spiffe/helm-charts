@@ -33,6 +33,12 @@ Review Tornjak documentation for more details.
 Since this is just a demo version, to access Tornjak APIs you can use
 port forwarding. See the chart NOTES output for more details.
 
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| mrsabath | <mrsabath@gmail.com> | <https://mrsabath.github.io> |
+
 ## Values
 
 | Key | Type | Default | Description |
