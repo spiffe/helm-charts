@@ -73,7 +73,7 @@ affinity: {}
 
 topologySpreadConstraints: []
 
-persistence:
+dataStorage:
   enabled: true
   size: 1Gi
   accessMode: ReadWriteOnce
