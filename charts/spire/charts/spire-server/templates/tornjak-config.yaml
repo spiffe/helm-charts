@@ -11,11 +11,11 @@ data:
     }
 
     plugins {
-    {{- if .Values.tornjak.config.backend.dataStore }}
+    {{- if .Values.tornjak.config.dataStore }}
       DataStore "sql" {
         plugin_data {
-          drivername = "{{ .Values.tornjak.config.backend.dataStore.driver }}"
-          filename = "{{ .Values.tornjak.config.backend.dataStore.file }}"
+          drivername = "{{ .Values.tornjak.config.dataStore.driver }}"
+          filename = "{{ .Values.tornjak.config.dataStore.file }}"
         }
       }
     {{- end }}

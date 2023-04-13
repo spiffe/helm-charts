@@ -33,29 +33,20 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: {{ include "spire-server.namespace" . }}
-  name: {{ include "spire-tornjak.frontend" . }}
-spec:
-  type: {{ .Values.service.type }} # ClusterIP
-  selector:
-    {{- include "spire-server.selectorLabels" . | nindent 4 }}
-  ports:
-    - name: {{ include "spire-tornjak.frontend" . }}
-      port: 3000
-      targetPort: 3000
-      protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: {{ include "spire-server.namespace" . }}
   name: {{ include "spire-tornjak.backend" . }}
+  {{- with .Values.tornjak.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 8 }}
+  {{- end }}
+  labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }} # ClusterIP
+  type: {{ .Values.tornjak.service.type }}
   selector:
    {{- include "spire-server.selectorLabels" . | nindent 4 }}
   ports:
     - name: {{ include "spire-tornjak.backend" . }}
-      port: 10000
-      targetPort: 10000
+      port: {{ .Values.tornjak.service.port }}
+      targetPort: tornjak
       protocol: TCP
 {{- end }}
