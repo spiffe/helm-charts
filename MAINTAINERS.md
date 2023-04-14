@@ -51,7 +51,7 @@ SPIRE Helm Charts maintainers are appointed according to the [process described 
 
 ### Stepping down policy
 
-Maintainers may step down at any time. After you've informed other maintainers, create a pull request to remove yourself from the [CODEOWNERS](CODEOWNERS) file.
+Maintainers may step down at any time. After you've informed other maintainers, create a pull request to remove yourself from the [CODEOWNERS](CODEOWNERS) file and the various `Chart.yaml` maintainer lists.
 
 ### Removal of inactive maintainers
 
