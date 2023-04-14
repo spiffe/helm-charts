@@ -38,7 +38,7 @@ dependencies:
     version: 0.1.0
   #FIXME This should be moved to the subcharts once it they have been moved out.
   - name: spire-lib
-    repository: file://../spire-lib
+    repository: file://./charts/spire-lib
     version: 0.1.0
 annotations:
   artifacthub.io/category: security
