@@ -37,7 +37,7 @@ Maintainers will check in with each other before making changes to the milestone
 
 ### Community PRs
 
-For PRs that come in from the community the maintainers will discuss and determine if the PR is in line whith the project's [guiding principlies](#guiding-principles). If the PR is accepted to move forward the maintainers will add it to the appropriate mileston.
+For PRs that come in from the community the maintainers will discuss and determine if the PR is in line whith the project's [guiding principlies](#guiding-principles). If the PR is accepted to move forward the maintainers will add it to the appropriate milestone.
 
 ### Bug fixes
 
