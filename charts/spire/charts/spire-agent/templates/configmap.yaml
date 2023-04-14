@@ -12,13 +12,13 @@ data:
       server_port = {{ .Values.server.port | quote }}
       socket_path = {{ include "spire-agent.socket-path" . | quote }}
       trust_bundle_path = "/run/spire/bundle/bundle.crt"
-      trust_domain = {{ include "spire-agent.trust-domain" . | quote }}
+      trust_domain = {{ include "spire-lib.trust-domain" . | quote }}
     }
 
     plugins {
       NodeAttestor "k8s_psat" {
         plugin_data {
-          cluster = {{ include "spire-agent.cluster-name" . | quote }}
+          cluster = {{ include "spire-lib.cluster-name" . | quote }}
         }
       }
 

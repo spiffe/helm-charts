@@ -100,7 +100,7 @@ spec:
             name: {{ include "spire-agent.fullname" . }}
         - name: spire-bundle
           configMap:
-            name: {{ include "spire-agent.bundle-configmap" . }}
+            name: {{ include "spire-lib.bundle-configmap" . }}
         - name: spire-token
           projected:
             sources:
