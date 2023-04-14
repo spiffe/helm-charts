@@ -99,6 +99,7 @@ Kubernetes: `>=1.21.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
+| file://../spire-lib | spire-lib | 0.1.0 |
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
