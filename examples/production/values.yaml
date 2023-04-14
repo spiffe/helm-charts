@@ -24,7 +24,7 @@ spire-server:
     seccompProfile:
       type: RuntimeDefault
 
-  persistence:
+  dataStorage:
     enabled: true
 
   logLevel: info

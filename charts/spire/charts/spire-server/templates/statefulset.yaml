@@ -91,7 +91,7 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
-            {{- if eq (.Values.persistence.enabled | toString) "true" }}
+            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
@@ -185,16 +185,16 @@ spec:
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
-    {{- if eq (.Values.persistence.enabled | toString) "true" }}
+    {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
     - metadata:
         name: spire-data
       spec:
         accessModes:
-          - {{ .Values.persistence.accessMode | default "ReadWriteOnce" }}
+          - {{ .Values.dataStorage.accessMode | default "ReadWriteOnce" }}
         resources:
           requests:
-            storage: {{ .Values.persistence.size }}
-        {{- if .Values.persistence.storageClass }}
-        storageClassName: {{ .Values.persistence.storageClass }}
+            storage: {{ .Values.dataStorage.size }}
+        {{- if .Values.dataStorage.storageClass }}
+        storageClassName: {{ .Values.dataStorage.storageClass }}
         {{- end }}
     {{ end }}
