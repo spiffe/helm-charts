@@ -59,7 +59,7 @@ Existing maintainers can be removed from the list if they do not show significan
 
 If a maintainer has shown insufficient activity over this period, the project manager will contact the maintainer to ask if they want to continue being a maintainer. If the maintainer decides to step down as a maintainer, they open a pull request to be removed from the [CODEOWNERS](CODEOWNERS) file.
 
-If the maintainer wants to remain a maintainer, but is unable to perform the required duties they can be removed with a vote by the [SSC][3] and at least 66% of the current maintainers. A slack messages is sent to the maintainer channel, inviting maintainers of the project to vote. The voting period is five business days. Issues related to a maintainer's performance should be discussed with them among the other maintainers so that they aren't surprised by a pull request removing them.
+If the maintainer wants to remain a maintainer, but is unable to perform the required duties they can be removed with a vote by the [SSC][3] and at least 66% of the current maintainers. A slack message is sent to the maintainer channel, inviting maintainers of the project to vote. The voting period is five business days. Issues related to a maintainer's performance should be discussed with them among the other maintainers so that they aren't surprised by a pull request removing them.
 
 [1]: https://github.com/spiffe/spiffe/blob/main/GOVERNANCE.md
 [2]: https://github.com/spiffe/spiffe/blob/main/GOVERNANCE.md#maintainers
