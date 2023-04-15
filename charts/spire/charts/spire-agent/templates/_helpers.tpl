@@ -42,6 +42,16 @@ Allow the release namespace to be overridden for multi-namespace deployments in 
   {{- end -}}
 {{- end -}}
 
+{{- define "spire-agent.podMonitor.namespace" -}}
+  {{- if ne (len .Values.telemetry.prometheus.podMonitor.namespace) 0 }}
+    {{- .Values.telemetry.prometheus.podMonitor.namespace }}
+  {{- else if ne (len (dig "telemetry" "prometheus" "podMonitor" "namespace" "" .Values.global)) 0 }}
+    {{- .Values.global.telemetry.prometheus.podMonitor.namespace }}
+  {{- else }}
+    {{- include "spire-agent.namespace" . }}
+  {{- end }}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

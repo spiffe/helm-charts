@@ -2,21 +2,26 @@
 global:
   k8s:
     # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
-    clusterDomain: "cluster.local"
+    clusterDomain: cluster.local
   spire:
     profiles: []
     # - production
 
     # -- Set the name of the Kubernetes cluster
-    clusterName: "example-cluster"
+    clusterName: example-cluster
     # -- Set the trust domain to use for the spiffe identifiers
-    trustDomain: "example.org"
+    trustDomain: example.org
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 
 #  telemetry:
 #    prometheus:
 #      enabled: true
+#      podMonitor:
+#        enabled: true
+#        # -- Allows to install the PodMonitor in another namespace then the spire components are installed into.
+#        namespace: "kube-prometheus-system"
+#        labels: {}
 
 nameOverride: ""
 fullnameOverride: ""
