@@ -1,0 +1,47 @@
+spire-server:
+  tornjak:
+    enabled: true
+    image:
+      registry: ghcr.io
+      repository: spiffe/tornjak-be
+      pullPolicy: IfNotPresent
+      version: "v1.0.2"
+    config:
+      backend:
+        apiServerURL: "http://localhost:10000/"
+        dataStore:
+          driver: "sqlite3"
+          file: "/run/spire/data/tornjak.sqlite3"
+
+tornjak-frontend:
+  enabled: true
+  image:
+    registry: ghcr.io
+    repository: spiffe/tornjak-fe
+    pullPolicy: IfNotPresent
+    version: "v1.0.2"
+  imagePullSecrets: []
+  nameOverride: ""
+  namespaceOverride: ""
+  fullnameOverride: ""
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
+  service:
+    type: ClusterIP
+    port: 3000
+  apiServerURL: "http://localhost:10000/"
