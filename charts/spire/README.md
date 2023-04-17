@@ -17,7 +17,7 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 | Dependency | Supported Versions |
 |:-----------|:-------------------|
-| SPIRE      | `1.5.3+`, `1.6.x`  |
+| SPIRE      | `1.5.3+`, `1.6.3+` |
 | Helm       | `3.x`              |
 | Kubernetes | `1.21+`            |
 
@@ -108,12 +108,10 @@ Kubernetes: `>=1.21.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| fullnameOverride | string | `""` |  |
 | global.k8s.clusterDomain | string | `"cluster.local"` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
 | global.spire.clusterName | string | `"example-cluster"` | Set the name of the Kubernetes cluster |
 | global.spire.trustDomain | string | `"example.org"` | Set the trust domain to use for the spiffe identifiers |
-| nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spire-agent.enabled | bool | `true` |  |
