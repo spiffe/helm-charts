@@ -17,7 +17,7 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 | Dependency | Supported Versions |
 |:-----------|:-------------------|
-| SPIRE      | `1.5.3+`, `1.6.x`  |
+| SPIRE      | `1.5.3+`, `1.6.3+` |
 | Helm       | `3.x`              |
 | Kubernetes | `1.21+`            |
 
