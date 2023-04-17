@@ -148,11 +148,11 @@ jobs:
         # to pull it off (i.e. kubectl version juggling).
         k8s:
           - v1.27.0
-          - v1.26.0
-          - v1.25.3
-          - v1.24.7
-          - v1.23.13
-          - v1.22.15
+          - v1.26.3
+          - v1.25.8
+          - v1.24.12
+          - v1.23.17
+          - v1.22.17
           - v1.21.14
         values:
           - ${{ fromJson(needs.build-matrix.outputs.tests) }}
