@@ -25,7 +25,7 @@ acme:
 
 workload_api:
   socket_path: {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
-  trust_domain: {{ include "lib.trust-domain" . | quote }}
+  trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
 
 health_checks:
   bind_port: "8008"
