@@ -23,9 +23,6 @@ global:
 #        namespace: "kube-prometheus-system"
 #        labels: {}
 
-nameOverride: ""
-fullnameOverride: ""
-
 # subcharts
 spire-server:
   enabled: true
