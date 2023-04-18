@@ -58,9 +58,9 @@ plugins:
           namespace: {{ .Values.notifier.k8sbundle.namespace | default (include "spire-server.namespace" .) | quote }}
           config_map: {{ include "spire-server.bundle-configmap" . | quote }}
 
-  UpstreamAuthority:
   {{- with .Values.upstreamAuthority.disk }}
   {{- if eq (.enabled | toString) "true" }}
+  UpstreamAuthority:
     - disk:
         plugin_data:
           cert_file_path: "/run/spire/upstream_ca/tls.crt"
@@ -73,8 +73,9 @@ plugins:
 
   {{- with .Values.upstreamAuthority.spire }}
   {{- if eq (.enabled | toString) "true" }}
+  UpstreamAuthority:
     - spire:
-        plugin_data {
+        plugin_data:
           server_address: {{ .server.address | quote }}
           server_port: {{ .server.port }}
           workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
@@ -83,6 +84,7 @@ plugins:
 
   {{- with .Values.upstreamAuthority.certManager }}
   {{- if eq (.enabled | toString) "true" }}
+  UpstreamAuthority:
     - cert-manager:
         plugin_data:
           issuer_name: {{ .issuer_name | quote }}
