@@ -10,4 +10,4 @@ helm install \
   --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
   --values "${SCRIPTPATH}/../../../examples/tornjak/values.yaml" \
   spire charts/spire --wait
-  helm test spire -n spire-server
+helm test spire -n spire-server
