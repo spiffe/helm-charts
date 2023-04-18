@@ -2,7 +2,7 @@ apiVersion: v2
 name: tornjak-frontend
 description: A Helm chart to deploy Tornjak frontend
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "v1.0.2"
 home: https://github.com/spiffe/helm-charts/tree/main/charts/spire
 sources:
