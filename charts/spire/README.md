@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.1](https://img.shields.io/badge/AppVersion-1.6.1-informational?style=flat-square)
+![Version: 0.6.3](https://img.shields.io/badge/Version-0.6.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.3](https://img.shields.io/badge/AppVersion-1.6.3-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -17,8 +17,11 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 | Dependency | Supported Versions |
 |:-----------|:-------------------|
-| SPIRE      | `1.5.3+`, `1.6.x`  |
+| SPIRE      | `1.5.3+`, `1.6.3+` |
 | Helm       | `3.x`              |
+| Kubernetes | `1.21+`            |
+
+> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden. *The first version we tested this chart with is `1.21`.*
 
 ## Prerequisites
 
@@ -84,6 +87,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | ---- | ------ | --- |
 | marcofranssen | <marco.franssen@gmail.com> | <https://marcofranssen.nl> |
 | kfox1111 | <Kevin.Fox@pnnl.gov> |  |
+| faisal-memon | <fymemon@yahoo.com> |  |
 
 ## Source Code
 
@@ -104,11 +108,10 @@ Kubernetes: `>=1.21.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| fullnameOverride | string | `""` |  |
+| global.k8s.clusterDomain | string | `"cluster.local"` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
 | global.spire.clusterName | string | `"example-cluster"` | Set the name of the Kubernetes cluster |
 | global.spire.trustDomain | string | `"example.org"` | Set the trust domain to use for the spiffe identifiers |
-| nameOverride | string | `""` |  |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spire-agent.enabled | bool | `true` |  |

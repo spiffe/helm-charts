@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.1](https://img.shields.io/badge/AppVersion-1.6.1-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.3](https://img.shields.io/badge/AppVersion-1.6.3-informational?style=flat-square)
 
 A Helm chart to install the SPIRE server.
 
@@ -28,6 +28,7 @@ A Helm chart to install the SPIRE server.
 | ca_subject.common_name | string | `"example.org"` |  |
 | ca_subject.country | string | `"NL"` |  |
 | ca_subject.organization | string | `"Example"` |  |
+| clusterDomain | string | `"cluster.local"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
@@ -48,6 +49,10 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
 | dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
@@ -87,6 +92,9 @@ A Helm chart to install the SPIRE server.
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | telemetry.prometheus.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tests.bash.image.registry | string | `"cgr.dev"` |  |
 | tests.bash.image.repository | string | `"chainguard/bash"` |  |
 | tests.bash.image.version | string | `"latest"` |  |
