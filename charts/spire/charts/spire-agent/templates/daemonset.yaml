@@ -45,7 +45,7 @@ spec:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
         {{- if gt (dig "fsGroup" 0.0 .Values.podSecurityContext) 0.0 }}
         - name: fsgroupfix
-          image: {{ template "spire-agent.image" .Values.bash }}
+          image: {{ template "spire-lib.image" (dict "image" .Values.bash.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.bash.image.pullPolicy }}
           command: ["bash", "-c"]
           args:
