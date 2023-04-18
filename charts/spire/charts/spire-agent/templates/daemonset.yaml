@@ -38,7 +38,7 @@ spec:
           # This is a small image with wait-for-it, choose whatever image
           # you prefer that waits for a service to be up. This image is built
           # from https://github.com/vishnubob/wait-for-it
-          image: {{ template "spire-agent.image" .Values.waitForIt }}
+          image: {{ template "spire-lib.image" .Values.waitForIt }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
           args: ["-t", "30", "-h", "{{ include "spire-agent.server-address" . | trim }}", "-p", {{ .Values.server.port | quote }}]
           resources:
@@ -48,7 +48,7 @@ spec:
         {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ template "spire-agent.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-config", "/run/spire/config/agent.conf"]
           ports:
@@ -100,7 +100,7 @@ spec:
             name: {{ include "spire-agent.fullname" . }}
         - name: spire-bundle
           configMap:
-            name: {{ include "spire-agent.bundle-configmap" . }}
+            name: {{ include "spire-lib.bundle-configmap" . }}
         - name: spire-token
           projected:
             sources:
