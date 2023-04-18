@@ -90,27 +90,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "spire-agent.registry" }}
-{{- if ne (len (dig "spire" "image" "registry" "" .global)) 0 }}
-{{- .global.spire.image.registry }}
-{{- else }}
-{{- .image.registry }}
-{{- end }}
-{{- end }}
-
-{{- define "spire-agent.image" -}}
-{{- $registry := include "spire-agent.registry" . }}
-{{- if eq (substr 0 7 .image.version) "sha256:" -}}
-{{- printf "%s/%s@%s" $registry .image.repository .image.version -}}
-{{- else if .appVersion -}}
-{{- printf "%s/%s:%s" $registry .image.repository (default .appVersion .image.version) -}}
-{{- else if .image.version -}}
-{{- printf "%s/%s:%s" $registry .image.repository .image.version -}}
-{{- else -}}
-{{- printf "%s/%s" $registry .image.repository -}}
-{{- end -}}
-{{- end }}
-
 {{- define "spire-agent.server-address" }}
 {{- if .Values.server.address }}
 {{- .Values.server.address }}
@@ -123,26 +102,3 @@ Create the name of the service account to use
 {{- print .Values.socketPath }}
 {{- end }}
 
-{{- define "spire-agent.cluster-name" }}
-{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
-{{- .Values.global.spire.clusterName }}
-{{- else }}
-{{- .Values.clusterName }}
-{{- end }}
-{{- end }}
-
-{{- define "spire-agent.trust-domain" }}
-{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
-{{- .Values.global.spire.trustDomain }}
-{{- else }}
-{{- .Values.trustDomain }}
-{{- end }}
-{{- end }}
-
-{{- define "spire-agent.bundle-configmap" }}
-{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
-{{- .Values.global.spire.bundleConfigMap }}
-{{- else }}
-{{- .Values.bundleConfigMap }}
-{{- end }}
-{{- end }}
