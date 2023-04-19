@@ -118,4 +118,3 @@ Tornjak specific section
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-be
 {{- end }}
-
