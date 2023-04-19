@@ -11,14 +11,14 @@ jq -r ".[].name" $CHARTJSON | while read CHART; do
   VERSION="$(jq -r "$ENTRYQUERY | .version" $CHARTJSON)"
   echo Processing: $CHART
   echo "  repo: $REPO_URL"
-  echo "  ver: $VERSION"
-  helm repo add "$CHART" "$REPO_URL"
-  helm repo update "$CHART"
-  NEW_VERSION=$(helm search repo --regexp "$CHART/$CHART\v" -o json | jq -r '.[0].version')
-  echo $VERSION $NEW_VERSION
-  if [ "x$VERSION" != "x$NEW_VERSION" ]; then
-    echo New version found.
-    jq "( $ENTRYQUERY ).version |= "'"'$NEW_VERSION'"' $CHARTJSON > /tmp/$$
+  echo "  current version: $VERSION"
+  helm repo add "$CHART" "$REPO_URL" > /dev/null
+  helm repo update "$CHART" > /dev/null
+  LATEST_VERSION=$(helm search repo --regexp "$CHART/$CHART\v" -o json | jq -r '.[0].version')
+  echo "  latest version: $LATEST_VERSION"
+  if [ "x$VERSION" != "x$LATEST_VERSION" ]; then
+    echo "  New version found!"
+    jq "( $ENTRYQUERY ).version |= "'"'$LATEST_VERSION'"' $CHARTJSON > /tmp/$$
     mv /tmp/$$ $CHARTJSON
   fi
 done
