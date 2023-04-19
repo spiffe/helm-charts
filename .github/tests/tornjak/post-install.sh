@@ -47,4 +47,5 @@ kubectl -n spire-server get service spire-tornjak-frontend
 
 if [ $1 -ne 0 ]; then
   get_namespace_details spire-server
+  get_namespace_details spire-system
 fi
