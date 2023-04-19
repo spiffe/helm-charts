@@ -115,7 +115,7 @@ Create the name of the service account to use
     {{- $pgValues := dict "Values" .Values.postgresql "global" .Values.global }}
     {{- $database := include "postgresql.database" $pgValues }}
     {{- $user := include "postgresql.username" $pgValues }}
-    {{- $password := $postgresql.auth.password }}
+    {{- $password := $pgValues.auth.password }}
     {{- $host := "spire-postgresql" }}
     {{- $port := include "postgresql.service.port" $pgValues }}
     {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=%s host=%s port=%d sslmode=disable" $database $user $password $host $port )}}
