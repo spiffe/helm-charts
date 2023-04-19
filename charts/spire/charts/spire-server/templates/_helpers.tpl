@@ -109,9 +109,16 @@ Create the name of the service account to use
 {{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
 {{- if not (hasKey $config "database_type") }}
   {{- if .Values.postgresql.enabled }}
-    {{- $_ := set $config "database_type" "postgresql" }}
-    {{- fail "Internal postgresql chart is not currently supported." }}
-    {{/* Nicely configure connection_string here */}}
+    {{- $_ := set $config "database_type" "postgres" }}
+    {{- fail "Internal postgresql chart is not currently supported."}}
+    {{/* Something like the following */}}
+    {{- $pgValues := dict "Values" .Values.postgresql "global" .Values.global }}
+    {{- $database := include "postgresql.database" $pgValues }}
+    {{- $user := include "postgresql.username" $pgValues }}
+    {{- $password := $postgresql.auth.password }}
+    {{- $host := "spire-postgresql" }}
+    {{- $port := include "postgresql.service.port" $pgValues }}
+    {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=%s host=%s port=%d sslmode=disable" $database $user $password $host $port )}}
   {{- else if .Values.mysql.enabled }}
     {{- fail "Internal mysql chart is not currently supported." }}
     {{/* Nicely configure connection_string here */}}
