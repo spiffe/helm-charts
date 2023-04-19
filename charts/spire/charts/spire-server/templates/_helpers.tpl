@@ -105,3 +105,20 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.datastore-config" }}
+{{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
+{{- if not (hasKey $config "database_type") }}
+  {{- if .Values.postgresql.enabled }}
+    {{- $_ := set $config "database_type" "postgresql" }}
+    {{- fail "Internal postgresql chart is not currently supported." }}
+    {{/* Nicely configure connection_string here */}}
+  {{- else if .Values.mysql.enabled }}
+    {{- fail "Internal mysql chart is not currently supported." }}
+    {{/* Nicely configure connection_string here */}}
+  {{- else }}
+    {{- $_ := set $config "database_type" "sqlite3" }}
+    {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
+  {{- end }}
+{{- end }}
+{{- $config | toYaml }}
+{{- end }}
