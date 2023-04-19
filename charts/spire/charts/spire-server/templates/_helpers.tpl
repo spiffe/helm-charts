@@ -132,3 +132,17 @@ Tornjak specific section
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-be
 {{- end }}
+
+{{/*
+Tornjak specific section
+*/}}
+
+{{- define "spire-tornjak.fullname" -}}
+{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
+{{- end }}
+{{- define "spire-tornjak.config" -}}
+{{ include "spire-tornjak.fullname" . }}-config
+{{- end }}
+{{- define "spire-tornjak.backend" -}}
+{{ include "spire-tornjak.fullname" . }}-be
+{{- end }}
