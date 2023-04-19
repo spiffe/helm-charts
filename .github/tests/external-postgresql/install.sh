@@ -23,8 +23,8 @@ spire-server:
   dataStore:
     sql:
       plugin_data:
-        database_type: "postgresql"
-        connection_string: "dbname=$PGDB user=$PGUSER password=$PGPW host=postgresql port=5432"
+        database_type: "postgres"
+        connection_string: "dbname=$PGDB user=$PGUSER password=$PGPW host=postgresql port=5432 sslmode=disable"
 EOF
 
 helm install postgresql postgresql --namespace "$scenario" --version 12.2.2 --repo https://charts.bitnami.com/bitnami -f /tmp/$$-db-values.yaml --wait
