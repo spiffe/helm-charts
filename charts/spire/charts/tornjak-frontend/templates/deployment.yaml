@@ -44,9 +44,3 @@ spec:
             periodSeconds: 30
             successThreshold: 1
             timeoutSeconds: 10
-          volumeMounts:
-            - name: cache
-              mountPath: /usr/src/app/node_modules/.cache
-      volumes:
-        - name: cache
-          emptyDir: {}
