@@ -73,11 +73,17 @@ affinity: {}
 
 topologySpreadConstraints: []
 
-dataStorage:
-  enabled: true
-  size: 1Gi
-  accessMode: ReadWriteOnce
-  storageClass: null
+# Used by sqllite for spire-server, tornjak, and/or the disk datastore.
+persistence:
+      enabled: true
+      size: 1Gi
+      accessMode: ReadWriteOnce
+      storageClass: null
+
+dataStore:
+  sql:
+    # -- Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section
+    plugin_data: {}
 
 logLevel: info
 jwtIssuer: oidc-discovery.example.org
@@ -217,3 +223,11 @@ nodeAttestor:
   k8sPsat:
     enabled: true
     serviceAccountAllowList: []
+
+# FIXME Not implemented yet
+postgresql:
+  enabled: false
+
+# FIXME Not implemented yet
+mysql:
+  enabled: false
