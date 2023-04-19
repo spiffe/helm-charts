@@ -53,10 +53,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
-| dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
-| dataStorage.enabled | bool | `true` |  |
-| dataStorage.size | string | `"1Gi"` |  |
-| dataStorage.storageClass | string | `nil` |  |
+| dataStore.sql.plugin_data | object | `{}` | Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
 | extraContainers | list | `[]` |  |
@@ -74,14 +71,20 @@ A Helm chart to install the SPIRE server.
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
+| mysql.enabled | bool | `false` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
 | nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
+| persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.size | string | `"1Gi"` |  |
+| persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| postgresql.enabled | bool | `false` |  |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
