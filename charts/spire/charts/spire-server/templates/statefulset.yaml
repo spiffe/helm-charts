@@ -165,8 +165,8 @@ spec:
       {{- end }}
       volumes:
         - name: spire-config
-          configMap:
-            name: {{ include "spire-server.fullname" . }}
+          secret:
+            secretName: {{ include "spire-server.fullname" . }}
         - name: spire-server-socket
           emptyDir: {}
         - name: spire-controller-manager-tmp

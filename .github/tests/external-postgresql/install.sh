@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -xe
+
 PGDB=$(uuidgen)
 PGUSER=$(uuidgen)
 PGPW=$(uuidgen)
@@ -27,14 +29,8 @@ EOF
 
 helm install postgresql postgresql --namespace "$scenario" --version 12.2.2 --repo https://charts.bitnami.com/bitnami -f /tmp/$$-db-values.yaml --wait
 
-set -xe
-
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
-
 helm install \
   --namespace "$scenario" \
-  --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
   spire charts/spire -f /tmp/$$-spire-values.yaml --wait
 
 helm test spire --namespace "$scenario"
