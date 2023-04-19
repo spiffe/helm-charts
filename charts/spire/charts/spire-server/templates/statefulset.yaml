@@ -151,7 +151,7 @@ spec:
         - name: tornjak
           securityContext:
             {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
-          image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image) }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
           startupProbe:
             httpGet:
