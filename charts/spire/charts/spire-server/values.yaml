@@ -82,7 +82,7 @@ persistence:
 
 dataStore:
   sql:
-    # -- Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section
+    # -- Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section.
     plugin_data: {}
 
 logLevel: info
@@ -226,8 +226,12 @@ nodeAttestor:
 
 # FIXME Not implemented yet
 postgresql:
+  # -- Deploy a built in postresql server
   enabled: false
+  # Any supported values from bitnami/postgres here
 
 # FIXME Not implemented yet
 mysql:
+  # -- Deploy a built in mysql server
   enabled: false
+  # Any supported values from bitnami/mysql here

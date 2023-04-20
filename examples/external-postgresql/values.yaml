@@ -1,0 +1,7 @@
+spire-server:
+  dataStore:
+    sql:
+      plugin_data:
+        database_type: "postgres"
+        connection_string: "dbname=YOURDB user=USER password=CHANGEME host=postgresql port=5432 sslmode=disable"
+
