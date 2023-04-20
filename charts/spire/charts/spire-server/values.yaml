@@ -73,7 +73,7 @@ affinity: {}
 
 topologySpreadConstraints: []
 
-# Used by sqlite3 for spire-server, by the disk Datastore, and/or by tornjak.
+# Used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak.
 persistence:
   enabled: true
   size: 1Gi
@@ -83,7 +83,11 @@ persistence:
 dataStore:
   sql:
     # -- Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section.
-    plugin_data: {}
+    plugin_data:
+      # -- Set to either "postgres" or "mysql" if you want to use an external databse
+      database_type: ""
+      # -- Set to the appropriate setting for your chosen external database. Passwords will be protected
+      connection_string: ""
 
 logLevel: info
 jwtIssuer: oidc-discovery.example.org
