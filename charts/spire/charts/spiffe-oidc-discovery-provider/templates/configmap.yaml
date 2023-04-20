@@ -7,7 +7,7 @@ log_level: {{ .Values.config.logLevel | quote }}
 domains:
   - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}"
   - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}"
-  - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spiffe-oidc-discovery-provider.cluster-domain" . }}"
+  - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}"
   {{- if gt (len .Values.config.domains) 0 }}
   {{- .Values.config.domains | toYaml | nindent 2 }}
   {{- end }}
@@ -25,7 +25,7 @@ acme:
 
 workload_api:
   socket_path: {{ include "spiffe-oidc-discovery-provider.workload-api-socket-path" . | quote }}
-  trust_domain: {{ include "spiffe-oidc-discovery-provider.trust-domain" . | quote }}
+  trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
 
 health_checks:
   bind_port: "8008"
