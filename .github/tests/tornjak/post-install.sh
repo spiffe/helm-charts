@@ -39,8 +39,11 @@ cat <<EOF >>"$GITHUB_STEP_SUMMARY"
 | workload                             | Status |
 | ------------------------------------ | ------ |
 | spire-server                         | "$("${k_rollout_status[@]}" spire-server statefulset spire-server)" |
+| spire-controller-manager             | "$("${k_rollout_status[@]}" spire-server statefulset spire-controller-manager)" |
+| spire-spiffe-oidc-discovery-provider | "$("${k_wait[@]}" spire-server deployments.apps spire-spiffe-oidc-discovery-provider)" |
+| spire-spiffe-csi-driver              | "$("${k_rollout_status[@]}" spire-system daemonset spire-spiffe-csi-driver)" |
+| spire-agent                          | "$("${k_rollout_status[@]}" spire-system daemonset spire-agent)" |
 | tornjak-frontend                     | "$("${k_wait[@]}" spire-server deployments.apps spire-tornjak-frontend)" |
-| tornjak-frontend                     | "$("${k_rollout_status[@]}" spire-server deployments.apps spire-tornjak-frontend)" |
 EOF
 
 kubectl -n spire-server get service spire-tornjak-frontend
