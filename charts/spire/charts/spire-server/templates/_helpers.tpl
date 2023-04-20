@@ -107,7 +107,7 @@ Create the name of the service account to use
 
 {{- define "spire-server.datastore-config" }}
 {{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
-{{- if not (hasKey $config "database_type") }}
+{{- if eq (len $config.database_type) 0 }}
   {{- if .Values.postgresql.enabled }}
     {{- $_ := set $config "database_type" "postgres" }}
     {{- fail "Internal postgresql chart is not currently supported."}}
