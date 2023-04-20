@@ -5,7 +5,7 @@ global:
 
 spire-server:
   nodeAttestor:
-    k8sPsat:
+    k8s_psat:
       serviceAccountAllowList: ["spire-system:spire-agent"]
   notifier:
     k8sbundle:

@@ -114,7 +114,7 @@ upstreamAuthority:
         certificate: ""
         key: ""
         bundle: ""
-  certManager:
+  cert-manager:
     enabled: false
     rbac:
       create: true
@@ -214,6 +214,6 @@ defaultX509SvidTTL: 4h
 defaultJwtSvidTTL: 1h
 
 nodeAttestor:
-  k8sPsat:
+  k8s_psat:
     enabled: true
     serviceAccountAllowList: []

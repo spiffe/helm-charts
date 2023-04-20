@@ -12,7 +12,7 @@ rules:
     verbs:
       - get
       - patch
-{{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.rbac.create }}
+{{- if and (index .Values.upstreamAuthority "cert-manager").enabled (index .Values.upstreamAuthority "cert-manager").rbac.create }}
 ---
 # Role to be able to manage cert requests with Cert-Manager
 kind: Role
@@ -61,7 +61,7 @@ roleRef:
   name: {{ include "spire-server.fullname" . }}-bundle
   apiGroup: rbac.authorization.k8s.io
 
-{{- if and .Values.nodeAttestor.k8sPsat.enabled }}
+{{- if and .Values.nodeAttestor.k8s_psat.enabled }}
 ---
 # ClusterRole to allow spire-server node attestor to query Token Review API
 kind: ClusterRole

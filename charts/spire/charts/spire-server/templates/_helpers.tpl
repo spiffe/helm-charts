@@ -98,10 +98,81 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "spire-server.serviceAccountAllowedList" }}
-{{- if ne (len .Values.nodeAttestor.k8sPsat.serviceAccountAllowList) 0 }}
-{{- .Values.nodeAttestor.k8sPsat.serviceAccountAllowList | toJson }}
+{{- if ne (len .Values.nodeAttestor.k8s_psat.serviceAccountAllowList) 0 }}
+{{- .Values.nodeAttestor.k8s_psat.serviceAccountAllowList | toJson }}
 {{- else }}
 [{{ printf "%s:%s-agent" .Release.Namespace .Release.Name | quote }}]
 {{- end }}
 {{- end }}
 
+
+{{/*
+Take a copy of a plugin values, and output mergable config
+*/}}
+{{- define "spire-server.config_mergeable" }}
+{{- $config := . }}
+{{- $newConfig := dict }}
+{{- range (list "plugin_cmd" "plugin_checksum" "plugin_data") }}
+{{- if hasKey $config . }}
+{{- $_ := set $newConfig . (index $config .) }}
+{{- end }}
+{{- end }}
+{{- toYaml $newConfig }}
+{{- end }}
+
+{{/*
+Take a copy of the config and merge in plugins passed through as root.
+*/}}
+{{- define "spire-server.config_merge" }}
+{{- $newConfig := .config | fromYaml }}
+{{- $root := .root }}
+{{- $sections := list (list "nodeAttestor" "NodeAttestor") (list "notifier" "Notifier") (list "keyManager" "KeyManager") (list "upstreamAuthority" "UpstreamAuthority") }}
+{{- range $section := $sections }}
+{{- $vsection := index $section 0 }}
+{{- $csection := index $section 1 }}
+{{- if not (hasKey $newConfig.plugins $csection) }}
+{{- $_ := set $newConfig.plugins $csection (dict) }}
+{{- end }}
+{{- $cdict := index $newConfig.plugins $csection }}
+{{- $vdict := index $root.Values $vsection }}
+{{- range $name, $v := $vdict }}
+{{- $oldV := index $cdict $name | default (dict) }}
+{{- $newV := $oldV | mustMerge (include "spire-server.config_mergeable" $v | fromYaml) }}
+{{- if or (not (hasKey $v "enabled")) (eq ($v.enabled | toString) "true") }}
+{{- $_ := set $cdict $name $newV }}
+{{- end }}
+{{- end }}
+{{- if eq (len $cdict) 0 }}
+{{- $_ := unset $newConfig.plugins $csection }}
+{{- end }}
+{{- end }}
+{{- $newConfig | toYaml }}
+{{- end }}
+
+{{/*
+Take a copy of the plugin section and return a yaml string based version
+reformatted from a dict of dicts to a dict of lists of dicts
+*/}}
+{{- define "spire-server.plugins_reformat" }}
+{{- range $type, $v := . }}
+{{ $type }}:
+  {{- range $name, $v2 := $v }}
+    - {{ $name }}: {{ $v2 | toYaml | nindent 8 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Take a copy of the config as a yaml config and root var.
+Merge in .root.Values.plugin into config,
+Reformat the plugin section from a dict of dicts to a dict of lists of dicts,
+and export it back as as json string.
+This makes it much easier for users to merge in plugin configs, as dicts are easier
+to merge in values, but spire needs arrays.
+*/}}
+{{- define "spire-server.reformat-and-yaml2json" -}}
+{{- $config := include "spire-server.config_merge" . | fromYaml }}
+{{- $plugins := include "spire-server.plugins_reformat" $config.plugins | fromYaml }}
+{{- $_ := set $config "plugins" $plugins }}
+{{- $config | toPrettyJson }}
+{{- end }}
