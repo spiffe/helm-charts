@@ -73,12 +73,12 @@ affinity: {}
 
 topologySpreadConstraints: []
 
-# Used by sqllite for spire-server, tornjak, and/or the disk datastore.
+# Used by sqlite3 for spire-server, by the disk Datastore, and/or by tornjak.
 persistence:
-      enabled: true
-      size: 1Gi
-      accessMode: ReadWriteOnce
-      storageClass: null
+  enabled: true
+  size: 1Gi
+  accessMode: ReadWriteOnce
+  storageClass: null
 
 dataStore:
   sql:
