@@ -53,7 +53,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
-| dataStore.sql.plugin_data | object | `{}` | Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section |
+| dataStore.sql.plugin_data | object | `{}` | Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section. |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
 | extraContainers | list | `[]` |  |
@@ -71,7 +71,7 @@ A Helm chart to install the SPIRE server.
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
-| mysql.enabled | bool | `false` |  |
+| mysql.enabled | bool | `false` | Deploy a built in mysql server |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
@@ -84,7 +84,7 @@ A Helm chart to install the SPIRE server.
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql.enabled | bool | `false` |  |
+| postgresql.enabled | bool | `false` | Deploy a built in postresql server |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
