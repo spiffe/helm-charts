@@ -156,7 +156,9 @@ reformatted from a dict of dicts to a dict of lists of dicts
 {{- define "spire-server.plugins_reformat" }}
 {{- range $type, $v := . }}
 {{ $type }}:
-  {{- range $name, $v2 := $v }}
+  {{- $names := sortAlpha (keys $v) }}
+  {{- range $name := $names }}
+    {{- $v2 := index $v $name }}
     - {{ $name }}: {{ $v2 | toYaml | nindent 8 }}
   {{- end }}
 {{- end }}
