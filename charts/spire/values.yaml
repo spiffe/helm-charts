@@ -11,6 +11,10 @@ global:
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 
+    image:
+      # -- Override all Spire image registries at once
+      registry: ""
+
 #  telemetry:
 #    prometheus:
 #      enabled: true
