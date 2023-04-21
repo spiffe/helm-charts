@@ -74,11 +74,12 @@ insecureScheme:
       #   cpu: 100m
       #   memory: 64Mi
 
+jwtIssuer: oidc-discovery.example.org
+
 config:
   logLevel: info
-  domains:
-    - localhost
-    - oidc-discovery.example.org
+  # -- Override the domains to use. Defaults to jwtIssuer and localhost.
+  domains: []
 
   acme:
     tosAccepted: false

@@ -10,6 +10,9 @@ domains:
   - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}"
   {{- if gt (len .Values.config.domains) 0 }}
   {{- .Values.config.domains | toYaml | nindent 2 }}
+  {{- else }}
+  - "{{ include "spire-lib.jwt-issuer" . }}"
+  - "localhost"
   {{- end }}
 
 {{- if .Values.insecureScheme.enabled }}

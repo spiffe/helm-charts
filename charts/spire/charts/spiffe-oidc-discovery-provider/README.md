@@ -26,8 +26,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | config.acme.tosAccepted | bool | `false` |  |
-| config.domains[0] | string | `"localhost"` |  |
-| config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| config.domains | list | `[]` | Override the domains to use. Defaults to jwtIssuer and localhost. |
 | config.logLevel | string | `"info"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -48,6 +47,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
 | insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
 | insecureScheme.nginx.resources | object | `{}` |  |
+| jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
