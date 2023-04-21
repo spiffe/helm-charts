@@ -6,7 +6,7 @@ Your release is named: {{ .Release.Name }}
 Namespace: {{ include "tornjak-frontend.namespace" . }}
 
 Tornjak UI (Frontend)
-  image: {{ template "tornjak-frontend.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+  image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
   pull policy: {{ .Values.image.pullPolicy }}
 Configured with Tornjak API (Backend): {{ include "tornjak-frontend.apiURL" . }}
 
