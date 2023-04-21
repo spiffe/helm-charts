@@ -7,6 +7,8 @@
 
 A Helm chart to deploy Tornjak frontend
 
+**Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
+
 ## Version support
 
 > **Note**: This Chart is still in development and still subject to change the API (`values.yaml`).
@@ -38,6 +40,10 @@ port forwarding. See the chart NOTES output for more details.
 | Name | Email | Url |
 | ---- | ------ | --- |
 | mrsabath | <mrsabath@gmail.com> | <https://mrsabath.github.io> |
+
+## Source Code
+
+* <https://github.com/spiffe/tornjak>
 
 ## Values
 
