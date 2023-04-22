@@ -237,10 +237,30 @@ postgresql:
     username: spire
     password: CHANGEME
     postgresPassword: CHANGEME
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
+      accessMode: ReadWriteOnce
+      storageClass: ""
   # Any supported values from bitnami/postgres here
 
 # FIXME Not implemented yet
 mysql:
   # -- Deploy a built in mysql server
   enabled: false
+  auth:
+    database: spire
+    username: spire
+    password: CHANGEME
+    rootPassword: CHANGEME
+  primary:
+    service:
+      ports:
+        mysql: 3306
+    persistence:
+      enabled: true
+      size: 1Gi
+      accessMode: ReadWriteOnce
+      storageClass: ""
   # Any supported values from bitnami/mysql here

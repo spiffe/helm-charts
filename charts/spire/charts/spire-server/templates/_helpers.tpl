@@ -122,6 +122,12 @@ Create the name of the service account to use
   {{- else if .Values.mysql.enabled }}
     {{- fail "Internal mysql chart is not currently supported." }}
     {{/* Nicely configure connection_string here */}}
+    {{- $database := .Values.mysql.auth.database }}
+    {{- $user := .Values.mysql.auth.username }}
+    {{- $password := .Values.mysql.auth.password }}
+    {{- $host := "spire-mysql" }}
+    {{- $port := .Values.mysql.primary.service.ports.mysql }}
+    {{- $_ := set $config "connection_string" (printf "%s:%s@tcp(%s:%d)/%s?parseTime=true" $user $password $host $port $database )}}
   {{- else }}
     {{- $_ := set $config "database_type" "sqlite3" }}
     {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}

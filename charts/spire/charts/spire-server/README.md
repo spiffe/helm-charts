@@ -73,7 +73,16 @@ A Helm chart to install the SPIRE server.
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | logLevel | string | `"info"` |  |
+| mysql.auth.database | string | `"spire"` |  |
+| mysql.auth.password | string | `"CHANGEME"` |  |
+| mysql.auth.rootPassword | string | `"CHANGEME"` |  |
+| mysql.auth.username | string | `"spire"` |  |
 | mysql.enabled | bool | `false` | Deploy a built in mysql server |
+| mysql.primary.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| mysql.primary.persistence.enabled | bool | `true` |  |
+| mysql.primary.persistence.size | string | `"1Gi"` |  |
+| mysql.primary.persistence.storageClass | string | `""` |  |
+| mysql.primary.service.ports.mysql | int | `3306` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
@@ -91,6 +100,10 @@ A Helm chart to install the SPIRE server.
 | postgresql.auth.postgresPassword | string | `"CHANGEME"` |  |
 | postgresql.auth.username | string | `"spire"` |  |
 | postgresql.enabled | bool | `false` | Deploy a built in postresql server |
+| postgresql.primary.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| postgresql.primary.persistence.enabled | bool | `true` |  |
+| postgresql.primary.persistence.size | string | `"1Gi"` |  |
+| postgresql.primary.persistence.storageClass | string | `""` |  |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
