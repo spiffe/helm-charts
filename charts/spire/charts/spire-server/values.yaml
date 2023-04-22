@@ -232,6 +232,11 @@ nodeAttestor:
 postgresql:
   # -- Deploy a built in postresql server
   enabled: false
+  auth:
+    database: spire
+    username: spire
+    password: CHANGEME
+    postgresPassword: CHANGEME
   # Any supported values from bitnami/postgres here
 
 # FIXME Not implemented yet
