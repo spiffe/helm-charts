@@ -108,30 +108,8 @@ Create the name of the service account to use
 {{- define "spire-server.datastore-config" }}
 {{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
 {{- if eq (len $config.database_type) 0 }}
-  {{- if .Values.postgresql.enabled }}
-    {{- $_ := set $config "database_type" "postgres" }}
-    {{- fail "Internal postgresql chart is not currently supported."}}
-    {{/* Something like the following */}}
-    {{- $pgValues := dict "Values" .Values.postgresql "global" .Values.global "Template" (dict "Name" "" "BasePath" "") }}
-    {{- $database := include "postgresql.database" $pgValues }}
-    {{- $user := include "postgresql.username" $pgValues }}
-    {{- $password := $pgValues.auth.password }}
-    {{- $host := "spire-postgresql" }}
-    {{- $port := include "postgresql.service.port" $pgValues }}
-    {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=%s host=%s port=%d sslmode=disable" $database $user $password $host $port )}}
-  {{- else if .Values.mysql.enabled }}
-    {{- fail "Internal mysql chart is not currently supported." }}
-    {{/* Nicely configure connection_string here */}}
-    {{- $database := .Values.mysql.auth.database }}
-    {{- $user := .Values.mysql.auth.username }}
-    {{- $password := .Values.mysql.auth.password }}
-    {{- $host := "spire-mysql" }}
-    {{- $port := .Values.mysql.primary.service.ports.mysql }}
-    {{- $_ := set $config "connection_string" (printf "%s:%s@tcp(%s:%d)/%s?parseTime=true" $user $password $host $port $database )}}
-  {{- else }}
-    {{- $_ := set $config "database_type" "sqlite3" }}
-    {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
-  {{- end }}
+  {{- $_ := set $config "database_type" "sqlite3" }}
+  {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
 {{- end }}
 {{- $config | toYaml }}
 {{- end }}
