@@ -112,7 +112,7 @@ Create the name of the service account to use
     {{- $_ := set $config "database_type" "postgres" }}
     {{- fail "Internal postgresql chart is not currently supported."}}
     {{/* Something like the following */}}
-    {{- $pgValues := dict "Values" .Values.postgresql "global" .Values.global }}
+    {{- $pgValues := dict "Values" .Values.postgresql "global" .Values.global "Template" (dict "Name" "" "BasePath" "") }}
     {{- $database := include "postgresql.database" $pgValues }}
     {{- $user := include "postgresql.username" $pgValues }}
     {{- $password := $pgValues.auth.password }}

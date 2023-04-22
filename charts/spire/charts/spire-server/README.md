@@ -86,6 +86,10 @@ A Helm chart to install the SPIRE server.
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| postgresql.auth.database | string | `"spire"` |  |
+| postgresql.auth.password | string | `"CHANGEME"` |  |
+| postgresql.auth.postgresPassword | string | `"CHANGEME"` |  |
+| postgresql.auth.username | string | `"spire"` |  |
 | postgresql.enabled | bool | `false` | Deploy a built in postresql server |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
