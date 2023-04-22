@@ -30,6 +30,7 @@ A Helm chart to install the SPIRE server.
 | ca_subject.organization | string | `"Example"` |  |
 | clusterDomain | string | `"cluster.local"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| config | object | `{}` | Any of the settings described at https://github.com/spiffe/spire/blob/main/doc/spire_server.md#server-configuration-file can be set here |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
