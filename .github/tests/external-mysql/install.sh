@@ -2,7 +2,7 @@
 
 set -xe
 
-DB=$(uuidgen)
+DB=dbname
 DBUSER=$(uuidgen)
 DBPW=$(uuidgen)
 DBROOTPW=$(uuidgen)
