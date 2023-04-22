@@ -1,0 +1,3 @@
+spire-server:
+  config:
+    admin_ids: ["spiffe://example.org/users/some-admin"]

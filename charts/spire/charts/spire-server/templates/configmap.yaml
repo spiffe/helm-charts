@@ -100,6 +100,10 @@ telemetry:
         port: 9988
 {{- end }}
 {{- end }}
+{{- define "spire-server.yaml-config-merge" -}}
+{{- $config := include "spire-server.yaml-config" . | fromYaml }}
+{{- $config | mustMerge (dict "server" .Values.config) | toYaml }}
+{{- end  }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -107,4 +111,4 @@ metadata:
   namespace: {{ include "spire-server.namespace" . }}
 data:
   server.conf: |
-    {{- include "spire-server.yaml-config" . | fromYaml | toPrettyJson | nindent 4 }}
+    {{- include "spire-server.yaml-config-merge" . | fromYaml | toPrettyJson | nindent 4 }}
