@@ -2,6 +2,9 @@
 
 set -xe
 
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 DB=spire
 DBUSER=spire
 DBPW=$(uuidgen)
@@ -25,10 +28,14 @@ spire-server:
         connection_string: "${DBUSER}:${DBPW}@tcp(mysql:3306)/${DB}?parseTime=true"
 EOF
 
-helm install mysql mysql --namespace "$scenario" --version 9.7.2 --repo https://charts.bitnami.com/bitnami -f /tmp/$$-db-values.yaml --wait
+helm install mysql mysql --namespace "spire-server" --version 9.7.2 --repo https://charts.bitnami.com/bitnami \
+  --values "${SCRIPTPATH}/mysql-values.yaml" \
+  --values /tmp/$$-db-values.yaml --wait
 
 helm install \
-  --namespace "$scenario" \
-  spire charts/spire -f /tmp/$$-spire-values.yaml --wait
+  --namespace "spire-server" \
+  --values /tmp/$$-spire-values.yaml \
+  --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
+  spire charts/spire --wait
 
 helm test spire --namespace "$scenario"

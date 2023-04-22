@@ -44,6 +44,25 @@ spire-server:
       - kube-public
       - local-path-storage
 
+  postgresql:
+    primary:
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        capabilities:
+          drop: [ALL]
+        seccompProfile:
+          type: RuntimeDefault
+
+  mysql:
+    primary:
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: [ALL]
+        seccompProfile:
+          type: RuntimeDefault
+
 spiffe-csi-driver:
   enabled: true
   namespaceOverride: spire-system
