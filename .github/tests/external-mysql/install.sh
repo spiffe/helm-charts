@@ -22,7 +22,7 @@ spire-server:
     sql:
       plugin_data:
         database_type: "mysql"
-        connection_string: "$DBUER:$DBPW@tcp(mysql:3306)/$DB?parseTime=true"
+        connection_string: "$DBUSER:$DBPW@tcp(mysql:3306)/$DB?parseTime=true"
 EOF
 
 helm install mysql mysql --namespace "$scenario" --version 9.7.2 --repo https://charts.bitnami.com/bitnami -f /tmp/$$-db-values.yaml --wait
