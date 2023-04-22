@@ -38,13 +38,14 @@ cat <<EOF >>"$GITHUB_STEP_SUMMARY"
 
 | workload                             | Status |
 | ------------------------------------ | ------ |
-| spire-server                         | "$("${k_rollout_status[@]}" $scenario statefulset spire-server)" |
-| spire-controller-manager             | "$("${k_rollout_status[@]}" $scenario statefulset spire-controller-manager)" |
-| spire-spiffe-oidc-discovery-provider | "$("${k_wait[@]}" $scenario deployments.apps spire-spiffe-oidc-discovery-provider)" |
-| spire-spiffe-csi-driver              | "$("${k_rollout_status[@]}" $scenario daemonset spire-spiffe-csi-driver)" |
-| spire-agent                          | "$("${k_rollout_status[@]}" $scenario daemonset spire-agent)" |
+| spire-server                         | "$("${k_rollout_status[@]}" spire-server statefulset spire-server)" |
+| spire-controller-manager             | "$("${k_rollout_status[@]}" spire-server statefulset spire-controller-manager)" |
+| spire-spiffe-oidc-discovery-provider | "$("${k_wait[@]}" spire-server deployments.apps spire-spiffe-oidc-discovery-provider)" |
+| spire-spiffe-csi-driver              | "$("${k_rollout_status[@]}" spire-system daemonset spire-spiffe-csi-driver)" |
+| spire-agent                          | "$("${k_rollout_status[@]}" spire-system daemonset spire-agent)" |
 EOF
 
 if [ $1 -ne 0 ]; then
-  get_namespace_details $scenario
+  get_namespace_details spire-server
+  get_namespace_details spire-systen
 fi

@@ -2,6 +2,9 @@
 
 set -xe
 
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
 DB=$(uuidgen)
 DBUSER=$(uuidgen)
 DBPW=$(uuidgen)
@@ -25,10 +28,14 @@ spire-server:
         connection_string: "dbname=${DB} user=${DBUSER} password=${DBPW} host=postgresql port=5432 sslmode=disable"
 EOF
 
-helm install postgresql postgresql --namespace "$scenario" --version 12.2.2 --repo https://charts.bitnami.com/bitnami -f /tmp/$$-db-values.yaml --wait
+helm install postgresql postgresql --namespace "spire-server" --version 12.2.2 --repo https://charts.bitnami.com/bitnami \
+  --values "${SCRIPTPATH}/postgresql-values.yaml" \
+  --values /tmp/$$-db-values.yaml --wait
 
 helm install \
-  --namespace "$scenario" \
-  spire charts/spire -f /tmp/$$-spire-values.yaml --wait
+  --namespace "spire-server" \
+  --values /tmp/$$-spire-values.yaml \
+  --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
+  spire charts/spire --wait
 
 helm test spire --namespace "$scenario"
