@@ -29,7 +29,7 @@ jobs:
 
       - name: Update Versions
         run: |
-          ./.github/workflow/scripts/update-versions.sh
+          ./.github/workflows/scripts/update-versions.sh
           git diff
 
       - name: Create Pull Request
