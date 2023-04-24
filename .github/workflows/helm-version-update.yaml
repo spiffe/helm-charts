@@ -1,4 +1,5 @@
-name: Build
+name: Check versions
+
 on:
   schedule:
     - cron: '0 8 * * 1'
@@ -10,10 +11,13 @@ env:
   HELM_VERSION: v3.11.1
 
 jobs:
-  ensure-versions:
+  check-helm-chart-versions:
     runs-on: ubuntu-22.04
+
     permissions:
-      pull-request: write
+      contents: write
+      pull-requests: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.0
@@ -30,10 +34,14 @@ jobs:
 
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5.0.0
+        with:
+          title: Bump test chart dependencies
+          branch: bump-test-chart-deps
+          commit-message: Bump test chart dependencies
+          body: Bump the Helm charts used in test scenarios to latest available versions.
+          signoff: true
 
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+        run: 'echo "::notice title=PR #${{ steps.cpr.outputs.pull-request-number }}::${{ steps.cpr.outputs.pull-request-url }}"'
