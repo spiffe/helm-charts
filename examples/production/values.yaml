@@ -62,6 +62,8 @@ spire-agent:
 
 spiffe-oidc-discovery-provider:
   enabled: true
+  config:
+    domains: []
   insecureScheme:
     enabled: true
   podSecurityContext:
