@@ -79,7 +79,8 @@ jwtIssuer: oidc-discovery.example.org
 config:
   logLevel: info
   # -- Override the domains to use. Defaults to jwtIssuer and localhost.
-  domains: []
+  domains:
+  - localhost
 
   acme:
     tosAccepted: false
