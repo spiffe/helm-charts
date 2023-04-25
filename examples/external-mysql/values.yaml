@@ -1,6 +1,11 @@
 spire-server:
   dataStore:
     sql:
-      plugin_data:
-        database_type: "mysql"
-        connection_string: "spire:CHANGEME@tcp(mysql:3306)/spire?parseTime=true"
+      database_type: mysql
+      host: mysql
+      port: 3306
+      database: spire
+      username: spire
+      password: CHANGEME
+      options:
+        - parseTime: true

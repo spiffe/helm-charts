@@ -105,11 +105,49 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.config-mysql-query" }}
+{{- $lst := list }}
+{{- range . }}
+{{- range $key, $value := . }}
+{{- $eValue := toString $value }}
+{{- $entry := printf "%s=%s" (urlquery $key) (urlquery $eValue) }}
+{{- $lst = append $lst $entry }}
+{{- end }}
+{{- end }}
+{{- if gt (len $lst) 0 }}
+{{- printf "?%s" (join "&" $lst) }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.config-postgresql-options" }}
+{{- $lst := list }}
+{{- range . }}
+{{- range $key, $value := . }}
+{{- $eValue := toString $value }}
+{{- $entry := printf "%s=%s" $key $eValue }}
+{{- $lst = append $lst $entry }}
+{{- end }}
+{{- end }}
+{{- if gt (len $lst) 0 }}
+{{- printf " %s" (join " " $lst) }}
+{{- end }}
+{{- end }}
+
 {{- define "spire-server.datastore-config" }}
 {{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
-{{- if eq (len $config.database_type) 0 }}
+{{- if eq .Values.dataStore.sql.database_type "sqlite3" }}
   {{- $_ := set $config "database_type" "sqlite3" }}
   {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
+{{- else if eq .Values.dataStore.sql.database_type "mysql" }}
+  {{- $_ := set $config "database_type" "mysql" }}
+  {{- $query := include "spire-server.config-mysql-query" .Values.dataStore.sql.options }}
+  {{- $_ := set $config "connection_string" (printf "%s:%s@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.password .Values.dataStore.sql.host (int .Values.dataStore.sql.port) .Values.dataStore.sql.database $query) }}
+{{- else if eq .Values.dataStore.sql.database_type "postgresql" }}
+  {{- $_ := set $config "database_type" "postgresql" }}
+  {{- $options:= include "spire-server.config-postgresql-options" .Values.dataStore.sql.options }}
+  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=%s host=%s port=%d%s" .Values.dataStore.sql.database .Values.dataStore.sql.username .Values.dataStore.sql.password .Values.dataStore.sql.host (int .Values.dataStore.sql.port) $options) }}
+{{- else }}
+  {{- fail "Unsupported database type" }}
 {{- end }}
 {{- $config | toYaml }}
 {{- end }}
