@@ -43,7 +43,7 @@ spec:
           args: ["-t", "30", "-h", "{{ include "spire-agent.server-address" . | trim }}", "-p", {{ .Values.server.port | quote }}]
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
-        {{- if gt (dig "fsGroup" 0.0 .Values.podSecurityContext) 0.0 }}
+        {{- if gt (int (dig "fsGroup" 0 .Values.podSecurityContext)) 0 }}
         - name: fsgroupfix
           image: {{ template "spire-lib.image" (dict "image" .Values.bash.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.bash.image.pullPolicy }}
