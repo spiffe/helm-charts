@@ -27,7 +27,7 @@ jobs:
         with:
           version: ${{ env.HELM_VERSION }}
 
-      - name: Update Versions
+      - name: Update test chart versions
         run: |
           ./.github/workflows/scripts/update-versions.sh
           git diff
@@ -41,6 +41,8 @@ jobs:
           commit-message: Bump test chart dependencies
           body: Bump the Helm charts used in test scenarios to latest available versions.
           signoff: true
+          add-paths: |
+            .github/tests
 
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
