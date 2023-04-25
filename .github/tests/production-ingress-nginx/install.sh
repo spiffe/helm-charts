@@ -9,10 +9,10 @@ kubectl label namespace spire-system pod-security.kubernetes.io/enforce=privileg
 kubectl create namespace spire-server
 kubectl label namespace spire-server pod-security.kubernetes.io/enforce=restricted
 
-helm install cert-manager cert-manager --namespace cert-manager --create-namespace --version v1.11.0 --set installCRDs=true --repo https://charts.jetstack.io --wait
+helm install cert-manager cert-manager --namespace cert-manager --create-namespace --version "$VERSION_CERT_MANAGER" --set installCRDs=true --repo "$HELM_REPO_CERT_MANAGER" --wait
 kubectl apply -f $SCRIPT_DIR/testcert.yaml -n spire-server
 
-helm install ingress-nginx ingress-nginx --version 4.5.2 --repo https://kubernetes.github.io/ingress-nginx --create-namespace -n ingress-nginx --wait \
+helm install ingress-nginx ingress-nginx --version "$VERSION_INGRESS_NGINX" --repo "$HELM_REPO_INGRESS_NGINX" --create-namespace -n ingress-nginx --wait \
     --set controller.extraArgs.enable-ssl-passthrough=,controller.admissionWebhooks.enabled=false,controller.service.type=ClusterIP \
     --set controller.ingressClassResource.default=true
 
