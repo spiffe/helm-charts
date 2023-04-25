@@ -28,7 +28,7 @@ spire-server:
         connection_string: "${DBUSER}:${DBPW}@tcp(mysql:3306)/${DB}?parseTime=true"
 EOF
 
-helm install mysql mysql --namespace "spire-server" --version 9.7.2 --repo https://charts.bitnami.com/bitnami \
+helm install mysql mysql --namespace "spire-server" --version "$VERSION_MYSQL" --repo "$HELM_REPO_MYSQL" \
   --values "${SCRIPTPATH}/mysql-values.yaml" \
   --values /tmp/$$-db-values.yaml --wait
 
