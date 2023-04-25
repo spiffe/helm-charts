@@ -63,7 +63,7 @@ spec:
       - name: post-install-job
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
-        image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image) }}
+        image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image "global" .Values.global) }}
         command:
         - /bin/sh
         - -c
