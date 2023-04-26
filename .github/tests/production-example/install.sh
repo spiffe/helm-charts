@@ -2,8 +2,8 @@
 
 set -xe
 
-SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
+SCRIPT="$(readlink -f "$0")"
+SCRIPTPATH="$(dirname "${SCRIPT}")"
 
 helm install \
   --namespace spire-server \
