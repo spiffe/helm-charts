@@ -58,6 +58,8 @@ trustDomain: example.org
 
 bundleConfigMap: spire-bundle
 
+
+
 server:
   address: ""
   port: 8081
@@ -81,6 +83,9 @@ workloadAttestors:
   unix:
     # -- enables the Unix workload attestor
     enabled: false
+  k8s:
+    # -- If true, kubelet certificate verification is skipped
+    skipKubeletVerification: false
 
 telemetry:
   prometheus:
