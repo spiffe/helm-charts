@@ -2,7 +2,7 @@
 
 set -x
 
-SCRIPT="$(readlink -f "$0")"
+SCRIPT=$(readlink -f "$0")
 SCRIPTPATH="$(dirname "${SCRIPT}")"
 scenario="${scenario:-$(basename "${SCRIPTPATH}")}"
 
@@ -10,9 +10,8 @@ scenario="${scenario:-$(basename "${SCRIPTPATH}")}"
 source "${SCRIPTPATH}/../common.sh"
 
 print_helm_releases
-print_spire_workload_status spire-server spire-system
+print_spire_workload_status "${scenario}"
 
-if [[ "$1" -ne 0 ]]; then
-  get_namespace_details spire-server
-  get_namespace_details spire-system
+if [ "$1" != '0' ]; then
+  get_namespace_details "${scenario}"
 fi
