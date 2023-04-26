@@ -54,6 +54,7 @@ A Helm chart to install the SPIRE agent.
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` |  |
 | waitForIt.image.version | string | `"latest-20230113"` |  |
 | waitForIt.resources | object | `{}` |  |
+| workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
 
 ----------------------------------------------
