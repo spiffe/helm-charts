@@ -81,6 +81,9 @@ workloadAttestors:
   unix:
     # -- enables the Unix workload attestor
     enabled: false
+  k8s:
+    # -- If true, kubelet certificate verification is skipped
+    skipKubeletVerification: true
 
 telemetry:
   prometheus:
