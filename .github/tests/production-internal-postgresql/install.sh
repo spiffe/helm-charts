@@ -29,7 +29,6 @@ popd
 helm install \
   --namespace "spire-server" \
   --values /tmp/$$-spire-values.yaml \
-  --values "${SCRIPTPATH}/values.yaml" \
   --values "${SCRIPTPATH}/../../../examples/production/values.yaml" \
   spire charts/spire --wait
 

@@ -1,9 +1,0 @@
-spire-server:
-  mysql:
-    primary:
-      containerSecurityContext:
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop: [ALL]
-        seccompProfile:
-          type: RuntimeDefault
