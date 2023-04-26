@@ -3,10 +3,16 @@
 set -x
 
 SCRIPT=$(readlink -f "$0")
-SCRIPTPATH=$(dirname "$SCRIPT")
+SCRIPTPATH=$(dirname "${SCRIPT}")
+scenario="${scenario:-$(basename "${SCRIPTPATH}")}"
 
-k_wait=(kubectl wait --for condition=available --timeout 30s --namespace)
-k_rollout_status=(kubectl rollout status --watch --timeout 30s --namespace)
+k_wait () {
+  kubectl wait --for condition=available --timeout 30s --namespace "$1" "$2" "$3" | tail -n 1
+}
+
+k_rollout_status () {
+  kubectl rollout status --watch --timeout 30s --namespace "$1" "$2" "$3" | tail -n 1
+}
 
 function get_namespace_details {
 cat <<EOF >>"$GITHUB_STEP_SUMMARY"
@@ -38,14 +44,14 @@ cat <<EOF >>"$GITHUB_STEP_SUMMARY"
 
 | workload                             | Status |
 | ------------------------------------ | ------ |
-| spire-server                         | "$("${k_rollout_status[@]}" spire-server statefulset spire-server)" |
-| spire-controller-manager             | "$("${k_rollout_status[@]}" spire-server statefulset spire-controller-manager)" |
-| spire-spiffe-oidc-discovery-provider | "$("${k_wait[@]}" spire-server deployments.apps spire-spiffe-oidc-discovery-provider)" |
-| spire-spiffe-csi-driver              | "$("${k_rollout_status[@]}" spire-system daemonset spire-spiffe-csi-driver)" |
-| spire-agent                          | "$("${k_rollout_status[@]}" spire-system daemonset spire-agent)" |
+| spire-server                         | "$(k_rollout_status spire-server statefulset spire-server)" |
+| spire-controller-manager             | "$(k_rollout_status spire-server statefulset spire-controller-manager)" |
+| spire-spiffe-oidc-discovery-provider | "$(k_wait spire-server deployments.apps spire-spiffe-oidc-discovery-provider)" |
+| spire-spiffe-csi-driver              | "$(k_rollout_status spire-system daemonset spire-spiffe-csi-driver)" |
+| spire-agent                          | "$(k_rollout_status spire-system daemonset spire-agent)" |
 EOF
 
-if [ $1 -ne 0 ]; then
+if [[ "$1" -ne 0 ]]; then
   get_namespace_details spire-server
   get_namespace_details spire-systen
 fi
