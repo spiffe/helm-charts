@@ -3,7 +3,7 @@
 SCRIPT="$(readlink -f "$0")"
 SCRIPTPATH="$(dirname "${SCRIPT}")"
 
-CHARTJSON="${SCRIPTPATH}/../../tests/charts.json"
+CHARTJSON="${SCRIPTPATH}/../tests/charts.json"
 
 jq -r ".[].name" "${CHARTJSON}" | while read -r CHART; do
   ENTRYQUERY='.[] | select(.name == "'$CHART'")'
