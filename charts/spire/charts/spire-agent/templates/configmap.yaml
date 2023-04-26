@@ -24,7 +24,7 @@ plugins:
           # Defaults to the secure kubelet port by default.
           # Minikube does not have a cert in the cluster CA bundle that
           # can authenticate the kubelet cert, so skip validation.
-          skip_kubelet_verification: true
+          skip_kubelet_verification: {{ .Values.workloadAttestors.k8s.skipKubeletVerification }}
 
   {{- if .Values.workloadAttestors.unix.enabled }}
     - unix:
