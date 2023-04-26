@@ -11,7 +11,7 @@ DBPW=$(uuidgen)
 DBROOTPW=$(uuidgen)
 
 # Generate random settings to make sure things come up with random settings.
-cat > /tmp/$$-db-values.yaml <<EOF
+cat <<EOF > /tmp/$$-db-values.yaml
 auth:
   database: ${DB}
   username: ${DBUSER}
@@ -19,7 +19,7 @@ auth:
   rootPassword: ${DBROOTPW}
 EOF
 
-cat > /tmp/$$-spire-values.yaml <<EOF
+cat <<EOF > /tmp/$$-spire-values.yaml
 spire-server:
   dataStore:
     sql:

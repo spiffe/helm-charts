@@ -9,4 +9,3 @@ spire-server:
       password: CHANGEME
       options:
         - sslmode: disable
-
