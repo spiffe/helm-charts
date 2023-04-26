@@ -85,7 +85,7 @@ workloadAttestors:
     enabled: false
   k8s:
     # -- If true, kubelet certificate verification is skipped
-    skipKubeletVerification: false
+    skipKubeletVerification: true
 
 telemetry:
   prometheus:
