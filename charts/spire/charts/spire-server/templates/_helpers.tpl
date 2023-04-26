@@ -142,14 +142,15 @@ Create the name of the service account to use
   {{- $user := include "postgresql.username" $pgValues }}
   {{- $password := $pgValues.auth.password }}
   {{- $host := "spire-postgresql" }}
-  {{- $port := include "postgresql.service.port" $pgValues }}
+  {{- $port := int (include "postgresql.service.port" $pgValues) }}
   {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=%s host=%s port=%d sslmode=disable" $database $user $password $host $port )}}
 {{- else if .Values.mysql.enabled }}
+  {{- $_ := set $config "database_type" "mysql" }}
   {{- $database := .Values.mysql.auth.database }}
   {{- $user := .Values.mysql.auth.username }}
   {{- $password := .Values.mysql.auth.password }}
   {{- $host := "spire-mysql" }}
-  {{- $port := .Values.mysql.primary.service.ports.mysql }}
+  {{- $port := int .Values.mysql.primary.service.ports.mysql }}
   {{- $_ := set $config "connection_string" (printf "%s:%s@tcp(%s:%d)/%s?parseTime=true" $user $password $host $port $database )}}
 {{- else if eq .Values.dataStore.sql.database_type "sqlite3" }}
   {{- $_ := set $config "database_type" "sqlite3" }}

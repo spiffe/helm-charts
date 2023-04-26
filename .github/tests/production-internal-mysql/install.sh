@@ -21,6 +21,11 @@ spire-server:
       rootPassword: ${DBROOTPW}
 EOF
 
+# FIXME
+pushd charts/spire/charts/spire-server
+helm dep up
+popd
+
 helm install \
   --namespace "spire-server" \
   --values /tmp/$$-spire-values.yaml \
