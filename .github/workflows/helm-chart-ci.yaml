@@ -147,11 +147,12 @@ jobs:
         # Kubernetes, but can go back farther as long as we don't need heroics
         # to pull it off (i.e. kubectl version juggling).
         k8s:
-          - v1.26.0
-          - v1.25.3
-          - v1.24.7
-          - v1.23.13
-          - v1.22.15
+          - v1.27.0
+          - v1.26.3
+          - v1.25.8
+          - v1.24.12
+          - v1.23.17
+          - v1.22.17
           - v1.21.14
         values:
           - ${{ fromJson(needs.build-matrix.outputs.tests) }}
@@ -181,7 +182,7 @@ jobs:
         uses: helm/kind-action@v1.5.0
         # Only build a kind cluster if there are chart changes to test.
         with:
-          version: v0.17.0
+          version: v0.18.0
           node_image: kindest/node:${{ matrix.k8s }}
           config: .github/kind/conf/kind-config.yaml
           verbosity: 1
@@ -199,6 +200,8 @@ jobs:
 
           export scenario="$(basename "${TEST_DIR}")"
           export EXTRA_HELM_ARGS=""
+
+          source .github/tests/charts.sh
 
           [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
           [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
