@@ -53,9 +53,14 @@ A Helm chart to install the SPIRE server.
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
-| dataStore.sql.plugin_data | object | `{"connection_string":"","database_type":""}` | Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section. |
-| dataStore.sql.plugin_data.connection_string | string | `""` | Set to the appropriate setting for your chosen external database. Passwords will be protected |
-| dataStore.sql.plugin_data.database_type | string | `""` | Set to either "postgres" or "mysql" if you want to use an external databse |
+| dataStore.sql.database | string | `"spire"` |  |
+| dataStore.sql.database_type | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
+| dataStore.sql.host | string | `""` |  |
+| dataStore.sql.options | list | `[]` |  |
+| dataStore.sql.password | string | `""` |  |
+| dataStore.sql.plugin_data | object | `{}` | Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section. |
+| dataStore.sql.port | int | `0` | likely 5432 for postgresql 3306 for mysql |
+| dataStore.sql.username | string | `"spire"` |  |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
 | extraContainers | list | `[]` |  |
