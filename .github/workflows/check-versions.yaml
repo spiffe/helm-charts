@@ -29,7 +29,7 @@ jobs:
 
       - name: Update test chart versions
         run: |
-          ./.github/workflows/scripts/update-versions.sh
+          ./.github/scripts/update-versions.sh
           git diff
 
       - name: Create Pull Request
