@@ -18,7 +18,7 @@ jq -r ".[].name" "${CHARTJSON}" | while read -r CHART; do
   echo "  latest version: ${LATEST_VERSION}"
   if [ "x${VERSION}" != "x${LATEST_VERSION}" ]; then
     echo "  New version found!"
-    jq "(${ENTRYQUERY}).version |= "'"${LATEST_VERSION}"' "${CHARTJSON}" > /tmp/$$
+    jq "(${ENTRYQUERY}).version |= \"${LATEST_VERSION}\"" "${CHARTJSON}" > /tmp/$$
     mv /tmp/$$ "${CHARTJSON}"
   fi
 done
