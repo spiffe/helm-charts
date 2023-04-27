@@ -19,7 +19,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spiffe-csi-driver"` | The repository within the registry |
-| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
 | imagePullSecrets | list | `[]` |  |
 | kubeletPath | string | `"/var/lib/kubelet"` |  |
 | nameOverride | string | `""` |  |
@@ -27,7 +27,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` | The OCI registry to pull the image from |
 | nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` | The repository within the registry |
-| nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
+| nodeDriverRegistrar.image.tag | string | `"v2.6.2"` |  |
 | nodeDriverRegistrar.resources | object | `{}` |  |
 | nodeSelector | object | `{}` |  |
 | pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |

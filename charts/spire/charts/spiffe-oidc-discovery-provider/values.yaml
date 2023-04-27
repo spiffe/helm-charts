@@ -17,7 +17,7 @@ image:
   # -- The image pull policy
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion
-  version: ""
+  tag: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -65,13 +65,13 @@ insecureScheme:
       repository: nginxinc/nginx-unprivileged
       # -- The image pull policy
       pullPolicy: IfNotPresent
-      version: 1.23.2-alpine
+      tag: 1.23.2-alpine
       # chainguard image does not support the templates feature
       # https://github.com/chainguard-images/nginx/issues/43
       # registry: cgr.dev
       # repository: chainguard/nginx
       # pullPolicy: IfNotPresent
-      # version: "1.23.2"
+      # tag: "1.23.2"
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
@@ -146,7 +146,7 @@ telemetry:
         repository: nginx/nginx-prometheus-exporter
         # -- The image pull policy
         pullPolicy: IfNotPresent
-        version: "0.11.0"
+        tag: "0.11.0"
 
       resources: {}
         # We usually recommend not to specify default resources and to leave this as a conscious

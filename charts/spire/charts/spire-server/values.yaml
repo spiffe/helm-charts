@@ -13,7 +13,7 @@ image:
   # -- The image pull policy
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  version: ""
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -170,7 +170,7 @@ controllerManager:
     # -- The image pull policy
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    version: "0.2.2"
+    tag: "0.2.2"
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -229,7 +229,7 @@ controllerManager:
         repository: rancher/kubectl
         # -- The image pull policy
         pullPolicy: IfNotPresent
-        version: ""
+        tag: latest
 
 telemetry:
   prometheus:

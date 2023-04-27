@@ -9,7 +9,7 @@ image:
   # -- The image pull policy
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion
-  version: ""
+  tag: ""
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -63,7 +63,7 @@ nodeDriverRegistrar:
     repository: sig-storage/csi-node-driver-registrar
     # -- The image pull policy
     pullPolicy: IfNotPresent
-    version: v2.6.2
+    tag: v2.6.2
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little

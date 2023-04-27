@@ -10,7 +10,7 @@ image:
   # -- The image pull policy
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  version: ""
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -86,7 +86,7 @@ waitForIt:
     repository: chainguard/wait-for-it
     # -- The image pull policy
     pullPolicy: IfNotPresent
-    version: latest-20230113
+    tag: latest-20230113
   resources: {}
 
 # workloadAttestors determine a workload's properties and then generate a set of selectors associated with it.
