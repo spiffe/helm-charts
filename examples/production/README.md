@@ -1,6 +1,6 @@
 # Recommended production setup
 
-Too install Spire with the least privileges possible we deploy spire accross 2 namespaces.
+To install Spire with the least privileges possible we deploy spire across 2 namespaces.
 
 ```shell
 kubectl create namespace "spire-system"
