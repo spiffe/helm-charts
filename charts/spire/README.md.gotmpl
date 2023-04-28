@@ -49,6 +49,21 @@ spec:
         - --service-account-signing-key-file=/run/config/pki/sa.key
 ```
 
+## Deployment - Non Production
+
+You can just helm install the chart. It should work out of the box for basic testing.
+
+## Deployment - Production
+
+The spire chart is shipped with examples and production profiles to make it significantly easier to produce a production ready deployment that works with the version you are deploying.
+
+Please download the chart:
+```
+helm pull spiffe/spire --version <VERSION> --untar
+```
+
+Then see spire/examples/README.md for more instructions.
+
 ## Usage
 
 To utilize Spire in your own workloads you should add the following to your workload:

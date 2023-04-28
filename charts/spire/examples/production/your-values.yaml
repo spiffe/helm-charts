@@ -1,0 +1,20 @@
+# These values should be in your own configuration values.yaml
+# You need to override them as appropriate for your deployment
+
+global:
+  spire:
+    clusterName: production
+    trustDomain: production.domain
+
+spire-server:
+  jwtIssuer: oidc-discovery.production.domain
+  ca_subject:
+    country: NL
+    organization: Production
+    common_name: production.domain
+
+# If using spiffe-oidc-discovery-provider
+spiffe-oidc-discovery-provider:
+  config:
+    domains:
+      - oidc-discovery.production.domain
