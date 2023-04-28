@@ -3,18 +3,18 @@
 
 global:
   spire:
-    clusterName: production
-    trustDomain: production.domain
+    clusterName: changeme
+    trustDomain: changeme.yourdomain
 
 spire-server:
-  jwtIssuer: oidc-discovery.production.domain
+  jwtIssuer: oidc-discovery.changeme.yourdomain
   ca_subject:
     country: NL
-    organization: Production
-    common_name: production.domain
+    organization: ChangeMe
+    common_name: chageme.yourdomain
 
 # If using spiffe-oidc-discovery-provider
 spiffe-oidc-discovery-provider:
   config:
     domains:
-      - oidc-discovery.production.domain
+      - oidc-discovery.changeme.yourdomain
