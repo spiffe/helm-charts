@@ -6,9 +6,9 @@ github repo. See the main README.md for details.
 First, edit your-values.yaml and update for your deployment.
 
 If your using CI/CD (you should), then:
- * Copy your-values.yaml into your repo
- * Also copy spire/profiles/production-values.yaml in as production-values.yaml. Don't edit it.
- * When upgrading, update your production-values.yaml from spire/profiles/production-values.yaml 
+ * Copy your-values.yaml into your repo.
+ * Also copy spire/profiles into your repo. Don't edit any files under the profiles directory.
+ * When upgrading, update your copy of profiles from spire/profiles again to pick up new recommendations.
 
 To install Spire with the least privileges possible we deploy spire across 2 namespaces.
 
@@ -18,7 +18,7 @@ kubectl label namespace "spire-system" pod-security.kubernetes.io/enforce=privil
 kubectl create namespace "spire-server"
 kubectl label namespace "spire-server" pod-security.kubernetes.io/enforce=restricted
 
-helm upgrade --install --namespace spire-server spire charts/spire -f production-values.yaml -f your-values.yaml
+helm upgrade --install --namespace spire-server spire charts/spire -f profiles/production-values.yaml -f your-values.yaml
 ```
 
 See the charts README.md for more options to add to your-values.yaml
