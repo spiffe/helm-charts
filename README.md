@@ -1,3 +1,5 @@
+> **Note**: We do not recommend using the charts in this repository directly except for development. Instead, please see https://artifacthub.io/packages/search?repo=spiffe
+
 > **Note**: All the helm charts in this repo are beta. We encourage you to try them out and contribute. The API may change as we move towards a production ready release.
 
 # SPIFFE Helm Charts
