@@ -60,7 +60,7 @@ Please download the chart:
 helm pull spiffe/spire --version <VERSION> --untar
 ```
 
-Then see spire/examples/README.md for more instructions.
+Then see spire/examples/production/README.md for more instructions.
 
 ## Usage
 
