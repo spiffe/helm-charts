@@ -1,0 +1,27 @@
+{
+  "spire-agent": [
+    {
+      "query": "waitForIt.image",
+      "filter": "^latest-",
+      "sort-flags": ""
+    }
+  ],
+  "spiffe-csi-driver": [
+    {
+      "query": "nodeDriverRegistrar.image",
+      "filter": "^v",
+      "sort-flags": ""
+    }
+  ],
+  "spiffe-oidc-discovery-provider": [
+    {
+      "query": "insecureScheme.nginx.image",
+      "filter": "^[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+-alpine$",
+      "sort-flags": ""
+    }, {
+      "query": "telemetry.prometheus.nginxExporter.image",
+      "filter": "^[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+$",
+      "sort-flags": "-t . -k1,1n -k2,2n -k3,3n"
+    }
+  ]
+}

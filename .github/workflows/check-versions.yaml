@@ -2,7 +2,7 @@ name: Check versions
 
 on:
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '0 8 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,6 +30,25 @@ jobs:
       - name: Update test chart versions
         run: |
           ./.github/scripts/update-versions.sh
+          git diff
+
+      - name: Setup go
+        uses: actions/setup-go@v4
+
+      - name: Setup crane
+        uses: imjasonh/setup-crane@v0.1
+
+      - name: Update image tags
+        run: |
+          go install github.com/mikefarah/yq/v4@latest
+
+          sudo apt-get install wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy
+
+          ./.github/scripts/update-tags.sh
           git diff
 
       - name: Create Pull Request
