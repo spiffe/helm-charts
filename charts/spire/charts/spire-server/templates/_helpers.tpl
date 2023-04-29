@@ -105,3 +105,10 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.kubectl-image" }}
+{{- $root := deepCopy . }}
+{{- if eq (len $root.image.version) 0 }}
+{{- $_ := set $root.image "version" $root.KubeVersion }}
+{{- end }}
+{{- include "spire-lib.image" $root }}
+{{- end }}

@@ -187,10 +187,10 @@ controllerManager:
     failurePolicy: Fail
     upgradeHook:
       image:
-        registry: cgr.dev
-        repository: chainguard/kubectl
+        registry: docker.io
+        repository: rancher/kubectl
         pullPolicy: IfNotPresent
-        version: latest
+        version: ""
 
 telemetry:
   prometheus:

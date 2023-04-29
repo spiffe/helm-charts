@@ -50,9 +50,9 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` |  |
 | dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | dataStorage.enabled | bool | `true` |  |
 | dataStorage.size | string | `"1Gi"` |  |
