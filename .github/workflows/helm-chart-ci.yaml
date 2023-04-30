@@ -127,8 +127,6 @@ jobs:
       - lint-chart
       - build-matrix
 
-    if: needs.lint-chart.outputs.changed == 'true'
-
     strategy:
       fail-fast: false
       matrix:
