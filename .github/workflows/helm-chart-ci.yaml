@@ -68,6 +68,17 @@ jobs:
             exit 1
           fi
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v3.5
+        with:
+          version: ${{ env.HELM_VERSION }}
+      - name: Check basic standalone rendering
+        run: |
+          ./update-deps.sh
+          for chart in spiffe-csi-driver spiffe-oidc-discovery-provider spire-agent spire-server; do
+            helm template "charts/${chart}" > /dev/null
+          done
+
   lint-chart:
     runs-on: ubuntu-22.04
 
