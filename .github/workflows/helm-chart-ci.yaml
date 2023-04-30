@@ -142,6 +142,8 @@ jobs:
           - v1.23.17
           - v1.22.17
           - v1.21.14
+        values:
+          - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
     steps:
       - name: Checkout
@@ -195,7 +197,7 @@ jobs:
             "${TEST_DIR}/install.sh"
           else
             ct install --debug \
-              --charts "spire" \
+              --charts "charts/spire" \
               --namespace "${scenario}" \
               --target-branch ${{ github.base_ref }} \
               --exclude-deprecated \
