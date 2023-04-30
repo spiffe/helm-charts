@@ -13,6 +13,12 @@ A Helm chart to install the SPIRE server.
 > The recommended spire-controller-manager version is `0.2.2` to support arm64 nodes. If running with any
 > prior version to `0.2.2` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../spire-lib | spire-lib | 0.1.0 |
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -66,6 +72,7 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
+| global | object | `{}` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/spire-server"` |  |
