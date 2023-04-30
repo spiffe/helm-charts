@@ -7,3 +7,4 @@ for chart in spiffe-csi-driver spiffe-oidc-discovery-provider spire-agent spire-
   pushd "charts/${chart}"
   helm dep up
   popd
+done
