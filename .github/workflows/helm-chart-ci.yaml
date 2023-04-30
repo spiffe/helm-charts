@@ -96,7 +96,7 @@ jobs:
         run: |
           ./update-deps.sh
           ct lint --debug ${{ github.base_ref != 'release' && '--check-version-increment=false' || '' }} \
-            --target-branch ${{ github.base_ref }} --excluded-charts charts/spire-lib
+            --target-branch ${{ github.base_ref }} --excluded-charts spire-lib
 
     outputs:
       changed: ${{ steps.list-changed.outputs.changed }}
