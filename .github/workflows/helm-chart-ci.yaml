@@ -92,14 +92,6 @@ jobs:
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed --target-branch ${{ github.base_ref }})
-          if [[ -n "$changed" ]]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Run chart-testing (lint)
         run: |
           ct lint --debug ${{ github.base_ref != 'release' && '--check-version-increment=false' || '' }} \
@@ -113,8 +105,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     needs: [lint-chart]
-
-    if: needs.lint-chart.outputs.changed == 'true'
 
     steps:
       - name: Checkout
@@ -154,8 +144,6 @@ jobs:
           - v1.23.17
           - v1.22.17
           - v1.21.14
-        values:
-          - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
     steps:
       - name: Checkout
@@ -209,6 +197,7 @@ jobs:
             "${TEST_DIR}/install.sh"
           else
             ct install --debug \
+              --charts "spire" \
               --namespace "${scenario}" \
               --target-branch ${{ github.base_ref }} \
               --exclude-deprecated \
