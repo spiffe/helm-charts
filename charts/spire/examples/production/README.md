@@ -24,3 +24,13 @@ helm upgrade --install --namespace spire-server spire charts/spire -f profiles/p
 See the charts README.md for more options to add to your-values.yaml
 
 Setting resources on all pods is highly recommended for a production system. We currently don't have specific recommendations yet.
+
+If your cluster has secure kubelet server certs, please set:
+```yaml
+spire-agent:
+  workloadAttestors:
+    k8s:
+      skipKubeletVerification: false
+```
+
+If you don't have secure kubelet server certs, please consider setting them up.
