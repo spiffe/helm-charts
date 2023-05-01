@@ -35,6 +35,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
     VERSION=$(yq e ".${QUERY}.version" "$VALUES")
+    # shellcheck disable=SC2086
     LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort ${SORTFLAGS}| tail -n 1)
 
     if trivy image "${REGISTRY}/${REPOSITORY}:${VERSION}" --exit-code 1; then
