@@ -5,6 +5,10 @@ set -x
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
+
+# shellcheck source=/dev/null
+source "${SCRIPTPATH}/../common.sh"
+
 k_wait=(kubectl wait --for condition=available --timeout 30s --namespace)
 k_rollout_status=(kubectl rollout status --watch --timeout 30s --namespace)
 
@@ -48,7 +52,7 @@ EOF
 
 kubectl -n spire-server get service spire-tornjak-frontend
 
-if [ $1 -ne 0 ]; then
+if [ "$1" -ne 0 ]; then
   get_namespace_details spire-server
   get_namespace_details spire-system
 fi
