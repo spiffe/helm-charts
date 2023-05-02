@@ -6,8 +6,28 @@
 
 A Helm chart to install the SPIFFE CSI driver.
 
+**Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
+
 > **Note**: The recommended version is `0.2.3` to support arm64 nodes. If running with any
 > prior version to `0.2.3` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| marcofranssen | <marco.franssen@gmail.com> | <https://marcofranssen.nl> |
+| kfox1111 | <Kevin.Fox@pnnl.gov> |  |
+| faisal-memon | <fymemon@yahoo.com> |  |
+
+## Source Code
+
+* <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../spire-lib | spire-lib | 0.1.0 |
 
 ## Values
 
@@ -15,6 +35,7 @@ A Helm chart to install the SPIFFE CSI driver.
 |-----|------|---------|-------------|
 | agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
 | fullnameOverride | string | `""` |  |
+| global | object | `{}` |  |
 | healthChecks.port | int | `9809` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |

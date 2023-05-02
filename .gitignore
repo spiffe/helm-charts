@@ -1,3 +1,4 @@
 bin/
 .idea/
 *.swp
+charts/*/charts/

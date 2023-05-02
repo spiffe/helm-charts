@@ -22,19 +22,19 @@ kubeVersion: ">=1.21.0-0"
 dependencies:
   - name: spire-server
     condition: spire-server.enabled
-    repository: file://./charts/spire-server
+    repository: file://../spire-server
     version: 0.1.0
   - name: spire-agent
     condition: spire-agent.enabled
-    repository: file://./charts/spire-agent
+    repository: file://../spire-agent
     version: 0.1.0
   - name: spiffe-csi-driver
     condition: spiffe-csi-driver.enabled
-    repository: file://./charts/spiffe-csi-driver
+    repository: file://../spiffe-csi-driver
     version: 0.1.0
   - name: spiffe-oidc-discovery-provider
     condition: spiffe-oidc-discovery-provider.enabled
-    repository: file://./charts/spiffe-oidc-discovery-provider
+    repository: file://../spiffe-oidc-discovery-provider
     version: 0.1.0
 annotations:
   artifacthub.io/category: security
