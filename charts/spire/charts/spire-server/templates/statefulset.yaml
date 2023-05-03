@@ -46,11 +46,19 @@ spec:
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
+            - -expandEnv
             - -config
             - /run/spire/config/server.conf
           env:
           - name: PATH
             value: "/opt/spire/bin:/bin"
+          {{- if ne .Values.dataStore.sql.database_type "sqlite3" }}
+          - name: DBPW
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-dbpw
+                key: DBPW
+          {{- end }}
           ports:
             - name: grpc
               containerPort: 8081
@@ -165,8 +173,8 @@ spec:
       {{- end }}
       volumes:
         - name: spire-config
-          secret:
-            secretName: {{ include "spire-server.fullname" . }}
+          configMap:
+            name: {{ include "spire-server.fullname" . }}
         - name: spire-server-socket
           emptyDir: {}
         - name: spire-controller-manager-tmp

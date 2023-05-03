@@ -141,11 +141,11 @@ Create the name of the service account to use
 {{- else if eq .Values.dataStore.sql.database_type "mysql" }}
   {{- $_ := set $config "database_type" "mysql" }}
   {{- $query := include "spire-server.config-mysql-query" .Values.dataStore.sql.options }}
-  {{- $_ := set $config "connection_string" (printf "%s:%s@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.password .Values.dataStore.sql.host (int .Values.dataStore.sql.port) .Values.dataStore.sql.database $query) }}
+  {{- $_ := set $config "connection_string" (printf "%s:${DBPW}@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.host (int .Values.dataStore.sql.port) .Values.dataStore.sql.database $query) }}
 {{- else if eq .Values.dataStore.sql.database_type "postgresql" }}
   {{- $_ := set $config "database_type" "postgresql" }}
   {{- $options:= include "spire-server.config-postgresql-options" .Values.dataStore.sql.options }}
-  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=%s host=%s port=%d%s" .Values.dataStore.sql.database .Values.dataStore.sql.username .Values.dataStore.sql.password .Values.dataStore.sql.host (int .Values.dataStore.sql.port) $options) }}
+  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=${DBPW} host=%s port=%d%s" .Values.dataStore.sql.database .Values.dataStore.sql.username .Values.dataStore.sql.host (int .Values.dataStore.sql.port) $options) }}
 {{- else }}
   {{- fail "Unsupported database type" }}
 {{- end }}
