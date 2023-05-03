@@ -3,7 +3,7 @@
 # Project Overview
 
 The spire/helm-chart effort intends to deliver a set of helm charts to
-support SPIRE deployments in Kubernetes to widest possible audience of
+support SPIRE deployments in Kubernetes to the widest possible audience of
 users.
 
 ## Mission and Scope
