@@ -53,10 +53,14 @@ A Helm chart to install the SPIRE server.
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
-| dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
-| dataStorage.enabled | bool | `true` |  |
-| dataStorage.size | string | `"1Gi"` |  |
-| dataStorage.storageClass | string | `nil` |  |
+| dataStore.sql.database | string | `"spire"` |  |
+| dataStore.sql.database_type | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
+| dataStore.sql.host | string | `""` |  |
+| dataStore.sql.options | list | `[]` | Only used by "postgres" or "mysql" |
+| dataStore.sql.password | string | `""` |  |
+| dataStore.sql.plugin_data | object | `{}` | Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section. |
+| dataStore.sql.port | int | `0` | likely 5432 for postgresql 3306 for mysql |
+| dataStore.sql.username | string | `"spire"` |  |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
 | extraContainers | list | `[]` |  |
@@ -80,6 +84,10 @@ A Helm chart to install the SPIRE server.
 | nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
 | nodeSelector | object | `{}` |  |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
+| persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.enabled | bool | `true` | Enable persistence used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak. |
+| persistence.size | string | `"1Gi"` |  |
+| persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |

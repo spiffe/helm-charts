@@ -73,11 +73,28 @@ affinity: {}
 
 topologySpreadConstraints: []
 
-dataStorage:
+persistence:
+  # -- Enable persistence used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak.
   enabled: true
   size: 1Gi
   accessMode: ReadWriteOnce
   storageClass: null
+
+dataStore:
+  sql:
+    # -- Other supported databases are "postgres" and "mysql"
+    database_type: sqlite3
+    database: spire
+    host: ""
+    # -- likely 5432 for postgresql 3306 for mysql
+    port: 0
+    username: spire
+    password: ""
+    # -- Only used by "postgres" or "mysql"
+    options: []
+
+    # -- Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section.
+    plugin_data: {}
 
 logLevel: info
 jwtIssuer: oidc-discovery.example.org

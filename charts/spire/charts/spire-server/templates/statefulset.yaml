@@ -1,5 +1,6 @@
 {{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
-{{- $configSum2 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
+{{- $configSum2 := (include (print $.Template.BasePath "/secret.yaml") . | sha256sum) }}
+{{- $configSum3 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
 apiVersion: apps/v1
 kind: StatefulSet
@@ -21,6 +22,7 @@ spec:
       annotations:
         checksum/config: {{ $configSum }}
         checksum/config2: {{ $configSum2 }}
+        checksum/config3: {{ $configSum3 }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -46,11 +48,19 @@ spec:
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
+            - -expandEnv
             - -config
             - /run/spire/config/server.conf
           env:
           - name: PATH
             value: "/opt/spire/bin:/bin"
+          {{- if ne .Values.dataStore.sql.database_type "sqlite3" }}
+          - name: DBPW
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-dbpw
+                key: DBPW
+          {{- end }}
           ports:
             - name: grpc
               containerPort: 8081
@@ -91,7 +101,7 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
-            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+            {{- if eq (.Values.persistence.enabled | toString) "true" }}
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
@@ -185,16 +195,16 @@ spec:
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
-    {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
+    {{- if eq (.Values.persistence.enabled | toString) "true" }}
     - metadata:
         name: spire-data
       spec:
         accessModes:
-          - {{ .Values.dataStorage.accessMode | default "ReadWriteOnce" }}
+          - {{ .Values.persistence.accessMode | default "ReadWriteOnce" }}
         resources:
           requests:
-            storage: {{ .Values.dataStorage.size }}
-        {{- if .Values.dataStorage.storageClass }}
-        storageClassName: {{ .Values.dataStorage.storageClass }}
+            storage: {{ .Values.persistence.size }}
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
     {{ end }}

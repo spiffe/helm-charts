@@ -33,8 +33,7 @@ plugins:
   DataStore:
     - sql:
         plugin_data:
-          database_type: "sqlite3"
-          connection_string: "/run/spire/data/datastore.sqlite3"
+          {{ include "spire-server.datastore-config" . | nindent 10 }}
 
   {{- with .Values.nodeAttestor.k8sPsat }}
   {{- if eq (.enabled | toString) "true" }}
