@@ -55,9 +55,9 @@ nodeSelector: {}
 logLevel: info
 clusterName: example-cluster
 trustDomain: example.org
-# -- If set, obtain trust bundle from url instead of Kubernetes configmap.
+# -- If set, obtain trust bundle from url instead of Kubernetes ConfigMap
 trustBundleURL: ""
-# -- If using trustBundleURL, what format is the url. Choices are pem and spiffe.
+# -- If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe"
 trustBundleFormat: pem
 bundleConfigMap: spire-bundle
 
