@@ -6,6 +6,5 @@ spire-server:
       port: 5432
       database: spire
       username: spire
-      password: CHANGEME
       options:
         - sslmode: disable
