@@ -48,8 +48,8 @@ A Helm chart to install the SPIRE agent.
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-agent |
 | telemetry.prometheus.port | int | `9988` |  |
-| trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are pem and spiffe. |
-| trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes configmap. |
+| trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
+| trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
 | trustDomain | string | `"example.org"` |  |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
 | waitForIt.image.registry | string | `"cgr.dev"` |  |
