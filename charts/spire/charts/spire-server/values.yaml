@@ -250,10 +250,10 @@ tornjak:
   # -- Tornjak API image
   image:
     registry: ghcr.io
-    repository: spiffe/tornjak-be
+    repository: spiffe/tornjak-backend
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    version: "v1.0.2"
+    version: "v1.2.0"
   service:
     type: ClusterIP
     port: 10000

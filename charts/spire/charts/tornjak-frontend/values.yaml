@@ -4,7 +4,7 @@
 
 image:
   registry: ghcr.io
-  repository: spiffe/tornjak-fe
+  repository: spiffe/tornjak-frontend
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
   version: ""
@@ -54,3 +54,10 @@ service:
 # Since Tornjak Frontend runs in the browser, this URL must be accessible from
 # the machine running a browser.
 apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
+
+# SPIRE Healthchecker indicator
+spireHealthCheck:
+  # -- Enables the SPIRE Healthchecker indicator
+  enabled: true
+  # -- Frequency of checks in seconds
+  frequencySeconds: 120
