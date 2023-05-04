@@ -74,7 +74,7 @@ jobs:
         run: |
           set +e
           set -o pipefail
-          go install github.com/onsi/ginkgo/v2/ginkgo
+          go install github.com/onsi/ginkgo/v2/ginkgo@latest
           cd tests/unit
           ginkgo 
 
