@@ -1,1 +1,5 @@
 Installed {{ .Chart.Name }}…
+{{- if ne (dig "spire" "nested" "standalone" .Values.global) "standalone" }}
+
+You have specified an experimental flag.
+{{- end }}
