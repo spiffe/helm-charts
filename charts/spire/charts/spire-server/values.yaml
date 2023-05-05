@@ -84,16 +84,19 @@ dataStore:
   sql:
     # -- Other supported databases are "postgres" and "mysql"
     database_type: sqlite3
-    database: spire
+    
+    # The remaining config in this section only applies to postgres and mysql databases
+
+    databaseName: spire
     host: ""
-    # -- likely 5432 for postgresql 3306 for mysql
+    # -- Likely 5432 for postgres and 3306 for mysql
     port: 0
     username: spire
     password: ""
     # -- Only used by "postgres" or "mysql"
     options: []
 
-    # -- Set any setting from https://github.com/spiffe/spire/blob/v1.6.3/doc/plugin_server_datastore_sql.md under this section.
+    # -- Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
     plugin_data: {}
 
 logLevel: info
