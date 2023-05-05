@@ -54,7 +54,7 @@ spec:
           env:
           - name: PATH
             value: "/opt/spire/bin:/bin"
-          {{- if ne .Values.dataStore.sql.database_type "sqlite3" }}
+          {{- if ne .Values.dataStore.sql.databaseType "sqlite3" }}
           - name: DBPW
             valueFrom:
               secretKeyRef:
