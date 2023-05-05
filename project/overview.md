@@ -7,6 +7,7 @@ support SPIRE deployments in Kubernetes to the widest possible audience of
 users.
 
 ## Mission and Scope
+
 The mission of this effort is to provide a stable upstream repository
 of Helm Charts sufficient for any organization or individual to use.
 
