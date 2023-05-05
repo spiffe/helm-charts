@@ -25,6 +25,7 @@ SPIRE into Kubernetes clusters, providing a flexible solution that can
 be used in a wide number of different scenarios.
 
 ### What is the scope of this project?
+
 The scope includes user documentation, chart creation, chart delivery,
 chart testing, and chart maintenance of a set of Helm Charts sufficient
 for deploying SPIRE in any SPIRE documented configuration, including
