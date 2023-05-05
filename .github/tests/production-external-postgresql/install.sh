@@ -23,7 +23,7 @@ cat > /tmp/$$-spire-values.yaml <<EOF
 spire-server:
   dataStore:
     sql:
-      databaseType: postgres
+      databaseType: postgresql
       databaseName: ${DB}
       username: ${DBUSER}
       password: ${DBPW}
