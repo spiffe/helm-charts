@@ -42,6 +42,7 @@ The project is currently in a pre-release status.  While the standalone
 deployment is close to release quality, the tiered deployment is not.
 
 ## Project Navigation
+
 Below are links to project documentation useful for the management and
 maintenance of the spire/helm project.
 
