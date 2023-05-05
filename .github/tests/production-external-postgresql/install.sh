@@ -23,9 +23,14 @@ cat > /tmp/$$-spire-values.yaml <<EOF
 spire-server:
   dataStore:
     sql:
-      plugin_data:
-        database_type: "postgres"
-        connection_string: "dbname=${DB} user=${DBUSER} password=${DBPW} host=postgresql port=5432 sslmode=disable"
+      databaseType: postgres
+      databaseName: ${DB}
+      username: ${DBUSER}
+      password: ${DBPW}
+      host: postgresql
+      port: 5432
+      options:
+      - sslmode: disable
 EOF
 
 helm install postgresql postgresql --namespace "spire-server" --version "$VERSION_POSTGRESQL" --repo "$HELM_REPO_POSTGRESQL" \

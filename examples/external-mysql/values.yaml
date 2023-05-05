@@ -1,10 +1,10 @@
 spire-server:
   dataStore:
     sql:
-      database_type: mysql
+      databaseType: mysql
+      databaseName: spire
       host: mysql
       port: 3306
-      database: spire
       username: spire
       options:
         - parseTime: true

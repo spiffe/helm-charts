@@ -23,9 +23,14 @@ cat <<EOF > /tmp/$$-spire-values.yaml
 spire-server:
   dataStore:
     sql:
-      plugin_data:
-        database_type: "mysql"
-        connection_string: "${DBUSER}:${DBPW}@tcp(mysql:3306)/${DB}?parseTime=true"
+      databaseType: mysql
+      databaseName: ${DB}
+      username: ${DBUSER}
+      password: ${DBPW}
+      host: mysql
+      port: 3306
+      options:
+      - parseTime: true
 EOF
 
 helm install mysql mysql --namespace "spire-server" --version "$VERSION_MYSQL" --repo "$HELM_REPO_MYSQL" \
