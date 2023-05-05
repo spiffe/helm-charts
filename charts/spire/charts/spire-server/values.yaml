@@ -89,7 +89,7 @@ dataStore:
 
     databaseName: spire
     host: ""
-    # -- Likely 5432 for postgres and 3306 for mysql
+    # -- If 0 (default), it will auto set to 5432 for postgres and 3306 for mysql
     port: 0
     username: spire
     password: ""

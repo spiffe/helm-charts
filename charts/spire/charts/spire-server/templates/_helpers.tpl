@@ -135,17 +135,19 @@ Create the name of the service account to use
 
 {{- define "spire-server.datastore-config" }}
 {{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
-{{- if eq .Values.dataStore.sql.database_type "sqlite3" }}
+{{- if eq .Values.dataStore.sql.databaseType "sqlite3" }}
   {{- $_ := set $config "database_type" "sqlite3" }}
   {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
-{{- else if eq .Values.dataStore.sql.database_type "mysql" }}
+{{- else if eq .Values.dataStore.sql.databaseType "mysql" }}
   {{- $_ := set $config "database_type" "mysql" }}
+  {{- $port := int .Values.dataStore.sql.port | default 3306 }}
   {{- $query := include "spire-server.config-mysql-query" .Values.dataStore.sql.options }}
-  {{- $_ := set $config "connection_string" (printf "%s:${DBPW}@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.host (int .Values.dataStore.sql.port) .Values.dataStore.sql.database $query) }}
-{{- else if eq .Values.dataStore.sql.database_type "postgresql" }}
+  {{- $_ := set $config "connection_string" (printf "%s:${DBPW}@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.host $port .Values.dataStore.sql.databaseName $query) }}
+{{- else if eq .Values.dataStore.sql.databaseType "postgresql" }}
   {{- $_ := set $config "database_type" "postgresql" }}
+  {{- $port := int .Values.dataStore.sql.port | default 5432 }}
   {{- $options:= include "spire-server.config-postgresql-options" .Values.dataStore.sql.options }}
-  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=${DBPW} host=%s port=%d%s" .Values.dataStore.sql.database .Values.dataStore.sql.username .Values.dataStore.sql.host (int .Values.dataStore.sql.port) $options) }}
+  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=${DBPW} host=%s port=%d%s" .Values.dataStore.sql.databaseName .Values.dataStore.sql.username .Values.dataStore.sql.host $port $options) }}
 {{- else }}
   {{- fail "Unsupported database type" }}
 {{- end }}
