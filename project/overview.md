@@ -31,6 +31,7 @@ for deploying SPIRE in any SPIRE documented configuration, including
 direction on how to extend the Charts to integrate non-SPIRE plugins.
 
 ### What development methodology is used?
+
 An Open Source Development methodology is used, where issues are tracked
 within the primary github repository.
 
