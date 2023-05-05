@@ -37,6 +37,7 @@ An Open Source Development methodology is used, where issues are tracked
 within the primary github repository.
 
 ## Status
+
 The project is currently in a pre-release status.  While the standalone
 deployment is close to release quality, the tiered deployment is not.
 
