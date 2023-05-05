@@ -19,6 +19,7 @@ organization or individual had to develop their own Kubernetes
 deployment packaging.
 
 ### What is the goal of this project?
+
 The goal of this project is to be the primary means of deployment for
 SPIRE into Kubernetes clusters, providing a flexible solution that can
 be used in a wide number of different scenarios.
