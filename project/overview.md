@@ -11,6 +11,7 @@ The mission of this effort is to provide a stable upstream repository
 of Helm Charts sufficient for any organization or individual to use.
 
 ### What problem does this project address?
+
 Prior to this effort, no single authoritative repository for SPIRE Helm
 Charts existed, imposing an additional burden on SPIRE adoption as each
 organization or individual had to develop their own Kubernetes
