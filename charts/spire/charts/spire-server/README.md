@@ -59,7 +59,7 @@ A Helm chart to install the SPIRE server.
 | dataStore.sql.options | list | `[]` | Only used by "postgres" or "mysql" |
 | dataStore.sql.password | string | `""` |  |
 | dataStore.sql.plugin_data | object | `{}` | Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section |
-| dataStore.sql.port | int | `0` | Likely 5432 for postgres and 3306 for mysql |
+| dataStore.sql.port | int | `0` | If 0 (default), it will auto set to 5432 for postgres and 3306 for mysql |
 | dataStore.sql.username | string | `"spire"` |  |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
