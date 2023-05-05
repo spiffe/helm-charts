@@ -1,7 +1,7 @@
 spire-server:
   dataStore:
     sql:
-      databaseType: postgresql
+      databaseType: postgres
       databaseName: spire
       host: postgresql
       port: 5432
