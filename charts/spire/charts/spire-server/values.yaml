@@ -83,7 +83,7 @@ persistence:
 dataStore:
   sql:
     # -- Other supported databases are "postgres" and "mysql"
-    database_type: sqlite3
+    databaseType: sqlite3
     
     # The remaining config in this section only applies to postgres and mysql databases
 
