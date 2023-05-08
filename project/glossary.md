@@ -8,7 +8,7 @@ to keep other documents concise and precise.  Documenting terminology
 here helps prevent misundersandings, facilitating easy onboarding of new
 team members.
 
-Deployment
+**Deployment**
 : A use of the Helm Charts to describe a single SPIRE cluster.
 
 Deployment Type
