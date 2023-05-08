@@ -27,7 +27,7 @@ to federate with one or more Deployments.
 : A deployment of the Helm Charts where the cluster's purpose is to
 provide certificates to Secondary Deployments.
 
-Secondary Deployment
+**Secondary Deployment**
 : A deployment of the Helm Charts where the cluster obtains an
 intermediate CA from a Primary Deployment and uses it to service
 Workload Identity requests.
