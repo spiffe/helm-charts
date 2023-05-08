@@ -47,4 +47,5 @@ Below are links to project documentation useful for the management and
 maintenance of the spire/helm project.
 
 ### Coordination
+
 - [glossary](glossary.md)
