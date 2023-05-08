@@ -36,7 +36,7 @@ Standalone Deployment
 : A deployment of the Helm Charts where the cluster both manages the CA
 and services Workload Identity requests in the same cluster.
 
-Tiered Deployment
+**Tiered Deployment**
 : Use of the Helm Charts two or more times, such that one chart is
 configured as a Primary Deployment Type and the others are configured as
 Secondary Deployment Types.
