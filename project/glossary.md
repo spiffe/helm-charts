@@ -11,7 +11,7 @@ team members.
 **Deployment**
 : A use of the Helm Charts to describe a single SPIRE cluster.
 
-Deployment Type
+**Deployment Type**
 : One of three supported deployments of the template: Standalone, 
 Primary, or Secondary.
 
