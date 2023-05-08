@@ -23,7 +23,7 @@ containing a different trust domain.
 : A Primary Deployment or Standalone Deployment that is configured
 to federate with one or more Deployments.
 
-Primary Deployment
+**Primary Deployment**
 : A deployment of the Helm Charts where the cluster's purpose is to
 provide certificates to Secondary Deployments.
 
