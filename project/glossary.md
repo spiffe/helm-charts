@@ -41,6 +41,6 @@ and services Workload Identity requests in the same cluster.
 configured as a Primary Deployment Type and the others are configured as
 Secondary Deployment Types.
 
-Trust Domain
+**Trust Domain**
 : The host field of a SPIFFE ID, naming a minimum footprint of a trust
 bundle's distribution.
