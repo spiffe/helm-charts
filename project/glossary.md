@@ -32,7 +32,7 @@ provide certificates to Secondary Deployments.
 intermediate CA from a Primary Deployment and uses it to service
 Workload Identity requests.
 
-Standalone Deployment
+**Standalone Deployment**
 : A deployment of the Helm Charts where the cluster both manages the CA
 and services Workload Identity requests in the same cluster.
 
