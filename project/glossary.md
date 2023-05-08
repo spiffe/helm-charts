@@ -12,7 +12,7 @@ team members.
 : A use of the Helm Charts to describe a single SPIRE cluster.
 
 **Deployment Type**
-: One of three supported deployments of the template: Standalone, 
+: One of three supported deployments of the charts: Standalone, 
 Primary, or Secondary.
 
 **Federation**
