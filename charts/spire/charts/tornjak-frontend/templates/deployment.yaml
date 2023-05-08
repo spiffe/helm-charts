@@ -36,9 +36,9 @@ spec:
             - name: REACT_APP_API_SERVER_URI
               value: {{ include "tornjak-frontend.apiURL" . }}
             {{- if eq (.Values.spireHealthCheck.enabled | toString) "true" }}
-            - name: REACT_APP_SPIRE_HEALTH_CHECK
+            - name: REACT_APP_SPIRE_HEALTH_CHECK_ENABLE
               value: "{{ .Values.spireHealthCheck.enabled }}"
-            - name: REACT_APP_SPIRE_HEALTH_CHECK_TIME
+            - name: REACT_APP_SPIRE_HEALTH_CHECK_FREQ_SEC
               value: "{{ .Values.spireHealthCheck.frequencySeconds }}"
             {{- end }}
           startupProbe:
