@@ -19,7 +19,7 @@ Primary, or Secondary.
 : When one cluster is configured to trust elements of another cluster
 containing a different trust domain.
 
-Federated Deployment
+**Federated Deployment**
 : A Primary Deployment or Standalone Deployment that is configured
 to federate with one or more Deployments.
 
