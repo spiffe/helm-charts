@@ -15,7 +15,7 @@ Deployment Type
 : One of three supported deployments of the template: Standalone, 
 Primary, or Secondary.
 
-Federation
+**Federation**
 : When one cluster is configured to trust elements of another cluster
 containing a different trust domain.
 
