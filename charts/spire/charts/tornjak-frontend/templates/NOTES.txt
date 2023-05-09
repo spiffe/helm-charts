@@ -10,7 +10,7 @@ Tornjak UI (Frontend)
   pull policy: {{ .Values.image.pullPolicy }}
   Tornjak API (Backend): {{ include "tornjak-frontend.apiURL" . }}
   SPIRE health check enabled:  "{{ .Values.spireHealthCheck.enabled }}"
-  Health check frequency [sec]: "{{ .Values.spireHealthCheck.frequencySeconds }}"
+  Health check frequency [sec]: "{{ .Values.spireHealthCheck.periodSeconds }}"
 
 ### WARNING ###
 

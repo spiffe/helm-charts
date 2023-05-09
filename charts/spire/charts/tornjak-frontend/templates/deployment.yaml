@@ -39,7 +39,7 @@ spec:
             - name: REACT_APP_SPIRE_HEALTH_CHECK_ENABLE
               value: "{{ .Values.spireHealthCheck.enabled }}"
             - name: REACT_APP_SPIRE_HEALTH_CHECK_FREQ_SEC
-              value: "{{ .Values.spireHealthCheck.frequencySeconds }}"
+              value: "{{ .Values.spireHealthCheck.periodSeconds }}"
             {{- end }}
           startupProbe:
             httpGet:
