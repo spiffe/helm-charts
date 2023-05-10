@@ -74,10 +74,10 @@ change it.
 From the Maintainers point of view, all merge requests require one of four
 actions:
 
-- The maintainer accepts the merge request.
-- The maintainer rejects the merge request.
-- The maintainer requests the merge request be altered.
-- The maintainer rewrites some or all of the merge request, becoming a
+- The maintainer accepts the pull request.
+- The maintainer rejects the pull request.
+- The maintainer requests the pull request be altered.
+- The maintainer rewrites some or all of the pull request, becoming a
   committer.
 
 Suggestions to the committer that a merge request be altered do not constitute
