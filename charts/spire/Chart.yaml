@@ -18,6 +18,8 @@ maintainers:
     email: Kevin.Fox@pnnl.gov
   - name: faisal-memon
     email: fymemon@yahoo.com
+  - name: edwbuck
+    email: edwbuck@gmail.com
 kubeVersion: ">=1.21.0-0"
 dependencies:
   - name: spire-server
