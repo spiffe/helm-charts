@@ -26,7 +26,7 @@ serviceAccount:
   name: ""
 
 configMap:
-  # Annotations to add to the SPIRE Agent ConfigMap
+  # -- Annotations to add to the SPIRE Agent ConfigMap
   annotations: {}
 
 podAnnotations: {}
