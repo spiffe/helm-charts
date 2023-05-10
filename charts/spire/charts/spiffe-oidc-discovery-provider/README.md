@@ -29,6 +29,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.domains[0] | string | `"localhost"` |  |
 | config.domains[1] | string | `"oidc-discovery.example.org"` |  |
 | config.logLevel | string | `"info"` |  |
+| configMap.annotations | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |

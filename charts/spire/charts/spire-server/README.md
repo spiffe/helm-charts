@@ -30,6 +30,8 @@ A Helm chart to install the SPIRE server.
 | ca_subject.organization | string | `"Example"` |  |
 | clusterDomain | string | `"cluster.local"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| configMap.annotations | object | `{}` |  |
+| controllerManager.configMap.annotations | object | `{}` |  |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
