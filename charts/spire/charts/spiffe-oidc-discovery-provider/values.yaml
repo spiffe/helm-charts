@@ -35,7 +35,7 @@ service:
     # external-dns.alpha.kubernetes.io/hostname: oidc-discovery.example.org
 
 configMap:
-  # Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
+  # -- Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
   annotations: {}
 
 podSecurityContext: {}
