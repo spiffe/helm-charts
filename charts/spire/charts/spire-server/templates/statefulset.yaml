@@ -12,7 +12,7 @@ metadata:
 spec:
   {{- if not .Values.autoscaling.enabled }}
   {{- if and (eq .Values.dataStore.sql.databaseType "sqlite3") (gt (int .Values.replicaCount) 1) }}
-  {{- fail "sqlite3 database only supports one replica." }}
+  {{- fail "When running with sqlite3 database, you can't scale up to more then one instance. 'replicaCount' MUST be 1" }}
   {{- end }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
