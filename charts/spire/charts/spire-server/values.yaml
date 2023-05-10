@@ -47,7 +47,7 @@ service:
   annotations: {}
 
 configMap:
-  # Annotations to add to the SPIRE Server ConfigMap
+  # -- Annotations to add to the SPIRE Server ConfigMap
   annotations: {}
 
 resources: {}
