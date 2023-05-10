@@ -20,7 +20,7 @@ request should be gratitude, even if the request cannot be merged.
 
 Committers are people contributing changes to the repository.  The first
 committer is typically the one that opens the pull request.  Additional people
-can become committers in the same merge request if they change the merge request
+can become committers in the same merge request if they change the pull request
 directly.
 
 Suggestions to a committer by a maintainer, such as commentary that with a
