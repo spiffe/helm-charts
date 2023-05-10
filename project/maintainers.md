@@ -16,7 +16,22 @@ survives due to the effort of frequent contributors and their generosity.  As
 such, to encourage future submissions, the default approach to handling a merge
 request should be gratitude, even if the request cannot be merged.
 
-## Committers
+## Roles
+
+There are two primary roles within the scope of a pull request.
+
+- Committer - one who offers code to be merged.
+- Maintainer - one who merges the code.
+
+To ensure that all code receives a proper review, these roles are mutually
+exclusive for each pull request.  Within the scope of a pull request, a
+Committer cannot be a Maintainer, nor can a Maintainer be a Committer.
+
+For abandoned pull requests still requiring work, or efforts transferred between
+people, a Maintainer may become a Committer, invalidating any of their prior
+review work.  
+
+### Committers
 
 Committers are people contributing changes to the repository.  The first
 committer is typically the one that opens the pull request.  Additional people
@@ -27,7 +42,7 @@ Suggestions to a committer by a maintainer, such as commentary that with a
 change the merge request might be accepted, does not make a maintainer a
 committer, as the committer will choose include the change at their discretion. 
 
-## Maintainers
+### Maintainers
 
 Maintainers hold a dual role in the project.  They are ambassadors of the
 effort as well as the gatekeepers permitting changes to the repository.  As
