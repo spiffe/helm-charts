@@ -191,7 +191,7 @@ controllerManager:
     annotations: {}
 
   configMap:
-    # Annotations to add to the Controller Manager ConfigMap
+    # -- Annotations to add to the Controller Manager ConfigMap
     annotations: {}
 
   ignoreNamespaces:
