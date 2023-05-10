@@ -11,6 +11,9 @@ metadata:
     {{- include "spire-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
+  {{- if and (eq .Values.dataStore.sql.databaseType "sqlite3") (gt (int .Values.replicaCount) 1) }}
+  {{- fail "sqlite3 database only supports one replica." }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   serviceName: {{ include "spire-server.fullname" . }}
