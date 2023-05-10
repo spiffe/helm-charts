@@ -142,7 +142,7 @@ Two passing reviews are required for code to be merged.
 
 Whenever possible, the number of reviewers should be limited, as each additional
 reviewer presents an extra set of communication channels between the review and
-themselves.  One re
+themselves. 
 
 - One reviewer has one channel between the committer and the reviewer
 - Increasing to two, adds one channel to the the committer, and one to the 
