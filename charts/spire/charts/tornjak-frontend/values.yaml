@@ -59,5 +59,4 @@ apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
 spireHealthCheck:
   # -- Enables the SPIRE Healthchecker indicator
   enabled: true
-  # -- Period duration in seconds for health checks
-  periodSeconds: 120
+
