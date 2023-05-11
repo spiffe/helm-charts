@@ -55,6 +55,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire-agent.fullname" . }}
   namespace: {{ include "spire-agent.namespace" . }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   agent.conf: |
     {{- include "spire-agent.yaml-config" . | fromYaml | toPrettyJson | nindent 4 }}

@@ -25,6 +25,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+configMap:
+  # -- Annotations to add to the SPIRE Agent ConfigMap
+  annotations: {}
+
 podAnnotations: {}
 
 podSecurityContext: {}
