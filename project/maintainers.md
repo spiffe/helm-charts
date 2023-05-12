@@ -7,7 +7,7 @@ provide a consistent user interface for those going through the review process.
 
 ## The Pull Request
 
-Merge requests are submitted through GitHub.  They are contributions to change
+Pull requests are submitted through GitHub.  They are contributions to change
 the project.  There is no difference between code and non-code submissions, in
 procedure or policy.
 
