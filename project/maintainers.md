@@ -5,7 +5,7 @@
 This document is a guide for maintainers across the spire/helm-chart effort to
 provide a consistent user interface for those going through the review process.
 
-## The Merge Request
+## The Pull Request
 
 Merge requests are submitted through GitHub.  They are contributions to change
 the project.  There is no difference between code and non-code submissions, in
