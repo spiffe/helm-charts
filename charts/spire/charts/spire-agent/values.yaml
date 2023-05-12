@@ -3,8 +3,6 @@
 # Declare variables to be passed into your templates.
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/spire-agent
   registry: ghcr.io
   repository: spiffe/spire-agent
   pullPolicy: IfNotPresent

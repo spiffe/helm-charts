@@ -9,8 +9,6 @@ replicaCount: 1
 namespaceOverride: ""
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/oidc-discovery-provider
   registry: ghcr.io
   repository: spiffe/oidc-discovery-provider
   pullPolicy: IfNotPresent
