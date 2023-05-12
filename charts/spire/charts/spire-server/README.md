@@ -87,7 +87,6 @@ A Helm chart to install the SPIRE server.
 | nodeSelector | object | `{}` |  |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.enabled | bool | `true` | Enable persistence used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak. |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
