@@ -9,6 +9,7 @@ Tornjak UI (Frontend)
   image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
   pull policy: {{ .Values.image.pullPolicy }}
   Tornjak API (Backend): {{ include "tornjak-frontend.apiURL" . }}
+  SPIRE health check enabled:  "{{ .Values.spireHealthCheck.enabled }}"
 
 ### WARNING ###
 

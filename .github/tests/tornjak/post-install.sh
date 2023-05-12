@@ -12,7 +12,7 @@ source "${SCRIPTPATH}/../common.sh"
 print_helm_releases
 print_spire_workload_status spire-server spire-system
 
-kubectl rollout status --watch --timeout 30s --namespace spire-server deployments.apps spire-tornjak-frontend
+kubectl rollout status --watch --timeout 180s --namespace spire-server deployments.apps spire-tornjak-frontend
 kubectl -n spire-server get deploy spire-tornjak-frontend
 kubectl -n spire-server get service spire-tornjak-frontend
 
