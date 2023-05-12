@@ -42,5 +42,5 @@ else
 fi
 
 # validate docs
-"$SCRIPTPATH/bin/${exe}"
+"$SCRIPTPATH/bin/${exe}" --document-dependency-values
 git diff --exit-code

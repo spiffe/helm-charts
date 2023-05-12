@@ -121,5 +121,239 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
+| spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
+| spiffe-csi-driver.fullnameOverride | string | `""` |  |
+| spiffe-csi-driver.healthChecks.port | int | `9809` |  |
+| spiffe-csi-driver.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spiffe-csi-driver.image.registry | string | `"ghcr.io"` |  |
+| spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
+| spiffe-csi-driver.image.version | string | `""` |  |
+| spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
+| spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
+| spiffe-csi-driver.nameOverride | string | `""` |  |
+| spiffe-csi-driver.namespaceOverride | string | `""` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.resources | object | `{}` |  |
+| spiffe-csi-driver.nodeSelector | object | `{}` |  |
+| spiffe-csi-driver.pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
+| spiffe-csi-driver.podAnnotations | object | `{}` |  |
+| spiffe-csi-driver.podSecurityContext | object | `{}` |  |
+| spiffe-csi-driver.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| spiffe-csi-driver.resources | object | `{}` |  |
+| spiffe-csi-driver.securityContext.privileged | bool | `true` |  |
+| spiffe-csi-driver.securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| spiffe-csi-driver.serviceAccount.annotations | object | `{}` |  |
+| spiffe-csi-driver.serviceAccount.create | bool | `true` |  |
+| spiffe-csi-driver.serviceAccount.name | string | `""` |  |
+| spiffe-oidc-discovery-provider.affinity | object | `{}` |  |
+| spiffe-oidc-discovery-provider.agentSocketName | string | `"spire-agent.sock"` |  |
+| spiffe-oidc-discovery-provider.autoscaling.enabled | bool | `false` |  |
+| spiffe-oidc-discovery-provider.autoscaling.maxReplicas | int | `5` |  |
+| spiffe-oidc-discovery-provider.autoscaling.minReplicas | int | `1` |  |
+| spiffe-oidc-discovery-provider.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| spiffe-oidc-discovery-provider.autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| spiffe-oidc-discovery-provider.clusterDomain | string | `"cluster.local"` |  |
+| spiffe-oidc-discovery-provider.config.acme.cacheDir | string | `"/run/spire"` |  |
+| spiffe-oidc-discovery-provider.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
+| spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
+| spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
+| spiffe-oidc-discovery-provider.config.domains[0] | string | `"localhost"` |  |
+| spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` |  |
+| spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
+| spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
+| spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` |  |
+| spiffe-oidc-discovery-provider.image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
+| spiffe-oidc-discovery-provider.image.version | string | `""` |  |
+| spiffe-oidc-discovery-provider.imagePullSecrets | list | `[]` |  |
+| spiffe-oidc-discovery-provider.ingress.annotations | object | `{}` |  |
+| spiffe-oidc-discovery-provider.ingress.className | string | `""` |  |
+| spiffe-oidc-discovery-provider.ingress.enabled | bool | `false` |  |
+| spiffe-oidc-discovery-provider.ingress.hosts[0].host | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spiffe-oidc-discovery-provider.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spiffe-oidc-discovery-provider.ingress.tls | list | `[]` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.enabled | bool | `false` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
+| spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
+| spiffe-oidc-discovery-provider.nodeSelector | object | `{}` |  |
+| spiffe-oidc-discovery-provider.podAnnotations | object | `{}` |  |
+| spiffe-oidc-discovery-provider.podSecurityContext | object | `{}` |  |
+| spiffe-oidc-discovery-provider.replicaCount | int | `1` |  |
+| spiffe-oidc-discovery-provider.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.securityContext | object | `{}` |  |
+| spiffe-oidc-discovery-provider.service.annotations | object | `{}` |  |
+| spiffe-oidc-discovery-provider.service.port | int | `80` |  |
+| spiffe-oidc-discovery-provider.service.type | string | `"ClusterIP"` |  |
+| spiffe-oidc-discovery-provider.serviceAccount.annotations | object | `{}` |  |
+| spiffe-oidc-discovery-provider.serviceAccount.create | bool | `true` |  |
+| spiffe-oidc-discovery-provider.serviceAccount.name | string | `""` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.enabled | bool | `false` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.version | string | `"0.11.0"` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
+| spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
+| spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
+| spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
+| spire-agent.clusterName | string | `"example-cluster"` |  |
+| spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
+| spire-agent.extraContainers | list | `[]` |  |
+| spire-agent.extraVolumeMounts | list | `[]` |  |
+| spire-agent.extraVolumes | list | `[]` |  |
+| spire-agent.fullnameOverride | string | `""` |  |
+| spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
+| spire-agent.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spire-agent.image.registry | string | `"ghcr.io"` |  |
+| spire-agent.image.repository | string | `"spiffe/spire-agent"` |  |
+| spire-agent.image.version | string | `""` |  |
+| spire-agent.imagePullSecrets | list | `[]` |  |
+| spire-agent.initContainers | list | `[]` |  |
+| spire-agent.logLevel | string | `"info"` |  |
+| spire-agent.nameOverride | string | `""` |  |
+| spire-agent.namespaceOverride | string | `""` |  |
+| spire-agent.nodeSelector | object | `{}` |  |
+| spire-agent.podAnnotations | object | `{}` |  |
+| spire-agent.podSecurityContext | object | `{}` |  |
+| spire-agent.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| spire-agent.resources | object | `{}` |  |
+| spire-agent.securityContext | object | `{}` |  |
+| spire-agent.server.address | string | `""` |  |
+| spire-agent.server.namespaceOverride | string | `""` |  |
+| spire-agent.server.port | int | `8081` |  |
+| spire-agent.serviceAccount.annotations | object | `{}` |  |
+| spire-agent.serviceAccount.create | bool | `true` |  |
+| spire-agent.serviceAccount.name | string | `""` |  |
+| spire-agent.socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
+| spire-agent.telemetry.prometheus.enabled | bool | `false` |  |
+| spire-agent.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| spire-agent.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| spire-agent.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-agent |
+| spire-agent.telemetry.prometheus.port | int | `9988` |  |
+| spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
+| spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
+| spire-agent.trustDomain | string | `"example.org"` |  |
+| spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spire-agent.waitForIt.image.registry | string | `"cgr.dev"` |  |
+| spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` |  |
+| spire-agent.waitForIt.image.version | string | `"latest-20230113"` |  |
+| spire-agent.waitForIt.resources | object | `{}` |  |
+| spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
+| spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
+| spire-server.affinity | object | `{}` |  |
+| spire-server.autoscaling.enabled | bool | `false` |  |
+| spire-server.autoscaling.maxReplicas | int | `100` |  |
+| spire-server.autoscaling.minReplicas | int | `1` |  |
+| spire-server.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
+| spire-server.caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
+| spire-server.caTTL | string | `"24h"` |  |
+| spire-server.ca_subject.common_name | string | `"example.org"` |  |
+| spire-server.ca_subject.country | string | `"NL"` |  |
+| spire-server.ca_subject.organization | string | `"Example"` |  |
+| spire-server.clusterDomain | string | `"cluster.local"` |  |
+| spire-server.clusterName | string | `"example-cluster"` |  |
+| spire-server.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
+| spire-server.controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
+| spire-server.controllerManager.enabled | bool | `false` |  |
+| spire-server.controllerManager.identities.dnsNameTemplates | list | `[]` |  |
+| spire-server.controllerManager.identities.enabled | bool | `true` |  |
+| spire-server.controllerManager.identities.namespaceSelector | object | `{}` |  |
+| spire-server.controllerManager.identities.podSelector | object | `{}` |  |
+| spire-server.controllerManager.identities.spiffeIDTemplate | string | `"spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}"` |  |
+| spire-server.controllerManager.ignoreNamespaces[0] | string | `"kube-system"` |  |
+| spire-server.controllerManager.ignoreNamespaces[1] | string | `"kube-public"` |  |
+| spire-server.controllerManager.ignoreNamespaces[2] | string | `"local-path-storage"` |  |
+| spire-server.controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spire-server.controllerManager.image.registry | string | `"ghcr.io"` |  |
+| spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |
+| spire-server.controllerManager.image.version | string | `"0.2.2"` |  |
+| spire-server.controllerManager.resources | object | `{}` |  |
+| spire-server.controllerManager.securityContext | object | `{}` |  |
+| spire-server.controllerManager.service.annotations | object | `{}` |  |
+| spire-server.controllerManager.service.port | int | `443` |  |
+| spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
+| spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
+| spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
+| spire-server.dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
+| spire-server.dataStore.sql.options | list | `[]` | Only used by "postgres" or "mysql" |
+| spire-server.dataStore.sql.password | string | `""` | Only used by "postgres" or "mysql" |
+| spire-server.dataStore.sql.plugin_data | object | `{}` | Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section |
+| spire-server.dataStore.sql.port | int | `0` | If 0 (default), it will auto set to 5432 for postgres and 3306 for mysql. Only used by those databases. |
+| spire-server.dataStore.sql.username | string | `"spire"` | Only used by "postgres" or "mysql" |
+| spire-server.defaultJwtSvidTTL | string | `"1h"` |  |
+| spire-server.defaultX509SvidTTL | string | `"4h"` |  |
+| spire-server.extraContainers | list | `[]` |  |
+| spire-server.extraVolumeMounts | list | `[]` |  |
+| spire-server.extraVolumes | list | `[]` |  |
+| spire-server.federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
+| spire-server.federation.bundleEndpoint.port | int | `8443` |  |
+| spire-server.federation.enabled | bool | `false` |  |
+| spire-server.fullnameOverride | string | `""` |  |
+| spire-server.image.pullPolicy | string | `"IfNotPresent"` |  |
+| spire-server.image.registry | string | `"ghcr.io"` |  |
+| spire-server.image.repository | string | `"spiffe/spire-server"` |  |
+| spire-server.image.version | string | `""` |  |
+| spire-server.imagePullSecrets | list | `[]` |  |
+| spire-server.initContainers | list | `[]` |  |
+| spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
+| spire-server.logLevel | string | `"info"` |  |
+| spire-server.nameOverride | string | `""` |  |
+| spire-server.namespaceOverride | string | `""` |  |
+| spire-server.nodeAttestor.k8sPsat.enabled | bool | `true` |  |
+| spire-server.nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
+| spire-server.nodeSelector | object | `{}` |  |
+| spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
+| spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| spire-server.persistence.size | string | `"1Gi"` |  |
+| spire-server.persistence.storageClass | string | `nil` |  |
+| spire-server.podAnnotations | object | `{}` |  |
+| spire-server.podSecurityContext | object | `{}` |  |
+| spire-server.replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
+| spire-server.resources | object | `{}` |  |
+| spire-server.securityContext | object | `{}` |  |
+| spire-server.service.annotations | object | `{}` |  |
+| spire-server.service.port | int | `8081` |  |
+| spire-server.service.type | string | `"ClusterIP"` |  |
+| spire-server.serviceAccount.annotations | object | `{}` |  |
+| spire-server.serviceAccount.create | bool | `true` |  |
+| spire-server.serviceAccount.name | string | `""` |  |
+| spire-server.telemetry.prometheus.enabled | bool | `false` |  |
+| spire-server.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| spire-server.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
+| spire-server.tolerations | list | `[]` |  |
+| spire-server.topologySpreadConstraints | list | `[]` |  |
+| spire-server.trustDomain | string | `"example.org"` |  |
+| spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
+| spire-server.upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
+| spire-server.upstreamAuthority.certManager.issuer_name | string | `"spire-ca"` |  |
+| spire-server.upstreamAuthority.certManager.kube_config_file | string | `""` |  |
+| spire-server.upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
+| spire-server.upstreamAuthority.certManager.rbac.create | bool | `true` |  |
+| spire-server.upstreamAuthority.disk.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
+| spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
+| spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
 
 ----------------------------------------------
