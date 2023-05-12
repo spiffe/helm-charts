@@ -35,15 +35,19 @@ spec:
           env:
             - name: REACT_APP_API_SERVER_URI
               value: {{ include "tornjak-frontend.apiURL" . }}
+            {{- if eq (.Values.spireHealthCheck.enabled | toString) "true" }}
+            - name: REACT_APP_SPIRE_HEALTH_CHECK_ENABLE
+              value: "{{ .Values.spireHealthCheck.enabled }}"
+            {{- end }}
           startupProbe:
             httpGet:
               scheme: HTTP
               port: {{ .Values.service.port }}
             failureThreshold: 6
-            initialDelaySeconds: 60
-            periodSeconds: 30
+            initialDelaySeconds: 120
+            periodSeconds: 45
             successThreshold: 1
-            timeoutSeconds: 10
+            timeoutSeconds: 20
           volumeMounts:
             - name: cache
               mountPath: /usr/src/app/node_modules/.cache

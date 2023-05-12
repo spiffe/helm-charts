@@ -108,8 +108,8 @@ A Helm chart to install the SPIRE server.
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
-| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-be","version":"v1.0.2"}` | Tornjak API image |
-| tornjak.image.version | string | `"v1.0.2"` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","version":"v1.2.0"}` | Tornjak API image |
+| tornjak.image.version | string | `"v1.2.0"` | Overrides the image tag whose default is the chart appVersion. |
 | tornjak.service.annotations | object | `{}` |  |
 | tornjak.service.port | int | `10000` |  |
 | tornjak.service.type | string | `"ClusterIP"` |  |
