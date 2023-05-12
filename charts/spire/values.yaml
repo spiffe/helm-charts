@@ -4,9 +4,9 @@ global:
     # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
     clusterDomain: cluster.local
   spire:
-    # -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
+    # -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
     clusterName: example-cluster
-    # -- Set the trust domain to be used for the SPIFFE identifiers
+    # -- The trust domain to be used for the SPIFFE identifiers
     trustDomain: example.org
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""

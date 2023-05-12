@@ -103,7 +103,7 @@ dataStore:
     # -- Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
     plugin_data: {}
 
-# -- The loglevel
+# -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
 jwtIssuer: oidc-discovery.example.org

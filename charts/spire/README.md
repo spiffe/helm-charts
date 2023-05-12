@@ -113,7 +113,7 @@ Kubernetes: `>=1.21.0-0`
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
 | global.spire.clusterName | string | `"example-cluster"` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
-| global.spire.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spire-agent.enabled | bool | `true` |  |
@@ -127,7 +127,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-csi-driver.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` | The repository within the registry |
-| spiffe-csi-driver.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| spiffe-csi-driver.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
@@ -162,13 +162,13 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
 | spiffe-oidc-discovery-provider.config.domains[0] | string | `"localhost"` |  |
 | spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
-| spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The loglevel |
+| spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.image.repository | string | `"spiffe/oidc-discovery-provider"` | The repository within the registry |
-| spiffe-oidc-discovery-provider.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| spiffe-oidc-discovery-provider.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion |
 | spiffe-oidc-discovery-provider.imagePullSecrets | list | `[]` |  |
 | spiffe-oidc-discovery-provider.ingress.annotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.ingress.className | string | `""` |  |
@@ -223,7 +223,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.image.version | string | `""` |  |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
-| spire-agent.logLevel | string | `"info"` | The loglevel |
+| spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-agent.nameOverride | string | `""` |  |
 | spire-agent.namespaceOverride | string | `""` |  |
 | spire-agent.nodeSelector | object | `{}` |  |
@@ -246,7 +246,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.telemetry.prometheus.port | int | `9988` |  |
 | spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| spire-agent.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spire-agent.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
 | spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
@@ -316,7 +316,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.imagePullSecrets | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
-| spire-server.logLevel | string | `"info"` | The loglevel |
+| spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
 | spire-server.nodeAttestor.k8sPsat.enabled | bool | `true` |  |

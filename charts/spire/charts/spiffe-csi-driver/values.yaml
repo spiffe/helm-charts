@@ -8,7 +8,7 @@ image:
   repository: spiffe/spiffe-csi-driver
   # -- The image pull policy
   pullPolicy: IfNotPresent
-  # -- Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion
   version: ""
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

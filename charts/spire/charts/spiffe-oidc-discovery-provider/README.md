@@ -28,13 +28,13 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.acme.tosAccepted | bool | `false` |  |
 | config.domains[0] | string | `"localhost"` |  |
 | config.domains[1] | string | `"oidc-discovery.example.org"` |  |
-| config.logLevel | string | `"info"` | The loglevel |
+| config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/oidc-discovery-provider"` | The repository within the registry |
-| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

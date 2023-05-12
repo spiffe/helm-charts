@@ -57,11 +57,11 @@ resources: {}
 
 nodeSelector: {}
 
-# -- The loglevel
+# -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
-# -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
+# -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
-# -- Set the trust domain to be used for the SPIFFE identifiers
+# -- The trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
 # -- If set, obtain trust bundle from url instead of Kubernetes ConfigMap
 trustBundleURL: ""

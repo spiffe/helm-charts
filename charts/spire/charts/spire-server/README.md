@@ -79,7 +79,7 @@ A Helm chart to install the SPIRE server.
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
-| logLevel | string | `"info"` | The loglevel |
+| logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |

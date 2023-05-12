@@ -28,7 +28,7 @@ A Helm chart to install the SPIRE agent.
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| logLevel | string | `"info"` | The loglevel |
+| logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
@@ -51,7 +51,7 @@ A Helm chart to install the SPIRE agent.
 | telemetry.prometheus.port | int | `9988` |  |
 | trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |

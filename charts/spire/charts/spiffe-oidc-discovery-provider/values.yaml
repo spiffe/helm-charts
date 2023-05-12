@@ -16,7 +16,7 @@ image:
   repository: spiffe/oidc-discovery-provider
   # -- The image pull policy
   pullPolicy: IfNotPresent
-  # -- Overrides the image tag whose default is the chart appVersion.
+  # -- Overrides the image tag whose default is the chart appVersion
   version: ""
 
 resources: {}
@@ -85,7 +85,7 @@ insecureScheme:
       #   memory: 64Mi
 
 config:
-  # -- The loglevel
+  # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
   domains:
     - localhost
@@ -125,7 +125,7 @@ affinity: {}
 
 # -- Set the trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
-# -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
+# -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
 clusterDomain: cluster.local
 
 telemetry:
