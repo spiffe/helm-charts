@@ -122,6 +122,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
+| tornjak-frontend.enabled | bool | `false` |  |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
@@ -313,7 +314,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
-| spire-server.image.version | string | `""` |  |
+| spire-server.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | spire-server.imagePullSecrets | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
@@ -344,6 +345,14 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
+| spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
+| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","version":"v1.2.0"}` | Tornjak API image |
+| spire-server.tornjak.image.version | string | `"v1.2.0"` | Overrides the image tag whose default is the chart appVersion. |
+| spire-server.tornjak.resources | object | `{}` |  |
+| spire-server.tornjak.service.annotations | object | `{}` |  |
+| spire-server.tornjak.service.port | int | `10000` |  |
+| spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
@@ -356,6 +365,24 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
-| tornjak-frontend.enabled | bool | `false` |  |
+| tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
+| tornjak-frontend.fullnameOverride | string | `""` |  |
+| tornjak-frontend.image.pullPolicy | string | `"IfNotPresent"` |  |
+| tornjak-frontend.image.registry | string | `"ghcr.io"` |  |
+| tornjak-frontend.image.repository | string | `"spiffe/tornjak-frontend"` |  |
+| tornjak-frontend.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak-frontend.imagePullSecrets | list | `[]` |  |
+| tornjak-frontend.labels | object | `{}` |  |
+| tornjak-frontend.nameOverride | string | `""` |  |
+| tornjak-frontend.namespaceOverride | string | `""` |  |
+| tornjak-frontend.podSecurityContext | object | `{}` |  |
+| tornjak-frontend.securityContext | object | `{}` |  |
+| tornjak-frontend.service.annotations | object | `{}` |  |
+| tornjak-frontend.service.port | int | `3000` |  |
+| tornjak-frontend.service.type | string | `"ClusterIP"` |  |
+| tornjak-frontend.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
 
 ----------------------------------------------
