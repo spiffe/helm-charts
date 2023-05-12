@@ -111,9 +111,9 @@ Kubernetes: `>=1.21.0-0`
 |-----|------|---------|-------------|
 | global.k8s.clusterDomain | string | `"cluster.local"` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
-| global.spire.clusterName | string | `"example-cluster"` | Set the name of the Kubernetes cluster |
+| global.spire.clusterName | string | `"example-cluster"` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
-| global.spire.trustDomain | string | `"example.org"` | Set the trust domain to use for the spiffe identifiers |
+| global.spire.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spiffe-csi-driver.enabled | bool | `true` |  |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
 | spire-agent.enabled | bool | `true` |  |
@@ -121,20 +121,20 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.enabled | bool | `true` |  |
 | spire-server.enabled | bool | `true` |  |
 | spire-server.nameOverride | string | `"server"` |  |
-| spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
+| spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
-| spiffe-csi-driver.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spiffe-csi-driver.image.registry | string | `"ghcr.io"` |  |
-| spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` |  |
-| spiffe-csi-driver.image.version | string | `""` |  |
+| spiffe-csi-driver.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-csi-driver.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` | The repository within the registry |
+| spiffe-csi-driver.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
 | spiffe-csi-driver.namespaceOverride | string | `""` |  |
-| spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spiffe-csi-driver.nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` |  |
-| spiffe-csi-driver.nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-csi-driver.nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` | The OCI registry to pull the image from |
+| spiffe-csi-driver.nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` | The repository within the registry |
 | spiffe-csi-driver.nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
 | spiffe-csi-driver.nodeDriverRegistrar.resources | object | `{}` |  |
 | spiffe-csi-driver.nodeSelector | object | `{}` |  |
@@ -145,11 +145,11 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.resources | object | `{}` |  |
 | spiffe-csi-driver.securityContext.privileged | bool | `true` |  |
 | spiffe-csi-driver.securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| spiffe-csi-driver.serviceAccount.annotations | object | `{}` |  |
-| spiffe-csi-driver.serviceAccount.create | bool | `true` |  |
-| spiffe-csi-driver.serviceAccount.name | string | `""` |  |
+| spiffe-csi-driver.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| spiffe-csi-driver.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| spiffe-csi-driver.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spiffe-oidc-discovery-provider.affinity | object | `{}` |  |
-| spiffe-oidc-discovery-provider.agentSocketName | string | `"spire-agent.sock"` |  |
+| spiffe-oidc-discovery-provider.agentSocketName | string | `"spire-agent.sock"` | The name of the spire-agent unix socket |
 | spiffe-oidc-discovery-provider.autoscaling.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.autoscaling.maxReplicas | int | `5` |  |
 | spiffe-oidc-discovery-provider.autoscaling.minReplicas | int | `1` |  |
@@ -162,13 +162,13 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
 | spiffe-oidc-discovery-provider.config.domains[0] | string | `"localhost"` |  |
 | spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
-| spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` |  |
+| spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The loglevel |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
-| spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` |  |
-| spiffe-oidc-discovery-provider.image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
-| spiffe-oidc-discovery-provider.image.version | string | `""` |  |
+| spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| spiffe-oidc-discovery-provider.image.repository | string | `"spiffe/oidc-discovery-provider"` | The repository within the registry |
+| spiffe-oidc-discovery-provider.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | spiffe-oidc-discovery-provider.imagePullSecrets | list | `[]` |  |
 | spiffe-oidc-discovery-provider.ingress.annotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.ingress.className | string | `""` |  |
@@ -178,9 +178,9 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | spiffe-oidc-discovery-provider.ingress.tls | list | `[]` |  |
 | spiffe-oidc-discovery-provider.insecureScheme.enabled | bool | `false` |  |
-| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
-| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
@@ -194,13 +194,13 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.service.annotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.service.port | int | `80` |  |
 | spiffe-oidc-discovery-provider.service.type | string | `"ClusterIP"` |  |
-| spiffe-oidc-discovery-provider.serviceAccount.annotations | object | `{}` |  |
-| spiffe-oidc-discovery-provider.serviceAccount.create | bool | `true` |  |
-| spiffe-oidc-discovery-provider.serviceAccount.name | string | `""` |  |
+| spiffe-oidc-discovery-provider.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| spiffe-oidc-discovery-provider.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| spiffe-oidc-discovery-provider.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.enabled | bool | `false` |  |
-| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` |  |
-| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.version | string | `"0.11.0"` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
@@ -208,7 +208,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
-| spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` |  |
+| spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.clusterName | string | `"example-cluster"` |  |
 | spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
@@ -217,13 +217,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.extraVolumes | list | `[]` |  |
 | spire-agent.fullnameOverride | string | `""` |  |
 | spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
-| spire-agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spire-agent.image.registry | string | `"ghcr.io"` |  |
-| spire-agent.image.repository | string | `"spiffe/spire-agent"` |  |
+| spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spire-agent.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| spire-agent.image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
 | spire-agent.image.version | string | `""` |  |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
-| spire-agent.logLevel | string | `"info"` |  |
+| spire-agent.logLevel | string | `"info"` | The loglevel |
 | spire-agent.nameOverride | string | `""` |  |
 | spire-agent.namespaceOverride | string | `""` |  |
 | spire-agent.nodeSelector | object | `{}` |  |
@@ -235,10 +235,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.server.address | string | `""` |  |
 | spire-agent.server.namespaceOverride | string | `""` |  |
 | spire-agent.server.port | int | `8081` |  |
-| spire-agent.serviceAccount.annotations | object | `{}` |  |
-| spire-agent.serviceAccount.create | bool | `true` |  |
-| spire-agent.serviceAccount.name | string | `""` |  |
-| spire-agent.socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
+| spire-agent.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| spire-agent.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| spire-agent.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| spire-agent.socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spire-agent.telemetry.prometheus.enabled | bool | `false` |  |
 | spire-agent.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spire-agent.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
@@ -246,10 +246,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.telemetry.prometheus.port | int | `9988` |  |
 | spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| spire-agent.trustDomain | string | `"example.org"` |  |
-| spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spire-agent.waitForIt.image.registry | string | `"cgr.dev"` |  |
-| spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` |  |
+| spire-agent.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
 | spire-agent.waitForIt.image.version | string | `"latest-20230113"` |  |
 | spire-agent.waitForIt.resources | object | `{}` |  |
 | spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
@@ -278,9 +278,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.ignoreNamespaces[0] | string | `"kube-system"` |  |
 | spire-server.controllerManager.ignoreNamespaces[1] | string | `"kube-public"` |  |
 | spire-server.controllerManager.ignoreNamespaces[2] | string | `"local-path-storage"` |  |
-| spire-server.controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spire-server.controllerManager.image.registry | string | `"ghcr.io"` |  |
-| spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |
+| spire-server.controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spire-server.controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | spire-server.controllerManager.image.version | string | `"0.2.2"` |  |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
@@ -288,9 +288,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.service.port | int | `443` |  |
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` | The repository within the registry |
 | spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
@@ -309,14 +309,14 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.federation.bundleEndpoint.port | int | `8443` |  |
 | spire-server.federation.enabled | bool | `false` |  |
 | spire-server.fullnameOverride | string | `""` |  |
-| spire-server.image.pullPolicy | string | `"IfNotPresent"` |  |
-| spire-server.image.registry | string | `"ghcr.io"` |  |
-| spire-server.image.repository | string | `"spiffe/spire-server"` |  |
+| spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| spire-server.image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
 | spire-server.image.version | string | `""` |  |
 | spire-server.imagePullSecrets | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
-| spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
-| spire-server.logLevel | string | `"info"` |  |
+| spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.logLevel | string | `"info"` | The loglevel |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
 | spire-server.nodeAttestor.k8sPsat.enabled | bool | `true` |  |
@@ -334,16 +334,16 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.service.annotations | object | `{}` |  |
 | spire-server.service.port | int | `8081` |  |
 | spire-server.service.type | string | `"ClusterIP"` |  |
-| spire-server.serviceAccount.annotations | object | `{}` |  |
-| spire-server.serviceAccount.create | bool | `true` |  |
-| spire-server.serviceAccount.name | string | `""` |  |
+| spire-server.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| spire-server.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| spire-server.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spire-server.telemetry.prometheus.enabled | bool | `false` |  |
 | spire-server.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spire-server.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
-| spire-server.trustDomain | string | `"example.org"` |  |
+| spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | spire-server.upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |

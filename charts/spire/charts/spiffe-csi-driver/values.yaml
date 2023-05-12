@@ -2,9 +2,13 @@
 pluginName: csi.spiffe.io
 
 image:
+  # -- The OCI registry to pull the image from
   registry: ghcr.io
+  # -- The repository within the registry
   repository: spiffe/spiffe-csi-driver
+  # -- The image pull policy
   pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
   version: ""
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -27,11 +31,11 @@ namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
@@ -53,8 +57,11 @@ nodeSelector: {}
 
 nodeDriverRegistrar:
   image:
+    # -- The OCI registry to pull the image from
     registry: registry.k8s.io
+    # -- The repository within the registry
     repository: sig-storage/csi-node-driver-registrar
+    # -- The image pull policy
     pullPolicy: IfNotPresent
     version: v2.6.2
   resources: {}
@@ -69,6 +76,7 @@ nodeDriverRegistrar:
     #   cpu: 100m
     #   memory: 64Mi
 
+# -- The unix socket path to the spire-agent
 agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
 
 kubeletPath: /var/lib/kubelet
