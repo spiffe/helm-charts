@@ -33,7 +33,7 @@ jobs:
           git diff
 
       - name: Setup go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v4.0.0
 
       - name: Setup crane
         uses: imjasonh/setup-crane@v0.1
