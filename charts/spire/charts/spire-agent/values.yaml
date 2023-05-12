@@ -3,10 +3,11 @@
 # Declare variables to be passed into your templates.
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/spire-agent
+  # -- The OCI registry to pull the image from
   registry: ghcr.io
+  # -- The repository within the registry
   repository: spiffe/spire-agent
+  # -- The image pull policy
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   version: ""
@@ -17,13 +18,17 @@ namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+
+configMap:
+  # -- Annotations to add to the SPIRE Agent ConfigMap
+  annotations: {}
 
 podAnnotations: {}
 
@@ -52,8 +57,11 @@ resources: {}
 
 nodeSelector: {}
 
+# -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
+# -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
+# -- The trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
 # -- If set, obtain trust bundle from url instead of Kubernetes ConfigMap
 trustBundleURL: ""
@@ -72,8 +80,11 @@ healthChecks:
 
 waitForIt:
   image:
+    # -- The OCI registry to pull the image from
     registry: cgr.dev
+    # -- The repository within the registry
     repository: chainguard/wait-for-it
+    # -- The image pull policy
     pullPolicy: IfNotPresent
     version: latest-20230113
   resources: {}
@@ -98,6 +109,7 @@ telemetry:
       namespace: ""
       labels: {}
 
+# -- The unix socket path to the spire-agent
 socketPath: /run/spire/agent-sockets/spire-agent.sock
 
 # -- Priority class assigned to daemonset pods

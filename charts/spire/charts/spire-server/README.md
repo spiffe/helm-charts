@@ -30,6 +30,8 @@ A Helm chart to install the SPIRE server.
 | ca_subject.organization | string | `"Example"` |  |
 | clusterDomain | string | `"cluster.local"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
+| controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
@@ -39,9 +41,9 @@ A Helm chart to install the SPIRE server.
 | controllerManager.ignoreNamespaces[0] | string | `"kube-system"` |  |
 | controllerManager.ignoreNamespaces[1] | string | `"kube-public"` |  |
 | controllerManager.ignoreNamespaces[2] | string | `"local-path-storage"` |  |
-| controllerManager.image.pullPolicy | string | `"IfNotPresent"` |  |
-| controllerManager.image.registry | string | `"ghcr.io"` |  |
-| controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` |  |
+| controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | controllerManager.image.version | string | `"0.2.2"` |  |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
@@ -49,9 +51,9 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` | The repository within the registry |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
@@ -70,14 +72,14 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"spiffe/spire-server"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| jwtIssuer | string | `"oidc-discovery.example.org"` |  |
-| logLevel | string | `"info"` |  |
+| jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
@@ -85,7 +87,6 @@ A Helm chart to install the SPIRE server.
 | nodeSelector | object | `{}` |  |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.enabled | bool | `true` | Enable persistence used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak. |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
@@ -96,16 +97,16 @@ A Helm chart to install the SPIRE server.
 | service.annotations | object | `{}` |  |
 | service.port | int | `8081` |  |
 | service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | telemetry.prometheus.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
-| trustDomain | string | `"example.org"` |  |
+| trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |

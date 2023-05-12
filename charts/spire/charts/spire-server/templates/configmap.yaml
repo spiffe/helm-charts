@@ -104,6 +104,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire-server.fullname" . }}
   namespace: {{ include "spire-server.namespace" . }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   server.conf: |
     {{- include "spire-server.yaml-config" . | fromYaml | toPrettyJson | nindent 4 }}

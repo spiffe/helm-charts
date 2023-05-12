@@ -6,10 +6,11 @@
 replicaCount: 1
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/spire-server
+  # -- The OCI registry to pull the image from
   registry: ghcr.io
+  # -- The repository within the registry
   repository: spiffe/spire-server
+  # -- The image pull policy
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   version: ""
@@ -20,11 +21,11 @@ namespaceOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
@@ -44,6 +45,10 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 8081
+  annotations: {}
+
+configMap:
+  # -- Annotations to add to the SPIRE Server ConfigMap
   annotations: {}
 
 resources: {}
@@ -74,8 +79,6 @@ affinity: {}
 topologySpreadConstraints: []
 
 persistence:
-  # -- Enable persistence used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak.
-  enabled: true
   size: 1Gi
   accessMode: ReadWriteOnce
   storageClass: null
@@ -100,10 +103,14 @@ dataStore:
     # -- Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
     plugin_data: {}
 
+# -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
+# -- The JWT issuer domain
 jwtIssuer: oidc-discovery.example.org
 
+# -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
+# -- Set the trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
 
 bundleConfigMap: spire-bundle
@@ -155,8 +162,11 @@ controllerManager:
   enabled: false
 
   image:
+    # -- The OCI registry to pull the image from
     registry: ghcr.io
+    # -- The repository within the registry
     repository: spiffe/spire-controller-manager
+    # -- The image pull policy
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     version: "0.2.2"
@@ -186,6 +196,10 @@ controllerManager:
     port: 443
     annotations: {}
 
+  configMap:
+    # -- Annotations to add to the Controller Manager ConfigMap
+    annotations: {}
+
   ignoreNamespaces:
     - kube-system
     - kube-public
@@ -208,8 +222,11 @@ controllerManager:
     failurePolicy: Fail
     upgradeHook:
       image:
+        # -- The OCI registry to pull the image from
         registry: cgr.dev
+        # -- The repository within the registry
         repository: chainguard/kubectl
+        # -- The image pull policy
         pullPolicy: IfNotPresent
         version: latest
 

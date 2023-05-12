@@ -16,18 +16,19 @@ A Helm chart to install the SPIRE agent.
 |-----|------|---------|-------------|
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
+| configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"spiffe/spire-agent"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
 | image.version | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| logLevel | string | `"info"` |  |
+| logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
@@ -39,10 +40,10 @@ A Helm chart to install the SPIRE agent.
 | server.address | string | `""` |  |
 | server.namespaceOverride | string | `""` |  |
 | server.port | int | `8081` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
-| socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | telemetry.prometheus.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
@@ -50,10 +51,10 @@ A Helm chart to install the SPIRE agent.
 | telemetry.prometheus.port | int | `9988` |  |
 | trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| trustDomain | string | `"example.org"` |  |
-| waitForIt.image.pullPolicy | string | `"IfNotPresent"` |  |
-| waitForIt.image.registry | string | `"cgr.dev"` |  |
-| waitForIt.image.repository | string | `"chainguard/wait-for-it"` |  |
+| trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
 | waitForIt.image.version | string | `"latest-20230113"` |  |
 | waitForIt.resources | object | `{}` |  |
 | workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
