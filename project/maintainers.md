@@ -11,7 +11,7 @@ Merge requests are submitted through GitHub.  They are contributions to change
 the project.  There is no difference between code and non-code submissions, in
 procedure or policy.
 
-All maintainers should consider that merge requests are gifts.  The project
+All maintainers should consider that pull requests are gifts.  The project
 survives due to the effort of frequent contributors and their generosity.  As
 such, to encourage future submissions, the default approach to handling a merge
 request should be gratitude, even if the request cannot be merged.
