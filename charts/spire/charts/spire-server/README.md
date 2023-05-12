@@ -110,6 +110,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
 | tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","version":"v1.2.0"}` | Tornjak API image |
 | tornjak.image.version | string | `"v1.2.0"` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
 | tornjak.service.port | int | `10000` |  |
 | tornjak.service.type | string | `"ClusterIP"` |  |
