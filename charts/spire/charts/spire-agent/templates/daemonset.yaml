@@ -38,7 +38,7 @@ spec:
           # This is a small image with wait-for-it, choose whatever image
           # you prefer that waits for a service to be up. This image is built
           # from https://github.com/vishnubob/wait-for-it
-          image: {{ template "spire-agent.image" .Values.waitForIt }}
+          image: {{ template "spire-lib.image" (dict "image" .Values.waitForIt.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
           args: ["-t", "30", "-h", "{{ include "spire-agent.server-address" . | trim }}", "-p", {{ .Values.server.port | quote }}]
           resources:
@@ -48,7 +48,7 @@ spec:
         {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ template "spire-agent.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: ["-config", "/run/spire/config/agent.conf"]
           ports:
@@ -62,9 +62,11 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
+            {{- if eq (len .Values.trustBundleURL) 0 }}
             - name: spire-bundle
               mountPath: /run/spire/bundle
               readOnly: true
+            {{- end }}
             - name: spire-agent-socket-dir
               mountPath: {{ include "spire-agent.socket-path" . | dir }}
               readOnly: false
@@ -98,9 +100,11 @@ spec:
         - name: spire-config
           configMap:
             name: {{ include "spire-agent.fullname" . }}
+        {{- if eq (len .Values.trustBundleURL) 0 }}
         - name: spire-bundle
           configMap:
-            name: {{ include "spire-agent.bundle-configmap" . }}
+            name: {{ include "spire-lib.bundle-configmap" . }}
+        {{- end }}
         - name: spire-token
           projected:
             sources:

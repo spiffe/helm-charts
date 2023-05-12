@@ -4,6 +4,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire-controller-manager.fullname" . }}
   namespace: {{ include "spire-server.namespace" . }}
+  {{- with .Values.controllerManager.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   controller-manager-config.yaml: |
     apiVersion: spire.spiffe.io/v1alpha1
@@ -22,8 +26,8 @@ data:
       resourceName: {{ .Release.Name | sha256sum | trunc 8 }}.spiffe.io
       resourceNamespace: {{ include "spire-server.namespace" . }}
     validatingWebhookConfigurationName: {{ include "spire-controller-manager.fullname" . }}-webhook
-    clusterName: {{ include "spire-server.cluster-name" . }}
-    trustDomain: {{ include "spire-server.trust-domain" . }}
+    clusterName: {{ include "spire-lib.cluster-name" . }}
+    trustDomain: {{ include "spire-lib.trust-domain" . }}
     ignoreNamespaces:
       {{- with .Values.controllerManager.ignoreNamespaces }}
       {{- toYaml . | nindent 6 }}

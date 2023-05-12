@@ -82,18 +82,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "spire-server.image" -}}
-{{- if eq (substr 0 7 .image.version) "sha256:" -}}
-{{- printf "%s/%s@%s" .image.registry .image.repository .image.version -}}
-{{- else if .appVersion -}}
-{{- printf "%s/%s:%s" .image.registry .image.repository (default .appVersion .image.version) -}}
-{{- else if .image.version -}}
-{{- printf "%s/%s:%s" .image.registry .image.repository .image.version -}}
-{{- else -}}
-{{- printf "%s/%s" .image.registry .image.repository -}}
-{{- end -}}
-{{- end }}
-
 {{- define "spire-server.upstream-ca-secret" -}}
 {{- $root := . }}
 {{- with .Values.upstreamAuthority.disk -}}
@@ -117,34 +105,51 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "spire-server.cluster-name" }}
-{{- if ne (len (dig "spire" "clusterName" "" .Values.global)) 0 }}
-{{- .Values.global.spire.clusterName }}
-{{- else }}
-{{- .Values.clusterName }}
+{{- define "spire-server.config-mysql-query" }}
+{{- $lst := list }}
+{{- range . }}
+{{- range $key, $value := . }}
+{{- $eValue := toString $value }}
+{{- $entry := printf "%s=%s" (urlquery $key) (urlquery $eValue) }}
+{{- $lst = append $lst $entry }}
+{{- end }}
+{{- end }}
+{{- if gt (len $lst) 0 }}
+{{- printf "?%s" (join "&" $lst) }}
 {{- end }}
 {{- end }}
 
-{{- define "spire-server.trust-domain" }}
-{{- if ne (len (dig "spire" "trustDomain" "" .Values.global)) 0 }}
-{{- .Values.global.spire.trustDomain }}
-{{- else }}
-{{- .Values.trustDomain }}
+{{- define "spire-server.config-postgresql-options" }}
+{{- $lst := list }}
+{{- range . }}
+{{- range $key, $value := . }}
+{{- $eValue := toString $value }}
+{{- $entry := printf "%s=%s" $key $eValue }}
+{{- $lst = append $lst $entry }}
+{{- end }}
+{{- end }}
+{{- if gt (len $lst) 0 }}
+{{- printf " %s" (join " " $lst) }}
 {{- end }}
 {{- end }}
 
-{{- define "spire-server.bundle-configmap" }}
-{{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
-{{- .Values.global.spire.bundleConfigMap }}
+{{- define "spire-server.datastore-config" }}
+{{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
+{{- if eq .Values.dataStore.sql.databaseType "sqlite3" }}
+  {{- $_ := set $config "database_type" "sqlite3" }}
+  {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
+{{- else if eq .Values.dataStore.sql.databaseType "mysql" }}
+  {{- $_ := set $config "database_type" "mysql" }}
+  {{- $port := int .Values.dataStore.sql.port | default 3306 }}
+  {{- $query := include "spire-server.config-mysql-query" .Values.dataStore.sql.options }}
+  {{- $_ := set $config "connection_string" (printf "%s:${DBPW}@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.host $port .Values.dataStore.sql.databaseName $query) }}
+{{- else if eq .Values.dataStore.sql.databaseType "postgres" }}
+  {{- $_ := set $config "database_type" "postgres" }}
+  {{- $port := int .Values.dataStore.sql.port | default 5432 }}
+  {{- $options:= include "spire-server.config-postgresql-options" .Values.dataStore.sql.options }}
+  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=${DBPW} host=%s port=%d%s" .Values.dataStore.sql.databaseName .Values.dataStore.sql.username .Values.dataStore.sql.host $port $options) }}
 {{- else }}
-{{- .Values.bundleConfigMap }}
+  {{- fail "Unsupported database type" }}
 {{- end }}
-{{- end }}
-
-{{- define "spire-server.cluster-domain" -}}
-{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
-{{- .Values.global.k8s.clusterDomain }}
-{{- else }}
-{{- .Values.clusterDomain }}
-{{- end }}
+{{- $config | toYaml }}
 {{- end }}

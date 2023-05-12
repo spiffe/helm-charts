@@ -1,5 +1,6 @@
 {{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
-{{- $configSum2 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
+{{- $configSum2 := (include (print $.Template.BasePath "/secret.yaml") . | sha256sum) }}
+{{- $configSum3 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
 apiVersion: apps/v1
 kind: StatefulSet
@@ -10,6 +11,9 @@ metadata:
     {{- include "spire-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
+  {{- if and (eq .Values.dataStore.sql.databaseType "sqlite3") (gt (int .Values.replicaCount) 1) }}
+  {{- fail "When running with sqlite3 database, you can't scale up to more then one instance. 'replicaCount' MUST be 1" }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   serviceName: {{ include "spire-server.fullname" . }}
@@ -21,6 +25,7 @@ spec:
       annotations:
         checksum/config: {{ $configSum }}
         checksum/config2: {{ $configSum2 }}
+        checksum/config3: {{ $configSum3 }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -43,14 +48,22 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image) }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
+            - -expandEnv
             - -config
             - /run/spire/config/server.conf
           env:
           - name: PATH
             value: "/opt/spire/bin:/bin"
+          {{- if ne .Values.dataStore.sql.databaseType "sqlite3" }}
+          - name: DBPW
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-dbpw
+                key: DBPW
+          {{- end }}
           ports:
             - name: grpc
               containerPort: 8081
@@ -91,11 +104,9 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
-            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
-            {{- end }}
             {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
             - name: upstream-ca
               mountPath: /run/spire/upstream_ca
@@ -108,7 +119,7 @@ spec:
         - name: spire-controller-manager
           securityContext:
             {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
-          image: {{ template "spire-server.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.image) }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.controllerManager.image.pullPolicy }}
           args:
             - --config=controller-manager-config.yaml
@@ -185,16 +196,14 @@ spec:
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
-    {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
     - metadata:
         name: spire-data
       spec:
         accessModes:
-          - {{ .Values.dataStorage.accessMode | default "ReadWriteOnce" }}
+          - {{ .Values.persistence.accessMode | default "ReadWriteOnce" }}
         resources:
           requests:
-            storage: {{ .Values.dataStorage.size }}
-        {{- if .Values.dataStorage.storageClass }}
-        storageClassName: {{ .Values.dataStorage.storageClass }}
+            storage: {{ .Values.persistence.size }}
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
-    {{ end }}
