@@ -10,6 +10,7 @@ on:
       - '.github/kind/conf/kind-config.yaml'
       - '.github/tests/**/*.yaml'
       - '.github/tests/**/*.sh'
+      - '.github/tests/**/*.json'
       - 'examples/**/*.yaml'
       - 'helm-docs.sh'
 
