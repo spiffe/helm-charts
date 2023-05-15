@@ -1,5 +1,6 @@
 <!-- vim: filetype=markdown colorcolumn=80
 -->
+
 # Maintainers handbook
 
 This document is a guide for maintainers across the spire/helm-chart effort to
