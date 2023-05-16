@@ -70,6 +70,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+# -- Select specific nodes to run on (currently only amd64 is supported by Tornjak)
 nodeSelector: {}
 
 tolerations: []

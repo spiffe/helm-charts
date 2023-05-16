@@ -84,7 +84,7 @@ A Helm chart to install the SPIRE server.
 | namespaceOverride | string | `""` |  |
 | nodeAttestor.k8sPsat.enabled | bool | `true` |  |
 | nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
-| nodeSelector | object | `{}` |  |
+| nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.size | string | `"1Gi"` |  |

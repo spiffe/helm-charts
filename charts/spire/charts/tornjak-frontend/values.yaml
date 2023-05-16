@@ -41,6 +41,10 @@ service:
   port: 3000
   annotations: {}
 
+# -- Select specific nodes to run on (currently only amd64 is supported by Tornjak)
+nodeSelector:
+  kubernetes.io/arch: amd64
+
 # -- Provide minimal resources to prevent accidental crashes due to resource exhaustion
 # resources:
 #   requests:
@@ -59,4 +63,3 @@ apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
 spireHealthCheck:
   # -- Enables the SPIRE Healthchecker indicator
   enabled: true
-

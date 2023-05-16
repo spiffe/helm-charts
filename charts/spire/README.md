@@ -323,7 +323,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.namespaceOverride | string | `""` |  |
 | spire-server.nodeAttestor.k8sPsat.enabled | bool | `true` |  |
 | spire-server.nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
-| spire-server.nodeSelector | object | `{}` |  |
+| spire-server.nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | spire-server.persistence.size | string | `"1Gi"` |  |
@@ -375,6 +375,7 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.labels | object | `{}` |  |
 | tornjak-frontend.nameOverride | string | `""` |  |
 | tornjak-frontend.namespaceOverride | string | `""` |  |
+| tornjak-frontend.nodeSelector | object | `{"kubernetes.io/arch":"amd64"}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | tornjak-frontend.podSecurityContext | object | `{}` |  |
 | tornjak-frontend.securityContext | object | `{}` |  |
 | tornjak-frontend.service.annotations | object | `{}` |  |
