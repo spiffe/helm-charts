@@ -51,6 +51,10 @@ spec:
           volumeMounts:
             - name: cache
               mountPath: /usr/src/app/node_modules/.cache
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: cache
           emptyDir: {}

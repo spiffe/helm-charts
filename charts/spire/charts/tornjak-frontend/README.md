@@ -59,6 +59,7 @@ port forwarding. See the chart NOTES output for more details.
 | labels | object | `{}` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
+| nodeSelector | object | `{"kubernetes.io/arch":"amd64"}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | podSecurityContext | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
