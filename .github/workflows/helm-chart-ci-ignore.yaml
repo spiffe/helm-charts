@@ -1,0 +1,61 @@
+name: Helm Chart CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [synchronize, opened, reopened]
+    paths-ignore:
+      - 'charts/**'
+      - '.github/workflows/helm-chart-ci.yaml'
+      - '.github/kind/conf/kind-config.yaml'
+      - '.github/tests/**/*.yaml'
+      - '.github/tests/**/*.sh'
+      - '.github/tests/**/*.json'
+      - 'examples/**/*.yaml'
+      - 'helm-docs.sh'
+
+jobs:
+  lint-chart:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: 'echo "Skipping linter"'
+
+  checks:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: 'echo "Skipping checks"'
+
+  build-matrix:
+    name: Build matrix
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.2
+
+      - id: set-matrix
+        name: Collect all tests
+        run: |
+          tests="$(echo -e "default\n$(find .github/tests -maxdepth 1 -type d | grep -Ev 'tests$' | xargs -I % basename % | sort | uniq)")"
+          tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
+          echo "tests=$tests_json" >> $GITHUB_OUTPUT
+
+    outputs:
+      tests: ${{ steps.set-matrix.outputs.tests }}
+
+  test:
+    runs-on: ubuntu-22.04
+    needs:
+      - build-matrix
+
+    strategy:
+      matrix:
+        k8s:
+          - v1.27.0
+          - v1.26.3
+          - v1.25.8
+        values:
+          - ${{ fromJson(needs.build-matrix.outputs.tests) }}
+
+    steps:
+      - run: 'echo "Skipping tests"'
