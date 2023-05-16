@@ -75,7 +75,7 @@ A Helm chart to install the SPIRE server.
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
-| image.version | string | `""` |  |
+| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
@@ -106,6 +106,14 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
+| tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
+| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","version":"v1.2.0"}` | Tornjak API image |
+| tornjak.image.version | string | `"v1.2.0"` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak.resources | object | `{}` |  |
+| tornjak.service.annotations | object | `{}` |  |
+| tornjak.service.port | int | `10000` |  |
+| tornjak.service.type | string | `"ClusterIP"` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tornjak-frontend.fullname" . }}
+  namespace: {{ include "tornjak-frontend.namespace" . }}
+  labels:
+    {{- include "tornjak-frontend.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "tornjak-frontend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "tornjak-frontend.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tornjak-frontend.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name:  {{ include "tornjak-frontend.fullname" . }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: REACT_APP_API_SERVER_URI
+              value: {{ include "tornjak-frontend.apiURL" . }}
+            {{- if eq (.Values.spireHealthCheck.enabled | toString) "true" }}
+            - name: REACT_APP_SPIRE_HEALTH_CHECK_ENABLE
+              value: "{{ .Values.spireHealthCheck.enabled }}"
+            {{- end }}
+          startupProbe:
+            httpGet:
+              scheme: HTTP
+              port: {{ .Values.service.port }}
+            failureThreshold: 6
+            initialDelaySeconds: 120
+            periodSeconds: 45
+            successThreshold: 1
+            timeoutSeconds: 20
+          volumeMounts:
+            - name: cache
+              mountPath: /usr/src/app/node_modules/.cache
+      volumes:
+        - name: cache
+          emptyDir: {}
