@@ -111,6 +111,7 @@ Create the name of the service account to use
 {{- $_ := set $root.image "version" $root.KubeVersion }}
 {{- end }}
 {{- include "spire-lib.image" $root }}
+{{- end }}
 
 {{- define "spire-server.config-mysql-query" }}
 {{- $lst := list }}
