@@ -49,6 +49,7 @@ port forwarding. See the chart NOTES output for more details.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | object | `{}` |  |
 | apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -69,4 +70,6 @@ port forwarding. See the chart NOTES output for more details.
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tolerations | list | `[]` |  |
+| topologySpreadConstraints | list | `[]` |  |
 ----------------------------------------------
