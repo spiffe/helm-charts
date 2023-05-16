@@ -47,6 +47,8 @@ nodeSelector:
 
 affinity: {}
 
+tolerations: []
+
 # -- Provide minimal resources to prevent accidental crashes due to resource exhaustion
 # resources:
 #   requests:

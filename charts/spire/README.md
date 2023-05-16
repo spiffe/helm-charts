@@ -386,5 +386,6 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tornjak-frontend.tolerations | list | `[]` |  |
 
 ----------------------------------------------
