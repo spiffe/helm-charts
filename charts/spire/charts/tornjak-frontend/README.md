@@ -71,4 +71,5 @@ port forwarding. See the chart NOTES output for more details.
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
 | tolerations | list | `[]` |  |
+| topologySpreadConstraints | list | `[]` |  |
 ----------------------------------------------
