@@ -52,9 +52,9 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` | The repository within the registry |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` |  |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |

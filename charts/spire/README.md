@@ -291,9 +291,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` | The repository within the registry |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | spire-server.dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |

@@ -224,12 +224,12 @@ controllerManager:
     upgradeHook:
       image:
         # -- The OCI registry to pull the image from
-        registry: cgr.dev
+        registry: docker.io
         # -- The repository within the registry
-        repository: chainguard/kubectl
+        repository: rancher/kubectl
         # -- The image pull policy
         pullPolicy: IfNotPresent
-        version: latest
+        version: ""
 
 telemetry:
   prometheus:
