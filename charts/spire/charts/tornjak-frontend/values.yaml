@@ -45,6 +45,8 @@ service:
 nodeSelector:
   kubernetes.io/arch: amd64
 
+affinity: {}
+
 # -- Provide minimal resources to prevent accidental crashes due to resource exhaustion
 # resources:
 #   requests:
