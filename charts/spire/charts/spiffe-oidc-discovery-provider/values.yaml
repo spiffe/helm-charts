@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- The name of the spire-agent unix socket
 agentSocketName: spire-agent.sock
 
 replicaCount: 1
@@ -9,11 +10,13 @@ replicaCount: 1
 namespaceOverride: ""
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/oidc-discovery-provider
+  # -- The OCI registry to pull the image from
   registry: ghcr.io
+  # -- The repository within the registry
   repository: spiffe/oidc-discovery-provider
+  # -- The image pull policy
   pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion
   version: ""
 
 resources: {}
@@ -34,6 +37,10 @@ service:
   annotations: {}
     # external-dns.alpha.kubernetes.io/hostname: oidc-discovery.example.org
 
+configMap:
+  # -- Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
+  annotations: {}
+
 podSecurityContext: {}
   # fsGroup: 2000
 
@@ -52,8 +59,11 @@ insecureScheme:
 
   nginx:
     image:
+      # -- The OCI registry to pull the image from
       registry: docker.io
+      # -- The repository within the registry
       repository: nginxinc/nginx-unprivileged
+      # -- The image pull policy
       pullPolicy: IfNotPresent
       version: 1.23.2-alpine
       # chainguard image does not support the templates feature
@@ -75,6 +85,7 @@ insecureScheme:
       #   memory: 64Mi
 
 config:
+  # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
   domains:
     - oidc-discovery.example.org
@@ -91,11 +102,11 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
@@ -112,8 +123,9 @@ tolerations: []
 
 affinity: {}
 
+# -- Set the trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
-# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+# -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
 clusterDomain: cluster.local
 
 telemetry:
@@ -128,8 +140,11 @@ telemetry:
 
     nginxExporter:
       image:
+        # -- The OCI registry to pull the image from
         registry: docker.io
+        # -- The repository within the registry
         repository: nginx/nginx-prometheus-exporter
+        # -- The image pull policy
         pullPolicy: IfNotPresent
         version: "0.11.0"
 

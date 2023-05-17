@@ -1,0 +1,71 @@
+# Default values for Tornjak UI (Frontend).
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  registry: ghcr.io
+  repository: spiffe/tornjak-frontend
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  version: ""
+
+imagePullSecrets: []
+nameOverride: ""
+namespaceOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+labels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3000
+  annotations: {}
+
+# -- Select specific nodes to run on (currently only amd64 is supported by Tornjak)
+nodeSelector:
+  kubernetes.io/arch: amd64
+
+affinity: {}
+
+tolerations: []
+
+topologySpreadConstraints: []
+
+# -- Provide minimal resources to prevent accidental crashes due to resource exhaustion
+# resources:
+#   requests:
+#     cpu: 50m
+#     memory: 128Mi
+#   limits:
+#     cpu: 100m
+#     memory: 512Mi
+
+# -- URL of the Tornjak APIs (backend)
+# Since Tornjak Frontend runs in the browser, this URL must be accessible from
+# the machine running a browser.
+apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
+
+# SPIRE Healthchecker indicator
+spireHealthCheck:
+  # -- Enables the SPIRE Healthchecker indicator
+  enabled: true
