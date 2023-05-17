@@ -45,6 +45,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |
@@ -54,7 +55,8 @@ A Helm chart to install the SPIRE server.
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `"latest"` | Overrides the image tag |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `""` | Overrides the image tag |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -76,6 +78,7 @@ A Helm chart to install the SPIRE server.
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |

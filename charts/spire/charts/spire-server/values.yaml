@@ -12,6 +12,8 @@ image:
   repository: spiffe/spire-server
   # -- The image pull policy
   pullPolicy: IfNotPresent
+  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+  version: ""
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
@@ -169,6 +171,8 @@ controllerManager:
     repository: spiffe/spire-controller-manager
     # -- The image pull policy
     pullPolicy: IfNotPresent
+    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    version: ""
     # -- Overrides the image tag
     tag: "0.2.2"
 
@@ -229,8 +233,10 @@ controllerManager:
         repository: rancher/kubectl
         # -- The image pull policy
         pullPolicy: IfNotPresent
+        # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+        version: ""
         # -- Overrides the image tag
-        tag: latest
+        tag: ""
 
 telemetry:
   prometheus:

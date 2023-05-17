@@ -40,13 +40,15 @@
 
 {{- define "spire-lib.image" -}}
 {{- $registry := include "spire-lib.registry" . }}
-{{- if eq (substr 0 7 .image.tag) "sha256:" -}}
-{{- printf "%s/%s@%s" $registry .image.repository .image.tag -}}
-{{- else if .appVersion -}}
-{{- printf "%s/%s:%s" $registry .image.repository (default .appVersion .image.tag) -}}
-{{- else if .image.tag -}}
-{{- printf "%s/%s:%s" $registry .image.repository .image.tag -}}
-{{- else -}}
-{{- printf "%s/%s" $registry .image.repository -}}
-{{- end -}}
+{{- $repo := .image.repository }}
+{{- $tag := (default .image.tag .image.version) | toString }}
+{{- if eq (substr 0 7 $tag) "sha256:" }}
+{{- printf "%s/%s@%s" $registry $repo $tag }}
+{{- else if .appVersion }}
+{{- printf "%s/%s:%s" $registry $repo (default .appVersion $tag) }}
+{{- else if $tag }}
+{{- printf "%s/%s:%s" $registry $repo $tag }}
+{{- else }}
+{{- printf "%s/%s" $registry $repo }}
+{{- end }}
 {{- end }}

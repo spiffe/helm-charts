@@ -130,6 +130,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` | The repository within the registry |
 | spiffe-csi-driver.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
@@ -138,6 +139,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` | The OCI registry to pull the image from |
 | spiffe-csi-driver.nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` | The repository within the registry |
 | spiffe-csi-driver.nodeDriverRegistrar.image.tag | string | `"v2.6.2"` | Overrides the image tag |
+| spiffe-csi-driver.nodeDriverRegistrar.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.nodeDriverRegistrar.resources | object | `{}` |  |
 | spiffe-csi-driver.nodeSelector | object | `{}` |  |
 | spiffe-csi-driver.pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
@@ -171,6 +173,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.image.repository | string | `"spiffe/oidc-discovery-provider"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| spiffe-oidc-discovery-provider.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.imagePullSecrets | list | `[]` |  |
 | spiffe-oidc-discovery-provider.ingress.annotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.ingress.className | string | `""` |  |
@@ -184,6 +187,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.23.2-alpine"` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
@@ -204,6 +208,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.tag | string | `"0.11.0"` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
@@ -223,6 +228,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-agent.image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
 | spire-agent.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
 | spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -252,7 +258,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
-| spire-agent.waitForIt.image.tag | string | `"latest"` | Overrides the image tag |
+| spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.waitForIt.resources | object | `{}` |  |
 | spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
@@ -284,6 +291,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
@@ -293,7 +301,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `"latest"` | Overrides the image tag |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `""` | Overrides the image tag |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | spire-server.dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -315,6 +324,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
 | spire-server.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| spire-server.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.imagePullSecrets | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |

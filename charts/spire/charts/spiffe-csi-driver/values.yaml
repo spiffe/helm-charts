@@ -8,6 +8,8 @@ image:
   repository: spiffe/spiffe-csi-driver
   # -- The image pull policy
   pullPolicy: IfNotPresent
+  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+  version: ""
   # -- Overrides the image tag whose default is the chart appVersion
   tag: ""
 resources: {}
@@ -63,6 +65,8 @@ nodeDriverRegistrar:
     repository: sig-storage/csi-node-driver-registrar
     # -- The image pull policy
     pullPolicy: IfNotPresent
+    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    version: ""
     # -- Overrides the image tag
     tag: v2.6.2
   resources: {}
