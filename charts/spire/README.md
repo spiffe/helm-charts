@@ -357,8 +357,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
-| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","version":"v1.2.0"}` | Tornjak API image |
-| spire-server.tornjak.image.version | string | `"v1.2.0"` | Overrides the image tag whose default is the chart appVersion. |
+| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
+| spire-server.tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
 | spire-server.tornjak.service.port | int | `10000` |  |
@@ -381,7 +382,8 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.image.pullPolicy | string | `"IfNotPresent"` |  |
 | tornjak-frontend.image.registry | string | `"ghcr.io"` |  |
 | tornjak-frontend.image.repository | string | `"spiffe/tornjak-frontend"` |  |
-| tornjak-frontend.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak-frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak-frontend.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak-frontend.imagePullSecrets | list | `[]` |  |
 | tornjak-frontend.labels | object | `{}` |  |
 | tornjak-frontend.nameOverride | string | `""` |  |
