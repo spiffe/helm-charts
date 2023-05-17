@@ -54,6 +54,7 @@
 {{/* Takes in a dictionary with keys:
  * ingress - the standardized ingress object
  * name - The standardized object name
+ * namespace - The namespace to create the object in
  * svcName - The service to route to
  * port - which port on the service to use
  * labels - lables to add to the ingress
@@ -66,6 +67,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .name }}
+  namespace: {{ .namespace }}
   labels:
     {{ .labels | nindent 4 }}
   {{- with .ingress.annotations }}

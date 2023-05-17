@@ -1,6 +1,7 @@
 {{- if .Values.federation.enabled }}
 {{- $svcName := include "spire-server.fullname" . }}
 {{- $fullName := printf "%s-federation" $svcName }}
+{{- $namespace := include "spire-server.namespace" . }}
 {{- $labels := include "spire-server.labels" . }}
-{{ include "spire-lib.ingress-template" (dict "ingress" .Values.federation.ingress "name" $fullName "svcName" $svcName "port" .Values.federation.bundleEndpoint.port "labels" $labels) }}
+{{ include "spire-lib.ingress-template" (dict "ingress" .Values.federation.ingress "name" $fullName "namespace" $namespace "svcName" $svcName "port" .Values.federation.bundleEndpoint.port "labels" $labels) }}
 {{- end }}

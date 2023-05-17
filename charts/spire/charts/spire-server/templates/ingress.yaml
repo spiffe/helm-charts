@@ -1,3 +1,4 @@
 {{- $fullName := include "spire-server.fullname" . -}}
+{{- $namespace := include "spire-server.namespace" . }}
 {{- $labels := include "spire-server.labels" . }}
-{{ include "spire-lib.ingress-template" (dict "ingress" .Values.ingress "name" $fullName "svcName" $fullName "port" .Values.service.port "labels" $labels) }}
+{{ include "spire-lib.ingress-template" (dict "ingress" .Values.ingress "name" $fullName "namespace" $namespace "svcName" $fullName "port" .Values.service.port "labels" $labels) }}
