@@ -162,8 +162,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
-| spiffe-oidc-discovery-provider.config.domains[0] | string | `"localhost"` |  |
-| spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.config.domains[0] | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.config.domains[1] | string | `"localhost"` |  |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
@@ -209,6 +209,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
+| spiffe-oidc-discovery-provider.tests.hostAliases | list | `[]` |  |
+| spiffe-oidc-discovery-provider.tests.tls.customCA | string | `""` |  |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
