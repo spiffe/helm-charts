@@ -1,5 +1,6 @@
 spire-server:
   federation:
+    enabled: true
     ingress:
       enabled: true
       annotations:
