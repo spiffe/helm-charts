@@ -38,6 +38,10 @@ jobs:
       - name: Setup crane
         uses: imjasonh/setup-crane@v0.1
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
       - name: Update image tags
         run: |
           go install github.com/mikefarah/yq/v4@latest
@@ -47,6 +51,7 @@ jobs:
           echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
           sudo apt-get install trivy
+          sudo pip install ruamel.yaml dict_deep
 
           ./.github/scripts/update-tags.sh
           git diff

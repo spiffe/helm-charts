@@ -25,6 +25,16 @@ if ! command -v trivy &> /dev/null; then
   exit 1
 fi
 
+if ! command -v python3 -c 'import ruamel.yaml' &> /dev/null; then
+  echo Please install python3 with the ruamel.yaml module
+  exit 1
+fi
+
+if ! command -v python3 -c 'import dict_deep' &> /dev/null; then
+  echo Please install python3 with the dict_deep module
+  exit 1
+fi
+
 jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
   jq -r ".\"${CHART}\" | keys[]" "$IMAGEJSON" | while read -r IDX; do
     QUERY=$(jq -r ".\"${CHART}\"[${IDX}].query" "$IMAGEJSON")
@@ -45,7 +55,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
 
     if [ "${VERSION}" != "${LATEST_VERSION}" ]; then
       echo "New image version found: ${REGISTRY}/${REPOSITORY}:${LATEST_VERSION}"
-      yq e "(.${QUERY}).version |= \"${LATEST_VERSION}\"" "${VALUES}" > /tmp/$$
+      python3 -c "import sys; from dict_deep import deep_set; import ruamel.yaml; y = ruamel.yaml.YAML(); y.indent(mapping=2, sequence=4, offset=2); y.preserve_quotes = True; d = y.load(open('${VALUES}')); deep_set(d, '${QUERY}.version', '${LATEST_VERSION}'); y.dump(d, sys.stdout);" > /tmp/$$
       mv /tmp/$$ "${VALUES}"
     fi
   done
