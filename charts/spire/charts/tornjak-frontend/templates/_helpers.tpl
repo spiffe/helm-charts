@@ -41,14 +41,6 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "tornjak-frontend.cluster-domain" -}}
-{{- if ne (len (dig "k8s" "clusterDomain" "" .Values.global)) 0 }}
-{{- .Values.global.k8s.clusterDomain }}
-{{- else }}
-{{- .Values.clusterDomain }}
-{{- end }}
-{{- end }}
-
 {{/*
 Common labels
 */}}
