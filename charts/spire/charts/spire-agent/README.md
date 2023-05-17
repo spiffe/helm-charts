@@ -25,7 +25,7 @@ A Helm chart to install the SPIRE agent.
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
-| image.tag | string | `""` |  |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -55,7 +55,7 @@ A Helm chart to install the SPIRE agent.
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
-| waitForIt.image.tag | string | `"latest-20230113"` |  |
+| waitForIt.image.tag | string | `"latest"` | Overrides the image tag |
 | waitForIt.resources | object | `{}` |  |
 | workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |

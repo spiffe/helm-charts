@@ -65,6 +65,7 @@ insecureScheme:
       repository: nginxinc/nginx-unprivileged
       # -- The image pull policy
       pullPolicy: IfNotPresent
+      # -- Overrides the image tag
       tag: 1.23.2-alpine
       # chainguard image does not support the templates feature
       # https://github.com/chainguard-images/nginx/issues/43
@@ -146,6 +147,7 @@ telemetry:
         repository: nginx/nginx-prometheus-exporter
         # -- The image pull policy
         pullPolicy: IfNotPresent
+        # -- Overrides the image tag
         tag: "0.11.0"
 
       resources: {}

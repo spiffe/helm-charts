@@ -169,7 +169,7 @@ controllerManager:
     repository: spiffe/spire-controller-manager
     # -- The image pull policy
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # -- Overrides the image tag
     tag: "0.2.2"
 
   resources: {}
@@ -229,6 +229,7 @@ controllerManager:
         repository: rancher/kubectl
         # -- The image pull policy
         pullPolicy: IfNotPresent
+        # -- Overrides the image tag
         tag: latest
 
 telemetry:

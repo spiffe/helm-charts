@@ -63,6 +63,7 @@ nodeDriverRegistrar:
     repository: sig-storage/csi-node-driver-registrar
     # -- The image pull policy
     pullPolicy: IfNotPresent
+    # -- Overrides the image tag
     tag: v2.6.2
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious

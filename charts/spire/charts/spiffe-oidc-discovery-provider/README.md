@@ -47,7 +47,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | insecureScheme.nginx.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` | The repository within the registry |
-| insecureScheme.nginx.image.tag | string | `"1.23.2-alpine"` |  |
+| insecureScheme.nginx.image.tag | string | `"1.23.2-alpine"` | Overrides the image tag |
 | insecureScheme.nginx.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
@@ -67,7 +67,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` | The repository within the registry |
-| telemetry.prometheus.nginxExporter.image.tag | string | `"0.11.0"` |  |
+| telemetry.prometheus.nginxExporter.image.tag | string | `"0.11.0"` | Overrides the image tag |
 | telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
 | telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
