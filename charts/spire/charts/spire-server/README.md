@@ -109,7 +109,7 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tests.bash.image.registry | string | `"cgr.dev"` |  |
 | tests.bash.image.repository | string | `"chainguard/bash"` |  |
-| tests.bash.image.version | string | `"latest"` |  |
+| tests.bash.image.version | string | `"latest-20230517"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
