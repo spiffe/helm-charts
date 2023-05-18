@@ -371,8 +371,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
-| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
-| spire-server.tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.1","version":""}` | Tornjak API image |
+| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
