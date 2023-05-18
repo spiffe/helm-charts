@@ -165,8 +165,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
-| spiffe-oidc-discovery-provider.config.domains[0] | string | `"localhost"` |  |
-| spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.config.domains | list | `["localhost"]` | Override the domains to use. Defaults to jwtIssuer and localhost. |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
@@ -190,6 +189,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.23.2-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.nodeSelector | object | `{}` |  |
