@@ -49,4 +49,4 @@ spiffe-oidc-discovery-provider:
 
 tornjak-frontend:
   # -- Enables deployment of Tornjak frontend/UI (Not for production)
-  enabled: false # (Not for production)
+  enabled: false
