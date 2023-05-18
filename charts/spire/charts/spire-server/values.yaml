@@ -314,7 +314,7 @@ tornjak:
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: "v1.2.0"
+    tag: "v1.2.1"
   service:
     type: ClusterIP
     port: 10000
