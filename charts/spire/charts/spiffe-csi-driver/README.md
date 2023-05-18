@@ -28,7 +28,7 @@ A Helm chart to install the SPIFFE CSI driver.
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` | The OCI registry to pull the image from |
 | nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` | The repository within the registry |
-| nodeDriverRegistrar.image.tag | string | `"v2.6.2"` | Overrides the image tag |
+| nodeDriverRegistrar.image.tag | string | `"v2.8.0"` | Overrides the image tag |
 | nodeDriverRegistrar.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | nodeDriverRegistrar.resources | object | `{}` |  |
 | nodeSelector | object | `{}` |  |

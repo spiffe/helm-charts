@@ -70,7 +70,7 @@ insecureScheme:
       # -- This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
       # -- Overrides the image tag
-      tag: 1.23.2-alpine
+      tag: 1.24.0-alpine
       # chainguard image does not support the templates feature
       # https://github.com/chainguard-images/nginx/issues/43
       # registry: cgr.dev

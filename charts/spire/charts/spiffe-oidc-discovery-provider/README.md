@@ -48,7 +48,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | insecureScheme.nginx.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` | The repository within the registry |
-| insecureScheme.nginx.image.tag | string | `"1.23.2-alpine"` | Overrides the image tag |
+| insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | insecureScheme.nginx.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
