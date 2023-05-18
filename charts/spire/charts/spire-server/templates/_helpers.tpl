@@ -105,3 +105,76 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.kubectl-image" }}
+{{- $root := deepCopy . }}
+{{- $tag := (default $root.image.tag $root.image.version) | toString }}
+{{- if eq (len $tag) 0 }}
+{{- $_ := set $root.image "tag" $root.KubeVersion }}
+{{- end }}
+{{- include "spire-lib.image" $root }}
+{{- end }}
+
+{{- define "spire-server.config-mysql-query" }}
+{{- $lst := list }}
+{{- range . }}
+{{- range $key, $value := . }}
+{{- $eValue := toString $value }}
+{{- $entry := printf "%s=%s" (urlquery $key) (urlquery $eValue) }}
+{{- $lst = append $lst $entry }}
+{{- end }}
+{{- end }}
+{{- if gt (len $lst) 0 }}
+{{- printf "?%s" (join "&" $lst) }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.config-postgresql-options" }}
+{{- $lst := list }}
+{{- range . }}
+{{- range $key, $value := . }}
+{{- $eValue := toString $value }}
+{{- $entry := printf "%s=%s" $key $eValue }}
+{{- $lst = append $lst $entry }}
+{{- end }}
+{{- end }}
+{{- if gt (len $lst) 0 }}
+{{- printf " %s" (join " " $lst) }}
+{{- end }}
+{{- end }}
+
+{{- define "spire-server.datastore-config" }}
+{{- $config := deepCopy .Values.dataStore.sql.plugin_data }}
+{{- if eq .Values.dataStore.sql.databaseType "sqlite3" }}
+  {{- $_ := set $config "database_type" "sqlite3" }}
+  {{- $_ := set $config "connection_string" "/run/spire/data/datastore.sqlite3" }}
+{{- else if eq .Values.dataStore.sql.databaseType "mysql" }}
+  {{- $_ := set $config "database_type" "mysql" }}
+  {{- $port := int .Values.dataStore.sql.port | default 3306 }}
+  {{- $query := include "spire-server.config-mysql-query" .Values.dataStore.sql.options }}
+  {{- $_ := set $config "connection_string" (printf "%s:${DBPW}@tcp(%s:%d)/%s%s" .Values.dataStore.sql.username .Values.dataStore.sql.host $port .Values.dataStore.sql.databaseName $query) }}
+{{- else if eq .Values.dataStore.sql.databaseType "postgres" }}
+  {{- $_ := set $config "database_type" "postgres" }}
+  {{- $port := int .Values.dataStore.sql.port | default 5432 }}
+  {{- $options:= include "spire-server.config-postgresql-options" .Values.dataStore.sql.options }}
+  {{- $_ := set $config "connection_string" (printf "dbname=%s user=%s password=${DBPW} host=%s port=%d%s" .Values.dataStore.sql.databaseName .Values.dataStore.sql.username .Values.dataStore.sql.host $port $options) }}
+{{- else }}
+  {{- fail "Unsupported database type" }}
+{{- end }}
+{{- $config | toYaml }}
+{{- end }}
+
+{{/*
+Tornjak specific section
+*/}}
+
+{{- define "spire-tornjak.fullname" -}}
+{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
+{{- end }}
+
+{{- define "spire-tornjak.config" -}}
+{{ include "spire-tornjak.fullname" . }}-config
+{{- end }}
+
+{{- define "spire-tornjak.backend" -}}
+{{ include "spire-tornjak.fullname" . }}-backend
+{{- end }}

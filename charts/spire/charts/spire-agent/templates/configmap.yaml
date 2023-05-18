@@ -5,7 +5,12 @@ agent:
   server_address: {{ include "spire-agent.server-address" . | trim | quote }}
   server_port: {{ .Values.server.port | quote }}
   socket_path: {{ include "spire-agent.socket-path" . | quote }}
+  {{- if ne (len .Values.trustBundleURL) 0 }}
+  trust_bundle_url: {{ .Values.trustBundleURL | quote }}
+  trust_bundle_format: {{ .Values.trustBundleFormat | quote }}
+  {{- else }}
   trust_bundle_path: "/run/spire/bundle/bundle.crt"
+  {{- end }}
   trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
 
 plugins:
@@ -50,6 +55,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire-agent.fullname" . }}
   namespace: {{ include "spire-agent.namespace" . }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   agent.conf: |
     {{- include "spire-agent.yaml-config" . | fromYaml | toPrettyJson | nindent 4 }}

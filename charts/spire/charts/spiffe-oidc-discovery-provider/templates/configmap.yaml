@@ -38,6 +38,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spiffe-oidc-discovery-provider.fullname" . }}
   namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   oidc-discovery-provider.conf: |
     {{- include "spiffe-oidc-discovery-provider.yaml-config" (dict "oidcSocket" $oidcSocket "root" .) | fromYaml | toPrettyJson | nindent 4 }}
