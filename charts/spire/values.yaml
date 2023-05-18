@@ -26,21 +26,27 @@ global:
 
 # subcharts
 spire-server:
+  # -- Enables deployment of SPIRE Server
   enabled: true
   nameOverride: server
 
   controllerManager:
+    # -- Enables deployment of Controller Manager
     enabled: true
 
 spire-agent:
+  # -- Enables deployment of SPIRE Agent(s)
   enabled: true
   nameOverride: agent
 
 spiffe-csi-driver:
+  # -- Enables deployment of CSI driver
   enabled: true
 
 spiffe-oidc-discovery-provider:
+  # -- Enables deployment of OIDC discovery provider
   enabled: false
 
 tornjak-frontend:
+  # -- Enables deployment of Tornjak frontend/UI (Not for production)
   enabled: false

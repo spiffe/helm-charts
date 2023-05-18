@@ -115,14 +115,14 @@ Kubernetes: `>=1.21.0-0`
 | global.spire.clusterName | string | `"example-cluster"` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
 | global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
-| spiffe-csi-driver.enabled | bool | `true` |  |
-| spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
-| spire-agent.enabled | bool | `true` |  |
+| spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
+| spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
+| spire-agent.enabled | bool | `true` | Enables deployment of SPIRE Agent(s) |
 | spire-agent.nameOverride | string | `"agent"` |  |
-| spire-server.controllerManager.enabled | bool | `true` |  |
-| spire-server.enabled | bool | `true` |  |
+| spire-server.controllerManager.enabled | bool | `true` | Enables deployment of Controller Manager |
+| spire-server.enabled | bool | `true` | Enables deployment of SPIRE Server |
 | spire-server.nameOverride | string | `"server"` |  |
-| tornjak-frontend.enabled | bool | `false` |  |
+| tornjak-frontend.enabled | bool | `false` | Enables deployment of Tornjak frontend/UI (Not for production) |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
@@ -356,7 +356,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
-| spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
+| spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
 | spire-server.tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
