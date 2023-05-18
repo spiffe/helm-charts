@@ -9,8 +9,10 @@ image:
   repository: spiffe/spire-agent
   # -- The image pull policy
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
   version: ""
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -86,7 +88,10 @@ waitForIt:
     repository: chainguard/wait-for-it
     # -- The image pull policy
     pullPolicy: IfNotPresent
-    version: latest-20230113
+    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    version: ""
+    # -- Overrides the image tag
+    tag: latest-20230517
   resources: {}
 
 # workloadAttestors determine a workload's properties and then generate a set of selectors associated with it.

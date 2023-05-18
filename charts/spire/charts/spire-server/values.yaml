@@ -12,8 +12,10 @@ image:
   repository: spiffe/spire-server
   # -- The image pull policy
   pullPolicy: IfNotPresent
-  # -- Overrides the image tag whose default is the chart appVersion.
+  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
   version: ""
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -169,8 +171,10 @@ controllerManager:
     repository: spiffe/spire-controller-manager
     # -- The image pull policy
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    version: "0.2.2"
+    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    version: ""
+    # -- Overrides the image tag
+    tag: "0.2.2"
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -229,7 +233,10 @@ controllerManager:
         repository: rancher/kubectl
         # -- The image pull policy
         pullPolicy: IfNotPresent
+        # -- This value is deprecated in favor of tag. (Will be removed in a future release)
         version: ""
+        # -- Overrides the image tag
+        tag: ""
 
 telemetry:
   prometheus:
@@ -266,8 +273,10 @@ tornjak:
     registry: ghcr.io
     repository: spiffe/tornjak-backend
     pullPolicy: IfNotPresent
-    # -- Overrides the image tag whose default is the chart appVersion.
-    version: "v1.2.0"
+    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    version: ""
+    # -- Overrides the image tag
+    tag: "v1.2.0"
   service:
     type: ClusterIP
     port: 10000
