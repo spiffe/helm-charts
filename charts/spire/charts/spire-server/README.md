@@ -44,7 +44,8 @@ A Helm chart to install the SPIRE server.
 | controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
-| controllerManager.image.version | string | `"0.2.2"` |  |
+| controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |
@@ -54,7 +55,8 @@ A Helm chart to install the SPIRE server.
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` |  |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `""` | Overrides the image tag |
+| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -75,7 +77,8 @@ A Helm chart to install the SPIRE server.
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
-| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
@@ -107,9 +110,10 @@ A Helm chart to install the SPIRE server.
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
-| tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) |
-| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","version":"v1.2.0"}` | Tornjak API image |
-| tornjak.image.version | string | `"v1.2.0"` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
+| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
+| tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
 | tornjak.service.port | int | `10000` |  |

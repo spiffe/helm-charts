@@ -24,7 +24,7 @@ A Helm chart to deploy Tornjak frontend
 ## Prerequisites
 
 This chart requires access to Tornjak Backend (`tornjakFrontend.apiServerURL`).
-This URL needs to be reachable from your webbrowser and can therefore not be a cluster internal URL.
+This URL needs to be reachable from your web browser and can therefore not be a cluster internal URL.
 
 Obtain the URL for Tornjak APIs. If deployed in the same cluster, locally,
 Tornjak APIs are typically available at `http://localhost:10000`.
@@ -55,7 +55,8 @@ port forwarding. See the chart NOTES output for more details.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"spiffe/tornjak-frontend"` |  |
-| image.version | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
 | labels | object | `{}` |  |
 | nameOverride | string | `""` |  |

@@ -6,8 +6,10 @@ image:
   registry: ghcr.io
   repository: spiffe/tornjak-frontend
   pullPolicy: IfNotPresent
-  # -- Overrides the image tag whose default is the chart appVersion.
+  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
   version: ""
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
