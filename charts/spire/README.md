@@ -404,6 +404,9 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tornjak-frontend.tests.bash.image.registry | string | `"cgr.dev"` |  |
+| tornjak-frontend.tests.bash.image.repository | string | `"chainguard/bash"` |  |
+| tornjak-frontend.tests.bash.image.version | string | `"latest-20230517"` |  |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
 

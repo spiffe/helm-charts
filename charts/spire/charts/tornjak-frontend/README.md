@@ -71,6 +71,9 @@ port forwarding. See the chart NOTES output for more details.
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tests.bash.image.registry | string | `"cgr.dev"` |  |
+| tests.bash.image.repository | string | `"chainguard/bash"` |  |
+| tests.bash.image.version | string | `"latest-20230517"` |  |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 ----------------------------------------------

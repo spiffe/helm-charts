@@ -71,3 +71,10 @@ apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
 spireHealthCheck:
   # -- Enables the SPIRE Healthchecker indicator
   enabled: true
+
+tests:
+  bash:
+    image:
+      registry: cgr.dev
+      repository: chainguard/bash
+      version: latest-20230517

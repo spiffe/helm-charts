@@ -13,7 +13,7 @@ spec:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: curl-tornjak-backend
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
       args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.service.port }}']
       securityContext:
