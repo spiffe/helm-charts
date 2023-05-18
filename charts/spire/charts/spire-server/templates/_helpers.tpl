@@ -107,8 +107,9 @@ Create the name of the service account to use
 
 {{- define "spire-server.kubectl-image" }}
 {{- $root := deepCopy . }}
-{{- if eq (len $root.image.version) 0 }}
-{{- $_ := set $root.image "version" $root.KubeVersion }}
+{{- $tag := (default $root.image.tag $root.image.version) | toString }}
+{{- if eq (len $tag) 0 }}
+{{- $_ := set $root.image "tag" $root.KubeVersion }}
 {{- end }}
 {{- include "spire-lib.image" $root }}
 {{- end }}

@@ -40,15 +40,17 @@
 
 {{- define "spire-lib.image" -}}
 {{- $registry := include "spire-lib.registry" . }}
-{{- if eq (substr 0 7 .image.version) "sha256:" -}}
-{{- printf "%s/%s@%s" $registry .image.repository .image.version -}}
-{{- else if .appVersion -}}
-{{- printf "%s/%s:%s" $registry .image.repository (default .appVersion .image.version) -}}
-{{- else if .image.version -}}
-{{- printf "%s/%s:%s" $registry .image.repository .image.version -}}
-{{- else -}}
-{{- printf "%s/%s" $registry .image.repository -}}
-{{- end -}}
+{{- $repo := .image.repository }}
+{{- $tag := (default .image.tag .image.version) | toString }}
+{{- if eq (substr 0 7 $tag) "sha256:" }}
+{{- printf "%s/%s@%s" $registry $repo $tag }}
+{{- else if .appVersion }}
+{{- printf "%s/%s:%s" $registry $repo (default .appVersion $tag) }}
+{{- else if $tag }}
+{{- printf "%s/%s:%s" $registry $repo $tag }}
+{{- else }}
+{{- printf "%s/%s" $registry $repo }}
+{{- end }}
 {{- end }}
 
 {{/* Takes in a dictionary with keys:
