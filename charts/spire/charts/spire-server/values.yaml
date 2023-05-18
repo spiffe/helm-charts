@@ -267,7 +267,7 @@ nodeAttestor:
 # tornjak - Tornjak specific configuration
 tornjak:
   # -- Deploys Tornjak API (backend) (Not for production)
-  enabled: false # (Not for production)
+  enabled: false
   # -- Tornjak API image
   image:
     registry: ghcr.io
