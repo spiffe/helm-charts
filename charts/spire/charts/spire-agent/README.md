@@ -14,10 +14,11 @@ A Helm chart to install the SPIRE agent.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| bash.image.pullPolicy | string | `"Always"` |  |
-| bash.image.registry | string | `"cgr.dev"` |  |
-| bash.image.repository | string | `"chainguard/bash"` |  |
-| bash.image.version | string | `"latest"` |  |
+| bash.image.pullPolicy | string | `"Always"` | The image pull policy |
+| bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |

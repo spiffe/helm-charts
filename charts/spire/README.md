@@ -216,12 +216,18 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spire-agent.bash.image.pullPolicy | string | `"Always"` | The image pull policy |
+| spire-agent.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spire-agent.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| spire-agent.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.clusterName | string | `"example-cluster"` |  |
 | spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
 | spire-agent.extraContainers | list | `[]` |  |
 | spire-agent.extraVolumeMounts | list | `[]` |  |
 | spire-agent.extraVolumes | list | `[]` |  |
+| spire-agent.fsGroupFix.resources | object | `{}` |  |
 | spire-agent.fullnameOverride | string | `""` |  |
 | spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
 | spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |

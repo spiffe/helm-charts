@@ -96,10 +96,16 @@ waitForIt:
 
 bash:
   image:
+    # -- The OCI registry to pull the image from
     registry: cgr.dev
+    # -- The repository within the registry
     repository: chainguard/bash
+    # -- The image pull policy
     pullPolicy: Always
-    version: latest
+    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    version: ""
+    # -- Overrides the image tag
+    tag: latest-20230517
 
 fsGroupFix:
   resources: {}
