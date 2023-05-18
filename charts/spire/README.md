@@ -214,6 +214,9 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
+| spiffe-oidc-discovery-provider.tests.bash.image.registry | string | `"cgr.dev"` |  |
+| spiffe-oidc-discovery-provider.tests.bash.image.repository | string | `"chainguard/bash"` |  |
+| spiffe-oidc-discovery-provider.tests.bash.image.version | string | `"latest"` |  |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
@@ -353,6 +356,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spire-server.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
+| spire-server.tests.bash.image.registry | string | `"cgr.dev"` |  |
+| spire-server.tests.bash.image.repository | string | `"chainguard/bash"` |  |
+| spire-server.tests.bash.image.version | string | `"latest-20230517"` |  |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
