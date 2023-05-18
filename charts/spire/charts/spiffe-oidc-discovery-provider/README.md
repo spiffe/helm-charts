@@ -15,7 +15,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| agentSocketName | string | `"spire-agent.sock"` |  |
+| agentSocketName | string | `"spire-agent.sock"` | The name of the spire-agent unix socket |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `5` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -28,12 +28,14 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.acme.tosAccepted | bool | `false` |  |
 | config.domains[0] | string | `"localhost"` |  |
 | config.domains[1] | string | `"oidc-discovery.example.org"` |  |
-| config.logLevel | string | `"info"` |  |
+| config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
+| configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"spiffe/oidc-discovery-provider"` |  |
-| image.version | string | `""` |  |
+| image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| image.repository | string | `"spiffe/oidc-discovery-provider"` | The repository within the registry |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -43,10 +45,11 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | insecureScheme.enabled | bool | `false` |  |
-| insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` |  |
-| insecureScheme.nginx.image.registry | string | `"docker.io"` |  |
-| insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` |  |
-| insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
+| insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| insecureScheme.nginx.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` | The repository within the registry |
+| insecureScheme.nginx.image.tag | string | `"1.23.2-alpine"` | Overrides the image tag |
+| insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | insecureScheme.nginx.resources | object | `{}` |  |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
@@ -59,20 +62,21 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | service.annotations | object | `{}` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | telemetry.prometheus.enabled | bool | `false` |  |
-| telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` |  |
-| telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` |  |
-| telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` |  |
-| telemetry.prometheus.nginxExporter.image.version | string | `"0.11.0"` |  |
+| telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` | The repository within the registry |
+| telemetry.prometheus.nginxExporter.image.tag | string | `"0.11.0"` | Overrides the image tag |
+| telemetry.prometheus.nginxExporter.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
 | telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | telemetry.prometheus.port | int | `9988` |  |
 | tolerations | list | `[]` |  |
-| trustDomain | string | `"example.org"` |  |
+| trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 
 ----------------------------------------------
