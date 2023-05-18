@@ -1,5 +1,7 @@
 {{- $configSum := (include (print $.Template.BasePath "/configmap.yaml") . | sha256sum) }}
-{{- $configSum2 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
+{{- $configSum2 := (include (print $.Template.BasePath "/secret.yaml") . | sha256sum) }}
+{{- $configSum3 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
+{{- $configSumTornjak := (include (print $.Template.BasePath "/tornjak-config.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
 apiVersion: apps/v1
 kind: StatefulSet
@@ -10,6 +12,9 @@ metadata:
     {{- include "spire-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
+  {{- if and (eq .Values.dataStore.sql.databaseType "sqlite3") (gt (int .Values.replicaCount) 1) }}
+  {{- fail "When running with sqlite3 database, you can't scale up to more then one instance. 'replicaCount' MUST be 1" }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   serviceName: {{ include "spire-server.fullname" . }}
@@ -21,6 +26,8 @@ spec:
       annotations:
         checksum/config: {{ $configSum }}
         checksum/config2: {{ $configSum2 }}
+        checksum/config3: {{ $configSum3 }}
+        checksum/configTornjak: {{ $configSumTornjak }}
         {{- with .Values.podAnnotations }}
           {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -46,11 +53,19 @@ spec:
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
+            - -expandEnv
             - -config
             - /run/spire/config/server.conf
           env:
           - name: PATH
             value: "/opt/spire/bin:/bin"
+          {{- if ne .Values.dataStore.sql.databaseType "sqlite3" }}
+          - name: DBPW
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-dbpw
+                key: DBPW
+          {{- end }}
           ports:
             - name: grpc
               containerPort: 8081
@@ -91,11 +106,9 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
-            {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
-            {{- end }}
             {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
             - name: upstream-ca
               mountPath: /run/spire/upstream_ca
@@ -149,6 +162,47 @@ spec:
               mountPath: /tmp
               readOnly: false
         {{- end }}
+
+        {{- if eq (.Values.tornjak.enabled | toString) "true" }}
+        - name: tornjak
+          securityContext:
+            {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
+          image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image "global" .Values.global) }}
+          imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
+          startupProbe:
+            httpGet:
+              scheme: HTTP
+              port: 10000
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          args:
+            - -c
+            - /run/spire/config/server.conf
+            - -t
+            - /run/spire/tornjak-config/server.conf
+          ports:
+            - name: tornjak
+              containerPort: 10000
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.tornjak.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ include "spire-tornjak.config" . }}
+              mountPath: /run/spire/tornjak-config
+            - name: spire-server-socket
+              mountPath: /tmp/spire-server/private
+              readOnly: true
+            - name: spire-config
+              mountPath: /run/spire/config
+              readOnly: true
+            - name: spire-data
+              mountPath: /run/spire/data
+              readOnly: false
+        {{- end }}
+
         {{- if gt (len .Values.extraContainers) 0 }}
         {{- toYaml .Values.extraContainers | nindent 8 }}
         {{- end }}
@@ -192,20 +246,26 @@ spec:
           configMap:
             name: {{ include "spire-controller-manager.fullname" . }}
         {{- end }}
+        {{- if eq (.Values.tornjak.enabled | toString) "true" }}
+        {{- if .Values.tornjak.config }}
+        - name: {{ include "spire-tornjak.config" . }}
+          configMap:
+            defaultMode: 420
+            name: {{ include "spire-tornjak.config" . }}
+        {{- end }}
+        {{- end }}
         {{- if gt (len .Values.extraVolumes) 0 }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
-    {{- if eq (.Values.dataStorage.enabled | toString) "true" }}
     - metadata:
         name: spire-data
       spec:
         accessModes:
-          - {{ .Values.dataStorage.accessMode | default "ReadWriteOnce" }}
+          - {{ .Values.persistence.accessMode | default "ReadWriteOnce" }}
         resources:
           requests:
-            storage: {{ .Values.dataStorage.size }}
-        {{- if .Values.dataStorage.storageClass }}
-        storageClassName: {{ .Values.dataStorage.storageClass }}
+            storage: {{ .Values.persistence.size }}
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
-    {{ end }}

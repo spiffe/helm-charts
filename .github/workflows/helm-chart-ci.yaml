@@ -10,6 +10,7 @@ on:
       - '.github/kind/conf/kind-config.yaml'
       - '.github/tests/**/*.yaml'
       - '.github/tests/**/*.sh'
+      - '.github/tests/**/*.json'
       - 'examples/**/*.yaml'
       - 'helm-docs.sh'
 
@@ -92,14 +93,6 @@ jobs:
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed --target-branch ${{ github.base_ref }})
-          if [[ -n "$changed" ]]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Run chart-testing (lint)
         run: |
           ct lint --debug ${{ github.base_ref != 'release' && '--check-version-increment=false' || '' }} \
@@ -113,8 +106,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     needs: [lint-chart]
-
-    if: needs.lint-chart.outputs.changed == 'true'
 
     steps:
       - name: Checkout
@@ -136,8 +127,6 @@ jobs:
     needs:
       - lint-chart
       - build-matrix
-
-    if: needs.lint-chart.outputs.changed == 'true'
 
     strategy:
       fail-fast: false
@@ -179,7 +168,7 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Create kind ${{ matrix.k8s }} cluster
-        uses: helm/kind-action@v1.5.0
+        uses: helm/kind-action@v1.7.0
         # Only build a kind cluster if there are chart changes to test.
         with:
           version: v0.18.0
@@ -209,6 +198,7 @@ jobs:
             "${TEST_DIR}/install.sh"
           else
             ct install --debug \
+              --charts "charts/spire" \
               --namespace "${scenario}" \
               --target-branch ${{ github.base_ref }} \
               --exclude-deprecated \
