@@ -4,3 +4,20 @@ Installed {{ .Chart.Name }}…
 
   kubectl exec -n {{ .Release.Namespace }} {{ include "spire-server.fullname" . }}-0 -c spire-server -- \
     spire-server entry show
+
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
+
+Installed {{ include "spire-tornjak.fullname" . }}…
+
+### WARNING ###
+
+Tornjak runs without authentication and is therefore NOT suitable to run in production environments.
+Only use in test environments!
+
+Access Tornjak:
+
+    kubectl -n {{ include "spire-server.namespace" . }} port-forward service/{{ include "spire-tornjak.backend" . }} {{ .Values.tornjak.service.port }}:10000
+
+Open browser to: http://localhost:{{ .Values.tornjak.service.port }}
+
+{{- end }}

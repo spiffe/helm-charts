@@ -21,6 +21,7 @@ spire-agent:
   enabled: true
   namespaceOverride: spire-system
   serviceAccount:
+    # -- The name of the service account to use.
     name: spire-agent
   server:
     namespaceOverride: spire-server

@@ -33,8 +33,7 @@ plugins:
   DataStore:
     - sql:
         plugin_data:
-          database_type: "sqlite3"
-          connection_string: "/run/spire/data/datastore.sqlite3"
+          {{ include "spire-server.datastore-config" . | nindent 10 }}
 
   {{- with .Values.nodeAttestor.k8sPsat }}
   {{- if eq (.enabled | toString) "true" }}
@@ -105,6 +104,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire-server.fullname" . }}
   namespace: {{ include "spire-server.namespace" . }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   server.conf: |
     {{- include "spire-server.yaml-config" . | fromYaml | toPrettyJson | nindent 4 }}

@@ -2,6 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- The name of the spire-agent unix socket
 agentSocketName: spire-agent.sock
 
 replicaCount: 1
@@ -9,12 +10,16 @@ replicaCount: 1
 namespaceOverride: ""
 
 image:
-  # registry: gcr.io
-  # repository: spiffe-io/oidc-discovery-provider
+  # -- The OCI registry to pull the image from
   registry: ghcr.io
+  # -- The repository within the registry
   repository: spiffe/oidc-discovery-provider
+  # -- The image pull policy
   pullPolicy: IfNotPresent
+  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
   version: ""
+  # -- Overrides the image tag whose default is the chart appVersion
+  tag: ""
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -34,6 +39,10 @@ service:
   annotations: {}
     # external-dns.alpha.kubernetes.io/hostname: oidc-discovery.example.org
 
+configMap:
+  # -- Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
+  annotations: {}
+
 podSecurityContext: {}
   # fsGroup: 2000
 
@@ -52,16 +61,22 @@ insecureScheme:
 
   nginx:
     image:
+      # -- The OCI registry to pull the image from
       registry: docker.io
+      # -- The repository within the registry
       repository: nginxinc/nginx-unprivileged
+      # -- The image pull policy
       pullPolicy: IfNotPresent
-      version: 1.23.2-alpine
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: 1.23.2-alpine
       # chainguard image does not support the templates feature
       # https://github.com/chainguard-images/nginx/issues/43
       # registry: cgr.dev
       # repository: chainguard/nginx
       # pullPolicy: IfNotPresent
-      # version: "1.23.2"
+      # tag: "1.23.2"
     resources: {}
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
@@ -77,6 +92,7 @@ insecureScheme:
 jwtIssuer: oidc-discovery.example.org
 
 config:
+  # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
   # -- Override the domains to use. Defaults to jwtIssuer and localhost.
   domains:
@@ -93,11 +109,11 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
@@ -114,8 +130,9 @@ tolerations: []
 
 affinity: {}
 
+# -- Set the trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
-# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+# -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
 clusterDomain: cluster.local
 
 telemetry:
@@ -130,10 +147,16 @@ telemetry:
 
     nginxExporter:
       image:
+        # -- The OCI registry to pull the image from
         registry: docker.io
+        # -- The repository within the registry
         repository: nginx/nginx-prometheus-exporter
+        # -- The image pull policy
         pullPolicy: IfNotPresent
-        version: "0.11.0"
+        # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+        version: ""
+        # -- Overrides the image tag
+        tag: "0.11.0"
 
       resources: {}
         # We usually recommend not to specify default resources and to leave this as a conscious
