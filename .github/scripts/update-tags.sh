@@ -44,7 +44,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     VALUES="${SCRIPTPATH}/../../charts/spire/charts/${CHART}/values.yaml"
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
-    VERSION=$(yq e ".${QUERY}.version" "$VALUES")
+    VERSION=$(yq e ".${QUERY}.tag" "$VALUES")
     # shellcheck disable=SC2086
     LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort ${SORTFLAGS}| tail -n 1)
 
@@ -55,9 +55,9 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
 
     if [ "${VERSION}" != "${LATEST_VERSION}" ]; then
       echo "New image version found: ${REGISTRY}/${REPOSITORY}:${LATEST_VERSION}"
-      python3 -c "import sys; from dict_deep import deep_set; import ruamel.yaml; y = ruamel.yaml.YAML(); y.indent(mapping=2, sequence=4, offset=2); y.preserve_quotes = True; d = y.load(open('${VALUES}')); deep_set(d, '${QUERY}.version', '${LATEST_VERSION}'); y.dump(d, sys.stdout);" > /tmp/$$
+      python3 -c "import sys; from dict_deep import deep_set; import ruamel.yaml; y = ruamel.yaml.YAML(); y.indent(mapping=2, sequence=4, offset=2); y.preserve_quotes = True; d = y.load(open('${VALUES}')); deep_set(d, '${QUERY}.tag', '${LATEST_VERSION}'); y.dump(d, sys.stdout);" > /tmp/$$
       mv /tmp/$$ "${VALUES}"
     fi
   done
 done
-"./${SCRIPTPATH}/../../helm-docs.sh"
+"${SCRIPTPATH}/../../helm-docs.sh"
