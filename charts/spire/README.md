@@ -214,9 +214,11 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
-| spiffe-oidc-discovery-provider.tests.bash.image.registry | string | `"cgr.dev"` |  |
-| spiffe-oidc-discovery-provider.tests.bash.image.repository | string | `"chainguard/bash"` |  |
-| spiffe-oidc-discovery-provider.tests.bash.image.version | string | `"latest"` |  |
+| spiffe-oidc-discovery-provider.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spiffe-oidc-discovery-provider.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spiffe-oidc-discovery-provider.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| spiffe-oidc-discovery-provider.tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
@@ -356,9 +358,11 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spire-server.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
-| spire-server.tests.bash.image.registry | string | `"cgr.dev"` |  |
-| spire-server.tests.bash.image.repository | string | `"chainguard/bash"` |  |
-| spire-server.tests.bash.image.version | string | `"latest-20230517"` |  |
+| spire-server.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| spire-server.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spire-server.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| spire-server.tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-server.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
@@ -404,9 +408,11 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
-| tornjak-frontend.tests.bash.image.registry | string | `"cgr.dev"` |  |
-| tornjak-frontend.tests.bash.image.repository | string | `"chainguard/bash"` |  |
-| tornjak-frontend.tests.bash.image.version | string | `"latest-20230517"` |  |
+| tornjak-frontend.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| tornjak-frontend.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| tornjak-frontend.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| tornjak-frontend.tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| tornjak-frontend.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
 

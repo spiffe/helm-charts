@@ -107,9 +107,11 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
-| tests.bash.image.registry | string | `"cgr.dev"` |  |
-| tests.bash.image.repository | string | `"chainguard/bash"` |  |
-| tests.bash.image.version | string | `"latest-20230517"` |  |
+| tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
