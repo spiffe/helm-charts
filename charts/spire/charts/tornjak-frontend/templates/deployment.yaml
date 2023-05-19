@@ -39,15 +39,17 @@ spec:
             - name: REACT_APP_SPIRE_HEALTH_CHECK_ENABLE
               value: "{{ .Values.spireHealthCheck.enabled }}"
             {{- end }}
+          {{- if .Values.startupProbe.enabled }}
           startupProbe:
             httpGet:
               scheme: HTTP
               port: {{ .Values.service.port }}
-            failureThreshold: 6
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 5
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            successThreshold: {{ .Values.startupProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+          {{- end }}
           volumeMounts:
             - name: cache
               mountPath: /usr/src/app/node_modules/.cache
