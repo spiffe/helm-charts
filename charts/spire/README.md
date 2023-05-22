@@ -336,6 +336,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| spire-server.persistence.enabled | bool | `true` | Enable persistence used by sqlite3 for spire-server, by the disk KeyStore, and/or by Tornjak. |
 | spire-server.persistence.size | string | `"1Gi"` |  |
 | spire-server.persistence.storageClass | string | `nil` |  |
 | spire-server.podAnnotations | object | `{}` |  |
