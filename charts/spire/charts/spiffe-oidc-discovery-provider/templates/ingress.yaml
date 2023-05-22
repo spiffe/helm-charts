@@ -1,4 +1,16 @@
+{{- if .Values.ingress.enabled -}}
 {{- $fullName := include "spiffe-oidc-discovery-provider.fullname" . }}
-{{- $namespace := include "spiffe-oidc-discovery-provider.namespace" . }}
-{{- $labels := include "spiffe-oidc-discovery-provider.labels" . }}
-{{ include "spire-lib.ingress-template" (dict "ingress" .Values.ingress "name" $fullName "namespace" $namespace "svcName" $fullName "port" .Values.service.port "labels" $labels) }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
+  labels:
+    {{ include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{ include "spire-lib.ingress-template" (dict "ingress" .Values.ingress "svcName" $fullName "port" .Values.service.port) | nindent 2 }}
+{{- end }}

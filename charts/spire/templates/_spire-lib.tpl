@@ -55,55 +55,38 @@
 
 {{/* Takes in a dictionary with keys:
  * ingress - the standardized ingress object
- * name - The standardized object name
- * namespace - The namespace to create the object in
  * svcName - The service to route to
  * port - which port on the service to use
- * labels - lables to add to the ingress
 */}}
 {{ define "spire-lib.ingress-template" }}
 {{- $svcName := .svcName }}
 {{- $port := .port }}
-{{- if .ingress.enabled -}}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{ .name }}
-  namespace: {{ .namespace }}
-  labels:
-    {{ .labels | nindent 4 }}
-  {{- with .ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-spec:
-  {{- with .ingress.className }}
-  ingressClassName: {{ . | quote }}
-  {{- end }}
-  {{- if .ingress.tls }}
-  tls:
-    {{- range .ingress.tls }}
-    - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName | quote }}
-    {{- end }}
-  {{- end }}
-  rules:
-    {{- range .ingress.hosts }}
-    - host: {{ .host | quote }}
-      http:
-        paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
-            backend:
-              service:
-                name: {{ $svcName | quote }}
-                port:
-                  number: {{ $port }}
-          {{- end }}
-    {{- end }}
+{{- with .ingress.className }}
+ingressClassName: {{ . | quote }}
 {{- end }}
+{{- if .ingress.tls }}
+tls:
+  {{- range .ingress.tls }}
+  - hosts:
+      {{- range .hosts }}
+      - {{ . | quote }}
+      {{- end }}
+    secretName: {{ .secretName | quote }}
+  {{- end }}
+{{- end }}
+rules:
+  {{- range .ingress.hosts }}
+  - host: {{ .host | quote }}
+    http:
+      paths:
+        {{- range .paths }}
+        - path: {{ .path }}
+          pathType: {{ .pathType }}
+          backend:
+            service:
+              name: {{ $svcName | quote }}
+              port:
+                number: {{ $port }}
+        {{- end }}
+  {{- end }}
 {{- end }}
