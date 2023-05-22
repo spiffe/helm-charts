@@ -106,9 +106,11 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
+            {{- if eq (.Values.persistence.enabled | toString) "true" }}
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
+            {{- end }}
             {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
             - name: upstream-ca
               mountPath: /run/spire/upstream_ca
@@ -247,6 +249,7 @@ spec:
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
+    {{- if eq (.Values.persistence.enabled | toString) "true" }}
     - metadata:
         name: spire-data
       spec:
@@ -258,3 +261,4 @@ spec:
         {{- if .Values.persistence.storageClass }}
         storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
+    {{ end }}
