@@ -373,8 +373,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
-| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
-| spire-server.tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
+| spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
+| spire-server.tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
+| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
@@ -417,6 +419,12 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tornjak-frontend.startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
+| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold for startupProbe |
+| tornjak-frontend.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
+| tornjak-frontend.startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
+| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold for startupProbe |
+| tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
 
