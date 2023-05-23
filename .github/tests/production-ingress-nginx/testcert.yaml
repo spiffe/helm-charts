@@ -37,7 +37,6 @@ metadata:
 spec:
   dnsNames:
     - oidc-discovery.example.org
-    - spire-server.example.org
     - spire-server-federation.example.org
   secretName: tls-cert
   issuerRef:
