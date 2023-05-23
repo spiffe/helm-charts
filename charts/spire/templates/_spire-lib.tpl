@@ -58,7 +58,7 @@
  * svcName - The service to route to
  * port - which port on the service to use
 */}}
-{{ define "spire-lib.ingress-template" }}
+{{ define "spire-lib.ingress-spec" }}
 {{- $svcName := .svcName }}
 {{- $port := .port }}
 {{- with .ingress.className }}
