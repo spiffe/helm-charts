@@ -217,7 +217,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| spiffe-oidc-discovery-provider.tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.tests.bash.image.tag | string | `"5.2.15"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
@@ -375,7 +375,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-server.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| spire-server.tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-server.tests.bash.image.tag | string | `"5.2.15"` | Overrides the image tag |
 | spire-server.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
@@ -428,7 +428,7 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | tornjak-frontend.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | tornjak-frontend.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| tornjak-frontend.tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| tornjak-frontend.tests.bash.image.tag | string | `"5.2.15"` | Overrides the image tag |
 | tornjak-frontend.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |

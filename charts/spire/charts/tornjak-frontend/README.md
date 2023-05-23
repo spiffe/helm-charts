@@ -74,7 +74,7 @@ port forwarding. See the chart NOTES output for more details.
 | tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| tests.bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| tests.bash.image.tag | string | `"5.2.15"` | Overrides the image tag |
 | tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
