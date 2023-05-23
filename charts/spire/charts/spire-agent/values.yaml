@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# @ignored
+global: {}
+
 image:
   # -- The OCI registry to pull the image from
   registry: ghcr.io
