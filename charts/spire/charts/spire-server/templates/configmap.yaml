@@ -100,7 +100,7 @@ plugins:
   {{- end }}
   {{- end }}
 {{- if gt $upstreamAuthorityUsed 1 }}
-{{- fail "Too many Upstream Authorities used. You can only enable one." }}
+{{- fail "You can only enable a single Upstream Authority." }}
 {{- end }}
 
 health_checks:
