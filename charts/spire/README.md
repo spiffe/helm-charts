@@ -392,6 +392,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
+| spire-server.upstreamAuthority.spire.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
+| spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
 | tornjak-frontend.affinity | object | `{}` |  |
 | tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | tornjak-frontend.fullnameOverride | string | `""` |  |

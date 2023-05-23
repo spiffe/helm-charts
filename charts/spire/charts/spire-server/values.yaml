@@ -175,6 +175,11 @@ upstreamAuthority:
     # -- Specify to use a namespace other then the one the chart is installed into
     namespace: ""
     kube_config_file: ""
+  spire:
+    enabled: false
+    server:
+      address: ""
+      port: 8081
 
 notifier:
   k8sbundle:
