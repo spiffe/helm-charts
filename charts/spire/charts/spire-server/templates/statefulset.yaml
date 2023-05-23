@@ -179,9 +179,9 @@ spec:
             successThreshold: 1
             timeoutSeconds: 5
           args:
-            - -c
+            - --spire-config
             - /run/spire/config/server.conf
-            - -t
+            - --tornjak-config
             - /run/spire/tornjak-config/server.conf
           ports:
             - name: tornjak

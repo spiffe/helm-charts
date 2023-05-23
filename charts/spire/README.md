@@ -330,6 +330,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | spire-server.federation.bundleEndpoint.port | int | `8443` |  |
 | spire-server.federation.enabled | bool | `false` |  |
+| spire-server.federation.ingress.annotations | object | `{}` |  |
+| spire-server.federation.ingress.className | string | `""` |  |
+| spire-server.federation.ingress.enabled | bool | `false` |  |
+| spire-server.federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.federation.ingress.tls | list | `[]` |  |
 | spire-server.fullnameOverride | string | `""` |  |
 | spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
@@ -337,6 +344,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | spire-server.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.imagePullSecrets | list | `[]` |  |
+| spire-server.ingress.annotations | object | `{}` |  |
+| spire-server.ingress.className | string | `""` |  |
+| spire-server.ingress.enabled | bool | `false` |  |
+| spire-server.ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
+| spire-server.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -368,8 +382,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
-| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
-| spire-server.tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
+| spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
+| spire-server.tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
+| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
@@ -413,6 +429,12 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tornjak-frontend.startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
+| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold for startupProbe |
+| tornjak-frontend.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
+| tornjak-frontend.startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
+| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold for startupProbe |
+| tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
 | upstream-spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |

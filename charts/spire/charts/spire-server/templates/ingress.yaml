@@ -1,12 +1,12 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "spiffe-oidc-discovery-provider.fullname" . }}
+{{- $fullName := include "spire-server.fullname" . -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
-  namespace: {{ include "spiffe-oidc-discovery-provider.namespace" . }}
+  namespace: {{ include "spire-server.namespace" . }}
   labels:
-    {{ include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
+    {{ include "spire-server.labels" . | nindent 4}}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
