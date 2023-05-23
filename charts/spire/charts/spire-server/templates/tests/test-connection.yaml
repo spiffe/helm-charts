@@ -37,4 +37,35 @@ spec:
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
+    {{- if .Values.federation.ingress.enabled }}
+    - name: ingress
+      image: cgr.dev/chainguard/bash:latest
+      command: ['curl']
+      {{- if .Values.tests.tls.enabled }}
+      {{- if .Values.tests.tls.customCA }}
+      args: ['--cacert', '/ca/ca.crt', 'https://{{ index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}/']
+      {{- else }}
+      args: ['https://{{ index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}/']
+      {{- end }}
+      {{- if .Values.tests.tls.customCA }}
+      volumeMounts:
+        - name: custom-ca
+          mountPoint: /ca
+      {{- end }}
+      {{- else }}
+      args: ['-s', '{{ index (index (index .Values.federation.ingress.hosts 0) "host") 0 }}/']
+      {{- end }}
+      {{- if ne (len .Values.tests.hostAliases) 0 }}
+      hostAliases:
+        {{- toYaml .Values.tests.hostAliases | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+    {{- end }}
+  {{- if .Values.tests.tls.customCA }}
+  volumes:
+    - name: custom-ca
+      secret:
+        secretName: {{ .Values.tests.tls.customCA }}
+  {{- end }}
   restartPolicy: Never

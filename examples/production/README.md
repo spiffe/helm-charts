@@ -12,14 +12,12 @@ kubectl label namespace "spire-server" pod-security.kubernetes.io/enforce=restri
 helm upgrade --install --namespace spire-server spire charts/spire -f values.yaml
 ```
 
-If your using ingress-nginx and want to expose spire outside the cluster, add the
-following to the end of the helm upgrade example:
+If your using ingress-nginx and want to expose the spiffe oidc discovery provider outside the
+cluster, add the following to the end of the helm upgrade example:
 
 ```shell
--f values-export-ingress-nginx.yaml
+-f values-export-spiffe-oidc-discovery-provider-ingress-nginx.yaml
 ```
-
-See [values.yaml](./values.yaml) for more details on the chart configurations to achieve this setup.
 
 If you want to expose your spire-server outside of Kubernetes and are using ingress-nginx, add following values file when running `helm template/install/upgrade`.
 
@@ -42,3 +40,6 @@ If you chose profile https_spiffe, use:
 ```shell
 -f values-expose-federation-https-spiffe-ingress-nginx.yaml
 ```
+
+See [values.yaml](./values.yaml) for more details on the chart configurations to achieve this setup.
+

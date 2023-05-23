@@ -41,6 +41,10 @@ spec:
           image: {{ template "spire-lib.image" (dict "image" .Values.waitForIt.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.waitForIt.image.pullPolicy }}
           args: ["-t", "30", "-h", "{{ include "spire-agent.server-address" . | trim }}", "-p", {{ .Values.server.port | quote }}]
+          {{- if ne (len .Values.hostAliases) 0 }}
+          hostAliases:
+            {{- toYaml .Values.hostAliases | nindent 8 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.waitForIt.resources | nindent 12 }}
         {{- if gt (len .Values.initContainers) 0 }}
@@ -58,6 +62,10 @@ spec:
             - containerPort: {{ .Values.telemetry.prometheus.port }}
               name: prom
             {{- end }}
+          {{- if ne (len .Values.hostAliases) 0 }}
+          hostAliases:
+            {{- toYaml .Values.hostAliases | nindent 8 }}
+          {{- end }}
           volumeMounts:
             - name: spire-config
               mountPath: /run/spire/config

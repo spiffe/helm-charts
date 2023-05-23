@@ -125,3 +125,4 @@ extraVolumeMounts: []
 extraContainers: []
 
 initContainers: []
+hostAliases: []

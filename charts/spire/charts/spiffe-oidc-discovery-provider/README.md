@@ -78,6 +78,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.port | int | `9988` |  |
 | tests.hostAliases | list | `[]` |  |
 | tests.tls.customCA | string | `""` |  |
+| tests.tls.enabled | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 

@@ -216,6 +216,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
 | spiffe-oidc-discovery-provider.tests.hostAliases | list | `[]` |  |
 | spiffe-oidc-discovery-provider.tests.tls.customCA | string | `""` |  |
+| spiffe-oidc-discovery-provider.tests.tls.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
@@ -226,6 +227,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.extraVolumes | list | `[]` |  |
 | spire-agent.fullnameOverride | string | `""` |  |
 | spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
+| spire-agent.hostAliases | list | `[]` |  |
 | spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-agent.image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
@@ -369,6 +371,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spire-server.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
+| spire-server.tests.hostAliases | list | `[]` |  |
+| spire-server.tests.tls.customCA | string | `""` |  |
+| spire-server.tests.tls.enabled | bool | `false` |  |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |

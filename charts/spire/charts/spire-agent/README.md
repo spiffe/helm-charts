@@ -22,6 +22,7 @@ A Helm chart to install the SPIRE agent.
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
+| hostAliases | list | `[]` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |

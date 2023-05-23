@@ -189,4 +189,5 @@ ingress:
 tests:
   hostAliases: []
   tls:
+    enabled: false
     customCA: ""

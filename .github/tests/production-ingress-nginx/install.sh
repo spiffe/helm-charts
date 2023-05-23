@@ -26,7 +26,24 @@ spiffe-oidc-discovery-provider:
       - ip: "$ip"
         hostnames:
           - "oidc-discovery.example.org"
+spire-agent:
+  hostAliases:
+    - ip: "$ip"
+      hostnames:
+        - "spire-server.example.org"
+spire-server:
+  tests:
+    hostAliases:
+      - ip: "$ip"
+        hostnames:
+          - "spire-server-federation.example.org"
 EOF
 
-helm upgrade --install --namespace spire-server spire charts/spire -f examples/production/values.yaml -f examples/production/values-export-ingress-nginx.yaml \
-    -f /tmp/dummydns --set spiffe-oidc-discovery-provider.tests.tls.customCA=tls-cert --wait
+helm upgrade --install --namespace spire-server spire charts/spire -f examples/production/values.yaml \
+    -f examples/production/values-export-spiffe-oidc-discovery-provider-ingress-nginx.yaml \
+    -f examples/production/values-export-spire-server-ingress-nginx.yaml \
+    -f examples/production/values-export-federation-https-web-ingress-nginx.yaml \
+    -f /tmp/dummydns \
+    --set spiffe-oidc-discovery-provider.tests.tls.customCA=tls-cert,spire-server.tests.tls.customCA=tls-cert \
+    --set spire-agent.server.address=spire-server.example.org \
+    --wait
