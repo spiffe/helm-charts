@@ -321,6 +321,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | spire-server.federation.bundleEndpoint.port | int | `8443` |  |
 | spire-server.federation.enabled | bool | `false` |  |
+| spire-server.federation.ingress.annotations | object | `{}` |  |
+| spire-server.federation.ingress.className | string | `""` |  |
+| spire-server.federation.ingress.enabled | bool | `false` |  |
+| spire-server.federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.federation.ingress.tls | list | `[]` |  |
 | spire-server.fullnameOverride | string | `""` |  |
 | spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
@@ -328,6 +335,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | spire-server.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.imagePullSecrets | list | `[]` |  |
+| spire-server.ingress.annotations | object | `{}` |  |
+| spire-server.ingress.className | string | `""` |  |
+| spire-server.ingress.enabled | bool | `false` |  |
+| spire-server.ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
+| spire-server.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -378,6 +392,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
+| spire-server.upstreamAuthority.spire.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
+| spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
 | tornjak-frontend.affinity | object | `{}` |  |
 | tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | tornjak-frontend.fullnameOverride | string | `""` |  |
