@@ -96,8 +96,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 
 ## Requirements
 
-Kubernetes: `>=1.21.0-0`
-
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
