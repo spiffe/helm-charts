@@ -311,15 +311,17 @@ nodeAttestor:
 tornjak:
   # -- Deploys Tornjak API (backend) (Not for production)
   enabled: false
-  # -- Tornjak API image
   image:
+    # -- The OCI registry to pull the Tornjak image from
     registry: ghcr.io
+    # -- The repository within the registry
     repository: spiffe/tornjak-backend
+    # -- The Tornjak image pull policy
     pullPolicy: IfNotPresent
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: "v1.2.0"
+    tag: "v1.2.1"
   service:
     type: ClusterIP
     port: 10000

@@ -130,8 +130,10 @@ A Helm chart to install the SPIRE server.
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
-| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
-| tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
+| tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
+| tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
+| tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |

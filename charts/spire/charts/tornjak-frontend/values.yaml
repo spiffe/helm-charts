@@ -72,6 +72,23 @@ spireHealthCheck:
   # -- Enables the SPIRE Healthchecker indicator
   enabled: true
 
+## Configure extra options for Tornjak frontend container's startup probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes
+##
+startupProbe:
+  # -- Enable startupProbe on Tornjak frontend container
+  enabled: true
+  # -- Initial delay seconds for startupProbe
+  initialDelaySeconds: 5
+  # -- Period seconds for startupProbe
+  periodSeconds: 10
+  # -- Timeout seconds for startupProbe
+  timeoutSeconds: 5
+  # -- Failure threshold for startupProbe
+  failureThreshold: 6
+  # -- Success threshold for startupProbe
+  successThreshold: 1
+
 tests:
   bash:
     image:
