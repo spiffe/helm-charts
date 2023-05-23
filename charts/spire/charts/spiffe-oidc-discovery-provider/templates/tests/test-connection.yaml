@@ -45,7 +45,7 @@ spec:
           mountPoint: /ca
       {{- end }}
       {{- else }}
-      args: ['-s' 'http://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      args: ['-s', 'http://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
       {{- end }}
       {{- if ne (len .Values.tests.hostAliases) 0 }}
       hostAliases:

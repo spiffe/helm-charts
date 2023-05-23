@@ -45,5 +45,5 @@ helm upgrade --install --namespace spire-server spire charts/spire -f examples/p
     -f examples/production/values-export-federation-https-web-ingress-nginx.yaml \
     -f /tmp/dummydns \
     --set spiffe-oidc-discovery-provider.tests.tls.customCA=tls-cert,spire-server.tests.tls.customCA=tls-cert \
-    --set spire-agent.server.address=spire-server.example.org \
+    --set spire-agent.server.address=spire-server.example.org,spire-agent.server.port=443 \
     --wait
