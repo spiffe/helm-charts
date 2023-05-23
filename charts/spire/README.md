@@ -165,7 +165,7 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
-| spiffe-oidc-discovery-provider.config.domains | list | `["localhost"]` | Override the domains to use. Defaults to jwtIssuer and localhost. |
+| spiffe-oidc-discovery-provider.config.domains | list | `["localhost"]` | Override the domains to use. (jwtIssuer is automatically added to this list). |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
