@@ -1,4 +1,5 @@
 {{- define "spire-server.yaml-config" -}}
+{{- $upstreamAuthorityUsed := 0 }}
 {{- $root := . }}
 server:
   bind_address: "0.0.0.0"
@@ -59,6 +60,7 @@ plugins:
 
   {{- with .Values.upstreamAuthority.disk }}
   {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
     - disk:
         plugin_data:
@@ -72,6 +74,7 @@ plugins:
 
   {{- with .Values.upstreamAuthority.certManager }}
   {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
     - cert-manager:
         plugin_data:
@@ -87,6 +90,7 @@ plugins:
 
   {{- with .Values.upstreamAuthority.spire }}
   {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
     - spire:
         plugin_data:
@@ -95,6 +99,9 @@ plugins:
           workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
   {{- end }}
   {{- end }}
+{{- if gt $upstreamAuthorityUsed 1 }}
+{{- fail "Too many Upstream Authorities used. You can only enable one." }}
+{{- end }}
 
 health_checks:
   listener_enabled: true
