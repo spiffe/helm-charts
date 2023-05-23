@@ -214,8 +214,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
-| spiffe-oidc-discovery-provider.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
-| spiffe-oidc-discovery-provider.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spiffe-oidc-discovery-provider.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The tests image pull policy |
+| spiffe-oidc-discovery-provider.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the tests image from |
 | spiffe-oidc-discovery-provider.tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.tests.bash.image.tag | string | `"5.2.15"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
