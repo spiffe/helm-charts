@@ -165,12 +165,6 @@ upstreamAuthority:
         certificate: ""
         key: ""
         bundle: ""
-  spire:
-    enabled: false
-    upstreamDriver: upstream.csi.spiffe.io
-    server:
-      address: ""
-      port: 8081
   certManager:
     enabled: false
     rbac:
@@ -183,6 +177,7 @@ upstreamAuthority:
     kube_config_file: ""
   spire:
     enabled: false
+    upstreamDriver: upstream.csi.spiffe.io
     server:
       address: ""
       port: 8081
