@@ -81,6 +81,22 @@ affinity: {}
 
 topologySpreadConstraints: []
 
+livenessProbe:
+  httpGet:
+    path: /live
+    port: healthz
+  failureThreshold: 2
+  initialDelaySeconds: 15
+  periodSeconds: 60
+  timeoutSeconds: 3
+
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: healthz
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
 persistence:
   size: 1Gi
   accessMode: ReadWriteOnce
@@ -221,6 +237,15 @@ controllerManager:
     # runAsNonRoot: true
     # runAsUser: 1000
 
+  livenessProbe:
+    httpGet:
+      path: /healthz
+      port: healthz
+  readinessProbe:
+    httpGet:
+      path: /readyz
+      port: healthz
+
   service:
     type: ClusterIP
     port: 443
@@ -326,6 +351,17 @@ tornjak:
     type: ClusterIP
     port: 10000
     annotations: {}
+
+  startupProbe:
+    httpGet:
+      scheme: HTTP
+      port: 10000
+    failureThreshold: 3
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
   config:
     # -- persistent DB for storing Tornjak specific information
     dataStore:

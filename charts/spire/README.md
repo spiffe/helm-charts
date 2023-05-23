@@ -292,6 +292,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
 | spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| spire-server.controllerManager.livenessProbe.httpGet.path | string | `"/healthz"` |  |
+| spire-server.controllerManager.livenessProbe.httpGet.port | string | `"healthz"` |  |
+| spire-server.controllerManager.readinessProbe.httpGet.path | string | `"/readyz"` |  |
+| spire-server.controllerManager.readinessProbe.httpGet.port | string | `"healthz"` |  |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
@@ -342,6 +346,12 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.livenessProbe.failureThreshold | int | `2` |  |
+| spire-server.livenessProbe.httpGet.path | string | `"/live"` |  |
+| spire-server.livenessProbe.httpGet.port | string | `"healthz"` |  |
+| spire-server.livenessProbe.initialDelaySeconds | int | `15` |  |
+| spire-server.livenessProbe.periodSeconds | int | `60` |  |
+| spire-server.livenessProbe.timeoutSeconds | int | `3` |  |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
@@ -354,6 +364,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.persistence.storageClass | string | `nil` |  |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
+| spire-server.readinessProbe.httpGet.path | string | `"/ready"` |  |
+| spire-server.readinessProbe.httpGet.port | string | `"healthz"` |  |
+| spire-server.readinessProbe.initialDelaySeconds | int | `5` |  |
+| spire-server.readinessProbe.periodSeconds | int | `5` |  |
 | spire-server.replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | spire-server.resources | object | `{}` |  |
 | spire-server.securityContext | object | `{}` |  |
@@ -380,6 +394,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.tornjak.service.annotations | object | `{}` |  |
 | spire-server.tornjak.service.port | int | `10000` |  |
 | spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
+| spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
+| spire-server.tornjak.startupProbe.httpGet.port | int | `10000` |  |
+| spire-server.tornjak.startupProbe.httpGet.scheme | string | `"HTTP"` |  |
+| spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` |  |
+| spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |
+| spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
+| spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
