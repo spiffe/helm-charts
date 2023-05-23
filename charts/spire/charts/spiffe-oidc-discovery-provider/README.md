@@ -51,11 +51,15 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | insecureScheme.nginx.resources | object | `{}` |  |
+| livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |

@@ -133,6 +133,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
+| spiffe-csi-driver.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| spiffe-csi-driver.livenessProbe.timeoutSeconds | int | `5` | Timeout value in seconds for livenessProbe |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
 | spiffe-csi-driver.namespaceOverride | string | `""` |  |
 | spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -189,11 +191,15 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.nodeSelector | object | `{}` |  |
 | spiffe-oidc-discovery-provider.podAnnotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.podSecurityContext | object | `{}` |  |
+| spiffe-oidc-discovery-provider.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| spiffe-oidc-discovery-provider.readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | spiffe-oidc-discovery-provider.replicaCount | int | `1` |  |
 | spiffe-oidc-discovery-provider.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.securityContext | object | `{}` |  |
@@ -231,6 +237,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
+| spire-agent.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| spire-agent.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
 | spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-agent.nameOverride | string | `""` |  |
 | spire-agent.namespaceOverride | string | `""` |  |
@@ -238,6 +246,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.podAnnotations | object | `{}` |  |
 | spire-agent.podSecurityContext | object | `{}` |  |
 | spire-agent.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| spire-agent.readinessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for readinessProbe |
+| spire-agent.readinessProbe.periodSeconds | int | `60` | Period seconds for readinessProbe |
 | spire-agent.resources | object | `{}` |  |
 | spire-agent.securityContext | object | `{}` |  |
 | spire-agent.server.address | string | `""` |  |
@@ -292,10 +302,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
 | spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| spire-server.controllerManager.livenessProbe.httpGet.path | string | `"/healthz"` |  |
-| spire-server.controllerManager.livenessProbe.httpGet.port | string | `"healthz"` |  |
-| spire-server.controllerManager.readinessProbe.httpGet.path | string | `"/readyz"` |  |
-| spire-server.controllerManager.readinessProbe.httpGet.port | string | `"healthz"` |  |
+| spire-server.controllerManager.livenessProbe | object | `{}` | livenessProbe for Controller Manager |
+| spire-server.controllerManager.readinessProbe | object | `{}` | readinessProbe for Controller Manager |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
@@ -346,12 +354,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
-| spire-server.livenessProbe.failureThreshold | int | `2` |  |
-| spire-server.livenessProbe.httpGet.path | string | `"/live"` |  |
-| spire-server.livenessProbe.httpGet.port | string | `"healthz"` |  |
-| spire-server.livenessProbe.initialDelaySeconds | int | `15` |  |
-| spire-server.livenessProbe.periodSeconds | int | `60` |  |
-| spire-server.livenessProbe.timeoutSeconds | int | `3` |  |
+| spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
+| spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| spire-server.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| spire-server.livenessProbe.timeoutSeconds | int | `3` | Timeout in seconds for livenessProbe |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
@@ -364,10 +370,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.persistence.storageClass | string | `nil` |  |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
-| spire-server.readinessProbe.httpGet.path | string | `"/ready"` |  |
-| spire-server.readinessProbe.httpGet.port | string | `"healthz"` |  |
-| spire-server.readinessProbe.initialDelaySeconds | int | `5` |  |
-| spire-server.readinessProbe.periodSeconds | int | `5` |  |
+| spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| spire-server.readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | spire-server.replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | spire-server.resources | object | `{}` |  |
 | spire-server.securityContext | object | `{}` |  |
@@ -395,9 +399,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.tornjak.service.port | int | `10000` |  |
 | spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
-| spire-server.tornjak.startupProbe.httpGet.port | int | `10000` |  |
-| spire-server.tornjak.startupProbe.httpGet.scheme | string | `"HTTP"` |  |
-| spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` |  |
+| spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
 | spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |
 | spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
 | spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
@@ -439,10 +441,10 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
 | tornjak-frontend.startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
-| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold for startupProbe |
+| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold count for startupProbe |
 | tornjak-frontend.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
 | tornjak-frontend.startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
-| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold for startupProbe |
+| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold count for startupProbe |
 | tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |

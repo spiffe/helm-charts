@@ -46,10 +46,8 @@ A Helm chart to install the SPIRE server.
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
 | controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| controllerManager.livenessProbe.httpGet.path | string | `"/healthz"` |  |
-| controllerManager.livenessProbe.httpGet.port | string | `"healthz"` |  |
-| controllerManager.readinessProbe.httpGet.path | string | `"/readyz"` |  |
-| controllerManager.readinessProbe.httpGet.port | string | `"healthz"` |  |
+| controllerManager.livenessProbe | object | `{}` | livenessProbe for Controller Manager |
+| controllerManager.readinessProbe | object | `{}` | readinessProbe for Controller Manager |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |
@@ -100,12 +98,10 @@ A Helm chart to install the SPIRE server.
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
-| livenessProbe.failureThreshold | int | `2` |  |
-| livenessProbe.httpGet.path | string | `"/live"` |  |
-| livenessProbe.httpGet.port | string | `"healthz"` |  |
-| livenessProbe.initialDelaySeconds | int | `15` |  |
-| livenessProbe.periodSeconds | int | `60` |  |
-| livenessProbe.timeoutSeconds | int | `3` |  |
+| livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
+| livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| livenessProbe.timeoutSeconds | int | `3` | Timeout in seconds for livenessProbe |
 | logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
@@ -118,10 +114,8 @@ A Helm chart to install the SPIRE server.
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe.httpGet.path | string | `"/ready"` |  |
-| readinessProbe.httpGet.port | string | `"healthz"` |  |
-| readinessProbe.initialDelaySeconds | int | `5` |  |
-| readinessProbe.periodSeconds | int | `5` |  |
+| readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
@@ -149,9 +143,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.service.port | int | `10000` |  |
 | tornjak.service.type | string | `"ClusterIP"` |  |
 | tornjak.startupProbe.failureThreshold | int | `3` |  |
-| tornjak.startupProbe.httpGet.port | int | `10000` |  |
-| tornjak.startupProbe.httpGet.scheme | string | `"HTTP"` |  |
-| tornjak.startupProbe.initialDelaySeconds | int | `5` |  |
+| tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
 | tornjak.startupProbe.periodSeconds | int | `10` |  |
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |

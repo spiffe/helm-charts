@@ -84,8 +84,14 @@ spec:
               name: prom
             {{- end }}
           livenessProbe:
+            httpGet:
+              path: /live
+              port: healthz
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
+            httpGet:
+              path: /ready
+              port: healthz
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -126,8 +132,14 @@ spec:
               name: prom2
             {{- end }}
           livenessProbe:
+            httpGet:
+              path: /healthz
+              port: healthz
             {{- toYaml .Values.controllerManager.livenessProbe | nindent 12 }}
           readinessProbe:
+            httpGet:
+              path: /readyz
+              port: healthz
             {{- toYaml .Values.controllerManager.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.controllerManager.resources | nindent 12 }}
@@ -151,6 +163,9 @@ spec:
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
           startupProbe:
+            httpGet:
+              scheme: HTTP
+              port: 10000
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
           args:
             - --spire-config

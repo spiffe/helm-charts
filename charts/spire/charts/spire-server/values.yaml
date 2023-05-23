@@ -82,19 +82,19 @@ affinity: {}
 topologySpreadConstraints: []
 
 livenessProbe:
-  httpGet:
-    path: /live
-    port: healthz
+  # -- Failure threshold count for livenessProbe
   failureThreshold: 2
+  # -- Initial delay seconds for livenessProbe
   initialDelaySeconds: 15
+  # -- Period seconds for livenessProbe
   periodSeconds: 60
+  # -- Timeout in seconds for livenessProbe
   timeoutSeconds: 3
 
 readinessProbe:
-  httpGet:
-    path: /ready
-    port: healthz
+  # -- Initial delay seconds for readinessProbe
   initialDelaySeconds: 5
+  # -- Period seconds for readinessProbe
   periodSeconds: 5
 
 persistence:
@@ -237,14 +237,11 @@ controllerManager:
     # runAsNonRoot: true
     # runAsUser: 1000
 
-  livenessProbe:
-    httpGet:
-      path: /healthz
-      port: healthz
-  readinessProbe:
-    httpGet:
-      path: /readyz
-      port: healthz
+  # -- livenessProbe for Controller Manager
+  livenessProbe: {}
+
+  # -- readinessProbe for Controller Manager
+  readinessProbe: {}
 
   service:
     type: ClusterIP
@@ -353,10 +350,8 @@ tornjak:
     annotations: {}
 
   startupProbe:
-    httpGet:
-      scheme: HTTP
-      port: 10000
     failureThreshold: 3
+    # -- Initial delay seconds for
     initialDelaySeconds: 5
     periodSeconds: 10
     successThreshold: 1
