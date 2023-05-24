@@ -300,8 +300,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
 | spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| spire-server.controllerManager.livenessProbe | object | `{}` | livenessProbe for Controller Manager |
-| spire-server.controllerManager.readinessProbe | object | `{}` | readinessProbe for Controller Manager |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
 | spire-server.controllerManager.service.annotations | object | `{}` |  |

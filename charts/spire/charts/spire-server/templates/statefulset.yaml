@@ -135,12 +135,10 @@ spec:
             httpGet:
               path: /healthz
               port: healthz
-            {{- toYaml .Values.controllerManager.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /readyz
               port: healthz
-            {{- toYaml .Values.controllerManager.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.controllerManager.resources | nindent 12 }}
           volumeMounts:

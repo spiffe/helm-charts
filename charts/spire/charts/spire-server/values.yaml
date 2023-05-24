@@ -237,12 +237,6 @@ controllerManager:
     # runAsNonRoot: true
     # runAsUser: 1000
 
-  # -- livenessProbe for Controller Manager
-  livenessProbe: {}
-
-  # -- readinessProbe for Controller Manager
-  readinessProbe: {}
-
   service:
     type: ClusterIP
     port: 443
