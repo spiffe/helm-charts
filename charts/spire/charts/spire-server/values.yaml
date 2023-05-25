@@ -101,9 +101,13 @@ readinessProbe:
   periodSeconds: 5
 
 persistence:
+  # -- What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
+  type: pvc
   size: 1Gi
   accessMode: ReadWriteOnce
   storageClass: null
+  # -- Which path to use on the host when type = hostPath
+  hostPath: ""
 
 dataStore:
   sql:

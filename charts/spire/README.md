@@ -372,8 +372,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| spire-server.persistence.hostPath | string | `""` | Which path to use on the host when type = hostPath |
 | spire-server.persistence.size | string | `"1Gi"` |  |
 | spire-server.persistence.storageClass | string | `nil` |  |
+| spire-server.persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
 | spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
