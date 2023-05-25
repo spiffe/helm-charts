@@ -72,10 +72,10 @@ port forwarding. See the chart NOTES output for more details.
 | serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
 | startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
-| startupProbe.failureThreshold | int | `6` | Failure threshold for startupProbe |
+| startupProbe.failureThreshold | int | `6` | Failure threshold count for startupProbe |
 | startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
 | startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
-| startupProbe.successThreshold | int | `1` | Success threshold for startupProbe |
+| startupProbe.successThreshold | int | `1` | Success threshold count for startupProbe |
 | startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tolerations | list | `[]` |  |
 | topologySpreadConstraints | list | `[]` |  |
