@@ -35,8 +35,6 @@
 {{- print .global.spire.image.registry "/"}}
 {{- else if ne (len (.image.registry)) 0 }}
 {{- print .image.registry "/"}}
-{{- else }}
-{{- print ""}}
 {{- end }}
 {{- end }}
 
