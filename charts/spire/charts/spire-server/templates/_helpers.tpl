@@ -105,6 +105,15 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "spire-server.kubectl-image" }}
+{{- $root := deepCopy . }}
+{{- $tag := (default $root.image.tag $root.image.version) | toString }}
+{{- if eq (len $tag) 0 }}
+{{- $_ := set $root.image "tag" (regexReplaceAll "^(v?\\d+\\.\\d+\\.\\d+).*" $root.KubeVersion "${1}") }}
+{{- end }}
+{{- include "spire-lib.image" $root }}
+{{- end }}
+
 {{- define "spire-server.config-mysql-query" }}
 {{- $lst := list }}
 {{- range . }}
@@ -152,4 +161,20 @@ Create the name of the service account to use
   {{- fail "Unsupported database type" }}
 {{- end }}
 {{- $config | toYaml }}
+{{- end }}
+
+{{/*
+Tornjak specific section
+*/}}
+
+{{- define "spire-tornjak.fullname" -}}
+{{ include "spire-server.fullname" . | trimSuffix "-server" }}-tornjak
+{{- end }}
+
+{{- define "spire-tornjak.config" -}}
+{{ include "spire-tornjak.fullname" . }}-config
+{{- end }}
+
+{{- define "spire-tornjak.backend" -}}
+{{ include "spire-tornjak.fullname" . }}-backend
 {{- end }}

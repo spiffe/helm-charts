@@ -40,13 +40,53 @@
 
 {{- define "spire-lib.image" -}}
 {{- $registry := include "spire-lib.registry" . }}
-{{- if eq (substr 0 7 .image.version) "sha256:" -}}
-{{- printf "%s/%s@%s" $registry .image.repository .image.version -}}
-{{- else if .appVersion -}}
-{{- printf "%s/%s:%s" $registry .image.repository (default .appVersion .image.version) -}}
-{{- else if .image.version -}}
-{{- printf "%s/%s:%s" $registry .image.repository .image.version -}}
-{{- else -}}
-{{- printf "%s/%s" $registry .image.repository -}}
-{{- end -}}
+{{- $repo := .image.repository }}
+{{- $tag := (default .image.tag .image.version) | toString }}
+{{- if eq (substr 0 7 $tag) "sha256:" }}
+{{- printf "%s/%s@%s" $registry $repo $tag }}
+{{- else if .appVersion }}
+{{- printf "%s/%s:%s" $registry $repo (default .appVersion $tag) }}
+{{- else if $tag }}
+{{- printf "%s/%s:%s" $registry $repo $tag }}
+{{- else }}
+{{- printf "%s/%s" $registry $repo }}
+{{- end }}
+{{- end }}
+
+{{/* Takes in a dictionary with keys:
+ * ingress - the standardized ingress object
+ * svcName - The service to route to
+ * port - which port on the service to use
+*/}}
+{{ define "spire-lib.ingress-spec" }}
+{{- $svcName := .svcName }}
+{{- $port := .port }}
+{{- with .ingress.className }}
+ingressClassName: {{ . | quote }}
+{{- end }}
+{{- if .ingress.tls }}
+tls:
+  {{- range .ingress.tls }}
+  - hosts:
+      {{- range .hosts }}
+      - {{ . | quote }}
+      {{- end }}
+    secretName: {{ .secretName | quote }}
+  {{- end }}
+{{- end }}
+rules:
+  {{- range .ingress.hosts }}
+  - host: {{ .host | quote }}
+    http:
+      paths:
+        {{- range .paths }}
+        - path: {{ .path }}
+          pathType: {{ .pathType }}
+          backend:
+            service:
+              name: {{ $svcName | quote }}
+              port:
+                number: {{ $port }}
+        {{- end }}
+  {{- end }}
 {{- end }}

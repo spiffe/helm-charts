@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.3](https://img.shields.io/badge/AppVersion-1.6.3-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
 
 A Helm chart to install the SPIRE agent.
 
@@ -25,7 +25,8 @@ A Helm chart to install the SPIRE agent.
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
-| image.version | string | `""` |  |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -55,7 +56,8 @@ A Helm chart to install the SPIRE agent.
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
-| waitForIt.image.version | string | `"latest-20230113"` |  |
+| waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | waitForIt.resources | object | `{}` |  |
 | workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |

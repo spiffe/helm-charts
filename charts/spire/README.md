@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.3](https://img.shields.io/badge/AppVersion-1.6.3-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -19,9 +19,9 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 |:-----------|:-------------------|
 | SPIRE      | `1.5.3+`, `1.6.3+` |
 | Helm       | `3.x`              |
-| Kubernetes | `1.21+`            |
+| Kubernetes | `1.22+`            |
 
-> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden. *The first version we tested this chart with is `1.21`.*
+> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden.
 
 ## Prerequisites
 
@@ -96,14 +96,13 @@ Now you can interact with the Spire agent socket from your own application. The 
 
 ## Requirements
 
-Kubernetes: `>=1.21.0-0`
-
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
+| file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
 
 ## Values
 
@@ -114,20 +113,22 @@ Kubernetes: `>=1.21.0-0`
 | global.spire.clusterName | string | `"example-cluster"` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
 | global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
-| spiffe-csi-driver.enabled | bool | `true` |  |
-| spiffe-oidc-discovery-provider.enabled | bool | `false` |  |
-| spire-agent.enabled | bool | `true` |  |
+| spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
+| spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
+| spire-agent.enabled | bool | `true` | Enables deployment of SPIRE Agent(s) |
 | spire-agent.nameOverride | string | `"agent"` |  |
-| spire-server.controllerManager.enabled | bool | `true` |  |
-| spire-server.enabled | bool | `true` |  |
+| spire-server.controllerManager.enabled | bool | `true` | Enables deployment of Controller Manager |
+| spire-server.enabled | bool | `true` | Enables deployment of SPIRE Server |
 | spire-server.nameOverride | string | `"server"` |  |
+| tornjak-frontend.enabled | bool | `false` | Enables deployment of Tornjak frontend/UI (Not for production) |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
 | spiffe-csi-driver.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-csi-driver.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` | The repository within the registry |
-| spiffe-csi-driver.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| spiffe-csi-driver.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
@@ -135,7 +136,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-csi-driver.nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` | The OCI registry to pull the image from |
 | spiffe-csi-driver.nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` | The repository within the registry |
-| spiffe-csi-driver.nodeDriverRegistrar.image.version | string | `"v2.6.2"` |  |
+| spiffe-csi-driver.nodeDriverRegistrar.image.tag | string | `"v2.8.0"` | Overrides the image tag |
+| spiffe-csi-driver.nodeDriverRegistrar.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.nodeDriverRegistrar.resources | object | `{}` |  |
 | spiffe-csi-driver.nodeSelector | object | `{}` |  |
 | spiffe-csi-driver.pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
@@ -168,7 +170,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.image.repository | string | `"spiffe/oidc-discovery-provider"` | The repository within the registry |
-| spiffe-oidc-discovery-provider.image.version | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| spiffe-oidc-discovery-provider.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| spiffe-oidc-discovery-provider.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.imagePullSecrets | list | `[]` |  |
 | spiffe-oidc-discovery-provider.ingress.annotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.ingress.className | string | `""` |  |
@@ -181,7 +184,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.repository | string | `"nginxinc/nginx-unprivileged"` | The repository within the registry |
-| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `"1.23.2-alpine"` |  |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
@@ -201,7 +205,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.repository | string | `"nginx/nginx-prometheus-exporter"` | The repository within the registry |
-| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.version | string | `"0.11.0"` |  |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.tag | string | `"0.11.0"` | Overrides the image tag |
+| spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
@@ -220,7 +225,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-agent.image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
-| spire-agent.image.version | string | `""` |  |
+| spire-agent.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
 | spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -250,7 +256,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
-| spire-agent.waitForIt.image.version | string | `"latest-20230113"` |  |
+| spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.waitForIt.resources | object | `{}` |  |
 | spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
@@ -281,7 +288,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
-| spire-server.controllerManager.image.version | string | `"0.2.2"` |  |
+| spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
@@ -289,9 +297,10 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"chainguard/kubectl"` | The repository within the registry |
-| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `"latest"` |  |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `""` | Overrides the image tag |
+| spire-server.controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | spire-server.dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -308,12 +317,27 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | spire-server.federation.bundleEndpoint.port | int | `8443` |  |
 | spire-server.federation.enabled | bool | `false` |  |
+| spire-server.federation.ingress.annotations | object | `{}` |  |
+| spire-server.federation.ingress.className | string | `""` |  |
+| spire-server.federation.ingress.enabled | bool | `false` |  |
+| spire-server.federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.federation.ingress.tls | list | `[]` |  |
 | spire-server.fullnameOverride | string | `""` |  |
 | spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.image.repository | string | `"spiffe/spire-server"` | The repository within the registry |
-| spire-server.image.version | string | `""` |  |
+| spire-server.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| spire-server.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.imagePullSecrets | list | `[]` |  |
+| spire-server.ingress.annotations | object | `{}` |  |
+| spire-server.ingress.className | string | `""` |  |
+| spire-server.ingress.enabled | bool | `false` |  |
+| spire-server.ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
+| spire-server.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
@@ -321,7 +345,7 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.namespaceOverride | string | `""` |  |
 | spire-server.nodeAttestor.k8sPsat.enabled | bool | `true` |  |
 | spire-server.nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
-| spire-server.nodeSelector | object | `{}` |  |
+| spire-server.nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | spire-server.persistence.size | string | `"1Gi"` |  |
@@ -343,6 +367,17 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | spire-server.tolerations | list | `[]` |  |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
+| spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
+| spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
+| spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
+| spire-server.tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
+| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
+| spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| spire-server.tornjak.resources | object | `{}` |  |
+| spire-server.tornjak.service.annotations | object | `{}` |  |
+| spire-server.tornjak.service.port | int | `10000` |  |
+| spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
@@ -355,5 +390,38 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
+| spire-server.upstreamAuthority.spire.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
+| spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
+| tornjak-frontend.affinity | object | `{}` |  |
+| tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
+| tornjak-frontend.fullnameOverride | string | `""` |  |
+| tornjak-frontend.image.pullPolicy | string | `"IfNotPresent"` |  |
+| tornjak-frontend.image.registry | string | `"ghcr.io"` |  |
+| tornjak-frontend.image.repository | string | `"spiffe/tornjak-frontend"` |  |
+| tornjak-frontend.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| tornjak-frontend.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| tornjak-frontend.imagePullSecrets | list | `[]` |  |
+| tornjak-frontend.labels | object | `{}` |  |
+| tornjak-frontend.nameOverride | string | `""` |  |
+| tornjak-frontend.namespaceOverride | string | `""` |  |
+| tornjak-frontend.nodeSelector | object | `{"kubernetes.io/arch":"amd64"}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
+| tornjak-frontend.podSecurityContext | object | `{}` |  |
+| tornjak-frontend.securityContext | object | `{}` |  |
+| tornjak-frontend.service.annotations | object | `{}` |  |
+| tornjak-frontend.service.port | int | `3000` |  |
+| tornjak-frontend.service.type | string | `"ClusterIP"` |  |
+| tornjak-frontend.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tornjak-frontend.startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
+| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold for startupProbe |
+| tornjak-frontend.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
+| tornjak-frontend.startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
+| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold for startupProbe |
+| tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
+| tornjak-frontend.tolerations | list | `[]` |  |
+| tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
 
 ----------------------------------------------

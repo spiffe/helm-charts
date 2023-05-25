@@ -1,3 +1,23 @@
+spire-server:
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+    - host: ingress-nginx-controller.spire-oidc-insecure
+      paths:
+        - path: /
+          pathType: Prefix
+
+spire-agent:
+  server:
+    address: ingress-nginx-controller.spire-oidc-insecure
+    port: 443
+
 spiffe-oidc-discovery-provider:
   enabled: true
 
