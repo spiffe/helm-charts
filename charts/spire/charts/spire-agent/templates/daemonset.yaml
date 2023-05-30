@@ -53,8 +53,8 @@ spec:
           resources:
             {{- toYaml .Values.fsGroupFix.resources | nindent 12 }}
           volumeMounts:
-          - name: spire-agent-socket-dir
-            mountPath: {{ include "spire-agent.socket-path" . | dir }}
+            - name: spire-agent-socket-dir
+              mountPath: {{ include "spire-agent.socket-path" . | dir }}
           securityContext:
             runAsUser: 0
             runAsGroup: 0
