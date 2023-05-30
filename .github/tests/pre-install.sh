@@ -6,11 +6,8 @@ SCRIPT="$(readlink -f "$0")"
 SCRIPTPATH="$(dirname "${SCRIPT}")"
 DEPS="${SCRIPTPATH}/dependencies"
 
-# Set repo and version env variables
-REPOS=$(jq -r '.[] | "export " + ("HELM_REPO_" + .name | ascii_upcase | gsub("-";"_")) + "=" + .repo' "${SCRIPTPATH}/charts.json")
-VERSIONS=$(jq -r '.[] | "export " + ("VERSION_" + .name | ascii_upcase | gsub("-";"_")) + "=" + .version' "${SCRIPTPATH}/charts.json")
-eval "$REPOS"
-eval "$VERSIONS"
+# shellcheck source=/dev/null
+source "${SCRIPTPATH}/../scripts/parse-versions.sh"
 
 helm_install=(helm upgrade --install --create-namespace)
 
@@ -21,8 +18,7 @@ kubectl create namespace spire-server || true
 # nginx ingress
 "${helm_install[@]}" ingress-nginx ingress-nginx --version "${VERSION_INGRESS_NGINX}" --repo "${HELM_REPO_INGRESS_NGINX}" \
   --namespace ingress-nginx \
-  --set controller.extraArgs.enable-ssl-passthrough='' \
-  --wait
+  --set controller.extraArgs.enable-ssl-passthrough=
 kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller
 
 # prometheus

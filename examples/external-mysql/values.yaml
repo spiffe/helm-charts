@@ -2,7 +2,8 @@ spire-server:
   dataStore:
     sql:
       databaseType: mysql
-      databaseName: spire
-      host: mysql
+      databaseName: spire-server
+      host: mysql.mysql
       port: 3306
       username: spire
+      # password: CHANGE_ME

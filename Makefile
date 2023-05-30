@@ -52,3 +52,11 @@ cleanup-test-dependencies: ## Cleans up all test dependencies resources
 	@kubectl delete ns postgresql 2>/dev/null || true
 	@helm uninstall -n ingress-nginx ingress-nginx 2>/dev/null || true
 	@kubectl delete ns ingress-nginx 2>/dev/null || true
+
+test-example-%:
+	@echo Running tests for $* example…
+	@examples/$*/run-tests.sh
+	@echo
+
+.PHONY: test-examples
+test-examples: $(patsubst examples/%/values.yaml,test-example-%,$(wildcard examples/*/values.yaml)) ## Run helm install for and helm test for all the examples
