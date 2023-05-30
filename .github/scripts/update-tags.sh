@@ -41,7 +41,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     FILTER=$(jq -r ".\"${CHART}\"[${IDX}].filter" "$IMAGEJSON")
     SORTFLAGS=$(jq -r ".\"${CHART}\"[${IDX}].\"sort-flags\"" "$IMAGEJSON")
 
-    VALUES="${SCRIPTPATH}/../../charts/spire/charts/${CHART}/values.yaml"
+    VALUES="${SCRIPTPATH}/../../charts/spire/charts/${CHART}"
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
     VERSION=$(yq e ".${QUERY}.tag" "$VALUES")
