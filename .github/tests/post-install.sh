@@ -7,11 +7,6 @@ SCRIPTPATH="$(dirname "${SCRIPT}")"
 scenario="${scenario:-$(basename "${SCRIPTPATH}")}"
 
 # shellcheck source=/dev/null
-source "${SCRIPTPATH}/../common.sh"
+source "${SCRIPTPATH}/common.sh"
 
 print_helm_releases
-print_spire_workload_status "${scenario}"
-
-if [[ "$1" -ne 0 ]]; then
-  get_namespace_details "${scenario}"
-fi

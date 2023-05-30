@@ -15,3 +15,4 @@ kubeadmConfigPatches:
         # admission-control-config-file: /etc/kubernetes/pki/admctrl/admission-control.yaml
 nodes:
   - role: control-plane
+  - role: worker

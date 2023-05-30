@@ -117,32 +117,11 @@ jobs:
     outputs:
       changed: ${{ steps.list-changed.outputs.changed }}
 
-  build-matrix:
-    name: Build matrix
-    runs-on: ubuntu-22.04
-
-    needs: [lint-chart]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3.5.3
-
-      - id: set-matrix
-        name: Collect all tests
-        run: |
-          tests="$(echo -e "default\n$(find .github/tests -maxdepth 1 -type d | grep -Ev 'tests$' | xargs -I % basename % | sort | uniq)")"
-          tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
-          echo "tests=$tests_json" >> $GITHUB_OUTPUT
-
-    outputs:
-      tests: ${{ steps.set-matrix.outputs.tests }}
-
   test:
     runs-on: ubuntu-22.04
 
     needs:
       - lint-chart
-      - build-matrix
 
     strategy:
       fail-fast: false
@@ -155,8 +134,6 @@ jobs:
           - v1.27.2
           - v1.26.4
           - v1.25.9
-        values:
-          - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
     steps:
       - name: Checkout
@@ -188,34 +165,16 @@ jobs:
           config: .github/kind/conf/kind-config.yaml
           verbosity: 1
 
+      - name: Setup Test dependencies
+        run: ./pre-install.sh
+        working-directory: .github/tests
+
       - name: Run chart-testing (install)
         run: |
-          post-install() {
-            [ -x "${TEST_DIR}/post-install.sh" ] && "${TEST_DIR}/post-install.sh" $1
-            exit $1
-          }
+          ct install --config ct.yaml \
+            --target-branch ${{ github.base_ref }} \
 
-          trap 'post-install $? $LINENO' EXIT
-
-          export scenario="$(basename "${TEST_DIR}")"
-          export EXTRA_HELM_ARGS=""
-
-          source .github/tests/charts.sh
-
-          [ "${scenario}" != "default" ] && kubectl create namespace "${scenario}"
-          [ -x "${TEST_DIR}/pre-install.sh" ] && "${TEST_DIR}/pre-install.sh"
-          [ -f "${TEST_DIR}/.env" ] && source "${TEST_DIR}/.env"
-
-          if [ -x "${TEST_DIR}/install.sh" ]; then
-            "${TEST_DIR}/install.sh"
-          else
-            ct install --debug \
-              --charts "charts/spire" \
-              --namespace "${scenario}" \
-              --target-branch ${{ github.base_ref }} \
-              --exclude-deprecated \
-              --skip-clean-up \
-              ${{ (matrix.values != 'default' && '--helm-extra-set-args "--values=${TEST_DIR}/values.yaml ${EXTRA_HELM_ARGS}"') || '' }}
-          fi
-        env:
-          TEST_DIR: .github/tests/${{ matrix.values }}
+      - name: Test summary
+        if: always()
+        run: ./post-install.sh
+        working-directory: .github/tests
