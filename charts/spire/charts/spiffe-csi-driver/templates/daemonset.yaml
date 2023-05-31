@@ -93,8 +93,7 @@ spec:
             httpGet:
               path: /healthz
               port: healthz
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.nodeDriverRegistrar.resources | nindent 12 }}
       volumes:

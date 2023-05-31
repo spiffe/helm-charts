@@ -80,6 +80,18 @@ healthChecks:
   # -- override the host port used for health checking
   port: 9980
 
+livenessProbe:
+  # -- Initial delay seconds for livenessProbe
+  initialDelaySeconds: 15
+  # -- Period seconds for livenessProbe
+  periodSeconds: 60
+
+readinessProbe:
+  # -- Initial delay seconds for readinessProbe
+  initialDelaySeconds: 15
+  # -- Period seconds for readinessProbe
+  periodSeconds: 60
+
 waitForIt:
   image:
     # -- The OCI registry to pull the image from
