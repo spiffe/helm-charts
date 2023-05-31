@@ -198,8 +198,8 @@ ingress:
   #    hosts:
   #      - oidc-discovery.example.org
 
-tests:
-  hostAliases: []
-  tls:
-    enabled: false
-    customCA: ""
+#tests:
+#  hostAliases: []
+#  tls:
+#    enabled: false
+#    customCA: ""
