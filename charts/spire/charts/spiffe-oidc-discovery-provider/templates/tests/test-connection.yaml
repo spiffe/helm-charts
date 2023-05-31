@@ -1,3 +1,4 @@
+{{ $values := merge .Values }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -33,13 +34,13 @@ spec:
     - name: ingress
       image: cgr.dev/chainguard/bash:latest
       command: ['curl']
-      {{- if dig "tests" "tls" "enabled" false .Values }}
-      {{- if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
+      {{- if dig "tests" "tls" "enabled" false $values }}
+      {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
       args: ['--cacert', '/ca/ca.crt', 'https://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
       {{- else }}
       args: ['https://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
       {{- end }}
-      {{- if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
+      {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
       volumeMounts:
         - name: custom-ca
           mountPoint: /ca
@@ -47,14 +48,14 @@ spec:
       {{- else }}
       args: ['-s', 'http://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
       {{- end }}
-      {{- if ne (len (dig "tests" "hostAliases" "" .Values)) 0 }}
+      {{- if ne (len (dig "tests" "hostAliases" "" $values)) 0 }}
       hostAliases:
         {{- toYaml .Values.tests.hostAliases | nindent 8 }}
       {{- end }}
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
-  {{- if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
+  {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
   volumes:
     - name: custom-ca
       secret:
