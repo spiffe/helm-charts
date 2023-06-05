@@ -14,17 +14,17 @@ A Helm chart to install the SPIRE agent.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| bash.image.pullPolicy | string | `"Always"` | The image pull policy |
-| bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
-| bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| bash.image.tag | string | `"latest-20230517"` | Overrides the image tag |
-| bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | clusterName | string | `"example-cluster"` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
+| fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
+| fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| fsGroupFix.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | fsGroupFix.resources | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
