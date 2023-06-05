@@ -81,6 +81,22 @@ affinity: {}
 
 topologySpreadConstraints: []
 
+livenessProbe:
+  # -- Failure threshold count for livenessProbe
+  failureThreshold: 2
+  # -- Initial delay seconds for livenessProbe
+  initialDelaySeconds: 15
+  # -- Period seconds for livenessProbe
+  periodSeconds: 60
+  # -- Timeout in seconds for livenessProbe
+  timeoutSeconds: 3
+
+readinessProbe:
+  # -- Initial delay seconds for readinessProbe
+  initialDelaySeconds: 5
+  # -- Period seconds for readinessProbe
+  periodSeconds: 5
+
 persistence:
   size: 1Gi
   accessMode: ReadWriteOnce
@@ -127,6 +143,26 @@ federation:
     port: 8443
     address: "0.0.0.0"
 
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      # If Profile Type == https_spiffe:
+      # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    hosts:
+      - host: spire-server-federation.example.org
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+    #  - hosts:
+    #      - spire-server-federation.example.org
+    #    If Profile Type == https_web:
+    #    secretName: spire-server-federation-tls
+
 ca_subject:
   country: NL
   organization: Example
@@ -155,6 +191,11 @@ upstreamAuthority:
     # -- Specify to use a namespace other then the one the chart is installed into
     namespace: ""
     kube_config_file: ""
+  spire:
+    enabled: false
+    server:
+      address: ""
+      port: 8081
 
 notifier:
   k8sbundle:
@@ -247,6 +288,24 @@ telemetry:
       namespace: ""
       labels: {}
 
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+  hosts:
+    - host: spire-server.example.org
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: spire-server-tls
+  #    hosts:
+  #      - spire-server.example.org
+
 extraVolumes: []
 extraVolumeMounts: []
 extraContainers: []
@@ -268,19 +327,30 @@ nodeAttestor:
 tornjak:
   # -- Deploys Tornjak API (backend) (Not for production)
   enabled: false
-  # -- Tornjak API image
   image:
+    # -- The OCI registry to pull the Tornjak image from
     registry: ghcr.io
+    # -- The repository within the registry
     repository: spiffe/tornjak-backend
+    # -- The Tornjak image pull policy
     pullPolicy: IfNotPresent
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: "v1.2.0"
+    tag: "v1.2.1"
   service:
     type: ClusterIP
     port: 10000
     annotations: {}
+
+  startupProbe:
+    failureThreshold: 3
+    # -- Initial delay seconds for
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
   config:
     # -- persistent DB for storing Tornjak specific information
     dataStore:
