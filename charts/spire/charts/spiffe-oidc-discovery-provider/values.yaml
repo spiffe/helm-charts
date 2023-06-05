@@ -215,3 +215,17 @@ tests:
       version: ""
       # -- Overrides the image tag
       tag: 5.2.15
+
+tools:
+  kubectl:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: docker.io
+      # -- The repository within the registry
+      repository: rancher/kubectl
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: ""
