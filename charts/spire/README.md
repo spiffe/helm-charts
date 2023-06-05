@@ -466,6 +466,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | upstream-spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | upstream-spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
+| upstream-spiffe-csi-driver.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| upstream-spiffe-csi-driver.livenessProbe.timeoutSeconds | int | `5` | Timeout value in seconds for livenessProbe |
 | upstream-spiffe-csi-driver.nameOverride | string | `""` |  |
 | upstream-spiffe-csi-driver.namespaceOverride | string | `""` |  |
 | upstream-spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -500,6 +502,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | upstream-spire-agent.imagePullSecrets | list | `[]` |  |
 | upstream-spire-agent.initContainers | list | `[]` |  |
+| upstream-spire-agent.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| upstream-spire-agent.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
 | upstream-spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | upstream-spire-agent.nameOverride | string | `""` |  |
 | upstream-spire-agent.namespaceOverride | string | `""` |  |
@@ -507,6 +511,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.podAnnotations | object | `{}` |  |
 | upstream-spire-agent.podSecurityContext | object | `{}` |  |
 | upstream-spire-agent.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| upstream-spire-agent.readinessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for readinessProbe |
+| upstream-spire-agent.readinessProbe.periodSeconds | int | `60` | Period seconds for readinessProbe |
 | upstream-spire-agent.resources | object | `{}` |  |
 | upstream-spire-agent.securityContext | object | `{}` |  |
 | upstream-spire-agent.server.address | string | `""` |  |
