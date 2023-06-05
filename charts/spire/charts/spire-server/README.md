@@ -96,6 +96,10 @@ A Helm chart to install the SPIRE server.
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
+| livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| livenessProbe.timeoutSeconds | int | `3` | Timeout in seconds for livenessProbe |
 | logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
@@ -108,6 +112,8 @@ A Helm chart to install the SPIRE server.
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
@@ -134,6 +140,11 @@ A Helm chart to install the SPIRE server.
 | tornjak.service.annotations | object | `{}` |  |
 | tornjak.service.port | int | `10000` |  |
 | tornjak.service.type | string | `"ClusterIP"` |  |
+| tornjak.startupProbe.failureThreshold | int | `3` |  |
+| tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
+| tornjak.startupProbe.periodSeconds | int | `10` |  |
+| tornjak.startupProbe.successThreshold | int | `1` |  |
+| tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
