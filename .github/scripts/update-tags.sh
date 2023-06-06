@@ -45,6 +45,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
     VERSION=$(yq e ".${QUERY}.tag" "$VALUES")
+    # Disabling shellcheck SC2086 so that SORTFLAGS can be properly applied. It can be multiple flags, so can't be quoted.
     # shellcheck disable=SC2086
     LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort ${SORTFLAGS}| tail -n 1)
 
