@@ -106,6 +106,7 @@ waitForIt:
     tag: latest-20230517
   resources: {}
 
+# When running as non root, ensure the socket path is the correct permissions
 fsGroupFix:
   image:
     # -- The OCI registry to pull the image from
@@ -118,6 +119,7 @@ fsGroupFix:
     version: ""
     # -- Overrides the image tag
     tag: latest-20230517
+  # -- Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources: {}
 
 # workloadAttestors determine a workload's properties and then generate a set of selectors associated with it.
