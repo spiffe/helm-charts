@@ -25,7 +25,7 @@ A Helm chart to install the SPIRE agent.
 | fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
 | fsGroupFix.image.tag | string | `"latest-20230517"` | Overrides the image tag |
 | fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| fsGroupFix.resources | object | `{}` |  |
+| fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
