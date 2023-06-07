@@ -79,14 +79,12 @@ spec:
             httpGet:
               path: /live
               port: healthz
-            initialDelaySeconds: 15
-            periodSeconds: 60
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
               port: healthz
-            initialDelaySeconds: 15
-            periodSeconds: 60
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
         {{- if gt (len .Values.extraContainers) 0 }}

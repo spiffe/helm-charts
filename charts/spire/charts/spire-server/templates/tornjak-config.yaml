@@ -7,7 +7,12 @@ metadata:
 data:
   server.conf: |
     server {
-      metadata = "insert metadata"
+      spire_socket_path = "unix:///tmp/spire-server/private/api.sock" # socket to communicate with SPIRE server
+
+      http {
+        enabled = true # if true, opens HTTP server
+        port = "10000" # if HTTP enabled, opens HTTP listen port at container port 10000
+      }
     }
 
     plugins {

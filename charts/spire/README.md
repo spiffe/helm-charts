@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.3](https://img.shields.io/badge/AppVersion-1.6.3-informational?style=flat-square)
+![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -19,9 +19,9 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 |:-----------|:-------------------|
 | SPIRE      | `1.5.3+`, `1.6.3+` |
 | Helm       | `3.x`              |
-| Kubernetes | `1.21+`            |
+| Kubernetes | `1.22+`            |
 
-> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden. *The first version we tested this chart with is `1.21`.*
+> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden.
 
 ## Prerequisites
 
@@ -96,8 +96,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 
 ## Requirements
 
-Kubernetes: `>=1.21.0-0`
-
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
@@ -133,6 +131,8 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
+| spiffe-csi-driver.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| spiffe-csi-driver.livenessProbe.timeoutSeconds | int | `5` | Timeout value in seconds for livenessProbe |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
 | spiffe-csi-driver.namespaceOverride | string | `""` |  |
 | spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -189,11 +189,15 @@ Kubernetes: `>=1.21.0-0`
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.nodeSelector | object | `{}` |  |
 | spiffe-oidc-discovery-provider.podAnnotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.podSecurityContext | object | `{}` |  |
+| spiffe-oidc-discovery-provider.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| spiffe-oidc-discovery-provider.readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | spiffe-oidc-discovery-provider.replicaCount | int | `1` |  |
 | spiffe-oidc-discovery-provider.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.securityContext | object | `{}` |  |
@@ -231,6 +235,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
+| spire-agent.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| spire-agent.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
 | spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-agent.nameOverride | string | `""` |  |
 | spire-agent.namespaceOverride | string | `""` |  |
@@ -238,6 +244,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-agent.podAnnotations | object | `{}` |  |
 | spire-agent.podSecurityContext | object | `{}` |  |
 | spire-agent.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| spire-agent.readinessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for readinessProbe |
+| spire-agent.readinessProbe.periodSeconds | int | `60` | Period seconds for readinessProbe |
 | spire-agent.resources | object | `{}` |  |
 | spire-agent.securityContext | object | `{}` |  |
 | spire-agent.server.address | string | `""` |  |
@@ -319,6 +327,13 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | spire-server.federation.bundleEndpoint.port | int | `8443` |  |
 | spire-server.federation.enabled | bool | `false` |  |
+| spire-server.federation.ingress.annotations | object | `{}` |  |
+| spire-server.federation.ingress.className | string | `""` |  |
+| spire-server.federation.ingress.enabled | bool | `false` |  |
+| spire-server.federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.federation.ingress.tls | list | `[]` |  |
 | spire-server.fullnameOverride | string | `""` |  |
 | spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
@@ -326,8 +341,19 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | spire-server.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.imagePullSecrets | list | `[]` |  |
+| spire-server.ingress.annotations | object | `{}` |  |
+| spire-server.ingress.className | string | `""` |  |
+| spire-server.ingress.enabled | bool | `false` |  |
+| spire-server.ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
+| spire-server.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
+| spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| spire-server.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| spire-server.livenessProbe.timeoutSeconds | int | `3` | Timeout in seconds for livenessProbe |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
@@ -340,6 +366,8 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.persistence.storageClass | string | `nil` |  |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
+| spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| spire-server.readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | spire-server.replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | spire-server.resources | object | `{}` |  |
 | spire-server.securityContext | object | `{}` |  |
@@ -357,13 +385,20 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
-| spire-server.tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
-| spire-server.tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
+| spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
+| spire-server.tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
+| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
 | spire-server.tornjak.service.port | int | `10000` |  |
 | spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
+| spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
+| spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
+| spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |
+| spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
+| spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
@@ -376,6 +411,9 @@ Kubernetes: `>=1.21.0-0`
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | spire-server.upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
+| spire-server.upstreamAuthority.spire.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
+| spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
 | tornjak-frontend.affinity | object | `{}` |  |
 | tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | tornjak-frontend.fullnameOverride | string | `""` |  |
@@ -398,6 +436,12 @@ Kubernetes: `>=1.21.0-0`
 | tornjak-frontend.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
+| tornjak-frontend.startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
+| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold count for startupProbe |
+| tornjak-frontend.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
+| tornjak-frontend.startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
+| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold count for startupProbe |
+| tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
 

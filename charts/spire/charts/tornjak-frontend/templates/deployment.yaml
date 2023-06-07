@@ -28,6 +28,13 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              ln -s /tmp/env.js build/env.js
+              npx react-inject-env set -n /tmp/env.js
+              serve -s build -p $PORT_FE
           ports:
             - name: http
               containerPort: 3000
@@ -39,15 +46,18 @@ spec:
             - name: REACT_APP_SPIRE_HEALTH_CHECK_ENABLE
               value: "{{ .Values.spireHealthCheck.enabled }}"
             {{- end }}
+          {{- if .Values.startupProbe.enabled }}
           startupProbe:
             httpGet:
               scheme: HTTP
+              path: /tornjak/serverinfo
               port: {{ .Values.service.port }}
-            failureThreshold: 6
-            initialDelaySeconds: 120
-            periodSeconds: 45
-            successThreshold: 1
-            timeoutSeconds: 20
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            successThreshold: {{ .Values.startupProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+          {{- end }}
           volumeMounts:
             - name: cache
               mountPath: /usr/src/app/node_modules/.cache

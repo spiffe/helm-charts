@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.3](https://img.shields.io/badge/AppVersion-1.6.3-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
 
 A Helm chart to install the SPIRE server.
 
@@ -73,6 +73,13 @@ A Helm chart to install the SPIRE server.
 | federation.bundleEndpoint.address | string | `"0.0.0.0"` |  |
 | federation.bundleEndpoint.port | int | `8443` |  |
 | federation.enabled | bool | `false` |  |
+| federation.ingress.annotations | object | `{}` |  |
+| federation.ingress.className | string | `""` |  |
+| federation.ingress.enabled | bool | `false` |  |
+| federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
+| federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| federation.ingress.tls | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
@@ -80,8 +87,19 @@ A Helm chart to install the SPIRE server.
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
+| ingress.annotations | object | `{}` |  |
+| ingress.className | string | `""` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
+| livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| livenessProbe.timeoutSeconds | int | `3` | Timeout in seconds for livenessProbe |
 | logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
@@ -94,6 +112,8 @@ A Helm chart to install the SPIRE server.
 | persistence.storageClass | string | `nil` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
@@ -111,13 +131,20 @@ A Helm chart to install the SPIRE server.
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
-| tornjak.image | object | `{"pullPolicy":"IfNotPresent","registry":"ghcr.io","repository":"spiffe/tornjak-backend","tag":"v1.2.0","version":""}` | Tornjak API image |
-| tornjak.image.tag | string | `"v1.2.0"` | Overrides the image tag |
+| tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
+| tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
+| tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
+| tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
 | tornjak.service.port | int | `10000` |  |
 | tornjak.service.type | string | `"ClusterIP"` |  |
+| tornjak.startupProbe.failureThreshold | int | `3` |  |
+| tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
+| tornjak.startupProbe.periodSeconds | int | `10` |  |
+| tornjak.startupProbe.successThreshold | int | `1` |  |
+| tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
@@ -130,5 +157,8 @@ A Helm chart to install the SPIRE server.
 | upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
 | upstreamAuthority.disk.secret.name | string | `"spiffe-upstream-ca"` | If secret creation is disabled, the secret with this name will be used. |
+| upstreamAuthority.spire.enabled | bool | `false` |  |
+| upstreamAuthority.spire.server.address | string | `""` |  |
+| upstreamAuthority.spire.server.port | int | `8081` |  |
 
 ----------------------------------------------
