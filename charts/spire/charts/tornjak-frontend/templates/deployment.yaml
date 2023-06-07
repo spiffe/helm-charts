@@ -50,6 +50,7 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
+              path: /tornjak/serverinfo
               port: {{ .Values.service.port }}
             failureThreshold: {{ .Values.startupProbe.failureThreshold }}
             initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
