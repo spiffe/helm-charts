@@ -56,7 +56,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
 
     if [ "${VERSION}" != "${LATEST_VERSION}" ]; then
       echo "New image version found: ${REGISTRY}/${REPOSITORY}:${LATEST_VERSION}"
-      python3 -c "import sys; from dict_deep import deep_set; import ruamel.yaml; y = ruamel.yaml.YAML(); y.indent(mapping=2, sequence=4, offset=2); y.preserve_quotes = True; d = y.load(open('${VALUES}')); deep_set(d, '${QUERY}.tag', '${LATEST_VERSION}'); y.dump(d, sys.stdout);" > /tmp/$$
+      "${SCRIPTPATH}/edit-yaml.py" > /tmp/$$
       mv /tmp/$$ "${VALUES}"
     fi
   done
