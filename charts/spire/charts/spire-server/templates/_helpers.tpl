@@ -176,6 +176,7 @@ to merge in values, but spire needs arrays.
 {{- $plugins := include "spire-server.plugins_reformat" $config.plugins | fromYaml }}
 {{- $_ := set $config "plugins" $plugins }}
 {{- $config | toPrettyJson }}
+{{- end }}
 
 {{- define "spire-server.kubectl-image" }}
 {{- $root := deepCopy . }}
