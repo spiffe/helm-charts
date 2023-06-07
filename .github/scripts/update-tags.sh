@@ -37,17 +37,17 @@ fi
 
 jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
   jq -r ".\"${CHART}\" | keys[]" "$IMAGEJSON" | while read -r IDX; do
-    QUERY=$(jq -r ".\"${CHART}\"[${IDX}].query" "$IMAGEJSON")
+    export QUERY=$(jq -r ".\"${CHART}\"[${IDX}].query" "$IMAGEJSON")
     FILTER=$(jq -r ".\"${CHART}\"[${IDX}].filter" "$IMAGEJSON")
     SORTFLAGS=$(jq -r ".\"${CHART}\"[${IDX}].\"sort-flags\"" "$IMAGEJSON")
 
-    VALUES="${SCRIPTPATH}/../../charts/spire/charts/${CHART}"
+    export VALUES="${SCRIPTPATH}/../../charts/spire/charts/${CHART}"
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
     VERSION=$(yq e ".${QUERY}.tag" "$VALUES")
     # Disabling shellcheck SC2086 so that SORTFLAGS can be properly applied. It can be multiple flags, so can't be quoted.
     # shellcheck disable=SC2086
-    LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort ${SORTFLAGS}| tail -n 1)
+    export LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort ${SORTFLAGS}| tail -n 1)
 
     if trivy image "${REGISTRY}/${REPOSITORY}:${VERSION}" --exit-code 1; then
       echo No CVE found. Skipping.
