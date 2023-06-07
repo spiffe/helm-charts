@@ -357,8 +357,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
-| spire-server.nodeAttestor.k8sPsat.enabled | bool | `true` |  |
-| spire-server.nodeAttestor.k8sPsat.serviceAccountAllowList | list | `[]` |  |
+| spire-server.nodeAttestor.k8s_psat.enabled | bool | `true` |  |
+| spire-server.nodeAttestor.k8s_psat.serviceAccountAllowList | list | `[]` |  |
 | spire-server.nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
@@ -400,13 +400,13 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
 | spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
-| spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
-| spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
-| spire-server.upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
-| spire-server.upstreamAuthority.certManager.issuer_name | string | `"spire-ca"` |  |
-| spire-server.upstreamAuthority.certManager.kube_config_file | string | `""` |  |
-| spire-server.upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
-| spire-server.upstreamAuthority.certManager.rbac.create | bool | `true` |  |
+| spire-server.upstreamAuthority.cert-manager.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.cert-manager.issuer_group | string | `"cert-manager.io"` |  |
+| spire-server.upstreamAuthority.cert-manager.issuer_kind | string | `"Issuer"` |  |
+| spire-server.upstreamAuthority.cert-manager.issuer_name | string | `"spire-ca"` |  |
+| spire-server.upstreamAuthority.cert-manager.kube_config_file | string | `""` |  |
+| spire-server.upstreamAuthority.cert-manager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
+| spire-server.upstreamAuthority.cert-manager.rbac.create | bool | `true` |  |
 | spire-server.upstreamAuthority.disk.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
