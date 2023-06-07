@@ -68,7 +68,8 @@ shorthand to represent, respectively `at`, `similar / not`,
 MUST NOT contain such symbols, as it burdens the reader to deduce the
 intent of the writer.
 
-### Camel Case for created elements.
+### Camel Case for created elements
+
 Elements that refer to components that the project has created should
 exclusively use camel case, with a the first word being lower case.  To
 illustrate, a "card sort order" path element would read "cardSortOrder".
