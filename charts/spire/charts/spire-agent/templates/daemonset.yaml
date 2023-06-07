@@ -62,9 +62,11 @@ spec:
             - name: spire-config
               mountPath: /run/spire/config
               readOnly: true
+            {{- if eq (len .Values.trustBundleURL) 0 }}
             - name: spire-bundle
               mountPath: /run/spire/bundle
               readOnly: true
+            {{- end }}
             - name: spire-agent-socket-dir
               mountPath: {{ include "spire-agent.socket-path" . | dir }}
               readOnly: false
@@ -77,14 +79,12 @@ spec:
             httpGet:
               path: /live
               port: healthz
-            initialDelaySeconds: 15
-            periodSeconds: 60
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
               port: healthz
-            initialDelaySeconds: 15
-            periodSeconds: 60
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
         {{- if gt (len .Values.extraContainers) 0 }}
@@ -98,9 +98,11 @@ spec:
         - name: spire-config
           configMap:
             name: {{ include "spire-agent.fullname" . }}
+        {{- if eq (len .Values.trustBundleURL) 0 }}
         - name: spire-bundle
           configMap:
             name: {{ include "spire-lib.bundle-configmap" . }}
+        {{- end }}
         - name: spire-token
           projected:
             sources:

@@ -34,6 +34,18 @@ git checkout «your-branch»
 git rebase main
 ```
 
+## Testing
+
+Our CI pipeline takes care of the majority of the testing of this Chart. Other ways for you to test are by running `make test` locally using:
+
+> **Warning**: Ensure to run the test on a dedicated k8s cluster that does not have Spire installed yet.
+
+```shell
+make test
+```
+
+Another approach to testing the chart is by installing one of the examples in your own cluster to verify your contributed changes work before issueing your PR.
+
 ## Generating documentation
 
 Any changes to Chart.yaml or values.yaml require an update of the README.md. This update can easily be generated using [helm-docs][].

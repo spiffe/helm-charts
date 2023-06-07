@@ -1,0 +1,28 @@
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "spire-tornjak.fullname" . }}-test-connection"
+  namespace: {{ include "spire-server.namespace" . }}
+  labels:
+    {{- include "spire-server.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  securityContext:
+    {{- toYaml .Values.podSecurityContext | nindent 4 }}
+  containers:
+    - name: curl-tornjak-backend
+      image: cgr.dev/chainguard/bash:latest
+      command: ['curl']
+      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.service.port }}/api/tornjak/serverinfo']
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+    - name: curl-tornjak-backend-and-spire
+      image: cgr.dev/chainguard/bash:latest
+      command: ['curl']
+      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.service.port }}/api/healthcheck']
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+  restartPolicy: Never
+{{- end }}

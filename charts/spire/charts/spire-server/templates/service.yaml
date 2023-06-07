@@ -5,7 +5,7 @@ metadata:
   namespace: {{ include "spire-server.namespace" . }}
   {{- with .Values.service.annotations }}
   annotations:
-    {{- toYaml . | nindent 8 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}

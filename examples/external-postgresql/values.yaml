@@ -1,0 +1,10 @@
+spire-server:
+  dataStore:
+    sql:
+      databaseType: postgres
+      databaseName: spire
+      host: postgresql
+      port: 5432
+      username: spire
+      options:
+        - sslmode: disable

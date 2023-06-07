@@ -1,4 +1,5 @@
 {{- define "spire-server.yaml-config" -}}
+{{- $upstreamAuthorityUsed := 0 }}
 {{- $root := . }}
 server:
   bind_address: "0.0.0.0"
@@ -33,8 +34,7 @@ plugins:
   DataStore:
     sql:
       plugin_data:
-        database_type: "sqlite3"
-        connection_string: "/run/spire/data/datastore.sqlite3"
+        {{ include "spire-server.datastore-config" . | nindent 8 }}
 
   {{- with .Values.nodeAttestor.k8s_psat }}
   {{- if eq (.enabled | toString) "true" }}
@@ -60,6 +60,7 @@ plugins:
 
   {{- with .Values.upstreamAuthority.disk }}
   {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
     disk:
       plugin_data:
@@ -73,6 +74,7 @@ plugins:
 
   {{- with (index .Values.upstreamAuthority "cert-manager") }}
   {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
     cert-manager:
       plugin_data:
@@ -85,6 +87,21 @@ plugins:
         {{- end }}
   {{- end }}
   {{- end }}
+
+  {{- with .Values.upstreamAuthority.spire }}
+  {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
+  UpstreamAuthority:
+    - spire:
+        plugin_data:
+          server_address: {{ .server.address | quote }}
+          server_port: {{ .server.port }}
+          workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
+  {{- end }}
+  {{- end }}
+{{- if gt $upstreamAuthorityUsed 1 }}
+{{- fail "You can only enable a single Upstream Authority." }}
+{{- end }}
 
 health_checks:
   listener_enabled: true
@@ -105,6 +122,10 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire-server.fullname" . }}
   namespace: {{ include "spire-server.namespace" . }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 data:
   server.conf: |
     {{- include "spire-server.reformat-and-yaml2json" (dict "config" (include "spire-server.yaml-config" .) "root" .) | nindent 4 }}

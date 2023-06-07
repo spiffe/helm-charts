@@ -24,9 +24,6 @@ spire-server:
     seccompProfile:
       type: RuntimeDefault
 
-  dataStorage:
-    enabled: true
-
   logLevel: info
 
   controllerManager:
@@ -73,6 +70,21 @@ spiffe-oidc-discovery-provider:
     allowPrivilegeEscalation: false
     runAsNonRoot: true
     readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
+
+tornjak-frontend:
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: [ALL]
     seccompProfile:

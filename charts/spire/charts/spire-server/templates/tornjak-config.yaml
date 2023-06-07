@@ -1,0 +1,28 @@
+{{- if eq (.Values.tornjak.enabled | toString) "true" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spire-tornjak.config" . }}
+  namespace: {{ include "spire-server.namespace" . }}
+data:
+  server.conf: |
+    server {
+      spire_socket_path = "unix:///tmp/spire-server/private/api.sock" # socket to communicate with SPIRE server
+
+      http {
+        enabled = true # if true, opens HTTP server
+        port = "10000" # if HTTP enabled, opens HTTP listen port at container port 10000
+      }
+    }
+
+    plugins {
+    {{- if .Values.tornjak.config.dataStore }}
+      DataStore "sql" {
+        plugin_data {
+          drivername = "{{ .Values.tornjak.config.dataStore.driver }}"
+          filename = "{{ .Values.tornjak.config.dataStore.file }}"
+        }
+      }
+    {{- end }}
+    }
+{{- end }}
