@@ -104,8 +104,8 @@ or the element is restructured to avoid confusion.  For example,
 
 Acronyms and Initialisim occasionally use periods in their presentation.
 When they do, the periods MUST be removed without replacement by
-another character.  To illustrate `U.S.S.R.` should be written as
-`USSR`.
+another character.  To illustrate `U.N.` for the United Nations should
+be written as `UN`.
 
 ### Abbreviations
 
