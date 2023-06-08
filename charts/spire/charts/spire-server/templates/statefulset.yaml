@@ -87,16 +87,12 @@ spec:
             httpGet:
               path: /live
               port: healthz
-            failureThreshold: 2
-            initialDelaySeconds: 15
-            periodSeconds: 60
-            timeoutSeconds: 3
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
               port: healthz
-            initialDelaySeconds: 5
-            periodSeconds: 5
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -167,12 +163,9 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
+              path: /api/tornjak/serverinfo
               port: 10000
-            failureThreshold: 3
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 5
+            {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
           args:
             - --spire-config
             - /run/spire/config/server.conf

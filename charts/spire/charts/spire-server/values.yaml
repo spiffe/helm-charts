@@ -81,6 +81,22 @@ affinity: {}
 
 topologySpreadConstraints: []
 
+livenessProbe:
+  # -- Failure threshold count for livenessProbe
+  failureThreshold: 2
+  # -- Initial delay seconds for livenessProbe
+  initialDelaySeconds: 15
+  # -- Period seconds for livenessProbe
+  periodSeconds: 60
+  # -- Timeout in seconds for livenessProbe
+  timeoutSeconds: 3
+
+readinessProbe:
+  # -- Initial delay seconds for readinessProbe
+  initialDelaySeconds: 5
+  # -- Period seconds for readinessProbe
+  periodSeconds: 5
+
 persistence:
   size: 1Gi
   accessMode: ReadWriteOnce
@@ -326,6 +342,15 @@ tornjak:
     type: ClusterIP
     port: 10000
     annotations: {}
+
+  startupProbe:
+    failureThreshold: 3
+    # -- Initial delay seconds for
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+
   config:
     # -- persistent DB for storing Tornjak specific information
     dataStore:

@@ -3,7 +3,7 @@ name: Helm Chart CI
 on:
   workflow_dispatch:
   pull_request:
-    types: [synchronize, opened, reopened, edited]
+    types: [synchronize, opened, reopened]
     paths:
       - 'charts/**'
       - '.github/workflows/helm-chart-ci.yaml'
@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  HELM_VERSION: v3.11.1
-  PYTHON_VERSION: 3.11.2
+  HELM_VERSION: v3.12.0
+  PYTHON_VERSION: 3.11.3
   CHART_TESTING_VERSION: v3.8.0
 
 jobs:
@@ -61,7 +61,7 @@ jobs:
           if [ $res -eq 0 ]; then
             {
               echo "## Hardcoded images"
-              echo 
+              echo
               echo ":x: These templates were found to be using statically defined images and not overridable ones. Please fix."
               echo
               cat /tmp/findings
@@ -136,10 +136,10 @@ jobs:
         # Kubernetes, but can go back farther as long as we don't need heroics
         # to pull it off (i.e. kubectl version juggling).
         k8s:
-          - v1.27.0
-          - v1.26.3
-          - v1.25.8
-          - v1.24.12
+          - v1.27.2
+          - v1.26.4
+          - v1.25.9
+          - v1.24.13
           - v1.23.17
           - v1.22.17
         values:
