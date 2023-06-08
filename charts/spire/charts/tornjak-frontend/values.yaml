@@ -87,7 +87,7 @@ startupProbe:
   periodSeconds: 10
   # -- Timeout seconds for startupProbe
   timeoutSeconds: 5
-  # -- Failure threshold for startupProbe
+  # -- Failure threshold count for startupProbe
   failureThreshold: 6
-  # -- Success threshold for startupProbe
+  # -- Success threshold count for startupProbe
   successThreshold: 1

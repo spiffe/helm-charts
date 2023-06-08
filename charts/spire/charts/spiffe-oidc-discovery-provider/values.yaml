@@ -57,6 +57,18 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+readinessProbe:
+  # -- Initial delay seconds for readinessProbe
+  initialDelaySeconds: 5
+  # -- Period seconds for readinessProbe
+  periodSeconds: 5
+
+livenessProbe:
+  # -- Initial delay seconds for livenessProbe
+  initialDelaySeconds: 5
+  # -- Period seconds for livenessProbe
+  periodSeconds: 5
+
 podAnnotations: {}
 
 insecureScheme:
