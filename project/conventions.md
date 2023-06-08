@@ -74,6 +74,17 @@ Elements that refer to components that the project has created should
 exclusively use camel case, with a the first word being lower case.  To
 illustrate, a "card sort order" path element would read "cardSortOrder".
 
+### Exact Case for non-created elements
+
+Elements that reflect components that have well known names should make
+every effort to use the well known name exactly, even if the rules for
+captialization don't follow other naming conventions.  Exceptions to
+this SHOULD include replacing problematic characters with underscores,
+to improve template functionality.  To illustrate, the operating system 
+NeXTSTEP would read as "NeXTSTEP" and "NeXT Computers" SHOULD be written
+as "NeXT_Computers" but may also be written as "NeXTComputers" if clarity
+is maintained.
+
 ### Acronyms and Minimalists
 
 Occasionally the use of an Acronym or Minimalist is used as part of an
