@@ -3,25 +3,25 @@
     {
       "query": "waitForIt.image",
       "filter": "^latest-",
-      "sort-flags": ""
+      "sort-flags": []
     }
   ],
   "spiffe-csi-driver/values.yaml": [
     {
       "query": "nodeDriverRegistrar.image",
       "filter": "^v",
-      "sort-flags": ""
+      "sort-flags": []
     }
   ],
   "spiffe-oidc-discovery-provider/values.yaml": [
     {
       "query": "insecureScheme.nginx.image",
       "filter": "^[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+-alpine$",
-      "sort-flags": ""
+      "sort-flags": []
     }, {
       "query": "telemetry.prometheus.nginxExporter.image",
       "filter": "^[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+$",
-      "sort-flags": "-t . -k1,1n -k2,2n -k3,3n"
+      "sort-flags": ["-t", ".", "-k1,1n", "-k2,2n", "-k3,3n"]
     }
   ]
 }
