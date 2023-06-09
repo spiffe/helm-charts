@@ -85,3 +85,4 @@ Create the name of the service account to use
 {{- define "spiffe-oidc-discovery-provider.workload-api-socket-path" -}}
 {{- printf "/spiffe-workload-api/%s" .Values.agentSocketName }}
 {{- end }}
+

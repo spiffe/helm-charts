@@ -106,8 +106,8 @@ jwtIssuer: oidc-discovery.example.org
 config:
   # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
-  # -- Override the domains to use. (jwtIssuer is automatically added to this list).
-  domains:
+  # -- Add additional domains that can be used for oidc discovery
+  additionalDomains:
   - localhost
 
   acme:
