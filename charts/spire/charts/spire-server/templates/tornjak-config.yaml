@@ -11,7 +11,7 @@ data:
       {{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
       http {
         enabled = true # if true, opens HTTP server
-        port = "10000" # if HTTP enabled, opens HTTP listen port at container port 10000
+        port = "{{ .Values.tornjak.config.http.port }}" # if HTTP enabled, opens HTTP listen port at container port 10000
       }
       {{- end }}
       {{- if eq (.Values.tornjak.config.connectionType | toString) "tls" }}

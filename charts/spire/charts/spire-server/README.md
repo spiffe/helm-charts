@@ -145,18 +145,11 @@ A Helm chart to install the SPIRE server.
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
+| tornjak.config.connectionType | string | `"http"` | Tornjak supports 3 connection types: `http`, `tls`, and `mtls`. Select only one. |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
-| tornjak.config.http.enabled | bool | `true` | Enables Tornjak HTTP (insecure) service |
-| tornjak.config.http.port | int | `10000` | Container port value for HTTP |
-| tornjak.config.http.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Service to handle Tornjak HTTP connection |
-| tornjak.config.mtls.enabled | bool | `false` | Enables Tornjak TLS service. When 'true', the 'serverSecret' and 'userSecret' must be created prior to installing this chart |
-| tornjak.config.mtls.port | int | `30000` | Container port value for mTLS |
-| tornjak.config.mtls.service | object | `{"annotations":{},"port":30000,"type":"ClusterIP"}` | Service to handle Tornjak mTLS connection |
-| tornjak.config.serverSecret | string | `"tornjak-server-secret"` | Name of the secret containing server side key and certificate for TLS verification |
-| tornjak.config.tls.enabled | bool | `false` | Enables Tornjak TLS service. When 'true', the 'serverSecret' must be created prior to installing this chart |
-| tornjak.config.tls.port | int | `20000` | Container port value for TLS |
-| tornjak.config.tls.service | object | `{"annotations":{},"port":20000,"type":"ClusterIP"}` | Service to handle Tornjak TLS connection |
-| tornjak.config.userSecret | string | `"tornjak-user-secret"` | Name of the secret containing user CA for mTLS verification |
+| tornjak.config.serverSecret | string | `"tornjak-server-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
+| tornjak.config.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
+| tornjak.config.userSecret | string | `"tornjak-user-secret"` | Name of the secret containing user CA for mTLS verification (required for `mtls` connectionType) |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
