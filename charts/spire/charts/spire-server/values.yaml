@@ -390,7 +390,7 @@ tornjak:
     # Tornjak TLS service
     tls:
       # -- Enables Tornjak TLS service
-      enabled: true
+      enabled: false
       # -- Container port value for TLS
       port: 20000
       # -- Certificate for TLS connection
@@ -406,7 +406,7 @@ tornjak:
     # Tornjak mTLS service
     mtls:
       # -- Enables Tornjak TLS service
-      enabled: true
+      enabled: false
       # -- Container port value for mTLS
       port: 30000
       # -- Certificate for mTLS connection

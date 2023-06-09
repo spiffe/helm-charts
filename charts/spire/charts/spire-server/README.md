@@ -149,10 +149,15 @@ A Helm chart to install the SPIRE server.
 | tornjak.config.http.enabled | bool | `true` | Enables Tornjak HTTP (insecure) service |
 | tornjak.config.http.port | int | `10000` | Container port value for HTTP |
 | tornjak.config.http.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Service to handle Tornjak HTTP connection |
-| tornjak.config.mtls.enabled | bool | `true` | Enables Tornjak TLS service |
+| tornjak.config.mtls.ca | string | `"/opt/spire/sample-keys/rootCA.pem"` | CA for mTLS connection |
+| tornjak.config.mtls.cert | string | `"/opt/spire/sample-keys/cert.pem"` | Certificate for mTLS connection |
+| tornjak.config.mtls.enabled | bool | `false` | Enables Tornjak TLS service |
+| tornjak.config.mtls.key | string | `"/opt/spire/sample-keys/key.pem"` | Key for mTLS connection |
 | tornjak.config.mtls.port | int | `30000` | Container port value for mTLS |
 | tornjak.config.mtls.service | object | `{"annotations":{},"port":30000,"type":"ClusterIP"}` | Service to handle Tornjak mTLS connection |
-| tornjak.config.tls.enabled | bool | `true` | Enables Tornjak TLS service |
+| tornjak.config.tls.cert | string | `"/opt/spire/sample-keys/cert.pem"` | Certificate for TLS connection |
+| tornjak.config.tls.enabled | bool | `false` | Enables Tornjak TLS service |
+| tornjak.config.tls.key | string | `"/opt/spire/sample-keys/key.pem"` | Key for TLS connection |
 | tornjak.config.tls.port | int | `20000` | Container port value for TLS |
 | tornjak.config.tls.service | object | `{"annotations":{},"port":20000,"type":"ClusterIP"}` | Service to handle Tornjak TLS connection |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
