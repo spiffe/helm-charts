@@ -68,6 +68,8 @@ shorthand to represent, respectively `at`, `similar / not`,
 MUST NOT contain such symbols, as it burdens the reader to deduce the
 intent of the writer.
 
+`-` SHOULD NOT be used when there are good alternatives. Its reasonable to use when spire itself uses it for config such as plugin names or required by helm for child charts.
+
 ### Camel Case for created elements
 
 Elements that refer to components that the project has created should
