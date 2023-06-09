@@ -62,7 +62,7 @@ characters, even when such characters are supported by Helm.  ASCII
 letters, upper and lower case, ASCII numerals, and the ASCII underscore
 character are always permitted.  
 
-Other characters, such as `@`, `~`, `-`, `&`, `+` are often used as
+Other characters, such as `@`, `~`, `&`, `+` are often used as
 shorthand to represent, respectively `at`, `similar / not`, 
 `minus / without`, `and / reference`, `plus / with`.  Helm key elements
 MUST NOT contain such symbols, as it burdens the reader to deduce the
