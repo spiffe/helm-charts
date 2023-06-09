@@ -12,17 +12,19 @@ spec:
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
+   {{- if eq (.Values.tornjak.config.http.enabled | toString) "true" }}
     - name: curl-tornjak-backend
       image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
-      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.service.port }}/api/tornjak/serverinfo']
+      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}-http.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.config.http.service.port }}/api/tornjak/serverinfo']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     - name: curl-tornjak-backend-and-spire
       image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
-      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.service.port }}/api/healthcheck']
+      args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.backend" . }}-http.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.config.http.service.port }}/api/healthcheck']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
+    {{- end }}
   restartPolicy: Never
 {{- end }}

@@ -145,7 +145,16 @@ A Helm chart to install the SPIRE server.
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
-| tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
+| tornjak.config.http.enabled | bool | `true` | Enables Tornjak HTTP (insecure) service |
+| tornjak.config.http.port | int | `10000` | Container port value for HTTP |
+| tornjak.config.http.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Service to handle Tornjak HTTP connection |
+| tornjak.config.mtls.enabled | bool | `true` | Enables Tornjak TLS service |
+| tornjak.config.mtls.port | int | `30000` | Container port value for mTLS |
+| tornjak.config.mtls.service | object | `{"annotations":{},"port":30000,"type":"ClusterIP"}` | Service to handle Tornjak mTLS connection |
+| tornjak.config.tls.enabled | bool | `true` | Enables Tornjak TLS service |
+| tornjak.config.tls.port | int | `20000` | Container port value for TLS |
+| tornjak.config.tls.service | object | `{"annotations":{},"port":20000,"type":"ClusterIP"}` | Service to handle Tornjak TLS connection |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
@@ -153,9 +162,6 @@ A Helm chart to install the SPIRE server.
 | tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
-| tornjak.service.annotations | object | `{}` |  |
-| tornjak.service.port | int | `10000` |  |
-| tornjak.service.type | string | `"ClusterIP"` |  |
 | tornjak.startupProbe.failureThreshold | int | `3` |  |
 | tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
 | tornjak.startupProbe.periodSeconds | int | `10` |  |

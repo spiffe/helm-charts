@@ -398,7 +398,16 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | spire-server.tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
-| spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
+| spire-server.tornjak.config.http.enabled | bool | `true` | Enables Tornjak HTTP (insecure) service |
+| spire-server.tornjak.config.http.port | int | `10000` | Container port value for HTTP |
+| spire-server.tornjak.config.http.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Service to handle Tornjak HTTP connection |
+| spire-server.tornjak.config.mtls.enabled | bool | `true` | Enables Tornjak TLS service |
+| spire-server.tornjak.config.mtls.port | int | `30000` | Container port value for mTLS |
+| spire-server.tornjak.config.mtls.service | object | `{"annotations":{},"port":30000,"type":"ClusterIP"}` | Service to handle Tornjak mTLS connection |
+| spire-server.tornjak.config.tls.enabled | bool | `true` | Enables Tornjak TLS service |
+| spire-server.tornjak.config.tls.port | int | `20000` | Container port value for TLS |
+| spire-server.tornjak.config.tls.service | object | `{"annotations":{},"port":20000,"type":"ClusterIP"}` | Service to handle Tornjak TLS connection |
 | spire-server.tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
@@ -406,9 +415,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
-| spire-server.tornjak.service.annotations | object | `{}` |  |
-| spire-server.tornjak.service.port | int | `10000` |  |
-| spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
 | spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
 | spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |

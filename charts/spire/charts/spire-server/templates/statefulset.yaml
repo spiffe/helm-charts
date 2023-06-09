@@ -175,21 +175,35 @@ spec:
             {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
+          {{- if eq (.Values.tornjak.config.http.enabled | toString) "true" }}
           startupProbe:
             httpGet:
               scheme: HTTP
               path: /api/tornjak/serverinfo
-              port: 10000
+              port: {{ .Values.tornjak.config.http.port }}
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
+          {{- end }}
           args:
             - --spire-config
             - /run/spire/config/server.conf
             - --tornjak-config
             - /run/spire/tornjak-config/server.conf
           ports:
-            - name: tornjak
-              containerPort: 10000
+            {{- if eq (.Values.tornjak.config.http.enabled | toString) "true" }}
+            - name: tornjak-http
+              containerPort: {{ .Values.tornjak.config.http.port }}
               protocol: TCP
+            {{- end }}
+            {{- if eq (.Values.tornjak.config.tls.enabled | toString) "true" }}
+            - name: tornjak-tls
+              containerPort: {{ .Values.tornjak.config.tls.port }}
+              protocol: TCP
+            {{- end }}
+            {{- if eq (.Values.tornjak.config.mtls.enabled | toString) "true" }}
+            - name: tornjak-mtls
+              containerPort: {{ .Values.tornjak.config.mtls.port }}
+              protocol: TCP
+            {{- end }}
           resources:
             {{- toYaml .Values.tornjak.resources | nindent 12 }}
           volumeMounts:
@@ -204,6 +218,10 @@ spec:
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
+            {{- if or (eq (.Values.tornjak.config.tls.enabled | toString) "true") (eq (.Values.tornjak.config.mtls.enabled | toString) "true") }}
+            - name: certs
+              mountPath: /opt/spire/sample-keys
+            {{- end }}
         {{- end }}
 
         {{- if gt (len .Values.extraContainers) 0 }}
@@ -233,6 +251,12 @@ spec:
           emptyDir: {}
         - name: spire-controller-manager-tmp
           emptyDir: {}
+        {{- if or (eq (.Values.tornjak.config.tls.enabled | toString) "true") (eq (.Values.tornjak.config.mtls.enabled | toString) "true") }}
+        - name: certs
+          secret:
+            defaultMode: 256
+            secretName: tornjak-certs
+        {{- end }}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca
           secret:
