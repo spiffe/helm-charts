@@ -390,13 +390,9 @@ tornjak:
     # Tornjak TLS service
     tls:
       # -- Enables Tornjak TLS service
-      enabled: false
+      enabled: true
       # -- Container port value for TLS
       port: 20000
-      # -- Certificate for TLS connection
-      cert: "/opt/spire/sample-keys/cert.pem"
-      # -- Key for TLS connection
-      key:  "/opt/spire/sample-keys/key.pem"
       # -- Service to handle Tornjak TLS connection
       service:
         type: ClusterIP
@@ -406,20 +402,18 @@ tornjak:
     # Tornjak mTLS service
     mtls:
       # -- Enables Tornjak TLS service
-      enabled: false
+      enabled: true
       # -- Container port value for mTLS
       port: 30000
-      # -- Certificate for mTLS connection
-      cert: "/opt/spire/sample-keys/cert.pem"
-      # -- Key for mTLS connection
-      key:  "/opt/spire/sample-keys/key.pem"
-      # -- CA for mTLS connection
-      ca: "/opt/spire/sample-keys/rootCA.pem"
       # -- Service to handle Tornjak mTLS connection
       service:
         type: ClusterIP
         port: 30000
         annotations: {}
+    # -- Name of the secret containing server side key and certificate for TLS verification
+    serverSecret: tornjak-server-secret
+    # -- Name of the secret containing user CA for mTLS verification
+    userSecret: tornjak-user-secret
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
