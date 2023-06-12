@@ -400,13 +400,15 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
 | spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spire-server.upstreamAuthority.certManager.createCA | bool | `false` | Creates a Cert-manager CA |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | spire-server.upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
-| spire-server.upstreamAuthority.certManager.issuer_name | string | `"spire-ca"` |  |
+| spire-server.upstreamAuthority.certManager.issuer_name | string | `"spire-server-ca"` |  |
 | spire-server.upstreamAuthority.certManager.kube_config_file | string | `""` |  |
 | spire-server.upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
 | spire-server.upstreamAuthority.certManager.rbac.create | bool | `true` |  |
+| spire-server.upstreamAuthority.certManager.signedSpec | object | `{}` | See https://cert-manager.io/docs/configuration/ca/ and other options to configure a CA. By default this chart will deploy a selfsigned CA. |
 | spire-server.upstreamAuthority.disk.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | spire-server.upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |

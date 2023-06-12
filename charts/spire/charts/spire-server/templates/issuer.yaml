@@ -1,0 +1,47 @@
+{{- with .Values.upstreamAuthority.certManager }}
+{{ if and .enabled .createCA }}
+{{/*
+Configuring CA Issuer: https://cert-manager.io/docs/configuration/ca/
+*/}}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "spire-server.fullname" $ }}-signed
+  namespace: {{ include "spire-server.namespace" $ }}
+  labels:
+    {{- include "spire-server.labels" $ | nindent 4}}
+spec:
+{{- if .signedSpec }}
+  {{- toYaml .signedSpec | nindent 4 }}
+{{- else }}
+  selfSigned: {}
+{{- end }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "spire-server.fullname" $ }}-ca
+  namespace: {{ include "spire-server.namespace" $ }}
+spec:
+  isCA: true
+  commonName: {{ $.Values.ca_subject.common_name }}
+  secretName: {{ include "spire-server.fullname" $ }}-ca-keys
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: {{ include "spire-server.fullname" $ }}-signed
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "spire-server.fullname" $ }}-ca
+  namespace: {{ include "spire-server.namespace" $ }}
+spec:
+  ca:
+    secretName: {{ include "spire-server.fullname" $ }}-ca-keys
+---
+{{- end }}
+{{- end }}

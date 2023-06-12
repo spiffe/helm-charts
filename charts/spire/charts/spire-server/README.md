@@ -146,13 +146,15 @@ A Helm chart to install the SPIRE server.
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| upstreamAuthority.certManager.createCA | bool | `false` | Creates a Cert-manager CA |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
-| upstreamAuthority.certManager.issuer_name | string | `"spire-ca"` |  |
+| upstreamAuthority.certManager.issuer_name | string | `"spire-server-ca"` |  |
 | upstreamAuthority.certManager.kube_config_file | string | `""` |  |
 | upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
 | upstreamAuthority.certManager.rbac.create | bool | `true` |  |
+| upstreamAuthority.certManager.signedSpec | object | `{}` | See https://cert-manager.io/docs/configuration/ca/ and other options to configure a CA. By default this chart will deploy a selfsigned CA. |
 | upstreamAuthority.disk.enabled | bool | `false` |  |
 | upstreamAuthority.disk.secret.create | bool | `true` | If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself. |
 | upstreamAuthority.disk.secret.data | object | `{"bundle":"","certificate":"","key":""}` | If secret creation is enabled, will create a secret with following certificate info |
