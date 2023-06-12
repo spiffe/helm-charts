@@ -389,8 +389,9 @@ tornjak:
 
     # Tornjak TLS service
     tls:
-      # -- Enables Tornjak TLS service
-      enabled: true
+      # -- Enables Tornjak TLS service. When 'true', the 'serverSecret'
+      # must be created prior to installing this chart
+      enabled: false
       # -- Container port value for TLS
       port: 20000
       # -- Service to handle Tornjak TLS connection
@@ -401,8 +402,9 @@ tornjak:
 
     # Tornjak mTLS service
     mtls:
-      # -- Enables Tornjak TLS service
-      enabled: true
+      # -- Enables Tornjak TLS service. When 'true', the 'serverSecret'
+      # and 'userSecret' must be created prior to installing this chart
+      enabled: false
       # -- Container port value for mTLS
       port: 30000
       # -- Service to handle Tornjak mTLS connection

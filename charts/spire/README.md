@@ -402,11 +402,11 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.config.http.enabled | bool | `true` | Enables Tornjak HTTP (insecure) service |
 | spire-server.tornjak.config.http.port | int | `10000` | Container port value for HTTP |
 | spire-server.tornjak.config.http.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Service to handle Tornjak HTTP connection |
-| spire-server.tornjak.config.mtls.enabled | bool | `true` | Enables Tornjak TLS service |
+| spire-server.tornjak.config.mtls.enabled | bool | `false` | Enables Tornjak TLS service. When 'true', the 'serverSecret' and 'userSecret' must be created prior to installing this chart |
 | spire-server.tornjak.config.mtls.port | int | `30000` | Container port value for mTLS |
 | spire-server.tornjak.config.mtls.service | object | `{"annotations":{},"port":30000,"type":"ClusterIP"}` | Service to handle Tornjak mTLS connection |
 | spire-server.tornjak.config.serverSecret | string | `"tornjak-server-secret"` | Name of the secret containing server side key and certificate for TLS verification |
-| spire-server.tornjak.config.tls.enabled | bool | `true` | Enables Tornjak TLS service |
+| spire-server.tornjak.config.tls.enabled | bool | `false` | Enables Tornjak TLS service. When 'true', the 'serverSecret' must be created prior to installing this chart |
 | spire-server.tornjak.config.tls.port | int | `20000` | Container port value for TLS |
 | spire-server.tornjak.config.tls.service | object | `{"annotations":{},"port":20000,"type":"ClusterIP"}` | Service to handle Tornjak TLS connection |
 | spire-server.tornjak.config.userSecret | string | `"tornjak-user-secret"` | Name of the secret containing user CA for mTLS verification |
