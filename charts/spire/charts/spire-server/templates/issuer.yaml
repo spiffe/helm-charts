@@ -20,7 +20,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ include "spire-server.fullname" $ }}-ca
+  name: {{ include "spire-server.fullname" $ }}
   namespace: {{ include "spire-server.namespace" $ }}
 spec:
   isCA: true
@@ -37,7 +37,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: {{ include "spire-server.fullname" $ }}-ca
+  name: {{ include "spire-server.fullname" $ }}
   namespace: {{ include "spire-server.namespace" $ }}
 spec:
   ca:
