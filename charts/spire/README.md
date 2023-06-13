@@ -388,7 +388,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
 | spire-server.tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
-| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
+| spire-server.tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |

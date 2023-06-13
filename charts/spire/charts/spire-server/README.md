@@ -134,7 +134,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
 | tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
-| tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
+| tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
