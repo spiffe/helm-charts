@@ -139,9 +139,6 @@ jobs:
           - v1.27.2
           - v1.26.4
           - v1.25.9
-          - v1.24.13
-          - v1.23.17
-          - v1.22.17
         values:
           - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
@@ -170,7 +167,7 @@ jobs:
         uses: helm/kind-action@v1.7.0
         # Only build a kind cluster if there are chart changes to test.
         with:
-          version: v0.18.0
+          version: v0.19.0
           node_image: kindest/node:${{ matrix.k8s }}
           config: .github/kind/conf/kind-config.yaml
           verbosity: 1
