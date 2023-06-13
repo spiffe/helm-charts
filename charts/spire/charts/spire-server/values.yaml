@@ -375,47 +375,23 @@ tornjak:
       driver: "sqlite3"
       file: "/run/spire/data/tornjak.sqlite3"
 
-    # Tornjak HTTP service
-    http:
-      # -- Enables Tornjak HTTP (insecure) service
-      enabled: true
-      # -- Container port value for HTTP
-      port: 10000
-      # -- Service to handle Tornjak HTTP connection
-      service:
-        type: ClusterIP
-        port: 10000
-        annotations: {}
+    # -- Tornjak supports 3 connection types: `http`, `tls`, and `mtls`.
+    # Select only one.
+    connectionType: http
 
-    # Tornjak TLS service
-    tls:
-      # -- Enables Tornjak TLS service. When 'true', the 'serverSecret'
-      # must be created prior to installing this chart
-      enabled: false
-      # -- Container port value for TLS
-      port: 20000
-      # -- Service to handle Tornjak TLS connection
-      service:
-        type: ClusterIP
-        port: 20000
-        annotations: {}
-
-    # Tornjak mTLS service
-    mtls:
-      # -- Enables Tornjak TLS service. When 'true', the 'serverSecret'
-      # and 'userSecret' must be created prior to installing this chart
-      enabled: false
-      # -- Container port value for mTLS
-      port: 30000
-      # -- Service to handle Tornjak mTLS connection
-      service:
-        type: ClusterIP
-        port: 30000
-        annotations: {}
     # -- Name of the secret containing server side key and certificate for TLS verification
+    # (required for `tls` or `mtls` connectionType)
     serverSecret: tornjak-server-secret
     # -- Name of the secret containing user CA for mTLS verification
+    # (required for `mtls` connectionType)
     userSecret: tornjak-user-secret
+
+    # -- Enables the service for a given `connectionType`
+    service:
+      type: ClusterIP
+      port: 10000
+      annotations: {}
+
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
