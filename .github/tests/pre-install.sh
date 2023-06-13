@@ -19,7 +19,7 @@ kubectl create namespace spire-server || true
 "${helm_install[@]}" ingress-nginx ingress-nginx --version "${VERSION_INGRESS_NGINX}" --repo "${HELM_REPO_INGRESS_NGINX}" \
   --namespace ingress-nginx \
   --set controller.extraArgs.enable-ssl-passthrough=
-kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller
+kubectl wait --namespace ingress-nginx --for=condition=ready --timeout 60s pod --selector=app.kubernetes.io/component=controller
 
 # prometheus
 "${helm_install[@]}" kube-prometheus-stack kube-prometheus-stack \
