@@ -185,7 +185,8 @@ upstreamAuthority:
     enabled: false
     rbac:
       create: true
-    issuer_name: "spire-server-ca"
+    # -- Defaults to the release name, override if CA is provided outside of the chart
+    issuer_name: ""
     issuer_kind: "Issuer"
     issuer_group: "cert-manager.io"
     # -- Specify to use a namespace other then the one the chart is installed into

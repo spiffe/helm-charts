@@ -404,7 +404,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | spire-server.upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
-| spire-server.upstreamAuthority.certManager.issuer_name | string | `"spire-server-ca"` |  |
+| spire-server.upstreamAuthority.certManager.issuer_name | string | `""` | Defaults to the release name, override if CA is provided outside of the chart |
 | spire-server.upstreamAuthority.certManager.kube_config_file | string | `""` |  |
 | spire-server.upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
 | spire-server.upstreamAuthority.certManager.rbac.create | bool | `true` |  |

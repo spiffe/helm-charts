@@ -150,7 +150,7 @@ A Helm chart to install the SPIRE server.
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
-| upstreamAuthority.certManager.issuer_name | string | `"spire-server-ca"` |  |
+| upstreamAuthority.certManager.issuer_name | string | `""` | Defaults to the release name, override if CA is provided outside of the chart |
 | upstreamAuthority.certManager.kube_config_file | string | `""` |  |
 | upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
 | upstreamAuthority.certManager.rbac.create | bool | `true` |  |

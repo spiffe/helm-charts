@@ -1,0 +1,8 @@
+spire-server:
+  upstreamAuthority:
+    certManager:
+      enabled: true
+      # -- Creates a Cert-manager CA
+      createCA: true
+      # signedSpec:
+      #   vault: {}
