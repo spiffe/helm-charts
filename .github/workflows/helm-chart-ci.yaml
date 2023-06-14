@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
 
       - name: Verify Docs updated
         run: ./helm-docs.sh
@@ -56,7 +56,7 @@ jobs:
           set -o pipefail
           # Look for image: definitions that are not templated. If we find none, exit is not 0 and we invert the error code to get the
           # test to pass. Ignore tests for now...
-          grep "image:" charts/spire/charts/*/templates/*.* | grep -v 'image: {{ template "' > /tmp/findings
+          grep -r "image:" charts/spire  | grep "templates/" | grep -v 'image: {{ template "' > /tmp/findings
           res=$?
           if [ $res -eq 0 ]; then
             {
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 0
 
@@ -109,7 +109,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
 
       - id: set-matrix
         name: Collect all tests
@@ -139,15 +139,12 @@ jobs:
           - v1.27.2
           - v1.26.4
           - v1.25.9
-          - v1.24.13
-          - v1.23.17
-          - v1.22.17
         values:
           - ${{ fromJson(needs.build-matrix.outputs.tests) }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 0
 
@@ -170,7 +167,7 @@ jobs:
         uses: helm/kind-action@v1.7.0
         # Only build a kind cluster if there are chart changes to test.
         with:
-          version: v0.18.0
+          version: v0.19.0
           node_image: kindest/node:${{ matrix.k8s }}
           config: .github/kind/conf/kind-config.yaml
           verbosity: 1

@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# @ignored
+global: {}
+
 # -- SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database.
 replicaCount: 1
 
@@ -367,3 +370,18 @@ tornjak:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+
+# @ignored
+tests:
+  bash:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: cgr.dev
+      # -- The repository within the registry
+      repository: chainguard/bash
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: 5.2.15
