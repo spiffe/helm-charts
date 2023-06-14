@@ -12,26 +12,26 @@ spec:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: curl-service-name
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
       args: ['-s', '-f', 'http://{{ include "spiffe-oidc-discovery-provider.fullname" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     - name: curl-service-name-namespace
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
       args: ['-s', '-f', 'http://{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     - name: curl-service-name-namespace-svc-cluster-local
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
       args: ['-s', '-f', 'http://{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.service.port }}/.well-known/openid-configuration']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- if .Values.ingress.enabled }}
     - name: curl-ingress
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
       args: ['-s', '-f', 'http://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
       securityContext:
