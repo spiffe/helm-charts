@@ -168,3 +168,60 @@ Tornjak specific section
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-backend
 {{- end }}
+
+{{/*
+TLS and mTLS Connection Types require ServerSecret to be set before the deployment
+mTLS Connection Types requires UserSecret to be set before the deployment
+*/}}
+{{- define "spire-tornjak.servicename" -}}
+{{- if eq .Values.tornjak.config.connectionType "http" -}}
+{{- include "spire-tornjak.backend" . -}}-http
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
+{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.serverSecret) -}}
+{{- fail "ERROR: When 'connectionType==tls', secret '.Values.tornjak.config.serverSecret' must be created in 'spire-server' namespace prior to the helm deployment" }}
+{{- end }}
+{{- include "spire-tornjak.backend" . -}}-tls
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
+{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.serverSecret) -}}
+{{- fail "ERROR: When 'connectionType==mtls', secret '.Values.tornjak.config.serverSecret' must be created in 'spire-server' namespace prior to the helm deployment" }}
+{{- end }}
+{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.userSecret) -}}
+{{- fail "ERROR: When 'connectionType==mtls', secret '.Values.tornjak.config.userSecret' must be created in 'spire-server' namespace prior to the helm deployment" }}
+{{- end }}
+{{- include "spire-tornjak.backend" . -}}-mtls
+{{- else }}
+{{- fail "ERROR: invalid option selected for '.Values.tornjak.config.connectionType' " -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "spire-tornjak.portname" -}}
+{{- if eq .Values.tornjak.config.connectionType "http" -}}
+tornjak-http
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" -}}
+tornjak-tls
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" -}}
+tornjak-mtls
+{{- end -}}
+{{- end -}}
+
+{{/*
+TLS Connection Type requires Server Secret to be set before the deployment
+
+{{- define "spire-tornjak.servicename" -}}
+{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
+{{ include "spire-tornjak.backend" . }}-http
+
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
+ {{- if not (lookup "v1" "Secret" .Release.Namespace .Values.tornjak.config.serverSecret) -}}
+ {{- fail "secret .Values.tornjak.config.serverSecret must be created prior to the helm deployment" }}
+ {{- end }}
+{{ include "spire-tornjak.backend" . }}-tls
+{{- end }}
+{{- end }}
+
+{{- define "spire-tornjak.portname" -}}
+{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
+tornjak-http
+{{- end }}
+{{- end }}
+*/}}

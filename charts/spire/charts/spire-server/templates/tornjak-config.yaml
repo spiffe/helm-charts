@@ -8,24 +8,24 @@ data:
   server.conf: |
     server {
       spire_socket_path = "unix:///tmp/spire-server/private/api.sock" # socket to communicate with SPIRE server
-      {{- if eq (.Values.tornjak.config.http.enabled | toString) "true" }}
+      {{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
       http {
         enabled = true # if true, opens HTTP server
-        port = "{{ .Values.tornjak.config.http.port }}" # if HTTP enabled, opens HTTP listen port at container port 10000
+        port = "10000" # if HTTP enabled, opens HTTP listen port at container port 10000
       }
       {{- end }}
-      {{- if eq (.Values.tornjak.config.tls.enabled | toString) "true" }}
+      {{- if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
       tls {
         enabled = true
-        port = "{{ .Values.tornjak.config.tls.port }}" # container port for TLS connection
+        port = "10000" # container port for TLS connection
         cert = "/opt/spire/server/tls.crt" # TLS server cert
         key  = "/opt/spire/server/tls.key"  # TLS server key
       }
       {{- end }}
-      {{- if eq (.Values.tornjak.config.mtls.enabled | toString) "true" }}
+      {{- if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
       mtls {
         enabled = true
-        port = "{{ .Values.tornjak.config.mtls.port }}" # container port for mTLS connection
+        port = "10000" # container port for mTLS connection
         cert = "/opt/spire/server/tls.crt" # mTLS server cert
         key  = "/opt/spire/server/tls.key"  # mTLS server key
         ca   = "/opt/spire/user/ca.crt"  # mTLS user CA

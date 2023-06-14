@@ -15,20 +15,20 @@ Tornjak runs without authentication and is therefore NOT suitable to run in prod
 Only use in test environments!
 
 Access Tornjak:
-{{- if eq (.Values.tornjak.config.http.enabled | toString) "true" }}
+   kubectl -n {{ include "spire-server.namespace" . }} port-forward service/{{ include "spire-tornjak.servicename" . }} {{ .Values.tornjak.config.service.port }}:10000
+{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
 HTTP:
-  kubectl -n {{ include "spire-server.namespace" . }} port-forward service/{{ include "spire-tornjak.backend" . }}-http {{ .Values.tornjak.config.http.service.port }}:{{ .Values.tornjak.config.http.port }}
-  Open browser to: http://localhost:{{ .Values.tornjak.config.http.service.port }}
-{{- end }}
-{{- if eq (.Values.tornjak.config.tls.enabled | toString) "true" }}
+  Open browser to: http://localhost:{{ .Values.tornjak.config.service.port }}
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
 TLS:
-  kubectl -n {{ include "spire-server.namespace" . }} port-forward service/{{ include "spire-tornjak.backend" . }}-tls {{ .Values.tornjak.config.tls.service.port }}:{{ .Values.tornjak.config.tls.port }}
-  Open browser to: https://localhost:{{ .Values.tornjak.config.tls.service.port }}
+  Open browser to: https://localhost:{{ .Values.tornjak.config.service.port }}
   *** NOTE: You might get a security warning if using self-signed certificate
-{{- end }}
-{{- if eq (.Values.tornjak.config.mtls.enabled | toString) "true" }}
+  or use curl:
+  curl  --cacert CA/rootCA.crt https://localhost:{{ .Values.tornjak.config.service.port }}
+{{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
 mTLS:
-  kubectl -n {{ include "spire-server.namespace" . }} port-forward service/{{ include "spire-tornjak.backend" . }}-mtls {{ .Values.tornjak.config.mtls.service.port }}:{{ .Values.tornjak.config.mtls.port }}
-  curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:{{ .Values.tornjak.config.mtls.service.port }}
+  curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:{{ .Values.tornjak.config.service.port }}
+{{- else }}
+  ERROR! Incorrect value selected for "Values.tornjak.config.connectionType"
 {{- end }}
 {{- end }}

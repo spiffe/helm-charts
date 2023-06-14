@@ -1,70 +1,22 @@
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
-{{- if eq (.Values.tornjak.config.http.enabled | toString) "true" }}
 apiVersion: v1
 kind: Service
 metadata:
   namespace: {{ include "spire-server.namespace" . }}
-  name: {{ include "spire-tornjak.backend" . }}-http
-  {{- with .Values.tornjak.config.http.service.annotations }}
+  name: {{ include "spire-tornjak.servicename" . }}
+  {{- with .Values.tornjak.config.service.annotations }}
   annotations:
     {{- toYaml . | nindent 8 }}
   {{- end }}
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.tornjak.config.http.service.type }}
+  type: {{ .Values.tornjak.config.service.type }}
   selector:
    {{- include "spire-server.selectorLabels" . | nindent 4 }}
   ports:
-    - name: {{ include "spire-tornjak.backend" . }}-http
-      port: {{ .Values.tornjak.config.http.service.port }}
-      targetPort: tornjak-http
+    - name: {{ include "spire-tornjak.portname" . }}
+      port: {{ .Values.tornjak.config.service.port }}
+      targetPort: {{ include "spire-tornjak.portname" . }}
       protocol: TCP
-{{- end }}
-{{- if eq (.Values.tornjak.config.tls.enabled | toString) "true" }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: {{ include "spire-server.namespace" . }}
-  name: {{ include "spire-tornjak.backend" . }}-tls
-  {{- with .Values.tornjak.config.tls.service.annotations }}
-  annotations:
-    {{- toYaml . | nindent 8 }}
-  {{- end }}
-  labels:
-    {{- include "spire-server.labels" . | nindent 4 }}
-spec:
-  type: {{ .Values.tornjak.config.tls.service.type }}
-  selector:
-   {{- include "spire-server.selectorLabels" . | nindent 4 }}
-  ports:
-    - name: {{ include "spire-tornjak.backend" . }}-tls
-      port: {{ .Values.tornjak.config.tls.service.port }}
-      targetPort: tornjak-tls
-      protocol: TCP
-{{- end }}
-{{- if eq (.Values.tornjak.config.mtls.enabled | toString) "true" }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  namespace: {{ include "spire-server.namespace" . }}
-  name: {{ include "spire-tornjak.backend" . }}-mtls
-  {{- with .Values.tornjak.config.mtls.service.annotations }}
-  annotations:
-    {{- toYaml . | nindent 8 }}
-  {{- end }}
-  labels:
-    {{- include "spire-server.labels" . | nindent 4 }}
-spec:
-  type: {{ .Values.tornjak.config.mtls.service.type }}
-  selector:
-   {{- include "spire-server.selectorLabels" . | nindent 4 }}
-  ports:
-    - name: {{ include "spire-tornjak.backend" . }}-mtls
-      port: {{ .Values.tornjak.config.mtls.service.port }}
-      targetPort: tornjak-mtls
-      protocol: TCP
-{{- end }}
 {{- end }}
