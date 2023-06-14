@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
+![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -131,6 +131,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
 | spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
+| spiffe-csi-driver.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| spiffe-csi-driver.livenessProbe.timeoutSeconds | int | `5` | Timeout value in seconds for livenessProbe |
 | spiffe-csi-driver.nameOverride | string | `""` |  |
 | spiffe-csi-driver.namespaceOverride | string | `""` |  |
 | spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -187,11 +189,15 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.namespaceOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.nodeSelector | object | `{}` |  |
 | spiffe-oidc-discovery-provider.podAnnotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.podSecurityContext | object | `{}` |  |
+| spiffe-oidc-discovery-provider.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| spiffe-oidc-discovery-provider.readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | spiffe-oidc-discovery-provider.replicaCount | int | `1` |  |
 | spiffe-oidc-discovery-provider.resources | object | `{}` |  |
 | spiffe-oidc-discovery-provider.securityContext | object | `{}` |  |
@@ -234,6 +240,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.imagePullSecrets | list | `[]` |  |
 | spire-agent.initContainers | list | `[]` |  |
+| spire-agent.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| spire-agent.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
 | spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-agent.nameOverride | string | `""` |  |
 | spire-agent.namespaceOverride | string | `""` |  |
@@ -241,6 +249,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.podAnnotations | object | `{}` |  |
 | spire-agent.podSecurityContext | object | `{}` |  |
 | spire-agent.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| spire-agent.readinessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for readinessProbe |
+| spire-agent.readinessProbe.periodSeconds | int | `60` | Period seconds for readinessProbe |
 | spire-agent.resources | object | `{}` |  |
 | spire-agent.securityContext | object | `{}` |  |
 | spire-agent.server.address | string | `""` |  |
@@ -345,6 +355,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
+| spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| spire-server.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| spire-server.livenessProbe.timeoutSeconds | int | `3` | Timeout in seconds for livenessProbe |
 | spire-server.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spire-server.nameOverride | string | `""` |  |
 | spire-server.namespaceOverride | string | `""` |  |
@@ -357,6 +371,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.persistence.storageClass | string | `nil` |  |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
+| spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
+| spire-server.readinessProbe.periodSeconds | int | `5` | Period seconds for readinessProbe |
 | spire-server.replicaCount | int | `1` | SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database. |
 | spire-server.resources | object | `{}` |  |
 | spire-server.securityContext | object | `{}` |  |
@@ -382,12 +398,17 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | spire-server.tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
 | spire-server.tornjak.image.repository | string | `"spiffe/tornjak-backend"` | The repository within the registry |
-| spire-server.tornjak.image.tag | string | `"v1.2.1"` | Overrides the image tag |
+| spire-server.tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
 | spire-server.tornjak.service.port | int | `10000` |  |
 | spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
+| spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
+| spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
+| spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |
+| spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
+| spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.certManager.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
@@ -426,10 +447,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | tornjak-frontend.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | tornjak-frontend.spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
 | tornjak-frontend.startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
-| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold for startupProbe |
+| tornjak-frontend.startupProbe.failureThreshold | int | `6` | Failure threshold count for startupProbe |
 | tornjak-frontend.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
 | tornjak-frontend.startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
-| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold for startupProbe |
+| tornjak-frontend.startupProbe.successThreshold | int | `1` | Success threshold count for startupProbe |
 | tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tornjak-frontend.tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | tornjak-frontend.tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |

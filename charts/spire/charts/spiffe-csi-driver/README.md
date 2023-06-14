@@ -23,6 +23,8 @@ A Helm chart to install the SPIFFE CSI driver.
 | image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | imagePullSecrets | list | `[]` |  |
 | kubeletPath | string | `"/var/lib/kubelet"` |  |
+| livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| livenessProbe.timeoutSeconds | int | `5` | Timeout value in seconds for livenessProbe |
 | nameOverride | string | `""` |  |
 | namespaceOverride | string | `""` |  |
 | nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |

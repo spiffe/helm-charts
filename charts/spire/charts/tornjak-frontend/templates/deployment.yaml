@@ -43,6 +43,7 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
+              path: /tornjak/serverinfo
               port: {{ .Values.service.port }}
             failureThreshold: {{ .Values.startupProbe.failureThreshold }}
             initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
@@ -52,7 +53,9 @@ spec:
           {{- end }}
           volumeMounts:
             - name: cache
-              mountPath: /usr/src/app/
+              mountPath: /usr/src/app/node_modules/.cache
+            - name: env
+              mountPath: /usr/src/app/build/tmp
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -71,4 +74,6 @@ spec:
       {{- end }}
       volumes:
         - name: cache
+          emptyDir: {}
+        - name: env
           emptyDir: {}

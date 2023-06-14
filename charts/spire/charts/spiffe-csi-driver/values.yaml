@@ -1,3 +1,6 @@
+# @ignored
+global: {}
+
 # -- Set the csi driver name deployed to Kubernetes.
 pluginName: csi.spiffe.io
 
@@ -26,6 +29,12 @@ resources: {}
 
 healthChecks:
   port: 9809
+
+livenessProbe:
+  # -- Initial delay seconds for livenessProbe
+  initialDelaySeconds: 5
+  # -- Timeout value in seconds for livenessProbe
+  timeoutSeconds: 5
 
 imagePullSecrets: []
 nameOverride: ""
