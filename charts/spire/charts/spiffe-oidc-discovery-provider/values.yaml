@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# @ignored
+global: {}
+
 # -- The name of the spire-agent unix socket
 agentSocketName: spire-agent.sock
 
