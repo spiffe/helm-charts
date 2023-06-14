@@ -371,6 +371,7 @@ tornjak:
     #   cpu: 100m
     #   memory: 128Mi
 
+# @ignored
 tests:
   bash:
     image:

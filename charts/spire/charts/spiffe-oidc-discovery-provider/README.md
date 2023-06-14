@@ -80,11 +80,6 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | telemetry.prometheus.port | int | `9988` |  |
-| tests.bash.image.pullPolicy | string | `"IfNotPresent"` | The tests image pull policy |
-| tests.bash.image.registry | string | `"cgr.dev"` | The OCI registry to pull the tests image from |
-| tests.bash.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| tests.bash.image.tag | string | `"5.2.15"` | Overrides the image tag |
-| tests.bash.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tolerations | list | `[]` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
 

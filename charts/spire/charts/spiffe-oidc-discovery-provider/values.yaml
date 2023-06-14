@@ -201,6 +201,7 @@ ingress:
   #    hosts:
   #      - oidc-discovery.example.org
 
+# @ignored
 tests:
   bash:
     image:

@@ -92,6 +92,7 @@ startupProbe:
   # -- Success threshold count for startupProbe
   successThreshold: 1
 
+# @ignored
 tests:
   bash:
     image:
