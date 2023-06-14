@@ -180,7 +180,7 @@ spec:
             httpGet:
               scheme: HTTP
               path: /api/tornjak/serverinfo
-              port: {{ .Values.tornjak.config.http.port }}
+              port: 10000
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
           {{- end }}
           args:
@@ -192,17 +192,6 @@ spec:
             - name: {{ include "spire-tornjak.portname" . }}
               containerPort: 10000
               protocol: TCP
-            {{- end }}
-            {{- if eq (.Values.tornjak.config.tls.enabled | toString) "true" }}
-            - name: tornjak-tls
-              containerPort: {{ .Values.tornjak.config.tls.port }}
-              protocol: TCP
-            {{- end }}
-            {{- if eq (.Values.tornjak.config.mtls.enabled | toString) "true" }}
-            - name: tornjak-mtls
-              containerPort: {{ .Values.tornjak.config.mtls.port }}
-              protocol: TCP
-            {{- end }}
           resources:
             {{- toYaml .Values.tornjak.resources | nindent 12 }}
           volumeMounts:

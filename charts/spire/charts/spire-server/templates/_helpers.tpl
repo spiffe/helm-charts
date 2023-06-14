@@ -203,25 +203,3 @@ tornjak-tls
 tornjak-mtls
 {{- end -}}
 {{- end -}}
-
-{{/*
-TLS Connection Type requires Server Secret to be set before the deployment
-
-{{- define "spire-tornjak.servicename" -}}
-{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
-{{ include "spire-tornjak.backend" . }}-http
-
-{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
- {{- if not (lookup "v1" "Secret" .Release.Namespace .Values.tornjak.config.serverSecret) -}}
- {{- fail "secret .Values.tornjak.config.serverSecret must be created prior to the helm deployment" }}
- {{- end }}
-{{ include "spire-tornjak.backend" . }}-tls
-{{- end }}
-{{- end }}
-
-{{- define "spire-tornjak.portname" -}}
-{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
-tornjak-http
-{{- end }}
-{{- end }}
-*/}}
