@@ -12,7 +12,7 @@ spec:
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
-   {{- if eq (.Values.tornjak.config.connectionType | toString) "true" }}
+   {{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
     - name: curl-tornjak-backend
       image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
