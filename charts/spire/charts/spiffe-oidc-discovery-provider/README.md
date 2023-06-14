@@ -6,9 +6,24 @@
 
 A Helm chart to install the SPIFFE OIDC discovery provider.
 
+**Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
+
 > **Note**: Minimum Spire version is `1.5.3`.
 > The recommended version is `1.6.0` to support arm64 nodes. If running with any
 > prior version to `1.6.0` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| marcofranssen | <marco.franssen@gmail.com> | <https://marcofranssen.nl> |
+| kfox1111 | <Kevin.Fox@pnnl.gov> |  |
+| faisal-memon | <fymemon@yahoo.com> |  |
+| edwbuck | <edwbuck@gmail.com> |  |
+
+## Source Code
+
+* <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 ## Values
 

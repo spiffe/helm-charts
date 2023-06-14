@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# @ignored
+global: {}
+
 # -- The name of the spire-agent unix socket
 agentSocketName: spire-agent.sock
 
@@ -198,8 +201,21 @@ ingress:
   #    hosts:
   #      - oidc-discovery.example.org
 
-#tests:
-#  hostAliases: []
-#  tls:
-#    enabled: false
-#    customCA: ""
+# @ignored
+tests:
+  hostAliases: []
+  tls:
+    enabled: false
+    customCA: ""
+  bash:
+    image:
+      # -- The OCI registry to pull the tests image from
+      registry: cgr.dev
+      # -- The repository within the registry
+      repository: chainguard/bash
+      # -- The tests image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: 5.2.15
