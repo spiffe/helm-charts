@@ -2,4 +2,5 @@ spire-server:
   upstreamAuthority:
     certManager:
       enabled: true
-      createCA: true
+      ca:
+        create: true
