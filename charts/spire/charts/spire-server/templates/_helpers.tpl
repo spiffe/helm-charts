@@ -178,15 +178,18 @@ mTLS Connection Types requires UserSecret to be set before the deployment
 {{- include "spire-tornjak.backend" . -}}-http
 {{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.serverSecret) -}}
-{{- fail "ERROR: When 'connectionType==tls', secret '.Values.tornjak.config.serverSecret' must be created in 'spire-server' namespace prior to the helm deployment" }}
+{{- $secret := default "NAME NOT SET" .Values.tornjak.config.serverSecret }}
+{{- fail (printf "ERROR: When 'connectionType==tls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}
 {{- end }}
 {{- include "spire-tornjak.backend" . -}}-tls
 {{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.serverSecret) -}}
-{{- fail "ERROR: When 'connectionType==mtls', secret '.Values.tornjak.config.serverSecret' must be created in 'spire-server' namespace prior to the helm deployment" }}
+{{- $secret := default "NAME NOT SET" .Values.tornjak.config.serverSecret }}
+{{- fail (printf "ERROR: When 'connectionType==mtls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}
 {{- end }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.userSecret) -}}
-{{- fail "ERROR: When 'connectionType==mtls', secret '.Values.tornjak.config.userSecret' must be created in 'spire-server' namespace prior to the helm deployment" }}
+{{- $uSecret := default "NAME NOT SET" .Values.tornjak.config.userSecret }}
+{{- fail (printf "ERROR: When 'connectionType==mtls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $uSecret "spire-server") }}
 {{- end }}
 {{- include "spire-tornjak.backend" . -}}-mtls
 {{- else }}
