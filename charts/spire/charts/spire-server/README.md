@@ -197,7 +197,7 @@ curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhos
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.connectionType | string | `"http"` | Tornjak supports 3 connection types: `http`, `tls`, and `mtls`. Select only one. |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
-| tornjak.config.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
+| tornjak.config.service | object | `{"annotations":{},"portHttp":10080,"portHttps":10443,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
 | tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
 | tornjak.config.userCA.name | string | `"tornjak-user-ca"` |  |
 | tornjak.config.userCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |

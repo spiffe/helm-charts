@@ -392,7 +392,8 @@ tornjak:
     # -- Enables the service for a given `connectionType`
     service:
       type: ClusterIP
-      port: 10000
+      portHttp: 10080
+      portHttps: 10443
       annotations: {}
 
   resources: {}

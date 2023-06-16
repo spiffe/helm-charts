@@ -15,8 +15,12 @@ spec:
   selector:
    {{- include "spire-server.selectorLabels" . | nindent 4 }}
   ports:
-    - name: {{ include "spire-tornjak.portname" . }}
-      port: {{ .Values.tornjak.config.service.port }}
-      targetPort: {{ include "spire-tornjak.portname" . }}
+    - name: {{ include "spire-tornjak.service-portname-http" . }}
+      port: {{ .Values.tornjak.config.service.portHttp }}
+      targetPort: {{ include "spire-tornjak.target-portname-http" . }}
+      protocol: TCP
+    - name: {{ include "spire-tornjak.service-portname-https" . }}
+      port: {{ .Values.tornjak.config.service.portHttps }}
+      targetPort: {{ include "spire-tornjak.target-portname-https" . }}
       protocol: TCP
 {{- end }}

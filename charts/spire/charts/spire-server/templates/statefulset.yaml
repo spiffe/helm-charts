@@ -180,7 +180,7 @@ spec:
             httpGet:
               scheme: HTTP
               path: /api/tornjak/serverinfo
-              port: 10000
+              port: 10080
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
           {{- end }}
           args:
@@ -189,8 +189,11 @@ spec:
             - --tornjak-config
             - /run/spire/tornjak-config/server.conf
           ports:
-            - name: {{ include "spire-tornjak.portname" . }}
-              containerPort: 10000
+            - name: {{ include "spire-tornjak.target-portname-http" . }}
+              containerPort: 10080
+              protocol: TCP
+            - name: {{ include "spire-tornjak.target-portname-https" . }}
+              containerPort: 10443
               protocol: TCP
           resources:
             {{- toYaml .Values.tornjak.resources | nindent 12 }}

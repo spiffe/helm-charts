@@ -171,19 +171,20 @@ Tornjak specific section
 
 {{/*
 TLS and mTLS Connection Types require tlsSecret to be set before the deployment
-mTLS Connection Types requires userCA.name to be set before the deployment
+mTLS Connection Types requires userCA.name to be set before the deployment.
+The code below does the verification of all the requirements.
 */}}
 {{- define "spire-tornjak.servicename" -}}
 
 {{- if eq .Values.tornjak.config.connectionType "http" -}}
-{{- include "spire-tornjak.backend" . -}}-http
+{{- include "spire-tornjak.backend" . -}}
 
 {{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.tlsSecret) -}}
 {{- $secret := default "NAME NOT SET" .Values.tornjak.config.tlsSecret }}
 {{- fail (printf "ERROR: When 'connectionType==tls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}
 {{- end }}
-{{- include "spire-tornjak.backend" . -}}-tls
+{{- include "spire-tornjak.backend" . -}}
 
 {{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.tlsSecret) -}}
@@ -195,19 +196,26 @@ mTLS Connection Types requires userCA.name to be set before the deployment
 {{- $caName := default "NAME NOT SET" .Values.tornjak.config.userCA.name }}
 {{- fail (printf "ERROR: When 'connectionType==mtls', %s '%s' must be created in '%s' namespace prior to the helm deployment" $caType $caName "spire-server") }}
 {{- end }}
-{{- include "spire-tornjak.backend" . -}}-mtls
+{{- include "spire-tornjak.backend" . -}}
 
 {{- else }}
 {{- fail "ERROR: invalid option selected for '.Values.tornjak.config.connectionType' " -}}
 {{- end -}}
 {{- end -}}
 
-{{- define "spire-tornjak.portname" -}}
-{{- if eq .Values.tornjak.config.connectionType "http" -}}
-tornjak-http
-{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" -}}
-tornjak-tls
-{{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" -}}
-tornjak-mtls
+
+{{- define "spire-tornjak.service-portname-http" -}}
+tornjak-srv-http
 {{- end -}}
+
+{{- define "spire-tornjak.service-portname-https" -}}
+tornjak-srv-https
+{{- end -}}
+
+{{- define "spire-tornjak.target-portname-http" -}}
+tornjak-http
+{{- end -}}
+
+{{- define "spire-tornjak.target-portname-https" -}}
+tornjak-https
 {{- end -}}
