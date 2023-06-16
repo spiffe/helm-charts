@@ -197,8 +197,8 @@ upstreamAuthority:
     kube_config_file: ""
 
     ca:
-      # -- Creates a Cert-manager CA
-      create: true
+      # -- Creates a Cert-Manager CA
+      create: false
       # -- Duration of the CA. Defaults to 10 years.
       duration:  87600h
       privateKey:
