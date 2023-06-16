@@ -161,7 +161,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
-| upstreamAuthority.certManager.ca.create | bool | `true` | Creates a Cert-manager CA |
+| upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
 | upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
 | upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |
 | upstreamAuthority.certManager.ca.privateKey.rotationPolicy | string | `""` |  |
