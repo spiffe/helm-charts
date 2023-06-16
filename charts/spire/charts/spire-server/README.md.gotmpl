@@ -23,6 +23,56 @@
 
 {{ template "chart.requirementsSection" . }}
 
+## Tornjak
+
+Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak](https://github.com/spiffe/tornjak)
+
+When Tornjak is enabled, it can be reached in one of the three connection types:
+
+* http - simple HTTP connection recommended for demonstration purpose only. It should not be use for production.
+* tls - enables Transport Layer Security (TLS) with HTTPS communication. Tornjak client can validate Tornjak server using TLS Certificate (see instructions below)
+* mtls - mutual TLS. Both, Tornjak client and the server can validate each other using provided certificates (see instructions below)
+
+### Tornjak with TLS
+
+`tornjak.config.connectionType=tls`
+
+TLS connection requires Tornjak to have access to TLS key and certificate.
+Complete instruction on creating your own TLS certificate can be found [here](https://github.com/spiffe/tornjak/blob/main/examples/tls_mtls/README.md).
+TLS Certificate and the private key must be provided to Tornjak via *TLS Secret*. Prior to deploying this Helm chart, create TLS Secret in the deployment namespace (e.g. `spire-server`)
+
+```console
+kubectl -n spire-server create secret tls tornjak-tls-secret --cert=client.crt --key=client.key
+```
+
+Once the charts are deployed, you can test the TLS connection with the following command (assuming localhost):
+
+```console
+curl --cacert CA/rootCA.crt https://localhost:10000
+```
+
+### Tornjak with mTLS
+
+`tornjak.config.connectionType=mtls`
+
+mTLS connection allows Tornjak server validation by client and Tornjak client validation by Tornjak server. The server validation is identical to above TLS. Follow the steps to create
+TLS secret with key and the certificate.
+
+Additionally, you must provide the user CA to Tornjak server via `Secret` or `ConfigMap`.
+Follow the steps to [create user CA for mTLS](https://github.com/spiffe/tornjak/blob/main/examples/tls_mtls/README.md), then create a *Secret* (or *ConfigMap*) prior to deploying this Helm chart.
+
+Here is an example using a *Secret* in `spire-server` namespace:
+
+```console
+kubectl -n spire-server create secret generic tornjak-user-ca --from-file=ca.crt="CA/rootCA.crt"
+```
+
+Once the charts are deployed, you can test the mTLS connection with the following command (assuming localhost):
+
+```console
+curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:10000
+```
+
 {{ template "chart.valuesSection" . }}
 
 ----------------------------------------------
