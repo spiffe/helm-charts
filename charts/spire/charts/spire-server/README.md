@@ -67,11 +67,6 @@ A Helm chart to install the SPIRE server.
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.tag | string | `""` | Overrides the image tag |
-| controllerManager.validatingWebhookConfiguration.upgradeHook.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -143,6 +138,11 @@ A Helm chart to install the SPIRE server.
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-server |
 | tolerations | list | `[]` |  |
+| tools.kubectl.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| tools.kubectl.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
+| tools.kubectl.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| tools.kubectl.image.tag | string | `""` | Overrides the image tag |
+| tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
@@ -161,10 +161,16 @@ A Helm chart to install the SPIRE server.
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
+| upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
+| upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |
+| upstreamAuthority.certManager.ca.privateKey.rotationPolicy | string | `""` |  |
+| upstreamAuthority.certManager.ca.privateKey.size | int | `256` |  |
+| upstreamAuthority.certManager.ca.renewBefore | string | `""` | How long to wait before renewing the CA |
 | upstreamAuthority.certManager.enabled | bool | `false` |  |
 | upstreamAuthority.certManager.issuer_group | string | `"cert-manager.io"` |  |
 | upstreamAuthority.certManager.issuer_kind | string | `"Issuer"` |  |
-| upstreamAuthority.certManager.issuer_name | string | `"spire-ca"` |  |
+| upstreamAuthority.certManager.issuer_name | string | `""` | Defaults to the release name, override if CA is provided outside of the chart |
 | upstreamAuthority.certManager.kube_config_file | string | `""` |  |
 | upstreamAuthority.certManager.namespace | string | `""` | Specify to use a namespace other then the one the chart is installed into |
 | upstreamAuthority.certManager.rbac.create | bool | `true` |  |
