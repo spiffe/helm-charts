@@ -400,7 +400,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
 | spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
-| spire-server.upstreamAuthority.certManager.ca.create | bool | `true` | Creates a Cert-manager CA |
+| spire-server.upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
 | spire-server.upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
 | spire-server.upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |
 | spire-server.upstreamAuthority.certManager.ca.privateKey.rotationPolicy | string | `""` |  |
