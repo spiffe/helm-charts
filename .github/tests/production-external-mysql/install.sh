@@ -29,8 +29,6 @@ spire-server:
       password: ${DBPW}
       host: mysql
       port: 3306
-      options:
-      - parseTime: true
 EOF
 
 helm install mysql mysql --namespace "spire-server" --version "$VERSION_MYSQL" --repo "$HELM_REPO_MYSQL" \
