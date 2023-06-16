@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# @ignored
+global: {}
+
 image:
   registry: ghcr.io
   repository: spiffe/tornjak-frontend
@@ -88,3 +91,18 @@ startupProbe:
   failureThreshold: 6
   # -- Success threshold count for startupProbe
   successThreshold: 1
+
+# @ignored
+tests:
+  bash:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: cgr.dev
+      # -- The repository within the registry
+      repository: chainguard/bash
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: 5.2.15
