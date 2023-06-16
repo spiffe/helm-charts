@@ -94,9 +94,7 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Run chart-testing (lint)
-        run: |
-          ct lint --debug ${{ github.base_ref != 'release' && '--check-version-increment=false' || '' }} \
-            --target-branch ${{ github.base_ref }}
+        run: TARGET_BRANCH=${{ github.base_ref }} make lint${{ github.base_ref == 'release' && '-release' || '' }}
 
     outputs:
       changed: ${{ steps.list-changed.outputs.changed }}
