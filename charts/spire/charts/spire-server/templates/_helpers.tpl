@@ -170,28 +170,33 @@ Tornjak specific section
 {{- end }}
 
 {{/*
-TLS and mTLS Connection Types require ServerSecret to be set before the deployment
-mTLS Connection Types requires UserSecret to be set before the deployment
+TLS and mTLS Connection Types require tlsSecret to be set before the deployment
+mTLS Connection Types requires userCA.name to be set before the deployment
 */}}
 {{- define "spire-tornjak.servicename" -}}
+
 {{- if eq .Values.tornjak.config.connectionType "http" -}}
 {{- include "spire-tornjak.backend" . -}}-http
+
 {{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
-{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.serverSecret) -}}
-{{- $secret := default "NAME NOT SET" .Values.tornjak.config.serverSecret }}
+{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.tlsSecret) -}}
+{{- $secret := default "NAME NOT SET" .Values.tornjak.config.tlsSecret }}
 {{- fail (printf "ERROR: When 'connectionType==tls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}
 {{- end }}
 {{- include "spire-tornjak.backend" . -}}-tls
+
 {{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
-{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.serverSecret) -}}
-{{- $secret := default "NAME NOT SET" .Values.tornjak.config.serverSecret }}
+{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.tlsSecret) -}}
+{{- $secret := default "NAME NOT SET" .Values.tornjak.config.tlsSecret }}
 {{- fail (printf "ERROR: When 'connectionType==mtls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}
 {{- end }}
-{{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.userSecret) -}}
-{{- $uSecret := default "NAME NOT SET" .Values.tornjak.config.userSecret }}
-{{- fail (printf "ERROR: When 'connectionType==mtls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $uSecret "spire-server") }}
+{{- $caType := default "INVALID" .Values.tornjak.config.userCA.type }}
+{{- if not (lookup "v1" $caType "spire-server" .Values.tornjak.config.userCA.name) -}}
+{{- $caName := default "NAME NOT SET" .Values.tornjak.config.userCA.name }}
+{{- fail (printf "ERROR: When 'connectionType==mtls', %s '%s' must be created in '%s' namespace prior to the helm deployment" $caType $caName "spire-server") }}
 {{- end }}
 {{- include "spire-tornjak.backend" . -}}-mtls
+
 {{- else }}
 {{- fail "ERROR: invalid option selected for '.Values.tornjak.config.connectionType' " -}}
 {{- end -}}

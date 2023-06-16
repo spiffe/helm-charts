@@ -147,9 +147,10 @@ A Helm chart to install the SPIRE server.
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.connectionType | string | `"http"` | Tornjak supports 3 connection types: `http`, `tls`, and `mtls`. Select only one. |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
-| tornjak.config.serverSecret | string | `"tornjak-server-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
 | tornjak.config.service | object | `{"annotations":{},"port":10000,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
-| tornjak.config.userSecret | string | `"tornjak-user-secret"` | Name of the secret containing user CA for mTLS verification (required for `mtls` connectionType) |
+| tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
+| tornjak.config.userCA.name | string | `"tornjak-user-ca"` |  |
+| tornjak.config.userCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |

@@ -247,13 +247,19 @@ spec:
         - name: server-cert
           secret:
             defaultMode: 256
-            secretName: {{ .Values.tornjak.config.serverSecret }}
+            secretName: {{ .Values.tornjak.config.tlsSecret }}
         {{- end }}
         {{- if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
+        {{- if eq (.Values.tornjak.config.userCA.type | toString) "Secret" }}
         - name: user-cert
           secret:
             defaultMode: 256
-            secretName: {{ .Values.tornjak.config.userSecret }}
+            secretName: {{ .Values.tornjak.config.userCA.name }}
+        {{- else if eq (.Values.tornjak.config.userCA.type | toString) "ConfigMap" }}
+        - name: user-cert
+          configMap:
+            name: {{ .Values.tornjak.config.userCA.name }}
+        {{- end }}
         {{- end }}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca

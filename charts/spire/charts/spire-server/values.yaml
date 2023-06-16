@@ -381,10 +381,13 @@ tornjak:
 
     # -- Name of the secret containing server side key and certificate for TLS verification
     # (required for `tls` or `mtls` connectionType)
-    serverSecret: tornjak-server-secret
-    # -- Name of the secret containing user CA for mTLS verification
-    # (required for `mtls` connectionType)
-    userSecret: tornjak-user-secret
+    tlsSecret: tornjak-tls-secret
+    userCA:
+      # -- Type of delivery for the user CA for mTLS client verification
+      # options are `Secret` or `ConfigMap`
+      # (required for `mtls` connectionType)
+      type: Secret
+      name: tornjak-user-ca
 
     # -- Enables the service for a given `connectionType`
     service:

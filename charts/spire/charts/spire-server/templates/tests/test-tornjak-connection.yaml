@@ -1,4 +1,5 @@
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
+{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,7 +13,6 @@ spec:
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
-   {{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
     - name: curl-tornjak-backend
       image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
@@ -25,6 +25,6 @@ spec:
       args: ['-k', '-s', '-f', 'http://{{ include "spire-tornjak.servicename" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.tornjak.config.service.port }}/api/healthcheck']
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
-    {{- end }}
   restartPolicy: Never
+{{- end }}
 {{- end }}
