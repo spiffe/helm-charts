@@ -226,6 +226,12 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.extraContainers | list | `[]` |  |
 | spire-agent.extraVolumeMounts | list | `[]` |  |
 | spire-agent.extraVolumes | list | `[]` |  |
+| spire-agent.fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
+| spire-agent.fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| spire-agent.fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| spire-agent.fsGroupFix.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| spire-agent.fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | spire-agent.fullnameOverride | string | `""` |  |
 | spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
 | spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
