@@ -1,5 +1,5 @@
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
-{{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
+{{- if eq .Values.tornjak.config.connectionType "http" }}
 apiVersion: v1
 kind: Pod
 metadata:

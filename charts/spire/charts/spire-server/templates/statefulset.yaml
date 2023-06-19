@@ -175,7 +175,7 @@ spec:
             {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
-          {{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
+          {{- if eq .Values.tornjak.config.connectionType "http" }}
           startupProbe:
             httpGet:
               scheme: HTTP
@@ -209,11 +209,11 @@ spec:
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
-            {{- if or (eq (.Values.tornjak.config.connectionType | toString) "tls") (eq (.Values.tornjak.config.connectionType | toString) "mtls") }}
+            {{- if or (eq .Values.tornjak.config.connectionType "tls") (eq .Values.tornjak.config.connectionType "mtls") }}
             - name: server-cert
               mountPath: /opt/spire/server
             {{- end }}
-            {{- if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
+            {{- if eq .Values.tornjak.config.connectionType "mtls" }}
             - name: user-cert
               mountPath: /opt/spire/user
             {{- end }}
@@ -246,19 +246,19 @@ spec:
           emptyDir: {}
         - name: spire-controller-manager-tmp
           emptyDir: {}
-        {{- if or (eq (.Values.tornjak.config.connectionType | toString) "tls") (eq (.Values.tornjak.config.connectionType | toString) "mtls") }}
+        {{- if or (eq .Values.tornjak.config.connectionType "tls") (eq .Values.tornjak.config.connectionType "mtls") }}
         - name: server-cert
           secret:
             defaultMode: 256
             secretName: {{ .Values.tornjak.config.tlsSecret }}
         {{- end }}
-        {{- if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
-        {{- if eq (.Values.tornjak.config.userCA.type | toString) "Secret" }}
+        {{- if eq .Values.tornjak.config.connectionType "mtls" }}
+        {{- if eq .Values.tornjak.config.userCA.type "Secret" }}
         - name: user-cert
           secret:
             defaultMode: 256
             secretName: {{ .Values.tornjak.config.userCA.name }}
-        {{- else if eq (.Values.tornjak.config.userCA.type | toString) "ConfigMap" }}
+        {{- else if eq .Values.tornjak.config.userCA.type "ConfigMap" }}
         - name: user-cert
           configMap:
             name: {{ .Values.tornjak.config.userCA.name }}

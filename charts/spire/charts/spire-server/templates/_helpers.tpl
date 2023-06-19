@@ -179,14 +179,14 @@ The code below does the verification of all the requirements.
 {{- if eq .Values.tornjak.config.connectionType "http" -}}
 {{- include "spire-tornjak.backend" . -}}
 
-{{- else if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
+{{- else if eq .Values.tornjak.config.connectionType "tls" }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.tlsSecret) -}}
 {{- $secret := default "NAME NOT SET" .Values.tornjak.config.tlsSecret }}
 {{- fail (printf "ERROR: When 'connectionType==tls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}
 {{- end }}
 {{- include "spire-tornjak.backend" . -}}
 
-{{- else if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
+{{- else if eq .Values.tornjak.config.connectionType "mtls" }}
 {{- if not (lookup "v1" "Secret" "spire-server" .Values.tornjak.config.tlsSecret) -}}
 {{- $secret := default "NAME NOT SET" .Values.tornjak.config.tlsSecret }}
 {{- fail (printf "ERROR: When 'connectionType==mtls', secret '%s' must be created in '%s' namespace prior to the helm deployment" $secret "spire-server") }}

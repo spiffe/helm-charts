@@ -8,13 +8,13 @@ data:
   server.conf: |
     server {
       spire_socket_path = "unix:///tmp/spire-server/private/api.sock" # socket to communicate with SPIRE server
-      {{- if eq (.Values.tornjak.config.connectionType | toString) "http" }}
+      {{- if eq .Values.tornjak.config.connectionType "http" }}
       http {
         enabled = true # if true, opens HTTP server
         port = "10080" # if HTTP enabled, opens HTTP listen port at container port 10000
       }
       {{- end }}
-      {{- if eq (.Values.tornjak.config.connectionType | toString) "tls" }}
+      {{- if eq .Values.tornjak.config.connectionType "tls" }}
       tls {
         enabled = true
         port = "10443" # container port for TLS connection
@@ -22,7 +22,7 @@ data:
         key  = "/opt/spire/server/tls.key"  # TLS server key
       }
       {{- end }}
-      {{- if eq (.Values.tornjak.config.connectionType | toString) "mtls" }}
+      {{- if eq .Values.tornjak.config.connectionType "mtls" }}
       mtls {
         enabled = true
         port = "10443" # container port for mTLS connection
