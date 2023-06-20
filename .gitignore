@@ -1,3 +1,5 @@
 bin/
 .idea/
 *.swp
+charts/**/*.tgz
+.DS_Store

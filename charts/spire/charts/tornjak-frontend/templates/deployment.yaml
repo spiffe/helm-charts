@@ -28,13 +28,6 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          command:
-            - /bin/sh
-            - -c
-            - |
-              ln -s /tmp/env.js build/env.js
-              npx react-inject-env set -n /tmp/env.js
-              serve -s build -p $PORT_FE
           ports:
             - name: http
               containerPort: 3000
@@ -50,6 +43,7 @@ spec:
           startupProbe:
             httpGet:
               scheme: HTTP
+              path: /tornjak/serverinfo
               port: {{ .Values.service.port }}
             failureThreshold: {{ .Values.startupProbe.failureThreshold }}
             initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
@@ -60,6 +54,8 @@ spec:
           volumeMounts:
             - name: cache
               mountPath: /usr/src/app/node_modules/.cache
+            - name: env
+              mountPath: /usr/src/app/build/tmp
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -78,4 +74,6 @@ spec:
       {{- end }}
       volumes:
         - name: cache
+          emptyDir: {}
+        - name: env
           emptyDir: {}

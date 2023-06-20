@@ -12,7 +12,7 @@ spec:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
   containers:
     - name: curl
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['bash']
       args:
         - -c
@@ -31,7 +31,7 @@ spec:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- if eq (.Values.federation.enabled | toString) "true" }}
     - name: curl-federation-bundle-endpoint
-      image: cgr.dev/chainguard/bash:latest
+      image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
       args: ['-k', '-s', '-f', 'https://{{ include "spire-server.fullname" . }}.{{ include "spire-server.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.federation.bundleEndpoint.port }}']
       securityContext:

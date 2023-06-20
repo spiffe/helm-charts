@@ -63,7 +63,7 @@ spec:
       - name: post-install-job
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
-        image: {{ template "spire-server.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
+        image: {{ template "spire-lib.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tools.kubectl.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
         args:
           - patch
           - validatingwebhookconfiguration
