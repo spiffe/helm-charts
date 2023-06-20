@@ -42,8 +42,23 @@ spec:
       shareProcessNamespace: true
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      {{- if gt (len .Values.initContainers) 0 }}
       initContainers:
+      {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.createCA }}
+        - name: wait
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: {{ template "spire-server.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
+          args:
+            - wait
+            - --namespace
+            - {{ .Release.Namespace }}
+            - --timeout=3m
+            - --for=condition=ready
+            - issuer
+            - {{ include "spire-server.fullname" $ }}
+          imagePullPolicy: {{ .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy }}
+      {{- end }}
+      {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
       {{- end }}
       containers:

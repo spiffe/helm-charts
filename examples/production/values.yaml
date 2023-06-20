@@ -54,6 +54,18 @@ spire-agent:
   server:
     namespaceOverride: spire-server
   priorityClassName: system-node-critical
+  podSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+  securityContext:
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    seccompProfile:
+      type: RuntimeDefault
 
   logLevel: info
 

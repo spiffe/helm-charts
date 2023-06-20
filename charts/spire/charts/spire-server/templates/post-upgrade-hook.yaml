@@ -56,14 +56,14 @@ spec:
       name: {{ include "spire-server.fullname" . }}-post-upgrade
     spec:
       restartPolicy: Never
-      serviceAccountName: {{ include "spire-server.serviceAccountName" . }}-post-upgrade 
+      serviceAccountName: {{ include "spire-server.serviceAccountName" . }}-post-upgrade
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
       - name: post-upgrade-job
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}
-        image: {{ template "spire-server.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
+        image: {{ template "spire-lib.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tools.kubectl.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
         args:
           - patch
           - validatingwebhookconfiguration

@@ -188,12 +188,25 @@ upstreamAuthority:
     enabled: false
     rbac:
       create: true
-    issuer_name: "spire-ca"
+    # -- Defaults to the release name, override if CA is provided outside of the chart
+    issuer_name: ""
     issuer_kind: "Issuer"
     issuer_group: "cert-manager.io"
     # -- Specify to use a namespace other then the one the chart is installed into
     namespace: ""
     kube_config_file: ""
+
+    ca:
+      # -- Creates a Cert-Manager CA
+      create: false
+      # -- Duration of the CA. Defaults to 10 years.
+      duration:  87600h
+      privateKey:
+        algorithm: ECDSA
+        size: 256
+        rotationPolicy: ""
+      # -- How long to wait before renewing the CA
+      renewBefore: ""
   spire:
     enabled: false
     server:
@@ -269,18 +282,20 @@ controllerManager:
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
-    upgradeHook:
-      image:
-        # -- The OCI registry to pull the image from
-        registry: docker.io
-        # -- The repository within the registry
-        repository: rancher/kubectl
-        # -- The image pull policy
-        pullPolicy: IfNotPresent
-        # -- This value is deprecated in favor of tag. (Will be removed in a future release)
-        version: ""
-        # -- Overrides the image tag
-        tag: ""
+
+tools:
+  kubectl:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: docker.io
+      # -- The repository within the registry
+      repository: rancher/kubectl
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: ""
 
 telemetry:
   prometheus:

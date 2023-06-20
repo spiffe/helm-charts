@@ -3,7 +3,7 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}-bundle
+  name: {{ include "spire-lib.bundle-configmap" . }}
   namespace: {{ .Values.notifier.k8sbundle.namespace | default $namespace }}
 rules:
   - apiGroups: [""]
@@ -24,6 +24,7 @@ rules:
   - apiGroups: ["cert-manager.io"]
     resources:
       - certificaterequests
+      - issuers
     verbs:
       - list
       - get
@@ -50,7 +51,7 @@ roleRef:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "spire-server.fullname" . }}-bundle
+  name: {{ include "spire-lib.bundle-configmap" . }}
   namespace: {{ .Values.notifier.k8sbundle.namespace | default $namespace }}
 subjects:
   - kind: ServiceAccount
@@ -58,7 +59,7 @@ subjects:
     namespace: {{ $namespace }}
 roleRef:
   kind: Role
-  name: {{ include "spire-server.fullname" . }}-bundle
+  name: {{ include "spire-lib.bundle-configmap" . }}
   apiGroup: rbac.authorization.k8s.io
 
 {{- if and .Values.nodeAttestor.k8sPsat.enabled }}
