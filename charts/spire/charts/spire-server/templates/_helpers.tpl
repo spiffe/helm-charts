@@ -114,9 +114,8 @@ Create the name of the service account to use
 {{- $lst = append $lst $entry }}
 {{- end }}
 {{- end }}
-{{- if gt (len $lst) 0 }}
-{{- printf "?%s" (join "&" $lst) }}
-{{- end }}
+{{- $lst = append $lst "parseTime=true" }}
+{{- printf "?%s" (join "&" (uniq $lst)) }}
 {{- end }}
 
 {{- define "spire-server.config-postgresql-options" }}
