@@ -122,7 +122,7 @@ fsGroupFix:
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: latest-20230517
+    tag: 5.2.15
   # -- Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources: {}
 

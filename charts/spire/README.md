@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -234,7 +234,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
 | spire-agent.fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| spire-agent.fsGroupFix.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.fsGroupFix.image.tag | string | `"5.2.15"` | Overrides the image tag |
 | spire-agent.fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | spire-agent.fullnameOverride | string | `""` |  |
