@@ -30,7 +30,10 @@ A Helm chart to install the SPIRE server.
 
 ## Tornjak
 
-Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak](https://github.com/spiffe/tornjak)
+Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak](https://github.com/spiffe/tornjak) and it is composed of two components:
+
+* Backend (this chart) - Tornjak APIs that extend SPIRE APIs with Control Plane functionality
+* [Frontend](../tornjak-frontend/README.md) - Tornjak UI
 
 When Tornjak is enabled, it can be reached in one of the three connection types:
 
@@ -53,7 +56,7 @@ kubectl -n spire-server create secret tls tornjak-tls-secret --cert=client.crt -
 Once the charts are deployed, you can test the TLS connection with the following command (assuming localhost):
 
 ```console
-curl --cacert CA/rootCA.crt https://localhost:10000
+curl --cacert CA/rootCA.crt https://localhost:10443
 ```
 
 ### Tornjak with mTLS
@@ -75,7 +78,7 @@ kubectl -n spire-server create secret generic tornjak-user-ca --from-file=ca.crt
 Once the charts are deployed, you can test the mTLS connection with the following command (assuming localhost):
 
 ```console
-curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:10000
+curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:10443
 ```
 
 ## Values
