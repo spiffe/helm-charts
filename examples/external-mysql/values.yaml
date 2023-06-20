@@ -6,5 +6,3 @@ spire-server:
       host: mysql
       port: 3306
       username: spire
-      options:
-        - parseTime: true
