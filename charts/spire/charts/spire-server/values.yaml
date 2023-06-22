@@ -198,7 +198,7 @@ upstreamAuthority:
 
     ca:
       # -- Creates a Cert-Manager CA
-      create: false
+      create: true
       # -- Duration of the CA. Defaults to 10 years.
       duration:  87600h
       privateKey:

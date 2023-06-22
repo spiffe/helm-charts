@@ -43,7 +43,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
-      {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.createCA }}
+      {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create }}
         - name: wait
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
