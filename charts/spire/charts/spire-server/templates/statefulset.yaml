@@ -189,10 +189,10 @@ spec:
             - --tornjak-config
             - /run/spire/tornjak-config/server.conf
           ports:
-            - name: {{ include "spire-tornjak.target-portname-http" . }}
+            - name: http
               containerPort: 10080
               protocol: TCP
-            - name: {{ include "spire-tornjak.target-portname-https" . }}
+            - name: https
               containerPort: 10443
               protocol: TCP
           resources:
