@@ -47,7 +47,7 @@ spec:
         - name: wait
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spire-server.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
+          image: {{ template "spire-lib.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tools.kubectl.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
           args:
             - wait
             - --namespace
@@ -56,7 +56,7 @@ spec:
             - --for=condition=ready
             - issuer
             - {{ include "spire-server.fullname" $ }}
-          imagePullPolicy: {{ .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.tools.kubectl.image.pullPolicy }}
       {{- end }}
       {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
