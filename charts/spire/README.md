@@ -310,7 +310,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
-| spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| spire-server.controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |

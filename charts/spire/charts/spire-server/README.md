@@ -60,7 +60,7 @@ A Helm chart to install the SPIRE server.
 | controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
-| controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
