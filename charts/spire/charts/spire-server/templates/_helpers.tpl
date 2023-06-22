@@ -202,20 +202,3 @@ The code below does the verification of all the requirements.
 {{- fail "ERROR: invalid option selected for '.Values.tornjak.config.connectionType' " -}}
 {{- end -}}
 {{- end -}}
-
-
-{{- define "spire-tornjak.service-portname-http" -}}
-tornjak-srv-http
-{{- end -}}
-
-{{- define "spire-tornjak.service-portname-https" -}}
-tornjak-srv-https
-{{- end -}}
-
-{{- define "spire-tornjak.target-portname-http" -}}
-tornjak-http
-{{- end -}}
-
-{{- define "spire-tornjak.target-portname-https" -}}
-tornjak-https
-{{- end -}}
