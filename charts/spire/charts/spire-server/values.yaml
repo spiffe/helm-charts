@@ -279,6 +279,9 @@ controllerManager:
       #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+    federatesWith: []
+    # - example.io
+    # - example.ai
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
