@@ -300,6 +300,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.enabled | bool | `false` |  |
 | spire-server.controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | spire-server.controllerManager.identities.enabled | bool | `true` |  |
+| spire-server.controllerManager.identities.federatesWith | list | `[]` |  |
 | spire-server.controllerManager.identities.namespaceSelector | object | `{}` |  |
 | spire-server.controllerManager.identities.podSelector | object | `{}` |  |
 | spire-server.controllerManager.identities.spiffeIDTemplate | string | `"spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}"` |  |
