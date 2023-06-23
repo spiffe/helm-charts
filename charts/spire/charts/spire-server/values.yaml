@@ -390,12 +390,11 @@ tornjak:
       type: Secret
       name: tornjak-user-ca
 
-    # -- Enables the service for a given `connectionType`
-    service:
-      type: ClusterIP
-      portHttp: 10080
-      portHttps: 10443
-      annotations: {}
+  service:
+    type: ClusterIP
+    portHttp: 10080
+    portHttps: 10443
+    annotations: {}
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
