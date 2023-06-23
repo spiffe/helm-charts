@@ -360,6 +360,12 @@ tornjak:
     # -- Overrides the image tag
     tag: "v1.2.2"
 
+  service:
+    type: ClusterIP
+    portHttp: 10080
+    portHttps: 10443
+    annotations: {}
+
   startupProbe:
     failureThreshold: 3
     # -- Initial delay seconds for
@@ -389,12 +395,6 @@ tornjak:
       # (required for `mtls` connectionType)
       type: Secret
       name: tornjak-user-ca
-
-  service:
-    type: ClusterIP
-    portHttp: 10080
-    portHttps: 10443
-    annotations: {}
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious

@@ -4,23 +4,23 @@ kind: Service
 metadata:
   namespace: {{ include "spire-server.namespace" . }}
   name: {{ include "spire-tornjak.servicename" . }}
-  {{- with .Values.tornjak.config.service.annotations }}
+  {{- with .Values.tornjak.service.annotations }}
   annotations:
     {{- toYaml . | nindent 8 }}
   {{- end }}
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.tornjak.config.service.type }}
+  type: {{ .Values.tornjak.service.type }}
   selector:
    {{- include "spire-server.selectorLabels" . | nindent 4 }}
   ports:
     - name: tornjak-srv-http
-      port: {{ .Values.tornjak.config.service.portHttp }}
+      port: {{ .Values.tornjak.service.portHttp }}
       targetPort: tornjak-http
       protocol: TCP
     - name: tornjak-srv-https
-      port: {{ .Values.tornjak.config.service.portHttps }}
+      port: {{ .Values.tornjak.service.portHttps }}
       targetPort: tornjak-https
       protocol: TCP
 {{- end }}

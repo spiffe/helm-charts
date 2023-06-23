@@ -399,7 +399,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
-| spire-server.tornjak.config.service | object | `{"annotations":{},"portHttp":10080,"portHttps":10443,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
 | spire-server.tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
 | spire-server.tornjak.config.userCA.name | string | `"tornjak-user-ca"` |  |
 | spire-server.tornjak.config.userCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |
@@ -410,6 +409,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
+| spire-server.tornjak.service.annotations | object | `{}` |  |
+| spire-server.tornjak.service.portHttp | int | `10080` |  |
+| spire-server.tornjak.service.portHttps | int | `10443` |  |
+| spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
 | spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
 | spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |

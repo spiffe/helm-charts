@@ -201,7 +201,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
-| tornjak.config.service | object | `{"annotations":{},"portHttp":10080,"portHttps":10443,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
 | tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
 | tornjak.config.userCA.name | string | `"tornjak-user-ca"` |  |
 | tornjak.config.userCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |
@@ -212,6 +211,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.image.tag | string | `"v1.2.2"` | Overrides the image tag |
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
+| tornjak.service.annotations | object | `{}` |  |
+| tornjak.service.portHttp | int | `10080` |  |
+| tornjak.service.portHttps | int | `10443` |  |
+| tornjak.service.type | string | `"ClusterIP"` |  |
 | tornjak.startupProbe.failureThreshold | int | `3` |  |
 | tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
 | tornjak.startupProbe.periodSeconds | int | `10` |  |
