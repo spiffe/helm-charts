@@ -37,13 +37,13 @@ Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak
 
 When Tornjak is enabled, it can be reached in one of the three connection types:
 
-* http - simple HTTP connection recommended for demonstration purpose only. It should not be use for production.
-* tls - enables Transport Layer Security (TLS) with HTTPS communication. Tornjak client can validate Tornjak server using TLS Certificate (see instructions below)
-* mtls - mutual TLS. Both, Tornjak client and the server can validate each other using provided certificates (see instructions below)
+* HTTP - simple HTTP connection recommended for demonstration purpose only. It should not be use for production.
+* TLS - enables Transport Layer Security (TLS) with HTTPS communication. Tornjak client can validate Tornjak server using TLS Certificate (see instructions below)
+* mTLS - mutual TLS. Both, Tornjak client and the server can validate each other using provided certificates (see instructions below)
 
-### Tornjak with TLS
+Tornjak automatically determines the connection type based on provided information. See below.
 
-`tornjak.config.connectionType=tls`
+### Tornjak with TLS Connection Type
 
 TLS connection requires Tornjak to have access to TLS key and certificate.
 Complete instruction on creating your own TLS certificate can be found [here](https://github.com/spiffe/tornjak/blob/main/examples/tls_mtls/README.md).
@@ -59,9 +59,7 @@ Once the charts are deployed, you can test the TLS connection with the following
 curl --cacert CA/rootCA.crt https://localhost:10443
 ```
 
-### Tornjak with mTLS
-
-`tornjak.config.connectionType=mtls`
+### Tornjak with mTLS Connection Type
 
 mTLS connection allows Tornjak server validation by client and Tornjak client validation by Tornjak server. The server validation is identical to above TLS. Follow the steps to create
 TLS secret with key and the certificate.
@@ -80,6 +78,10 @@ Once the charts are deployed, you can test the mTLS connection with the followin
 ```console
 curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:10443
 ```
+
+### Tornjak with HTTP Connection Type
+
+In order to run Tornjak with simple HTTP Connection only, make sure you don't create any `Secrets` or `ConfigMaps` listed above.
 
 ## Values
 
@@ -198,7 +200,6 @@ curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhos
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
-| tornjak.config.connectionType | string | `"http"` | Tornjak supports 3 connection types: `http`, `tls`, and `mtls`. Select only one. |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
 | tornjak.config.service | object | `{"annotations":{},"portHttp":10080,"portHttps":10443,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
 | tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |

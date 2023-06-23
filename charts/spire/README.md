@@ -398,7 +398,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | spire-server.tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
-| spire-server.tornjak.config.connectionType | string | `"http"` | Tornjak supports 3 connection types: `http`, `tls`, and `mtls`. Select only one. |
 | spire-server.tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
 | spire-server.tornjak.config.service | object | `{"annotations":{},"portHttp":10080,"portHttps":10443,"type":"ClusterIP"}` | Enables the service for a given `connectionType` |
 | spire-server.tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
