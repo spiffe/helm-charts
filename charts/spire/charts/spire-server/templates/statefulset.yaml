@@ -209,11 +209,11 @@ spec:
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
-            {{- if or (eq .Values.tornjak.config.connectionType "tls") (eq .Values.tornjak.config.connectionType "mtls") }}
+            {{- if or (eq (include "spire-tornjak.connectionType" .) "tls") (eq (include "spire-tornjak.connectionType" .) "mtls") }}
             - name: server-cert
               mountPath: /opt/spire/server
             {{- end }}
-            {{- if eq .Values.tornjak.config.connectionType "mtls" }}
+            {{- if eq (include "spire-tornjak.connectionType" .) "mtls" }}
             - name: user-cert
               mountPath: /opt/spire/user
             {{- end }}
@@ -246,13 +246,13 @@ spec:
           emptyDir: {}
         - name: spire-controller-manager-tmp
           emptyDir: {}
-        {{- if or (eq .Values.tornjak.config.connectionType "tls") (eq .Values.tornjak.config.connectionType "mtls") }}
+        {{- if or (eq (include "spire-tornjak.connectionType" .) "tls") (eq (include "spire-tornjak.connectionType" .) "mtls") }}
         - name: server-cert
           secret:
             defaultMode: 256
             secretName: {{ .Values.tornjak.config.tlsSecret }}
         {{- end }}
-        {{- if eq .Values.tornjak.config.connectionType "mtls" }}
+        {{- if eq (include "spire-tornjak.connectionType" .) "mtls" }}
         {{- if eq .Values.tornjak.config.userCA.type "Secret" }}
         - name: user-cert
           secret:

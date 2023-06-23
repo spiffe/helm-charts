@@ -375,9 +375,10 @@ tornjak:
       driver: "sqlite3"
       file: "/run/spire/data/tornjak.sqlite3"
 
-    # -- Tornjak supports 3 connection types: `http`, `tls`, and `mtls`.
-    # Select only one.
-    connectionType: http
+    # Tornjak supports 3 connection types: `http`, `tls`, and `mtls`.
+    # When `tlsSecret` is created in this chart namespace, the TLS connection is started
+    # When `tlsSecret` and `userCa.tornjak-user-ca` are created in this chart namespace, the mTLS connection is started
+    # When none of them are created, Tornjak starts with HTTP connection only
 
     # -- Name of the secret containing server side key and certificate for TLS verification
     # (required for `tls` or `mtls` connectionType)
