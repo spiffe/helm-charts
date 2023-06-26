@@ -43,6 +43,8 @@ When Tornjak is enabled, it can be reached in one of the three connection types:
 
 Tornjak automatically determines the connection type based on provided information. See below.
 
+**Warning**: For production, we recommend configuring tls certificates and client CA to protect Tornjak from unauthorized access.
+
 ### Tornjak with TLS Connection Type
 
 TLS connection requires Tornjak to have access to TLS key and certificate.
