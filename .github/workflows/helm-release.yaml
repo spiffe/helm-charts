@@ -66,3 +66,5 @@ jobs:
             digest="$(awk -F "[, ]+" '/Digest/{print $NF}' < .digest)"
             cosign sign ghcr.io/"${GITHUB_REPOSITORY_OWNER}"/helm-charts/"${name}"@"${digest}"
           done
+        env:
+          COSIGN_YES: true
