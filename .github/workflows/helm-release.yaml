@@ -31,7 +31,7 @@ jobs:
       - name: Setup cosign
         uses: sigstore/cosign-installer@v3.1.0
         with:
-          cosign-release: v2.0.2
+          cosign-release: v2.1.0
 
       - name: Set up Helm
         uses: azure/setup-helm@v3.5
