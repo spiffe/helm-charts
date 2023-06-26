@@ -35,11 +35,11 @@ Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak
 * Backend (this chart) - Tornjak APIs that extend SPIRE APIs with Control Plane functionality
 * [Frontend](../tornjak-frontend/README.md) - Tornjak UI
 
-When Tornjak is enabled, it is exposed on both http and https (if TLS server certs are configured). Tornjak handles a permanent redirect from `http` to `https` to ensure users always use the https endpoint.
+When Tornjak is enabled, it can be reached in one of the three connection types:
 
-In addition to that you can configure a `client certificate authority`, this will make Tornjak backend verify Client certificates signed by this authority to enable mTLS authentication.
-
-> **Warning**: For production ensure to configure the certificates including CA, to protect Tornjak from unauthorized access.
+* HTTP - simple HTTP connection recommended for demonstration purpose only. It should not be use for production.
+* TLS - enables Transport Layer Security (TLS) with HTTPS communication. Tornjak client can validate Tornjak server using TLS Certificate (see instructions below)
+* mTLS - mutual TLS. Both, Tornjak client and the server can validate each other using provided certificates (see instructions below)
 
 Tornjak automatically determines the connection type based on provided information. See below.
 
