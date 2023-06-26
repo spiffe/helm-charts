@@ -374,7 +374,7 @@ tornjak:
     successThreshold: 1
     timeoutSeconds: 5
 
-  # tornjak - Tornjak specific configuration
+  # tornjak - Tornjak default values
   config:
     # -- Persistent DB for storing Tornjak specific information
     dataStore:
@@ -382,6 +382,7 @@ tornjak:
       file: "/run/spire/data/tornjak.sqlite3"
 
     # Tornjak supports 3 connection types: `http`, `tls`, and `mtls`.
+    # The connections are determined based on provided configuration
     # When `tlsSecret` is created in this chart namespace, the TLS connection is started
     # When `tlsSecret` and `userCa.tornjak-user-ca` are created in this chart namespace, the mTLS connection is started
     # When none of them are created, Tornjak starts with HTTP connection only
