@@ -2,13 +2,28 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.6.4](https://img.shields.io/badge/AppVersion-1.6.4-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
 
 A Helm chart to install the SPIRE agent.
+
+**Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 > **Note**: Minimum Spire version is `1.5.3`.
 > The recommended version is `1.6.0` to support arm64 nodes. If running with any
 > prior version to `1.6.0` you have to use a `nodeSelector` to limit to `kubernetes.io/arch: amd64`.
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| marcofranssen | <marco.franssen@gmail.com> | <https://marcofranssen.nl> |
+| kfox1111 | <Kevin.Fox@pnnl.gov> |  |
+| faisal-memon | <fymemon@yahoo.com> |  |
+| edwbuck | <edwbuck@gmail.com> |  |
+
+## Source Code
+
+* <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
 ## Values
 
@@ -20,6 +35,12 @@ A Helm chart to install the SPIRE agent.
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
+| fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
+| fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| fsGroupFix.image.tag | string | `"5.2.15"` | Overrides the image tag |
+| fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | fullnameOverride | string | `""` |  |
 | healthChecks.port | int | `9980` | override the host port used for health checking |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
