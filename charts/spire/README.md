@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -300,6 +300,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.enabled | bool | `false` |  |
 | spire-server.controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | spire-server.controllerManager.identities.enabled | bool | `true` |  |
+| spire-server.controllerManager.identities.federatesWith | list | `[]` |  |
 | spire-server.controllerManager.identities.namespaceSelector | object | `{}` |  |
 | spire-server.controllerManager.identities.podSelector | object | `{}` |  |
 | spire-server.controllerManager.identities.spiffeIDTemplate | string | `"spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{ .PodSpec.ServiceAccountName }}"` |  |
@@ -309,7 +310,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.controllerManager.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
-| spire-server.controllerManager.image.tag | string | `"0.2.2"` | Overrides the image tag |
+| spire-server.controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |

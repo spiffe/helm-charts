@@ -231,7 +231,7 @@ controllerManager:
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: "0.2.2"
+    tag: "0.2.3"
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -279,6 +279,9 @@ controllerManager:
       #   spiffe.io/spiffe-id: "true"
     dnsNameTemplates: []
       # - '{{ index .PodMeta.Labels "app.kubernetes.io/name" }}.{{ .PodMeta.Namespace }}.svc.cluster.local'
+    federatesWith: []
+    # - example.io
+    # - example.ai
 
   validatingWebhookConfiguration:
     failurePolicy: Fail
