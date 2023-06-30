@@ -175,7 +175,7 @@ spec:
             {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
-          {{- if eq .Values.tornjak.config.connectionType "http" }}
+          {{- if eq (include "spire-tornjak.connectionType" .) "http" }}
           startupProbe:
             httpGet:
               scheme: HTTP

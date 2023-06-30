@@ -1,5 +1,5 @@
 {{- if eq (.Values.tornjak.enabled | toString) "true" }}
-{{- if eq .Values.tornjak.config.connectionType "http" }}
+{{- if eq (include "spire-tornjak.connectionType" .) "http" }}
 apiVersion: v1
 kind: Pod
 metadata:
