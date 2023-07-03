@@ -116,9 +116,6 @@ jobs:
       - name: Run chart-testing (lint)
         run: TARGET_BRANCH=${{ github.base_ref }} make lint${{ github.base_ref == 'release' && '-release' || '' }}
 
-    outputs:
-      changed: ${{ steps.list-changed.outputs.changed }}
-
   test:
     runs-on: ubuntu-22.04
 
@@ -210,6 +207,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        k8s:
+          - v1.27.2
+          - v1.26.4
+          - v1.25.9
         example:
           - ${{ fromJson(needs.build-matrix.outputs.examples) }}
 
