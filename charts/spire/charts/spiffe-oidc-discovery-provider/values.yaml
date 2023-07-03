@@ -104,12 +104,14 @@ insecureScheme:
       #   cpu: 100m
       #   memory: 64Mi
 
+jwtIssuer: oidc-discovery.example.org
+
 config:
   # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
-  domains:
-    - localhost
-    - oidc-discovery.example.org
+  # -- Add additional domains that can be used for oidc discovery
+  additionalDomains:
+  - localhost
 
   acme:
     tosAccepted: false

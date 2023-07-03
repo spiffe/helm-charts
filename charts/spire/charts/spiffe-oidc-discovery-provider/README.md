@@ -41,8 +41,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | config.acme.tosAccepted | bool | `false` |  |
-| config.domains[0] | string | `"localhost"` |  |
-| config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| config.additionalDomains | list | `["localhost"]` | Add additional domains that can be used for oidc discovery |
 | config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | fullnameOverride | string | `""` |  |
@@ -66,6 +65,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | insecureScheme.nginx.resources | object | `{}` |  |
+| jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | nameOverride | string | `""` |  |
