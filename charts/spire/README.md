@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.9.1](https://img.shields.io/badge/Version-0.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 0.10.1](https://img.shields.io/badge/Version-0.10.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -114,6 +114,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
 | global.spire.clusterName | string | `"example-cluster"` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
+| global.spire.jwtIssuer | string | `"oidc-discovery.example.org"` | Set the jwt issuer |
 | global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
 | spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
@@ -175,8 +176,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
-| spiffe-oidc-discovery-provider.config.domains[0] | string | `"localhost"` |  |
-| spiffe-oidc-discovery-provider.config.domains[1] | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.config.additionalDomains | list | `["localhost"]` | Add additional domains that can be used for oidc discovery |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
@@ -200,6 +200,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
 | spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |

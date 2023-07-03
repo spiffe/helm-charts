@@ -25,7 +25,7 @@ spiffe-oidc-discovery-provider:
     enabled: true
 
   config:
-    domains:
+    additionalDomains:
       - ingress-nginx-controller
 
     acme:

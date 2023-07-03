@@ -7,7 +7,7 @@ server:
   trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
   data_dir: "/run/spire/data"
   log_level: {{ .Values.logLevel | quote }}
-  jwt_issuer: {{ .Values.jwtIssuer | quote }}
+  jwt_issuer: {{ include "spire-lib.jwt-issuer" . | quote }}
 
   ca_key_type: {{ .Values.caKeyType | quote }}
   ca_ttl: {{ .Values.caTTL | quote }}
@@ -78,7 +78,7 @@ plugins:
   UpstreamAuthority:
     - cert-manager:
         plugin_data:
-          issuer_name: {{ default .issuer_name (include "spire-server.fullname" $root) }}
+          issuer_name: {{ default (include "spire-server.fullname" $root) .issuer_name }}
           issuer_kind: {{ .issuer_kind | quote }}
           issuer_group: {{ .issuer_group | quote }}
           namespace: {{ default $root.Release.Namespace .namespace | quote }}

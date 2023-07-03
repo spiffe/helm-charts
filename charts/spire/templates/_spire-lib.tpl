@@ -14,6 +14,14 @@
 {{- end }}
 {{- end }}
 
+{{- define "spire-lib.jwt-issuer" }}
+{{- if ne (len (dig "spire" "jwtIssuer" "" .Values.global)) 0 }}
+{{- .Values.global.spire.jwtIssuer }}
+{{- else }}
+{{- .Values.jwtIssuer }}
+{{- end }}
+{{- end }}
+
 {{- define "spire-lib.bundle-configmap" }}
 {{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
 {{- .Values.global.spire.bundleConfigMap }}
