@@ -1,3 +1,6 @@
+# @ignored
+global: {}
+
 # -- Set the csi driver name deployed to Kubernetes.
 pluginName: csi.spiffe.io
 
@@ -62,6 +65,8 @@ securityContext:
   #   - ALL
 
 nodeSelector: {}
+
+tolerations: []
 
 nodeDriverRegistrar:
   image:

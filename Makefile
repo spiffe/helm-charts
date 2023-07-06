@@ -1,8 +1,20 @@
+TARGET_BRANCH ?= main
+
 .PHONY: help
 help: ## Display this help.
 	@$(MAKE) help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
+##@ Linting:
+
+.PHONY: lint
+lint: ## Lint the charts using chart-testing
+	@echo Linting charts…
+	@ct lint --config ct.yaml --target-branch $(TARGET_BRANCH) --check-version-increment=false
+
+lint-release: ## Lint the charts using chart-testing for release
+	@echo Linting charts…
+	@ct lint --config ct.yaml --target-branch $(TARGET_BRANCH)
 
 ##@ Testing:
 

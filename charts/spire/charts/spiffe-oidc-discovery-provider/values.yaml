@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# @ignored
+global: {}
+
 # -- The name of the spire-agent unix socket
 agentSocketName: spire-agent.sock
 
@@ -101,12 +104,14 @@ insecureScheme:
       #   cpu: 100m
       #   memory: 64Mi
 
+jwtIssuer: oidc-discovery.example.org
+
 config:
   # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
-  domains:
-    - localhost
-    - oidc-discovery.example.org
+  # -- Add additional domains that can be used for oidc discovery
+  additionalDomains:
+  - localhost
 
   acme:
     tosAccepted: false
@@ -197,3 +202,32 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - oidc-discovery.example.org
+
+# @ignored
+tests:
+  bash:
+    image:
+      # -- The OCI registry to pull the tests image from
+      registry: cgr.dev
+      # -- The repository within the registry
+      repository: chainguard/bash
+      # -- The tests image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: 5.2.15
+
+tools:
+  kubectl:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: docker.io
+      # -- The repository within the registry
+      repository: rancher/kubectl
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: ""

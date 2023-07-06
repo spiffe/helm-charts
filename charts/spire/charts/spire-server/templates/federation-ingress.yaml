@@ -8,7 +8,7 @@ metadata:
   namespace: {{ include "spire-server.namespace" . }}
   labels:
     {{ include "spire-server.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+  {{- with .Values.federation.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}

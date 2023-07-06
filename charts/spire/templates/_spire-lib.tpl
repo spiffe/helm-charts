@@ -14,6 +14,14 @@
 {{- end }}
 {{- end }}
 
+{{- define "spire-lib.jwt-issuer" }}
+{{- if ne (len (dig "spire" "jwtIssuer" "" .Values.global)) 0 }}
+{{- .Values.global.spire.jwtIssuer }}
+{{- else }}
+{{- .Values.jwtIssuer }}
+{{- end }}
+{{- end }}
+
 {{- define "spire-lib.bundle-configmap" }}
 {{- if ne (len (dig "spire" "bundleConfigMap" "" .Values.global)) 0 }}
 {{- .Values.global.spire.bundleConfigMap }}
@@ -89,4 +97,13 @@ rules:
                 number: {{ $port }}
         {{- end }}
   {{- end }}
+{{- end }}
+
+{{- define "spire-lib.kubectl-image" }}
+{{- $root := deepCopy . }}
+{{- $tag := (default $root.image.tag $root.image.version) | toString }}
+{{- if eq (len $tag) 0 }}
+{{- $_ := set $root.image "tag" (regexReplaceAll "^(v?\\d+\\.\\d+\\.\\d+).*" $root.KubeVersion "${1}") }}
+{{- end }}
+{{- include "spire-lib.image" $root }}
 {{- end }}
