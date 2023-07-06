@@ -32,43 +32,43 @@ server:
 
 plugins:
   DataStore:
-    - sql:
-        plugin_data:
-          {{ include "spire-server.datastore-config" . | nindent 10 }}
+    sql:
+      plugin_data:
+        {{ include "spire-server.datastore-config" . | nindent 10 }}
 
   {{- with .Values.nodeAttestor.k8sPsat }}
   {{- if eq (.enabled | toString) "true" }}
   NodeAttestor:
-    - k8s_psat:
-        plugin_data:
-          clusters:
-            {{ include "spire-lib.cluster-name" $root }}:
-              service_account_allow_list: {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
+    k8s_psat:
+      plugin_data:
+        clusters:
+          {{ include "spire-lib.cluster-name" $root }}:
+            service_account_allow_list: {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
   {{- end }}
   {{- end }}
 
   KeyManager:
-    - disk:
-        plugin_data:
-          keys_path: "/run/spire/data/keys.json"
+    disk:
+      plugin_data:
+        keys_path: "/run/spire/data/keys.json"
 
   Notifier:
-    - k8sbundle:
-        plugin_data:
-          namespace: {{ .Values.notifier.k8sbundle.namespace | default (include "spire-server.namespace" .) | quote }}
-          config_map: {{ include "spire-lib.bundle-configmap" . | quote }}
+    k8sbundle:
+      plugin_data:
+        namespace: {{ .Values.notifier.k8sbundle.namespace | default (include "spire-server.namespace" .) | quote }}
+        config_map: {{ include "spire-lib.bundle-configmap" . | quote }}
 
   {{- with .Values.upstreamAuthority.disk }}
   {{- if eq (.enabled | toString) "true" }}
   {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
-    - disk:
-        plugin_data:
-          cert_file_path: "/run/spire/upstream_ca/tls.crt"
-          key_file_path: "/run/spire/upstream_ca/tls.key"
-          {{- if ne .secret.data.bundle "" }}
-          bundle_file_path: "/run/spire/upstream_ca/bundle.crt"
-          {{- end }}
+    disk:
+      plugin_data:
+        cert_file_path: "/run/spire/upstream_ca/tls.crt"
+        key_file_path: "/run/spire/upstream_ca/tls.key"
+        {{- if ne .secret.data.bundle "" }}
+        bundle_file_path: "/run/spire/upstream_ca/bundle.crt"
+        {{- end }}
   {{- end }}
   {{- end }}
 
@@ -76,15 +76,15 @@ plugins:
   {{- if eq (.enabled | toString) "true" }}
   {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
-    - cert-manager:
-        plugin_data:
-          issuer_name: {{ default (include "spire-server.fullname" $root) .issuer_name }}
-          issuer_kind: {{ .issuer_kind | quote }}
-          issuer_group: {{ .issuer_group | quote }}
-          namespace: {{ default $root.Release.Namespace .namespace | quote }}
-          {{- if ne .kube_config_file "" }}
-          kube_config_file: {{ .kube_config_file | quote }}
-          {{- end }}
+    cert-manager:
+      plugin_data:
+        issuer_name: {{ default (include "spire-server.fullname" $root) .issuer_name }}
+        issuer_kind: {{ .issuer_kind | quote }}
+        issuer_group: {{ .issuer_group | quote }}
+        namespace: {{ default $root.Release.Namespace .namespace | quote }}
+        {{- if ne .kube_config_file "" }}
+        kube_config_file: {{ .kube_config_file | quote }}
+        {{- end }}
   {{- end }}
   {{- end }}
 
@@ -92,11 +92,11 @@ plugins:
   {{- if eq (.enabled | toString) "true" }}
   {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
-    - spire:
-        plugin_data:
-          server_address: {{ .server.address | quote }}
-          server_port: {{ .server.port }}
-          workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
+    spire:
+      plugin_data:
+        server_address: {{ .server.address | quote }}
+        server_port: {{ .server.port }}
+        workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
   {{- end }}
   {{- end }}
 {{- if gt $upstreamAuthorityUsed 1 }}
