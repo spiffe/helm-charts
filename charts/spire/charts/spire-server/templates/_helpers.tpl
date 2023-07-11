@@ -173,7 +173,12 @@ Tornjak specific section
 Take a copy of the config and merge in .Values.plugins passed through as root.
 */}}
 {{- define "spire-server.config_merge" }}
-{{- $pluginsToMerge := dict "plugins" (deepCopy .root.Values.plugins) }}
+{{- $pluginsToMerge := dict "plugins" dict }}
+{{- range $type, $val := .root.Values.plugins }}
+{{-   if . }}
+{{-     set $pluginsToMerge.plugins $type $val }}
+{{-   end }}
+{{- end }}
 {{- $newConfig := .config | fromYaml | mustMerge $pluginsToMerge }}
 {{- $newConfig | toYaml }}
 {{- end }}
