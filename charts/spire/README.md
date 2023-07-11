@@ -374,7 +374,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | spire-server.persistence.size | string | `"1Gi"` |  |
 | spire-server.persistence.storageClass | string | `nil` |  |
-| spire-server.plugins | object | `{}` |  |
+| spire-server.plugins.KeyManager | object | `{}` |  |
+| spire-server.plugins.NodeAttestor | object | `{}` |  |
+| spire-server.plugins.Notifier | object | `{}` |  |
+| spire-server.plugins.UpstreamAuthority | object | `{}` |  |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
 | spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |

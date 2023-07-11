@@ -1,3 +1,15 @@
+{{- range $type, $tvals := .Values.plugins }}
+{{-   if not (has $type (list "KeyManager" "NodeAttestor" "UpstreamAuthority" "Notifier")) }}
+{{-     fail (printf "Unknown plugin type specified: %s" $type) }}
+{{-   end }}
+{{-   range $name, $nval := $tvals }}
+{{-     range $sname, $svals := $nval }}
+{{-       if not (has $sname (list "plugin_cmd" "plugin_checksum" "plugin_data")) }}
+{{-         fail (printf "Unknown plugin setting specified: %s" $sname) }}
+{{-       end }}
+{{-     end }}
+{{-   end }}
+{{- end }}
 {{- define "spire-server.yaml-config" -}}
 {{- $upstreamAuthorityUsed := 0 }}
 {{- $root := . }}

@@ -389,7 +389,11 @@ tornjak:
     #   cpu: 100m
     #   memory: 128Mi
 
-plugins: {}
+plugins:
+  KeyManager: {}
+  NodeAttestor: {}
+  UpstreamAuthority: {}
+  Notifier: {}
 
 # @ignored
 tests:
