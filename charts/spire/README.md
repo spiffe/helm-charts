@@ -508,6 +508,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spiffe-csi-driver.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | upstream-spiffe-csi-driver.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | upstream-spiffe-csi-driver.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| upstream-spiffe-csi-driver.tolerations | list | `[]` |  |
 | upstream-spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | upstream-spire-agent.clusterName | string | `"example-cluster"` |  |
 | upstream-spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
@@ -554,6 +555,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | upstream-spire-agent.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-agent |
 | upstream-spire-agent.telemetry.prometheus.port | int | `9988` |  |
+| upstream-spire-agent.tolerations | list | `[]` |  |
 | upstream-spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | upstream-spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
 | upstream-spire-agent.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
