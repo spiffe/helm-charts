@@ -41,11 +41,9 @@ spire-agent:
   enabled: true
   nameOverride: agent
 
-upstream:
-  # -- enable upstream csi driver and agent for use with nested spire.
-  enabled: false
-
 upstream-spire-agent:
+  # -- enable upstream agent for use with nested spire.
+  enabled: false
   nameOverride: agent-upstream
   bundleConfigMap: spire-bundle-upstream
 
@@ -60,6 +58,8 @@ spiffe-csi-driver:
   enabled: true
 
 upstream-spiffe-csi-driver:
+  # -- enable upstream csi driver for use with nested spire.
+  enabled: false
   pluginName: upstream.csi.spiffe.io
   agentSocketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
   healthChecks:

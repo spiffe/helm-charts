@@ -32,7 +32,7 @@ dependencies:
     version: 0.1.0
   - name: spire-agent
     alias: upstream-spire-agent
-    condition: upstream.enabled
+    condition: upstream-spire-agent.enabled
     repository: file://./charts/spire-agent
     version: 0.1.0
   - name: spiffe-csi-driver
@@ -41,7 +41,7 @@ dependencies:
     version: 0.1.0
   - name: spiffe-csi-driver
     alias: upstream-spiffe-csi-driver
-    condition: upstream.enabled
+    condition: upstream-spiffe-csi-driver.enabled
     repository: file://./charts/spiffe-csi-driver
     version: 0.1.0
   - name: spiffe-oidc-discovery-provider

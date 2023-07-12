@@ -125,14 +125,15 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.nameOverride | string | `"server"` |  |
 | tornjak-frontend.enabled | bool | `false` | Enables deployment of Tornjak frontend/UI (Not for production) |
 | upstream-spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
+| upstream-spiffe-csi-driver.enabled | bool | `false` | enable upstream csi driver for use with nested spire. |
 | upstream-spiffe-csi-driver.healthChecks.port | int | `9810` |  |
 | upstream-spiffe-csi-driver.pluginName | string | `"upstream.csi.spiffe.io"` |  |
 | upstream-spire-agent.bundleConfigMap | string | `"spire-bundle-upstream"` |  |
+| upstream-spire-agent.enabled | bool | `false` | enable upstream agent for use with nested spire. |
 | upstream-spire-agent.healthChecks.port | int | `9981` |  |
 | upstream-spire-agent.nameOverride | string | `"agent-upstream"` |  |
 | upstream-spire-agent.serviceAccount.name | string | `"spire-agent-upstream"` |  |
 | upstream-spire-agent.socketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
-| upstream.enabled | bool | `false` | enable upstream csi driver and agent for use with nested spire. |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
