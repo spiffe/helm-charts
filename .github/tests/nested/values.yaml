@@ -15,7 +15,7 @@ spiffe-oidc-discovery-provider:
   insecureScheme:
     enabled: true
 
-upstream-csi-driver:
+upstream-spiffe-csi-driver:
   enabled: true
 
 upstream-spire-agent:
