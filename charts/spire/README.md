@@ -27,6 +27,12 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 Please note this chart requires `Projected Service Account Tokens` which has to be enabled on your k8s api server.
 
+> **Note** This is enabled by default with newer versions as shown by the existence of
+        - --service-account-issuer
+        - --service-account-key-file
+        - --service-account-signing-key-file
+See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection for more details
+
 To enable Projected Service Account Tokens on Docker for Mac/Windows run the following
 command to SSH into the Docker Desktop K8s VM.
 
