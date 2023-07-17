@@ -1,54 +1,1549 @@
-# You can enable config/features that affect all services here.
+# Default configuration for Spire chart
+# SPDX-License-Identifier: APACHE-2.0
+
+## @section Global parameters
+## Note: the paramter values specified here will override the chart level values for these parameters.
+##
 global:
   k8s:
-    # -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+    ## @param global.k8s.clusterDomain Cluster domain name configured for Spire install
+    ##
     clusterDomain: cluster.local
   spire:
-    # -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
-    clusterName: example-cluster
-    # -- The trust domain to be used for the SPIFFE identifiers
-    trustDomain: example.org
-    # -- Set the jwt issuer
-    jwtIssuer: oidc-discovery.example.org
-    # -- Override all instances of bundleConfigMap
+    ## @param global.spire.bundleConfigMap A configmap containing the Spire bundle
+    ## @param global.spire.clusterName The name of the k8s cluster for Spire install
+    ## @param global.spire.image.registry Image registry override
+    ## @param global.spire.jwtIssuer The issuer for Spire JWT tokens
+    ## @param global.spire.trustDomain The trust domain for Spire install
+    ##
     bundleConfigMap: ""
-
+    clusterName: example-cluster
     image:
-      # -- Override all Spire image registries at once
       registry: ""
+    jwtIssuer: oidc-discovery.example.org
+    trustDomain: example.org
 
-#  telemetry:
-#    prometheus:
-#      enabled: true
-#      podMonitor:
-#        enabled: true
-#        # -- Allows to install the PodMonitor in another namespace then the spire components are installed into.
-#        namespace: "kube-prometheus-system"
-#        labels: {}
-
-# subcharts
+## @section Spire server parameters
+## Parameter values for Spire server
+##
 spire-server:
-  # -- Enables deployment of SPIRE Server
+  ## @param spire-server.enabled Flag to enable Spire server
+  ## @param spire-server.fullnameOverride Overrides the full name of Spire server pods
+  ## @param spire-server.nameOverride Overrides the name of Spire server pods
+  ## @param spire-server.namespaceOverride Overrides the namespace where Spire server pods are installed
+  ## @param spire-server.clusterName Cluster name configured for Spire servers
+  ## @param spire-server.ClusterDomain Cluster domain for Spire servers
+  ## @param spire-server.trustDomain Domain name for Spire server trust bundle
+  ## @param spire-server.bundleConfigMap Config map name for Spire servers trust bundle
+  ## @param spire-server.caKeyType Key type for certificate authority
+  ## @param spire-server.caTTL TTL for certificate authority
+  ## @param spire-server.defaultJwtSvidTTL Default TTL for JWT tokens issued by Spire
+  ## @param spire-server.defaultX509SvidTTL Default TTL for X509 tokens issued by Spire
+  ## @param spire-server.jwtIssuer Issuer for JWT tokens
+  ## @param spire-server.logLevel Log level for Spire servers
+  ## @param spire-server.replicaCount Replica count for Spire servers
+  ## 
   enabled: true
+  fullnameOverride: ""
   nameOverride: server
-
+  namespaceOverride: ""
+  clusterName: example-cluster
+  clusterDomain: cluster.local
+  trustDomain: example.org
+  bundleConfigMap: spire-bundle
+  caKeyType: rsa-2048
+  caTTL: 24h
+  defaultJwtSvidTTL: 1h
+  defaultX509SvidTTL: 4h
+  jwtIssuer: oidc-discovery.example.org
+  logLevel: info
+  replicaCount: 1
+  ## @param spire-server.global.k8s.clusterDomain Cluster domain name configured for Spire server
+  ## @param spire-server.global.spire.bundleConfigMap Bundle config map for Spire server
+  ## @param spire-server.global.spire.clusterName The name of the k8s cluster for Spire server
+  ## @param spire-server.global.spire.image.registry Image registry for Spire server
+  ## @param spire-server.global.spire.jwtIssuer JWT Issuer configured for Spire server
+  ## @param spire-server.global.spire.trustDomain Trust domain name configured for Spire server
+  ## 
+  global:
+    k8s:
+      clusterDomain: cluster.local
+    spire:
+      bundleConfigMap: ""
+      clusterName: example-cluster
+      image:
+        registry: ""
+      jwtIssuer: oidc-discovery.example.org
+      trustDomain: example.org
+  ## @param spire-server.ca_subject.common_name Common name for CA
+  ## @param spire-server.ca_subject.country Country for CA
+  ## @param spire-server.ca_subject.organization Organization for CA
+  ## 
+  ca_subject:
+    common_name: example.org
+    country: NL
+    organization: Example
+  ## @param spire-server.configMap.annotations
+  ## 
+  configMap:
+    annotations: {}
+  ## @param spire-server.controllerManager.enabled Enable controller manager and provision CRD's
+  ## 
   controllerManager:
-    # -- Enables deployment of Controller Manager
     enabled: true
+    ## @param spire-server.controllerManager.configMap.annotations
+    ## 
+    configMap:
+      annotations: {}
+    ## @param spire-server.controllerManager.identities.enabled Create a Spire server entry
+    ## @param spire-server.controllerManager.identities.dnsNameTemplates DNS name teamplates for Spire server entry
+    ## @param spire-server.controllerManager.identities.federatesWith List of Spire servers for federation of entries
+    ## @param spire-server.controllerManager.identities.namespaceSelector Namespace selector for Spire server entry
+    ## @param spire-server.controllerManager.identities.podSelector Pod selector for Spire server setting
+    ## @param spire-server.controllerManager.identities.spiffeIDTemplate Template for SPIFFE ID
+    ## TODO: check why this is not an array to support multiple Spire server entries
+    ## 
+    identities:
+      enabled: true
+      dnsNameTemplates: []
+      federatesWith: []
+      namespaceSelector: {}
+      podSelector: {}
+      spiffeIDTemplate: spiffe://{{ .TrustDomain }}/ns/{{ .PodMeta.Namespace }}/sa/{{
+        .PodSpec.ServiceAccountName }}
+    ## @param spire-server.controllerManager.ignore Namespaces List of namespaces to ignore for Spire server entry
+    ## 
+    ignoreNamespaces:
+    - kube-system
+    - kube-public
+    - local-path-storage
+    ## @param spire-server.controllerManager.image.pullPolicy Cluster pull policy
+    ## @param spire-server.controllerManager.image.registry Registry for Spire controller manager images
+    ## @param spire-server.controllerManager.image.repository Repository for the Spire controller manager image
+    ## @param spire-server.controllerManager.image.tag Tag for Spire controller manager image
+    ## @param spire-server.controllerManager.image.version App version for Spire controller manager image
+    ## 
+    image:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: spiffe/spire-controller-manager
+      tag: 0.2.3
+      version: ""
+    ## @param spire-server.controllerManager.resources Resources request and limits for Spire controller manager
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## Example:
+    ## resources:
+    ##   limits:
+    ##     memory: 512Mi
+    ##   requests:
+    ##     memory: 256Mi
+    ##     cpu: 250m
+    ## 
+    resources: {}
+    ## @param spire-server.controllerManager.securityContext Security contexts to be set at a pod level
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+    ## Example:
+    ## podSecurityContext:
+    ##   allowPrivilegeEscalation: false 
+    ##   seccompProfile:
+    ##     type: RuntimeDefault:
+    ##
+    securityContext: {}
+    ## @param spire-server.controllerManager.service.annotations Annotations for service object
+    ## @param spire-server.controllerManager.service.port Service port
+    ## @param spire-server.controllerManager.service.type Service type
+    ## 
+    service:
+      annotations: {}
+      port: 443
+      type: ClusterIP
+    ## @param spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy Failure policy can be "Ignore" or "Fail"
+    ## Ref: https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/#failure-policy
+    ## 
+    validatingWebhookConfiguration:
+      failurePolicy: Fail
+  ## @param spire-server.affinity Node affinity for Spire server pods
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity
+  ## Example:
+  ## affinity:
+  ##   nodeAffinity:
+  ##     requiredDuringSchedulingIgnoredDuringExecution:
+  ##       nodeSelectorTerms:
+  ##       - matchExpressions:
+  ##         - key: nodeType
+  ##           operator: In
+  ##           values:
+  ##           - spiffeNode:
+  affinity: {}
+  ## @param spire-server.autoscaling.enabled Enable horizontal pod autoscaling
+  ## @param spire-server.autoscaling.maxReplicas Maximum replicas for autoscaling
+  ## @param spire-server.autoscaling.minReplicas Minimum replicas for autoscaling
+  ## @param spire-server.autoscaling.targetCPUUtilizationPercentage Target CPU utilization
+  ## @param spire-server.autoscaling.targetMemoryUtilizationPercentage Target memory utilization
+  ## Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  ## 
+  autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  ## @param spire-server.dataStore.sql.databaseName Database name
+  ## @param spire-server.dataStore.sql.databaseType Database type supported values "sqlite3", "mysql" or "postgres"
+  ## @param spire-server.dataStore.sql.host Hostname for datastore
+  ## @param spire-server.dataStore.sql.port Port for datastore
+  ## @param spire-server.dataStore.sql.options Options specific to datastore
+  ## @param spire-server.dataStore.sql.username Username for datastore
+  ## @param spire-server.dataStore.sql.password Password for datastore 
+  ## @param spire-server.dataStore.sql.plugin_data Additional configuration for the datastore Spire server plugin
+  ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_datastore_sql.md
+  ## 
+  dataStore:
+    sql:
+      databaseName: spire
+      databaseType: sqlite3
+      host: ""
+      port: 0
+      options: []
+      username: spire
+      password: ""
+      plugin_data: {}
+  ## @param spire-server.initContainers Init container definitions for Spire server pods
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+  ## Example:
+  ## initContainers:
+  ## - name: initialization-logic
+  ##   image: cgr.dev/chainguard/bash:5.2.15
+  ##   command: ['sh', '-c', 'echo "Intialization logic here..."']
+  ## 
+  initContainers: []
+  ## @param spire-server.extraContainers Additional container definitions to run alongside Spire server
+  ## Ref: https://kubernetes.io/docs/concepts/containers/
+  ## Example:
+  ## extraContainers:
+  ## - name: extra-container
+  ##   image: cgr.dev/chainguard/bash:5.2.15
+  ##   command: ['sh', '-c', 'echo "Additional container logic here..."']
+  ## 
+  extraContainers: []
+  ## @param spire-server.extraVolumes Additional volumes to attach to Spire server pods
+  ## Ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  ## Example:
+  ## extraVolumes:
+  ## - name: extra-volume-1
+  ##   emptyDir: {}
+  ## 
+  extraVolumes: []
+  ## @param spire-server.extraVolumeMounts Additional volume mounts for Spire server container
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/
+  ## Example:
+  ## extraVolumeMounts:
+  ## - name: extra-volume-mount-1
+  ##   mountPath: /data/mount1
+  ##   subPath: "path"
+  ## 
+  extraVolumeMounts: []
+  ## @param spire-server.federation.enabled Enable federation for Spire server
+  ## @param spire-server.federation.bundleEndpoint.address Address for bundle endpoint for federation
+  ## @param spire-server.federation.bundleEndpoint.port Port for bundle endpoint for federation
+  ##
+  federation:
+    enabled: false
+    bundleEndpoint:
+      address: 0.0.0.0
+      port: 8443
+    ## @param spire-server.federation.ingress.enabled Enable ingress for Spire server
+    ## @param spire-server.federation.ingress.className Ingress class name
+    ## @param spire-server.federation.ingress.annotations Annotations for ingress object
+    ## 
+    ingress:
+      enabled: false
+      className: ""
+      annotations: {}
+      ## @param spire-server.federation.ingress.hosts List of hosts configured for ingress with path
+      ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+      ## Example:
+      ## hosts:
+      ## - host: spire-server-federation.example.org
+      ##  paths:
+      ##  - path: /
+      ##    pathType: Prefix
+      ## 
+      hosts:
+      - host: spire-server-federation.example.org
+        paths:
+        - path: /
+          pathType: Prefix
+      ## @param spire-server.federation.ingress.tls List of tls secrets for ingress
+      ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+      ## tls:
+      ## - hosts:
+      ##   - spire-server-federation.example.org
+      ##   secretName: tls-secret
+      ## 
+      tls: []
+  ## @param spire-server.image.pullPolicy Cluster pull policy
+  ## @param spire-server.image.registry Registry for Spire server images
+  ## @param spire-server.image.repository Repository for the Spire server image
+  ## @param spire-server.image.tag Tag for Spire server image
+  ## @param spire-server.image.version App version for Spire server image
+  ## 
+  image:
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: spiffe/spire-server
+    tag: ""
+    version: ""
+  ## @param spire-server.imagePullSecrets Pull secrets for authenticated registries
+  ## Example:
+  ## imagePullSecrets:
+  ##   - myRegistryPullSecret
+  ## 
+  imagePullSecrets: []
+  ## @param spire-server.ingress.enabled Enable ingress for Spire server
+  ## @param spire-server.ingress.className Ingress class name
+  ## @param spire-server.ingress.annotations Annotations for ingress object
+  ## 
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    ## @param spire-server.ingress.hosts List of hosts configured for ingress with path
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+    ## Example:
+    ## hosts:
+    ## - host: spire-server.example.org
+    ##  paths:
+    ##  - path: /
+    ##    pathType: Prefix
+    ## 
+    hosts:
+    - host: spire-server.example.org
+      paths:
+      - path: /
+        pathType: Prefix
+    ## @param spire-server.ingress.tls List of tls secrets for ingress
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+    ## tls:
+    ## - hosts:
+    ##   - spire-server.example.org
+    ##   secretName: tls-secret
+    ## 
+    tls: []
+  ## @param spire-server.livenessProbe.failureThreshold Failure threshold for pod liveness probe
+  ## @param spire-server.livenessProbe.initialDelaySeconds Initial delay in seconds for pod liveness probe
+  ## @param spire-server.livenessProbe.periodSeconds Period in seconds for pod liveness probe
+  ## @param spire-server.livenessProbe.timeoutSeconds Timeout in seconds for pod liveness probe
+  ## 
+  livenessProbe:
+    failureThreshold: 2
+    initialDelaySeconds: 15
+    periodSeconds: 60
+    timeoutSeconds: 3
+  ## @param spire-server.readinessProbe.initialDelaySeconds Initial delay in seconds for pod readiness probe
+  ## @param spire-server.readinessProbe.timeoutSeconds Timeout in seconds for pod readiness probe
+  ## 
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  ## @param spire-server.nodeSelector Nodeselector details for Spire server pods
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  ## Example:
+  ## nodeSelector:
+  ##   kubernetes.io/arch: amd64
+  ##
+  nodeSelector: {}
+  nodeAttestor:
+    ## @param spire-server.nodeAttestor.k8sPsat.enabled Enable Spire server nodeattestor plugin using k8sPsat
+    ## @param spire-server.nodeAttestor.k8sPsat.serviceAccountAllow List of service accounts allowed for k8sPsat
+    ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_nodeattestor_k8s_psat.md 
+    ##
+    k8sPsat:
+      enabled: true
+      serviceAccountAllowList: []
+  notifier:
+    ## @param spire-server.notifier.k8sbundle.namespace Namespace for notifier to push CA bundle
+    ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_notifier_k8sbundle.md
+    ##
+    k8sbundle:
+      namespace: ""
+  ## @param spire-server.persistence.accessMode Access mode of underlying PV
+  ## @param spire-server.persistence.size Size of underlying PVC 
+  ## Ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  ##
+  persistence:
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  ## @param spire-server.podAnnotations Annotations to be added at a pod level
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ## Example:
+  ## podAnnotations:
+  ##   annotationName1: annotationValue1
+  ##   annotationName2: annotationValue2
+  ##
+  podAnnotations: {}
+  ## @param spire-server.podSecurityContext Security contexts to be set at a container level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false 
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  podSecurityContext: {}
+  ## @param spire-server.resources Resources request and limits for Spire server
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ## Example:
+  ## resources:
+  ##   limits:
+  ##     memory: 512Mi
+  ##   requests:
+  ##     memory: 256Mi
+  ##     cpu: 250m
+  ## 
+  resources: {}
+  ## @param spire-server.securityContext Security contexts to be set at a pod level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false 
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  securityContext: {}
+  ## @param spire-server.service.annotations Annotations for service object
+  ## @param spire-server.service.port Service port
+  ## @param spire-server.service.type Service type
+  ## 
+  service:
+    annotations: {}
+    port: 8081
+    type: ClusterIP
+  ## @param spire-server.serviceAccount.create Flag for service account creation
+  ## @param spire-server.serviceAccount.name Name of service account for Spire server
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    ## @param spire-server.serviceAccount.annotations Annotations to be added to service account
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    ## Example:
+    ## annotations:
+    ##   annotationName1: annotationValue1
+    ##   annotationName2: annotationValue2
+    ##
+    annotations: {}
+  telemetry:
+    ## @param spire-server.telemetry.prometheus.enabled Flag to enable prometheus monitoring
+    ##
+    prometheus:
+      enabled: false
+      ## @param spire-server.telemetry.prometheus.podMonitor.enabled Flag for enabling podMonitor
+      ## @param spire-server.telemetry.prometheus.podMonitor.namespace Namespace for podMonitor
+      ## 
+      podMonitor:
+        enabled: false
+        namespace: ""
+        ## @param spire-server.telemetry.prometheus.podMonitor.labels Labels for podMonitor
+        ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+        ## Example:
+        ## labels:
+        ##   app: spire-server
+        ## 
+        labels: {}
+  tests:
+    bash:
+      ## @param spire-server.tests.bash.image.pullPolicy Cluster pull policy
+      ## @param spire-server.tests.bash.image.registry Registry for testing bash image
+      ## @param spire-server.tests.bash.image.repository Repository for testing bash image
+      ## @param spire-server.tests.bash.image.tag Tag for testing bash image
+      ## @param spire-server.tests.bash.image.version App version for testing bash image
+      ## 
+      image:
+        pullPolicy: IfNotPresent
+        registry: cgr.dev
+        repository: chainguard/bash
+        tag: 5.2.15
+        version: ""
+  ## @param apire-server.tolerations Specifies pod tolerations
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  ## Example:
+  ##   tolerations:
+  ##     - key: "example-key"
+  ##       operator: "Exists"
+  ##       effect: "NoSchedule":
+  ## 
+  tolerations: []
+  tools:
+    kubectl:
+      ## @param spire-server.tools.kubectl.image.pullPolicy Cluster pull policy
+      ## @param spire-server.tools.kubectl.image.registry Registry for kubectl image
+      ## @param spire-server.tools.kubectl.image.repository Repository for kubectl image
+      ## @param spire-server.tools.kubectl.image.tag Tag for kubectl image
+      ## @param spire-server.tools.kubectl.image.version App version for kubectl image
+      ## 
+      image:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: rancher/kubectl
+        tag: ""
+        version: ""
+  ## @param spire-server.topologySpreadConstraints Specifies topology spread constraints for pod scheduling
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+  ## Example:
+  ## topologySpreadConstraints:
+  ## - maxSkew: 2
+  ##   topologyKey: topology.kubernetes.io/zone
+  ##   whenUnsatisfiable: ScheduleAnyway
+  ##   labelSelector: 
+  ##     matchLabels:
+  ##       app: spire-server
+  topologySpreadConstraints: []
+  ## @param spire-server.tornjak.enabled Flag to enable tornjak on the server side
+  ## 
+  tornjak:
+    enabled: false
+    ## @param spire-server.tornjak.config.dataStore.driver Tornjak datastore driver
+    ## @param spire-server.tornjak.config.dataStore.file File path for datastore plugin
+    ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_datastore_sql.md
+    ## 
+    config:
+      dataStore:
+        driver: sqlite3
+        file: /run/spire/data/tornjak.sqlite3
+    ## @param spire-server.tornjak.image.pullPolicy Cluster pull policy
+    ## @param spire-server.tornjak.image.registry Registry for Tornjak image
+    ## @param spire-server.tornjak.image.repository Repository for Tornjak image
+    ## @param spire-server.tornjak.image.tag Tag for Tornjak image
+    ## @param spire-server.tornjak.image.version App version for Tornjak image
+    ## 
+    image:
+      pullPolicy: IfNotPresent
+      registry: ghcr.io
+      repository: spiffe/tornjak-backend
+      tag: v1.2.2
+      version: ""
+    ## @param spire-server.tornjak.resources Resources request and limits for Tornjak image
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## Example:
+    ## resources:
+    ##   limits:
+    ##     memory: 512Mi
+    ##   requests:
+    ##     memory: 256Mi
+    ##     cpu: 250m
+    ## 
+    resources: {}
+    ## @param spire-server.tornjak.service.annotations Annotations for service object
+    ## @param spire-server.tornjak.service.port Service port
+    ## @param spire-server.tornjak.service.type Service type
+    ## 
+    service:
+      annotations: {}
+      port: 10000
+      type: ClusterIP
+    ## @param spire-server.tornjak.startupProbe.initialDelaySeconds Initial delay in seconds for pod startup probe
+    ## @param spire-server.tornjak.startupProbe.periodSeconds Period in seconds for pod startup probe
+    ## @param spire-server.tornjak.startupProbe.timeoutSeconds Timeout in seconds for pod startup probe
+    ## @param spire-server.tornjak.startupProbe.successThreshold Success threshold for pod startup probe
+    ## @param spire-server.tornjak.startupProbe.failureThreshold Failure threshold for pod startup probe
+    ## 
+    startupProbe:
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 3
+  upstreamAuthority:
+    ## @param spire-server.upstreamAuthority.certManager.enabled Flag to enable cert manager upstream authority
+    ## @param spire-server.upstreamAuthority.certManager.issuer_group Issuer group for cert manager
+    ## @param spire-server.upstreamAuthority.certManager.issuer_kind Issuer kind for cert manager
+    ## @param spire-server.upstreamAuthority.certManager.issuer_name Name of cert issuer
+    ## @param spire-server.upstreamAuthority.certManager.kube_config_file K8s configuration to connect to API server
+    ## @param spire-server.upstreamAuthority.certManager.namespace Namespace for cert manager
+    ## 
+    certManager:
+      enabled: false
+      issuer_group: cert-manager.io
+      issuer_kind: Issuer
+      issuer_name: ""
+      kube_config_file: ""
+      namespace: ""
+      ## @param spire-server.upstreamAuthority.certManager.ca.create Flag to enable cert manager upstream CA
+      ## @param spire-server.upstreamAuthority.certManager.ca.duration Duration 
+      ## @param spire-server.upstreamAuthority.certManager.ca.privateKey.algorithm issuer_kind Issuer kind for cert manager
+      ## @param spire-server.upstreamAuthority.certManager.ca.privateKey.rotationPolicy Name of cert issuer
+      ## @param spire-server.upstreamAuthority.certManager.ca.privateKey.size K8s configuration to connect to API server
+      ## @param spire-server.upstreamAuthority.certManager.ca.renewBefore Namespace for cert manager
+      ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_upstreamauthority_cert_manager.md
+      ## 
+      ca:
+        create: false
+        duration: 87600h
+        privateKey:
+          algorithm: ECDSA
+          rotationPolicy: ""
+          size: 256
+        renewBefore: ""
+      ## @param spire-server.upstreamAuthority.certManager.rbac.create Flag for creation of cert manager RBAC role
+      ## 
+      rbac:
+        create: true
+    ## @param spire-server.upstreamAuthority.disk.enabled Flag for disk upstream authority plugin
+    ## 
+    disk:
+      enabled: false
+      ## @param spire-server.upstreamAuthority.disk.secret.create Create secret to hold CA
+      ## @param spire-server.upstreamAuthority.disk.secret.name Name for secret
+      ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_upstreamauthority_disk.md
+      ## 
+      secret:
+        create: true
+        name: spiffe-upstream-ca
+        ## @param spire-server.upstreamAuthority.disk.secret.data.bundle Data bundle for disk upstream authority
+        ## @param spire-server.upstreamAuthority.disk.secret.data.certificate Certificate for disk upstream authority
+        ## @param spire-server.upstreamAuthority.disk.secret.data.key Key for disk upstream authority
+        ## 
+        data:
+          bundle: ""
+          certificate: ""
+          key: ""
+    ## @param spire-server.upstreamAuthority.spire.enabled Flag for Spire upstream authority plugin
+    ## 
+    spire:
+      enabled: false
+      ## @param spire-server.upstreamAuthority.spire.server.address Address for Spire server
+      ## @param spire-server.upstreamAuthority.spire.server.port Port for Spire server
+      ## Ref: https://github.com/spiffe/spire/blob/v1.7.0/doc/plugin_server_upstreamauthority_spire.md
+      ## 
+      server:
+        address: ""
+        port: 8081
 
+## @section Spire agent parameters
+## Parameter values for Spire agent
+##
 spire-agent:
-  # -- Enables deployment of SPIRE Agent(s)
+  ## @param spire-agent.enabled Flag to enable Spire agent
+  ## @param spire-agent.fullnameOverride Overrides the full name of Spire agent pods
+  ## @param spire-agent.nameOverride Overrides the name of Spire agent pods
+  ## @param spire-agent.namespaceOverride Overrides the namespace where Spire agent pods are installed
+  ## @param spire-agent.clusterName Cluster name configured for Spire agents
+  ## @param spire-agent.trustBundleFormat Format for Spire agent trust bundle
+  ## @param spire-agent.trustBundleURL URL for Spire agent trust bundle for federation
+  ## @param spire-agent.trustDomain Domain name for Spire agent trust bundle
+  ## @param spire-agent.bundleConfigMap Config map name for Spire agent trust bundle
+  ## @param spire-agent.socketPath Path for Spire agent socket
+  ## @param spire-agent.logLevel Log level set for Spire agents
+  ## 
   enabled: true
+  fullnameOverride: ""
   nameOverride: agent
+  namespaceOverride: ""
+  clusterName: example-cluster
+  trustBundleFormat: pem
+  trustBundleURL: ""
+  trustDomain: example.org
+  bundleConfigMap: spire-bundle
+  socketPath: /run/spire/agent-sockets/spire-agent.sock
+  logLevel: info
+  ## @param spire-agent.global.k8s.clusterDomain Cluster domain name configured for Spire agent
+  ## @param spire-agent.global.spire.bundleConfigMap Spire bundle config map for Spire agent
+  ## @param spire-agent.global.spire.clusterName The name of the k8s cluster for Spire agent
+  ## @param spire-agent.global.spire.image.registry Image registry for Spire agent
+  ## @param spire-agent.global.spire.jwtIssuer JWT Issuer configured for Spire agent
+  ## @param spire-agent.global.spire.trustDomain Trust domain name configured for Spire agent
+  ## 
+  global:
+    k8s:
+      clusterDomain: cluster.local
+    spire:
+      bundleConfigMap: ""
+      clusterName: example-cluster
+      image:
+        registry: ""
+      jwtIssuer: oidc-discovery.example.org
+      trustDomain: example.org
+  ## @param spire-agent.configMap.annotations
+  ## 
+  configMap:
+    annotations: {}
+  ## @param spire-agent.initContainers Init container definitions for Spire agent pods
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+  ## Example:
+  ## initContainers:
+  ## - name: initialization-logic
+  ##   image: cgr.dev/chainguard/bash:5.2.15
+  ##   command: ['sh', '-c', 'echo "Intialization logic here..."']
+  ## 
+  initContainers: []
+  ## @param spire-agent.extraContainers Additional container definitions to run alongside Spire agent
+  ## Ref: https://kubernetes.io/docs/concepts/containers/
+  ## Example:
+  ## extraContainers:
+  ## - name: extra-container
+  ##   image: cgr.dev/chainguard/bash:5.2.15
+  ##   command: ['sh', '-c', 'echo "Additional container logic here..."']
+  ## 
+  extraContainers: []
+  ## @param spire-agent.extraVolumes Additional volumes to attach to Spire agent pods
+  ## Ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  ## Example:
+  ## extraVolumes:
+  ## - name: extra-volume-1
+  ##   emptyDir: {}
+  ## 
+  extraVolumes: []
+  ## @param spire-agent.extraVolumeMounts Additional volume mounts for Spire agent container
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/
+  ## Example:
+  ## extraVolumeMounts:
+  ## - name: extra-volume-mount-1
+  ##   mountPath: /data/mount1
+  ##   subPath: "path"
+  ## 
+  extraVolumeMounts: []
+  fsGroupFix:
+    ## @param spire-agent.fsGroupFix.image.pullPolicy Image pull policy
+    ## @param spire-agent.fsGroupFix.image.registry Registry for bash images to run fs group command
+    ## @param spire-agent.fsGroupFix.image.repository Repository for the bash images to run fs group command
+    ## @param spire-agent.fsGroupFix.image.tag Tag for bash images to run fs group command
+    ## @param spire-agent.fsGroupFix.image.version App version for bash images to run fs group command
+    ## 
+    image:
+      pullPolicy: Always
+      registry: cgr.dev
+      repository: chainguard/bash
+      tag: 5.2.15
+      version: ""
+    ## @param spire-agent.fsGroupFix.resources Resources request and limits for fs group command pod
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## Example:
+    ## resources:
+    ##   limits:
+    ##     memory: 512Mi
+    ##   requests:
+    ##     memory: 256Mi
+    ##     cpu: 250m
+    ## 
+    resources: {}
+  ## @param spire-agent.healthChecks.port Port for Spire agent pods health check
+  ## 
+  healthChecks:
+    port: 9980
+  ## @param spire-agent.image.pullPolicy Image pull policy
+  ## @param spire-agent.image.registry Registry for Spire agents
+  ## @param spire-agent.image.repository Repository for Spire agents
+  ## @param spire-agent.image.tag Tag for Spire agent images
+  ## @param spire-agent.image.version App version for Spire agent images
+  ## 
+  image:
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: spiffe/spire-agent
+    tag: ""
+    version: ""
+  ## @param spire-agent.imagePullSecrets Pull secrets for authenticated registries
+  ## Example:
+  ## imagePullSecrets:
+  ##   - myRegistryPullSecret
+  ## 
+  imagePullSecrets: []
+  ## @param spire-agent.livenessProbe.ginitialDelaySeconds Initial delay in seconds for pod liveness probe
+  ## @param spire-agent.livenessProbe.timeoutSeconds Timeout in seconds for pod liveness probe
+  ## 
+  livenessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 60
+  ## @param spire-agent.readinessProbe.initialDelaySeconds Initial delay in seconds for pod readiness probe
+  ## @param spire-agent.readinessProbe.timeoutSeconds Timeout in seconds for pod readiness probe
+  ## 
+  readinessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 60
+  ## @param spire-agent.nodeSelector Nodeselector details for Spire agent pods
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  ## Example:
+  ## nodeSelector:
+  ##   kubernetes.io/arch: amd64
+  ##
+  nodeSelector: {}
+  ## @param spire-agent.podAnnotations Annotations to be added at a pod level
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ## Example:
+  ## podAnnotations:
+  ##   annotationName1: annotationValue1
+  ##   annotationName2: annotationValue2
+  ##
+  podAnnotations: {}
+  ## @param spire-agent.podSecurityContext Security contexts to be set at a pod level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  podSecurityContext: {}
+  ## @param spire-agent.securityContext Security contexts to be set at a pod level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## securityContext:
+  ##   allowPrivilegeEscalation: false
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  securityContext: {}
+  ## @param apire-agent.priorityClassName Priority class name for pod
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  ##
+  priorityClassName: ""
+  ## @param spire-agent.resources Resources request and limits for Spire agent
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ## Example:
+  ## resources:
+  ##   limits:
+  ##     memory: 512Mi
+  ##   requests:
+  ##     memory: 256Mi
+  ##     cpu: 250m
+  ## 
+  resources: {}
+  ## @param spire-agent.server.address Address override for spire server
+  ## @param spire-agent.server.namespaceOverride Namespace override for Spire server
+  ## @param spire-agent.server.port Port for Spire server
+  ##
+  server:
+    address: ""
+    namespaceOverride: ""
+    port: 8081
+  ## @param spire-agent.serviceAccount.create Flag for service account creation
+  ## @param spire-agent.serviceAccount.name Name of service account for CSI driver
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    ## @param spire-agent.serviceAccount.annotations Annotations to be added to service account
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    ## Example:
+    ## annotations:
+    ##   annotationName1: annotationValue1
+    ##   annotationName2: annotationValue2
+    ##
+    annotations: {}
+  telemetry:
+    ## @param spire-agent.telemetry.prometheus.enabled Flag to enable prometheus monitoring
+    ## @param apire-agent.telemetry.prometheus.port Port for metrics endpoints 
+    ##
+    prometheus:
+      enabled: false
+      port: 9988
+      ## @param spire-agent.telemetry.prometheus.podMonitor.enabled Flag for enabling podMonitor
+      ## @param spire-agent.telemetry.prometheus.podMonitor.namespace Namespace for podMonitor
+      ## 
+      podMonitor:
+        enabled: false
+        namespace: ""
+        ## @param spire-agent.telemetry.prometheus.podMonitor.labels Labels for podMonitor
+        ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+        ## Example:
+        ## labels:
+        ##   app: spire-agent
+        ## 
+        labels: {}
+  ## @param apire-agent.tolerations Specifies pod tolerations
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  ## Example:
+  ##   tolerations:
+  ##     - key: "example-key"
+  ##       operator: "Exists"
+  ##       effect: "NoSchedule":
+  ## 
+  tolerations: []
+  waitForIt:
+    ## @param spire-agent.waitForIt.image.pullPolicy Cluster pull policy for image used to wait for Spire server to come up
+    ## @param spire-agent.waitForIt.image.registry Registry for image used to wait for Spire server to come up
+    ## @param spire-agent.waitForIt.image.repository Repository for image used to wait for Spire server to come up
+    ## @param spire-agent.waitForIt.image.tag Tag for image used to wait for Spire server to come up
+    ## @param spire-agent.waitForIt.image.version App version for image used to wait for Spire server to come up
+    ## 
+    image:
+      pullPolicy: IfNotPresent
+      registry: cgr.dev
+      repository: chainguard/wait-for-it
+      tag: latest-20230517
+      version: ""
+    ## @param spire-agent.waitForIt.resources Resources request and limits for container used to wait for Spire server to come up
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## Example:
+    ## resources:
+    ##   limits:
+    ##     memory: 512Mi
+    ##   requests:
+    ##     memory: 256Mi
+    ##     cpu: 250m
+    ## 
+    resources: {}
+  workloadAttestors:
+    ## @param spire-agent.workloadAttestors.k8s.skipKubeletVerification Configure k8s workload attestor to skip kubelet cert verification
+    ##
+    k8s:
+      skipKubeletVerification: true
+    ## @param spire-agent.workloadAttestors.unix.enabled Flag to enable unix workload attestor
+    ##
+    unix:
+      enabled: false
 
+## @section Spire CSI Driver parameters
+## Parameter values for spire-csi-driver
+##
 spiffe-csi-driver:
-  # -- Enables deployment of CSI driver
+  ## @param spiffe-csi-driver.enabled Flag to enable spiffe-csi-driver for the cluster
+  ## @param spiffe-csi-driver.agentSocketPath The path where Spire agent socket is mounted
+  ## @param spiffe-csi-driver.fullnameOverride Overrides the full name of CSI driver pods
+  ## @param spiffe-csi-driver.nameOverride Overrides the name of CSI driver pods
+  ## @param spiffe-csi-driver.namespaceOverride Overrides the namespace where CSI driver pods are installed
+  ## 
   enabled: true
+  agentSocketPath: /run/spire/agent-sockets/spire-agent.sock
+  fullnameOverride: ""
+  nameOverride: ""
+  namespaceOverride: ""
+  ## @param spiffe-csi-driver.image.pullPolicy Cluster pull policy
+  ## @param spiffe-csi-driver.image.registry Registry for Spire CSI driver images
+  ## @param spiffe-csi-driver.image.repository Repository for the Spire CSI driver image
+  ## @param spiffe-csi-driver.image.tag Tag for Spire CSI driver image
+  ## @param spiffe-csi-driver.image.version App version for Spire CSI Driver image
+  ## 
+  image:
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: spiffe/spiffe-csi-driver
+    tag: ""
+    version: ""
+  ## @param spiffe-csi-driver.imagePullSecrets Pull secrets for authenticated registries
+  ## Example:
+  ## imagePullSecrets:
+  ##   - myRegistryPullSecret
+  ## 
+  imagePullSecrets: []
+  global:
+    k8s:
+      ## @param spiffe-csi-driver.global.k8s.clusterDomain Local domain for cluster
+      ## 
+      clusterDomain: cluster.local
+    ## @param spiffe-csi-driver.global.spire.bundleConfigMap Name of configmap with trust bundle for Spire
+    ## @param spiffe-csi-driver.global.spire.clusterName Cluster name
+    ## @param spiffe-csi-driver.global.spire.image.registry Registry where spire image is stored
+    ## @param spiffe-csi-driver.global.spire.jwtIssuer Issuer for JWT tokens
+    ## @param spiffe-csi-driver.global.spire.trustDomain Spire trustdomain
+    ## 
+    spire:
+      bundleConfigMap: ""
+      clusterName: example-cluster
+      image:
+        registry: ""
+      jwtIssuer: oidc-discovery.example.org
+      trustDomain: example.org
+  ## @param spiffe-csi-driver.healthChecks.port Port for Spire CSI driver image health check
+  ## 
+  healthChecks:
+    port: 9809
+  ## @param spiffe-csi-driver.kubeletPath Path to Kubelet config in the cluster node
+  ## 
+  kubeletPath: /var/lib/kubelet
+  ## @param spiffe-csi-driver.livenessProbe.initialDelaySeconds Initial delay in seconds for pod liveness probe
+  ## @param spiffe-csi-driver.livenessProbe.timeoutSeconds Timeout in seconds for pod liveness probe
+  ## 
+  livenessProbe:
+    initialDelaySeconds: 5
+    timeoutSeconds: 5
+  ## @param spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy Cluster pull policy for Node driver registrar image
+  ## @param spiffe-csi-driver.nodeDriverRegistrar.image.registry Registry for Node driver registrar image
+  ## @param spiffe-csi-driver.nodeDriverRegistrar.image.repository Repository for Node driver registrar image
+  ## @param spiffe-csi-driver.nodeDriverRegistrar.image.tag Tag for Node driver registrar image
+  ## @param spiffe-csi-driver.nodeDriverRegistrar.image.version App version for Node driver registrar image
+  ## 
+  nodeDriverRegistrar:
+    image:
+      pullPolicy: IfNotPresent
+      registry: registry.k8s.io
+      repository: sig-storage/csi-node-driver-registrar
+      tag: v2.8.0
+      version: ""
+    ## @param spiffe-csi-driver.nodeDriverRegistrar.resources Resources request and limits for Node driver registrar
+    ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+    ## Example:
+    ## resources:
+    ##   limits:
+    ##     memory: 512Mi
+    ##   requests:
+    ##     memory: 256Mi
+    ##     cpu: 250m
+    ## 
+    resources: {}
+  ## @param spiffe-csi-driver.nodeSelector Nodeselector details for Spiffe CSI driver pods
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  ## Example:
+  ## nodeSelector:
+  ##   kubernetes.io/arch: amd64
+  ##
+  nodeSelector: {}
+  ## @param spiffe-csi-driver.pluginName Plugin name
+  ##
+  pluginName: csi.spiffe.io
+  ## @param spiffe-csi-driver.podAnnotations Annotations to be added at a pod level
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ## Example:
+  ## podAnnotations:
+  ##   annotationName1: annotationValue1
+  ##   annotationName2: annotationValue2
+  ##
+  podAnnotations: {}
+  ## @param spiffe-csi-driver.podSecurityContext Security contexts to be set at a pod level
+  ## Note: #TODO: confirm if this will override security context values below
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  podSecurityContext: {}
+  ## @param spiffe-csi-driver.securityContext.privileged Flag to set privileged container status
+  ## @param spiffe-csi-driver.securityContext.readOnlyRootFilesystem Flag for marking container filesystem readonly
+  ##
+  securityContext:
+    privileged: true
+    readOnlyRootFilesystem: true
+  ## @param spiffe-csi-driver.priorityClassName Priority class name for pod
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#pod-priority
+  ##
+  priorityClassName: ""
+  ## @param spiffe-csi-driver.resources Resource requests and limits for CSI driver
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ## Example:
+  ## resources:
+  ##   limits:
+  ##     memory: 512Mi
+  ##   requests:
+  ##     memory: 256Mi
+  ##     cpu: 250m
+  ## 
+  resources: {}
+  ## @param spiffe-csi-driver.serviceAccount.create Flag for service account creation
+  ## @param spiffe-csi-driver.serviceAccount.name Name of service account for CSI driver
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    ## @param spiffe-csi-driver.serviceAccount.annotations Annotations to be added to service account
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    ## Example:
+    ## annotations:
+    ##   annotationName1: annotationValue1
+    ##   annotationName2: annotationValue2
+    ##
+    annotations: {}
+  ## @param spiffe-csi-driver.tolerations Specifies pod tolerations
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  ## Example:
+  ##   tolerations:
+  ##     - key: "example-key"
+  ##       operator: "Exists"
+  ##       effect: "NoSchedule":
+  ## 
+  tolerations: []
 
+## @section SPIFFE oidc discovery provider parameters
+## Parameter values for spiffe-oidc-discovery-provider
+##
 spiffe-oidc-discovery-provider:
-  # -- Enables deployment of OIDC discovery provider
+  ## @param spiffe-oidc-discovery-provider.enabled Flag to enable spiffe-oidc-discovery-provider for the cluster
+  ## @param spiffe-oidc-discovery-provider.agentSocketPath The path where Spire agent socket is mounted
+  ## @param spiffe-oidc-discovery-provider.fullnameOverride Overrides the full name of spiffe-oidc-discovery-provider pods
+  ## @param spiffe-oidc-discovery-provider.nameOverride Overrides the name of spiffe-oidc-discovery-provider pods
+  ## @param spiffe-oidc-discovery-provider.namespaceOverride Overrides the namespace where spiffe-oidc-discovery-provider pods are installed
+  ## @param spiffe-oidc-discovery-provider.clusterDomain Cluster domain name configured for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.trustDomain Trust domain name configured for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.jwtIssuer JWT issuer name configured for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.replicaCount Number of replicas, autoscaling values will override
+  ## 
   enabled: false
+  agentSocketName: spire-agent.sock
+  fullnameOverride: ""
+  nameOverride: ""
+  namespaceOverride: ""
+  clusterDomain: cluster.local
+  trustDomain: example.org
+  jwtIssuer: oidc-discovery.example.org
+  replicaCount: 1
+  ## @param spiffe-oidc-discovery-provider.global.k8s.clusterDomain Cluster domain name configured for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.global.spire.bundleConfigMap Spire bundle config map for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.global.spire.clusterName The name of the k8s cluster for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.global.spire.image.registry Image registry for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.global.spire.jwtIssuer JWT Issuer configured for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.global.spire.trustDomain Trust domain name configured for spiffe-oidc-discovery-provider
+  ## 
+  global:
+    k8s:
+      clusterDomain: cluster.local
+    spire:
+      bundleConfigMap: ""
+      clusterName: example-cluster
+      image:
+        registry: ""
+      jwtIssuer: oidc-discovery.example.org
+      trustDomain: example.org
+  ## @param spiffe-oidc-discovery-provider.config.logLevel Log level for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.config.additionalDomains Additional domains configured for spiffe-oidc-discovery-provider
+  ## 
+  config:
+    logLevel: info
+    additionalDomains:
+    - localhost
+    ## @param spiffe-oidc-discovery-provider.config.acme.cacheDir Letsenctrypt plugin cache directory
+    ## @param spiffe-oidc-discovery-provider.config.acme.directoryUrl Letsencrypt plugin directory URL
+    ## @param spiffe-oidc-discovery-provider.config.acme.emailAddress Letsencrypt plugin email address
+    ## @param spiffe-oidc-discovery-provider.config.acme.tosAccepted Letsencrypt TOS acceptance flag
+    ## 
+    acme:
+      cacheDir: /run/spire
+      directoryUrl: https://acme-v02.api.letsencrypt.org/directory
+      emailAddress: letsencrypt@example.org
+      tosAccepted: false
+  ## @param spiffe-oidc-discovery-provider.configMap.annotations
+  ## 
+  configMap:
+    annotations: {}
+  ## @param spiffe-oidc-discovery-provider.image.pullPolicy Cluster pull policy
+  ## @param spiffe-oidc-discovery-provider.image.registry Registry for spiffe-oidc-discovery-provider image
+  ## @param spiffe-oidc-discovery-provider.image.repository Repository for spiffe-oidc-discovery-provider image
+  ## @param spiffe-oidc-discovery-provider.image.tag Tag for spiffe-oidc-discovery-provider image
+  ## @param spiffe-oidc-discovery-provider.image.version App version for spiffe-oidc-discovery-provider
+  ## 
+  image:
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: spiffe/oidc-discovery-provider
+    tag: ""
+    version: ""
+  ## @param spiffe-oidc-discovery-provider.imagePullSecrets Pull secrets for authenticated registries
+  ## Example:
+  ## imagePullSecrets:
+  ##   - myRegistryPullSecret
+  ## 
+  imagePullSecrets: []
+  ## @param spiffe-oidc-discovery-provider.service.annotations Annotations for service object
+  ## @param spiffe-oidc-discovery-provider.service.port Service port
+  ## @param spiffe-oidc-discovery-provider.service.type Service type
+  ## 
+  service:
+    annotations: {}
+    port: 80
+    type: ClusterIP
+  ## @param spiffe-oidc-discovery-provider.ingress.enabled Enable ingress for spiffe-oidc-discovery-provider
+  ## @param spiffe-oidc-discovery-provider.ingress.className Ingress class name
+  ## @param spiffe-oidc-discovery-provider.ingress.annotations Annotations for ingress object
+  ## 
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    ## @param spiffe-oidc-discovery-provider.ingress.hosts List of hosts configured for ingress with path
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+    ## Example:
+    ## hosts:
+    ## - host: oidc-discovery.example.org
+    ##  paths:
+    ##  - path: /
+    ##    pathType: Prefix
+    ## 
+    hosts:
+    - host: oidc-discovery.example.org
+      paths:
+      - path: /
+        pathType: Prefix
+    ## @param spiffe-oidc-discovery-provider.ingress.tls List of tls secrets for ingress
+    ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+    ## tls:
+    ## - hosts:
+    ##   - oidc-discovery.example.org
+    ##   secretName: tls-secret
+    ## 
+    tls: []
+  insecureScheme:
+    ## @param spiffe-oidc-discovery-provider.insecureScheme.enabled Flag to enable insecure nginx install
+    ## 
+    enabled: false
+    nginx:
+      ## @param spiffe-oidc-discovery-provider.insecureScheme.nginx.pullPolicy Image pull policy
+      ## @param spiffe-oidc-discovery-provider.insecureScheme.nginx.registry Registry for nginx image
+      ## @param spiffe-oidc-discovery-provider.insecureScheme.nginx.repository Repository for nginx image
+      ## @param spiffe-oidc-discovery-provider.insecureScheme.nginx.tag Tag for nginx image
+      ## @param spiffe-oidc-discovery-provider.insecureScheme.nginx.version App version for nginx
+      ## 
+      image:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: nginxinc/nginx-unprivileged
+        tag: 1.24.0-alpine
+        version: ""
+      ## @param spiffe-oidc-discovery-provider.insecureScheme.nginx.resources Resources request and limits for nginx
+      ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+      ## Example:
+      ## resources:
+      ##   limits:
+      ##     memory: 512Mi
+      ##   requests:
+      ##     memory: 256Mi
+      ##     cpu: 250m
+      ## 
+      resources: {}
+  ## @param spiffe-oidc-discovery-provider.8.initialDelaySeconds Initial delay in seconds for pod liveness probe
+  ## @param spiffe-oidc-discovery-provider.livenessProbe.timeoutSeconds Timeout in seconds for pod liveness probe
+  ## 
+  livenessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  ## @param spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds Initial delay in seconds for pod liveness probe
+  ## @param spiffe-oidc-discovery-provider.livenessProbe.timeoutSeconds Timeout in seconds for pod liveness probe
+  ## 
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  ## @param spiffe-oidc-discovery-provider.autoscaling.enabled Enable horizontal pod autoscaling
+  ## @param spiffe-oidc-discovery-provider.autoscaling.maxReplicas Maximum replicas for autoscaling
+  ## @param spiffe-oidc-discovery-provider.autoscaling.minReplicas Minimum replicas for autoscaling
+  ## @param spiffe-oidc-discovery-provider.autoscaling.targetCPUUtilizationPercentage Target CPU utilization
+  ## @param spiffe-oidc-discovery-provider.autoscaling.targetMemoryUtilizationPercentage Target memory utilization
+  ## Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  ## 
+  autoscaling:
+    enabled: false
+    maxReplicas: 5
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
+  ## @param spiffe-oidc-discovery-provider.nodeSelector Nodeselector details for spiffe-oidc-discovery-provider pods
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  ## Example:
+  ## nodeSelector:
+  ##   kubernetes.io/arch: amd64
+  ##
+  nodeSelector: {}
+  ## @param spiffe-oidc-discovery-provider.affinity Node affinity for spiffe-oidc-discovery-provider pods
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity
+  ## Example:
+  ## affinity:
+  ##   nodeAffinity:
+  ##     requiredDuringSchedulingIgnoredDuringExecution:
+  ##       nodeSelectorTerms:
+  ##       - matchExpressions:
+  ##         - key: nodeType
+  ##           operator: In
+  ##           values:
+  ##           - spiffeNode:
+  affinity: {}
+  ## @param spiffe-oidc-discovery-provider.podAnnotations Annotations to be added at a pod level
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ## Example:
+  ## podAnnotations:
+  ##   annotationName1: annotationValue1
+  ##   annotationName2: annotationValue2
+  ##
+  podAnnotations: {}
+  ## @param spiffe-oidc-discovery-provider.podSecurityContext Security contexts to be set at a pod level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  podSecurityContext: {}
+  ## @param spiffe-oidc-discovery-provider.podSecurityContext Security contexts to be set at a pod level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  securityContext: {}
+  ## @param spiffe-oidc-discovery-provider.resources Resources request and limits for Node driver registrar
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ## Example:
+  ## resources:
+  ##   limits:
+  ##     memory: 512Mi
+  ##   requests:
+  ##     memory: 256Mi
+  ##     cpu: 250m
+  ## 
+  resources: {}
+  ## @param spiffe-oidc-discovery-provider.serviceAccount.create Flag for service account creation
+  ## @param spiffe-oidc-discovery-provider.serviceAccount.name Name of service account for OIDC provider
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    ## @param spiffe-oidc-discovery-provider.serviceAccount.annotations Annotations to be added to service account
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    ## Example:
+    ## annotations:
+    ##   annotationName1: annotationValue1
+    ##   annotationName2: annotationValue2
+    ##
+    annotations: {}
+  telemetry:
+    ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.enabled Flag to enable prometheus monitoring
+    ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.port Port for metrics endpoints 
+    ##
+    prometheus:
+      enabled: false
+      port: 9988
+      nginxExporter:
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.pullPolicy Image pull policy
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.registry Registry for nginx exporter images
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.repository Repository for the nginx exporter image
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.tag Tag for nginx exporter image
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.image.version App version for nginx exporter image
+        ## 
+        image:
+          pullPolicy: IfNotPresent
+          registry: docker.io
+          repository: nginx/nginx-prometheus-exporter
+          tag: 0.11.0
+          version: ""
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.nginxExporter.resources Resources request and limits for Node driver registrar
+        ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+        ## Example:
+        ## resources:
+        ##   limits:
+        ##     memory: 512Mi
+        ##   requests:
+        ##     memory: 256Mi
+        ##     cpu: 250m
+        ## 
+        resources: {}
+      ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.enabled Flag for enabling podMonitor
+      ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace Namespace for podMonitor
+      ## 
+      podMonitor:
+        enabled: false
+        namespace: ""
+        ## @param spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels Labels for podMonitor
+        ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+        ## Example:
+        ## labels:
+        ##   app: spiffe-oidc-discovery-provider
+        ## 
+        labels: {}
+  tests:
+    bash:
+      ## @param spiffe-oidc-discovery-provider.tests.bash.image.pullPolicy Image pull policy
+      ## @param spiffe-oidc-discovery-provider.tests.bash.image.registry Registry for bash images
+      ## @param spiffe-oidc-discovery-provider.tests.bash.image.repository Repository for the bash image
+      ## @param spiffe-oidc-discovery-provider.tests.bash.image.tag Tag for bash image
+      ## @param spiffe-oidc-discovery-provider.tests.bash.image.version App version for bash image
+      ## 
+      image:
+        pullPolicy: IfNotPresent
+        registry: cgr.dev
+        repository: chainguard/bash
+        tag: 5.2.15
+        version: ""
+  ## @param spiffe-oidc-discovery-provider.tolerations Specifies pod tolerations
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  ## Example:
+  ##   tolerations:
+  ##     - key: "example-key"
+  ##       operator: "Exists"
+  ##       effect: "NoSchedule":
+  ## 
+  tolerations: []
+  tools:
+    kubectl:
+      ## @param spiffe-oidc-discovery-provider.tools.kubectl.image.pullPolicy Image pull policy
+      ## @param spiffe-oidc-discovery-provider.tools.kubectl.image.registry Registry for kubectl images
+      ## @param spiffe-oidc-discovery-provider.tools.kubectl.image.repository Repository for the kubectl image
+      ## @param spiffe-oidc-discovery-provider.tools.kubectl.image.tag Tag for kubectl image
+      ## @param spiffe-oidc-discovery-provider.tools.kubectl.image.version App version for kubectl image
+      ## 
+      image:
+        pullPolicy: IfNotPresent
+        registry: docker.io
+        repository: rancher/kubectl
+        tag: ""
+        version: ""
 
+## @section Tornjak frontend parameters
+## Parameter values for Tornjak frontend
+##
 tornjak-frontend:
-  # -- Enables deployment of Tornjak frontend/UI (Not for production)
+  ## @param tornjak-frontend.enabled Flag to enable Tronjak frontend
+  ## @param tornjak-frontend.fullnameOverride Overrides the full name of Tornjak frontend pods
+  ## @param tornjak-frontend.nameOverride Overrides the name of Tornjak frontend pods
+  ## @param tornjak-frontend.namespaceOverride Overrides the namespace where Tornjak frontend pods are installed
+  ## @param tornjak-frontend.apiServerURL API server URL for Tornjak server
+  ##
   enabled: false
+  fullnameOverride: ""
+  nameOverride: ""
+  namespaceOverride: ""
+  apiServerURL: http://localhost:10000/
+  ## @param tornjak-frontend.affinity Node affinity for Tornjak pods
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity
+  ## Example:
+  ## affinity:
+  ##   nodeAffinity:
+  ##     requiredDuringSchedulingIgnoredDuringExecution:
+  ##       nodeSelectorTerms:
+  ##       - matchExpressions:
+  ##         - key: nodeType
+  ##           operator: In
+  ##           values:
+  ##           - spiffeNode:
+  affinity: {}
+  ## @param tornjak-frontend.global.k8s.clusterDomain Cluster domain name configured for Tornjak frontend
+  ## @param tornjak-frontend.global.spire.bundleConfigMap Spire bundle config map for Tornjak frontend
+  ## @param tornjak-frontend.global.spire.clusterName The name of the k8s cluster for Tornjak frontend
+  ## @param tornjak-frontend.global.spire.image.registry Image registry for Tornjak frontend
+  ## @param tornjak-frontend.global.spire.jwtIssuer JWT Issuer configured for Tornjak frontend
+  ## @param tornjak-frontend.global.spire.trustDomain Trust domain name configured for Tornjak frontend
+  ## 
+  global:
+    k8s:
+      clusterDomain: cluster.local
+    spire:
+      bundleConfigMap: ""
+      clusterName: example-cluster
+      image:
+        registry: ""
+      jwtIssuer: oidc-discovery.example.org
+      trustDomain: example.org
+  ## @param tornjak-frontend.image.pullPolicy Cluster pull policy
+  ## @param tornjak-frontend.image.registry Registry for Tornjak frontend image
+  ## @param tornjak-frontend.image.repository Repository for Tornjak frontend image
+  ## @param tornjak-frontend.image.tag Tag for Tornjak frontend image
+  ## @param tornjak-frontend.image.version App version for Tornjak frontend image
+  ## 
+  image:
+    pullPolicy: IfNotPresent
+    registry: ghcr.io
+    repository: spiffe/tornjak-frontend
+    tag: ""
+    version: ""
+  ## @param tornjak-frontend.imagePullSecrets Pull secrets for authenticated registries
+  ## Example:
+  ## imagePullSecrets:
+  ##   - myRegistryPullSecret
+  ## 
+  imagePullSecrets: []
+  ## @param tornjak-frontend.labels Labels for Tornjak frontend
+  ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ## Example:
+  ## labels:
+  ##   app: tornjak-frontend
+  ## 
+  labels: {}
+  ## @param tornjak-frontend.nodeSelector Nodeselector details for Tornjak frontend pods
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  ## Example:
+  ## nodeSelector:
+  ##   kubernetes.io/arch: amd64
+  ##
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  ## @param tornjak-frontend.podSecurityContext Security contexts to be set at a pod level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false 
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  podSecurityContext: {}
+  ## @param tornjak-frontend.securityContext Security contexts to be set at a container level
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+  ## Example:
+  ## podSecurityContext:
+  ##   allowPrivilegeEscalation: false 
+  ##   seccompProfile:
+  ##     type: RuntimeDefault:
+  ##
+  securityContext: {}
+  ## @param tornjak-frontend.service.annotations Annotations for service object
+  ## @param tornjak-frontend.service.port Service port
+  ## @param tornjak-frontend.service.type Service type
+  ## 
+  service:
+    annotations: {}
+    port: 3000
+    type: ClusterIP
+  ## @param tornjak-frontend.serviceAccount.create Flag for service account creation
+  ## @param tornjak-frontend.serviceAccount.name Name of service account for Tornjak frontend
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    ## @param tornjak-frontend.serviceAccount.annotations Annotations to be added to service account
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    ## Example:
+    ## annotations:
+    ##   annotationName1: annotationValue1
+    ##   annotationName2: annotationValue2
+    ##
+    annotations: {}
+  ## @param tornjak-frontend.spireHealthCheck.enabled Flag to enable Spire server URL health check
+  ##
+  spireHealthCheck:
+    enabled: true
+  ## @param tornjak-frontend.startupProbe.enabled Flag for enabling pod startup probe
+  ## @param tornjak-frontend.startupProbe.initialDelaySeconds Initial delay in seconds for pod startup probe
+  ## @param tornjak-frontend.startupProbe.periodSeconds Period in seconds for pod startup probe
+  ## @param tornjak-frontend.startupProbe.timeoutSeconds Timeout in seconds for pod startup probe
+  ## @param tornjak-frontend.startupProbe.successThreshold Success threshold for pod startup probe
+  ## @param tornjak-frontend.startupProbe.failureThreshold Failure threshold for pod startup probe
+  ## 
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 6
+  tests:
+    bash:
+      ## @param tornjak-frontend.test.bash.image.pullPolicy Cluster pull policy
+      ## @param tornjak-frontend.test.bash.image.registry Registry for testing bash image
+      ## @param tornjak-frontend.test.bash.image.repository Repository for testing bash image
+      ## @param tornjak-frontend.test.bash.image.tag Tag for testing bash image
+      ## @param tornjak-frontend.test.bash.image.version App version for testing bash image
+      ## 
+      image:
+        pullPolicy: IfNotPresent
+        registry: cgr.dev
+        repository: chainguard/bash
+        tag: 5.2.15
+        version: ""
+  ## @param tornjak-frontend.tolerations Specifies pod tolerations
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  ## Example:
+  ##   tolerations:
+  ##     - key: "example-key"
+  ##       operator: "Exists"
+  ##       effect: "NoSchedule":
+  ## 
+  tolerations: []
+  ## @param tornjak-frontend.topologySpreadConstraints Specifies topology spread constraints for pod scheduling
+  ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+  ## Example:
+  ## topologySpreadConstraints:
+  ## - maxSkew: 2
+  ##   topologyKey: topology.kubernetes.io/zone
+  ##   whenUnsatisfiable: ScheduleAnyway
+  ##   labelSelector: 
+  ##     matchLabels:
+  ##       app: tornjak
+  topologySpreadConstraints: []
