@@ -362,8 +362,10 @@ tornjak:
 
   service:
     type: ClusterIP
-    portHttp: 10080
-    portHttps: 10443
+    # -- Ports for tornjak
+    ports:
+      http: 10080
+      https: 10443
     annotations: {}
 
   startupProbe:
