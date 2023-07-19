@@ -180,8 +180,8 @@ The code below determines what connection type should be used.
 
 {{- if (lookup "v1" "Secret" (include "spire-server.namespace" .) .Values.tornjak.config.tlsSecret) -}}
 
-{{- $caType := default "INVALID" .Values.tornjak.config.userCA.type }}
-{{- if (lookup "v1" $caType (include "spire-server.namespace" .) .Values.tornjak.config.userCA.name) -}}
+{{- $caType := default "INVALID" .Values.tornjak.config.clientCA.type }}
+{{- if (lookup "v1" $caType (include "spire-server.namespace" .) .Values.tornjak.config.clientCA.name) -}}
 {{- printf "mtls" -}}
 {{- else }}
 {{- printf "tls" -}}

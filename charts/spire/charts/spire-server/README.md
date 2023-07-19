@@ -68,7 +68,7 @@ Follow the steps to [create user CA for mTLS](https://github.com/spiffe/tornjak/
 Here is an example using a *Secret* in `spire-server` namespace:
 
 ```console
-kubectl -n spire-server create secret generic tornjak-user-ca --from-file=ca.crt="CA/rootCA.crt"
+kubectl -n spire-server create secret generic tornjak-client-ca --from-file=ca.crt="CA/rootCA.crt"
 ```
 
 Once the charts are deployed, you can test the mTLS connection with the following command (assuming localhost):
@@ -198,10 +198,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
+| tornjak.config.clientCA.name | string | `"tornjak-client-ca"` |  |
+| tornjak.config.clientCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |
 | tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
 | tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
-| tornjak.config.userCA.name | string | `"tornjak-user-ca"` |  |
-| tornjak.config.userCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
