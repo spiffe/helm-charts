@@ -36,9 +36,7 @@ spire-server:
       enabled: true
       issuer_name: abc123
 `)
-			if err != nil {
-				panic(err)
-			}
+			Expect(err).Should(Succeed())
 			notes := objs["spire/charts/spire-server/templates/configmap.yaml"]
 			Expect(notes).Should(ContainSubstring("abc123"))
 		})
