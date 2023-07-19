@@ -253,15 +253,15 @@ spec:
             secretName: {{ .Values.tornjak.config.tlsSecret }}
         {{- end }}
         {{- if eq (include "spire-tornjak.connectionType" .) "mtls" }}
-        {{- if eq .Values.tornjak.config.userCA.type "Secret" }}
+        {{- if eq .Values.tornjak.config.clientCA.type "Secret" }}
         - name: user-cert
           secret:
             defaultMode: 256
-            secretName: {{ .Values.tornjak.config.userCA.name }}
-        {{- else if eq .Values.tornjak.config.userCA.type "ConfigMap" }}
+            secretName: {{ .Values.tornjak.config.clientCA.name }}
+        {{- else if eq .Values.tornjak.config.clientCA.type "ConfigMap" }}
         - name: user-cert
           configMap:
-            name: {{ .Values.tornjak.config.userCA.name }}
+            name: {{ .Values.tornjak.config.clientCA.name }}
         {{- end }}
         {{- end }}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}

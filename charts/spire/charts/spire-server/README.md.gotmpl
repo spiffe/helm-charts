@@ -63,7 +63,7 @@ Follow the steps to [create user CA for mTLS](https://github.com/spiffe/tornjak/
 Here is an example using a *Secret* in `spire-server` namespace:
 
 ```console
-kubectl -n spire-server create secret generic tornjak-user-ca --from-file=ca.crt="CA/rootCA.crt"
+kubectl -n spire-server create secret generic tornjak-client-ca --from-file=ca.crt="CA/rootCA.crt"
 ```
 
 Once the charts are deployed, you can test the mTLS connection with the following command (assuming localhost):
