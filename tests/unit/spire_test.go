@@ -26,9 +26,7 @@ func ValueStringRender(chart *helmchart.Chart, values string) (map[string]string
 
 var _ = Describe("Spire", func() {
 	chart, err := helmloader.Load("../../charts/spire")
-	if err != nil {
-		panic(err)
-	}
+	Expect(err).Should(Succeed())
 	Describe("spire-server.upstream.cert-manager", func() {
 		It("issuer_name when set is passed through", func() {
 			objs, err := ValueStringRender(chart, `
