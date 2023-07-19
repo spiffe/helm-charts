@@ -12,6 +12,7 @@ on:
       - '.github/tests/**/*.sh'
       - '.github/tests/**/*.json'
       - 'examples/**/*.yaml'
+      - 'tests/**/*'
       - 'helm-docs.sh'
 
 concurrency:
@@ -70,14 +71,21 @@ jobs:
           fi
 
       - name: Setup Go
-        uses: actions/setup-go@v4
-      - name: Run Unit Tests
+        uses: actions/setup-go@v4.0.1
+        with:
+          go-version-file: tests/go.mod
+          cache-dependency-path: tests/go.sum
+          check-latest: true
+
+      - name: Install do dependencies
         run: |
-          set +e
-          set -o pipefail
+          go mod download
           go install github.com/onsi/ginkgo/v2/ginkgo@latest
-          cd tests/unit
-          ginkgo
+        working-directory: ./tests/unit
+
+      - name: Run Unit Tests
+        run: ginkgo
+        working-directory: ./tests/unit
 
   lint-chart:
     runs-on: ubuntu-22.04

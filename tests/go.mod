@@ -1,10 +1,11 @@
-module github.com/spiffe/helm-charts/tests/unit
+module github.com/spiffe/helm-charts/tests
 
 go 1.20
 
 require (
 	github.com/onsi/ginkgo/v2 v2.9.4
 	github.com/onsi/gomega v1.27.6
+	helm.sh/helm/v3 v3.11.3
 )
 
 require (
@@ -57,7 +58,6 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	helm.sh/helm/v3 v3.11.3 // indirect
 	k8s.io/api v0.26.2 // indirect
 	k8s.io/apiextensions-apiserver v0.26.0 // indirect
 	k8s.io/apimachinery v0.26.2 // indirect
