@@ -66,6 +66,8 @@ securityContext:
 
 nodeSelector: {}
 
+tolerations: []
+
 nodeDriverRegistrar:
   image:
     # -- The OCI registry to pull the image from
