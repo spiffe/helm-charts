@@ -48,7 +48,6 @@ spiffe-csi-driver:
 
 
 upstream-spiffe-csi-driver:
-  enabled: true
   namespaceOverride: spire-system
   priorityClassName: system-node-critical
 
