@@ -134,6 +134,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.nameOverride | string | `"agent-upstream"` |  |
 | upstream-spire-agent.serviceAccount.name | string | `"spire-agent-upstream"` |  |
 | upstream-spire-agent.socketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
+| upstream-spire-agent.telemetry.prometheus.port | int | `9989` |  |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
