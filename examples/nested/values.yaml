@@ -4,7 +4,7 @@ spire-server:
     spire:
       enabled: true
       server:
-        address: spire-server.nested-root-server
+        address: spire-server.spire-root-server
   controllerManager:
     enabled: true
     identities:
@@ -21,4 +21,4 @@ upstream-spiffe-csi-driver:
 upstream-spire-agent:
   enabled: true
   server:
-    address: spire-server.nested-root-server
+    address: spire-server.spire-root-server
