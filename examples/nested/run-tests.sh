@@ -19,8 +19,8 @@ teardown() {
   helm uninstall --namespace "${ns}" spire 2>/dev/null || true
   kubectl delete ns "${ns}" 2>/dev/null || true
 
-  helm uninstall --namespace mysql mysql 2>/dev/null || true
-  kubectl delete ns mysql 2>/dev/null || true
+  helm uninstall --namespace mysql spire-root-server 2>/dev/null || true
+  kubectl delete ns spire-root-server 2>/dev/null || true
 }
 
 trap 'trap - SIGTERM && teardown' SIGINT SIGTERM EXIT

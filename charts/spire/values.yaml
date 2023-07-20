@@ -52,6 +52,9 @@ upstream-spire-agent:
     name: spire-agent-upstream
   healthChecks:
     port: 9981
+  telemetry:
+    prometheus:
+      port: 9989
 
 spiffe-csi-driver:
   # -- Enables deployment of CSI driver
