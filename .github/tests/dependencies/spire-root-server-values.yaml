@@ -4,11 +4,11 @@ spire-server:
   nodeAttestor:
     k8sPsat:
       serviceAccountAllowList:
-        - nested:spire-agent-upstream
+        - spire-system:spire-agent-upstream
   bundleConfigMap: spire-bundle-upstream
   notifier:
     k8sbundle:
-      namespace: nested
+      namespace: spire-system
 
 spire-agent:
   enabled: false

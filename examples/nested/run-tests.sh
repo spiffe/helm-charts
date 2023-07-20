@@ -13,7 +13,7 @@ source "${SCRIPTPATH}/../../.github/scripts/parse-versions.sh"
 source "${TESTDIR}/common.sh"
 
 helm_install=(helm upgrade --install --create-namespace)
-ns=spire-system
+ns=spire-server
 
 teardown() {
   helm uninstall --namespace "${ns}" spire 2>/dev/null || true
@@ -25,6 +25,11 @@ teardown() {
 
 trap 'trap - SIGTERM && teardown' SIGINT SIGTERM EXIT
 
+kubectl create namespace spire-system 2>/dev/null || true
+kubectl label namespace spire-system pod-security.kubernetes.io/enforce=privileged || true
+kubectl create namespace "${ns}" 2>/dev/null || true
+kubectl label namespace "${ns}" pod-security.kubernetes.io/enforce=restricted || true
+
 "${helm_install[@]}" spire charts/spire \
   --namespace spire-root-server \
   --values "${DEPS}/spire-root-server-values.yaml" \
@@ -34,7 +39,7 @@ kubectl get nodes -o go-template='{{range .items}}{{printf "%s\n" .metadata.uid}
   kubectl exec -t spire-server-0 -n "spire-root-server" -- spire-server entry create -spiffeID spiffe://example.org/example-cluster/nested-spire -parentID "spiffe://example.org/spire/agent/k8s_psat/example-cluster/$line" -selector k8s:pod-label:app.kubernetes.io/name:server -downstream
 done
 
-"${helm_install[@]}" --namespace "${ns}" --values "${SCRIPTPATH}/values.yaml" \
+"${helm_install[@]}" --namespace "${ns}" --values "${SCRIPTPATH}/values.yaml,${SCRIPTPATH}/../production/values.yaml" \
   --wait spire charts/spire
 helm test --namespace "${ns}" spire
 
