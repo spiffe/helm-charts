@@ -6,6 +6,63 @@ entries:
       artifacthub.io/license: Apache-2.0
     apiVersion: v2
     appVersion: 1.7.0
+    created: "2023-07-20T08:51:35.452545569Z"
+    dependencies:
+    - condition: spire-server.enabled
+      name: spire-server
+      repository: file://./charts/spire-server
+      version: 0.1.0
+    - condition: spire-agent.enabled
+      name: spire-agent
+      repository: file://./charts/spire-agent
+      version: 0.1.0
+    - condition: spiffe-csi-driver.enabled
+      name: spiffe-csi-driver
+      repository: file://./charts/spiffe-csi-driver
+      version: 0.1.0
+    - condition: spiffe-oidc-discovery-provider.enabled
+      name: spiffe-oidc-discovery-provider
+      repository: file://./charts/spiffe-oidc-discovery-provider
+      version: 0.1.0
+    - condition: tornjak-frontend.enabled
+      name: tornjak-frontend
+      repository: file://./charts/tornjak-frontend
+      version: 0.1.0
+    description: 'A Helm chart for deploying the complete Spire stack including: spire-server,
+      spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager. '
+    digest: 98fb7498966cfd34305e901611c5308c75516113802504781aad2519055fcd3d
+    home: https://github.com/spiffe/helm-charts/tree/main/charts/spire
+    icon: https://spiffe.io/img/logos/spire/icon/color/spire-icon-color.png
+    keywords:
+    - spiffe
+    - spire
+    - spire-server
+    - spire-agent
+    - oidc
+    - spire-controller-manager
+    kubeVersion: '>=1.21.0-0'
+    maintainers:
+    - email: marco.franssen@gmail.com
+      name: marcofranssen
+      url: https://marcofranssen.nl
+    - email: Kevin.Fox@pnnl.gov
+      name: kfox1111
+    - email: fymemon@yahoo.com
+      name: faisal-memon
+    - email: edwbuck@gmail.com
+      name: edwbuck
+    name: spire
+    sources:
+    - https://github.com/spiffe/helm-charts/tree/main/charts/spire
+    type: application
+    urls:
+    - https://github.com/spiffe/helm-charts/releases/download/spire-0.11.0/spire-0.11.0.tgz
+    version: 0.11.0
+  - annotations:
+      artifacthub.io/category: security
+      artifacthub.io/license: Apache-2.0
+    apiVersion: v2
+    appVersion: 1.7.0
     created: "2023-06-30T20:19:07.253731476Z"
     dependencies:
     - condition: spire-server.enabled
@@ -870,4 +927,4 @@ entries:
     urls:
     - https://github.com/spiffe/helm-charts/releases/download/spire-0.1.0/spire-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-30T20:19:07.253962677Z"
+generated: "2023-07-20T08:51:35.452653571Z"
