@@ -31,7 +31,7 @@ Please note this chart requires `Projected Service Account Tokens` which has to 
         - --service-account-issuer
         - --service-account-key-file
         - --service-account-signing-key-file
-See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection for more details
+See [Service Account Token Volume Projection](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) in the Kubernetes docs for more details.
 
 To enable Projected Service Account Tokens on Docker for Mac/Windows run the following
 command to SSH into the Docker Desktop K8s VM.
