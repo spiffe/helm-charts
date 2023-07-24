@@ -21,13 +21,20 @@ A Helm chart to deploy Tornjak frontend
 | Tornjak    | `1.0.x`            |
 | Helm       | `3.x`              |
 
+## Tornjak
+
+Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak](https://github.com/spiffe/tornjak) and it is composed of two components:
+
+* [Backend](../spire-server/README.md) - Tornjak APIs that extend SPIRE APIs with Control Plane functionality
+* Frontend (this chart) - Tornjak UI
+
 ## Prerequisites
 
 This chart requires access to Tornjak Backend (`tornjakFrontend.apiServerURL`).
 This URL needs to be reachable from your web browser and can therefore not be a cluster internal URL.
 
 Obtain the URL for Tornjak APIs. If deployed in the same cluster, locally,
-Tornjak APIs are typically available at `http://localhost:10000`.
+Tornjak APIs are typically available at `http://localhost:10080`.
 Review Tornjak documentation for more details.
 
 ## Usage
