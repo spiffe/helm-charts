@@ -99,6 +99,30 @@ plugins:
           workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
   {{- end }}
   {{- end }}
+
+  {{- with .Values.upstreamAuthority.awspca }}
+  {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
+  UpstreamAuthority:
+    - aws_pca:
+        plugin_data:
+          region: {{ .region | quote }}
+          certificate_authority_arn: {{ .certificate_authority_arn | quote }}
+          ca_signing_template_arn: {{ .ca_signing_template_arn | default "arn:aws:acm-pca:::template/SubordinateCACertificate_PathLen0/V1" | quote }}
+          {{- if ne .signing_algorithm "" }}
+          signing_algorithm: {{ .signing_algorithm | quote }}
+          {{- end }}          
+          {{- if ne .assume_role_arn "" }}
+          assume_role_arn: {{ .assume_role_arn | quote }}
+          {{- end }}          
+          {{- if ne .endpoint "" }}
+          endpoint: {{ .endpoint | quote }}
+          {{- end }}          
+          {{- if ne .supplemental_bundle_path "" }}
+          supplemental_bundle_path: {{ .supplemental_bundle_path  | quote }}
+          {{- end }}          
+  {{- end }}
+  {{- end }}  
 {{- if gt $upstreamAuthorityUsed 1 }}
 {{- fail "You can only enable a single Upstream Authority." }}
 {{- end }}

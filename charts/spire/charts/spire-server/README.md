@@ -218,6 +218,14 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| upstreamAuthority.awspca.assume_role_arn | Optional | `""` | ARN of an IAM role to assume |
+| upstreamAuthority.awspca.ca_signing_template_arn | string | `""` | See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values. |
+| upstreamAuthority.awspca.certificate_authority_arn | string | `""` | ARN of the "upstream" CA certificate |
+| upstreamAuthority.awspca.enabled | bool | `false` |  |
+| upstreamAuthority.awspca.endpoint | string | `""` | See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information. |
+| upstreamAuthority.awspca.region | string | `""` | AWS Region to use |
+| upstreamAuthority.awspca.signing_algorithm | string | `""` | See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values. |
+| upstreamAuthority.awspca.supplemental_bundle_path | Optional | `""` | Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle. |
 | upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
 | upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
 | upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |
