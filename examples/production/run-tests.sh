@@ -8,6 +8,8 @@ TESTDIR="${SCRIPTPATH}/../../.github/tests"
 DEPS="${TESTDIR}/dependencies"
 
 # shellcheck source=/dev/null
+source "${SCRIPTPATH}/../../.github/scripts/parse-versions.sh"
+# shellcheck source=/dev/null
 source "${TESTDIR}/common.sh"
 
 helm_install=(helm upgrade --install --create-namespace)
