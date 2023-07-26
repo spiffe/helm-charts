@@ -172,8 +172,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.hostPath | string | `""` | Which path to use on the host when type = hostPath |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
+| persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
