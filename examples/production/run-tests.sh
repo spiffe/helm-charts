@@ -33,7 +33,7 @@ kubectl label namespace "${ns}" pod-security.kubernetes.io/enforce=restricted ||
 "${helm_install[@]}" cert-manager cert-manager --version "$VERSION_CERT_MANAGER" --repo "$HELM_REPO_CERT_MANAGER" \
   --namespace cert-manager \
   --create-namespace \
-  --set installCRDs=true
+  --set installCRDs=true \
   --wait
 
 kubectl apply -f "${DEPS}/testcert.yaml" -n spire-server
