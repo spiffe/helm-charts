@@ -28,6 +28,59 @@ A Helm chart to install the SPIRE server.
 
 * <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
+## Tornjak
+
+Tornjak is the UI and Control Plane for SPIRE [https://github.com/spiffe/tornjak](https://github.com/spiffe/tornjak) and it is composed of two components:
+
+* Backend (this chart) - Tornjak APIs that extend SPIRE APIs with Control Plane functionality
+* [Frontend](../tornjak-frontend/README.md) - Tornjak UI
+
+When Tornjak is enabled, it is exposed on both http and https (if TLS server certs are configured). Tornjak handles a permanent redirect from `http` to `https` to ensure users always use the https endpoint.
+
+In addition, you can configure a `client certificate authority`, this will make Tornjak backend verify Client certificates signed by this authority to enable mTLS authentication.
+
+**Warning**: For production, we recommend configuring TLS certificates and client CA to protect Tornjak from unauthorized access.
+
+### Tornjak with TLS Connection Type
+
+TLS connection requires Tornjak to have access to TLS key and certificate.
+Complete instruction on creating your own TLS certificate can be found [here](https://github.com/spiffe/tornjak/blob/main/examples/tls_mtls/README.md).
+TLS Certificate and the private key must be provided to Tornjak via *TLS Secret*. Prior to deploying this Helm chart, create TLS Secret in the deployment namespace (e.g. `spire-server`)
+
+```console
+kubectl -n spire-server create secret tls tornjak-tls-secret --cert=client.crt --key=client.key
+```
+
+Once the charts are deployed, you can test the TLS connection with the following command (assuming localhost):
+
+```console
+curl --cacert CA/rootCA.crt https://localhost:10443
+```
+
+### Tornjak with mTLS Connection Type
+
+mTLS connection allows Tornjak server validation by client and Tornjak client validation by Tornjak server. The server validation is identical to above TLS. Follow the steps to create
+TLS secret with key and the certificate.
+
+Additionally, you must provide the user CA to Tornjak server via `Secret` or `ConfigMap`.
+Follow the steps to [create user CA for mTLS](https://github.com/spiffe/tornjak/blob/main/examples/tls_mtls/README.md), then create a *Secret* (or *ConfigMap*) prior to deploying this Helm chart.
+
+Here is an example using a *Secret* in `spire-server` namespace:
+
+```console
+kubectl -n spire-server create secret generic tornjak-client-ca --from-file=ca.crt="CA/rootCA.crt"
+```
+
+Once the charts are deployed, you can test the mTLS connection with the following command (assuming localhost):
+
+```console
+curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhost:10443
+```
+
+### Tornjak with HTTP Connection Type
+
+In order to run Tornjak with simple HTTP Connection only, make sure you don't create any `Secrets` or `ConfigMaps` listed above.
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -119,8 +172,10 @@ A Helm chart to install the SPIRE server.
 | nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.hostPath | string | `""` | Which path to use on the host when type = hostPath |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
+| persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
 | plugins.KeyManager | object | `{}` |  |
 | plugins.NodeAttestor | object | `{}` |  |
 | plugins.Notifier | object | `{}` |  |
@@ -149,7 +204,10 @@ A Helm chart to install the SPIRE server.
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |
-| tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | persistent DB for storing Tornjak specific information |
+| tornjak.config.clientCA.name | string | `"tornjak-client-ca"` |  |
+| tornjak.config.clientCA.type | string | `"Secret"` | Type of delivery for the user CA for mTLS client verification options are `Secret` or `ConfigMap` (required for `mtls` connectionType) |
+| tornjak.config.dataStore | object | `{"driver":"sqlite3","file":"/run/spire/data/tornjak.sqlite3"}` | Persistent DB for storing Tornjak specific information |
+| tornjak.config.tlsSecret | string | `"tornjak-tls-secret"` | Name of the secret containing server side key and certificate for TLS verification (required for `tls` or `mtls` connectionType) |
 | tornjak.enabled | bool | `false` | Deploys Tornjak API (backend) (Not for production) |
 | tornjak.image.pullPolicy | string | `"IfNotPresent"` | The Tornjak image pull policy |
 | tornjak.image.registry | string | `"ghcr.io"` | The OCI registry to pull the Tornjak image from |
@@ -158,7 +216,7 @@ A Helm chart to install the SPIRE server.
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
-| tornjak.service.port | int | `10000` |  |
+| tornjak.service.ports | object | `{"http":10080,"https":10443}` | Ports for tornjak |
 | tornjak.service.type | string | `"ClusterIP"` |  |
 | tornjak.startupProbe.failureThreshold | int | `3` |  |
 | tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
