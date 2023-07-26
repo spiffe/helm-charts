@@ -1,3 +1,6 @@
+SOURCEDIR := charts
+README_SOURCES := $(shell find $(SOURCEDIR) -name 'values*.yaml' )
+
 TARGET_BRANCH ?= main
 
 .PHONY: help
@@ -30,7 +33,16 @@ clean-test-leftovers: ## Cleans up any lingering resources in case tests fail ma
 		&>/dev/null || true
 
 .PHONY: test
-test: install-test-deps test-charts test-examples ## Run all chart tests and example tests
+test: unit-test deployment-test ## Run all unit tests and deployment tests
+
+.PHONY: unit-test
+unit-test: README.md ## Run local development tests that must pass prior to submitting a Pull Request
+
+README.md: $(README_SOURCES)
+	$(error $(foreach NEWER,$?,$(shell printf 1>&2 "%s is newer than README.md\n" '$(NEWER)')))
+
+.PHONY: deployment-test
+deployment-test: install-test-deps test-charts test-examples ## Run all deployment tests
 
 .PHONY: install-test-deps
 install-test-deps: ## Install test dependency resources
