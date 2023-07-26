@@ -114,9 +114,8 @@ Create the name of the service account to use
 {{- $lst = append $lst $entry }}
 {{- end }}
 {{- end }}
-{{- if gt (len $lst) 0 }}
-{{- printf "?%s" (join "&" $lst) }}
-{{- end }}
+{{- $lst = append $lst "parseTime=true" }}
+{{- printf "?%s" (join "&" (uniq $lst)) }}
 {{- end }}
 
 {{- define "spire-server.config-postgresql-options" }}
@@ -169,3 +168,29 @@ Tornjak specific section
 {{- define "spire-tornjak.backend" -}}
 {{ include "spire-tornjak.fullname" . }}-backend
 {{- end }}
+
+{{/*
+Tornjak automatically determines the connection type based on provided configuration.
+When TLS Secret is provided, it enables TLS connection.
+When TLS Secret and User CA Secret (or ConfigMap) are provided, it enables mTLS connection.
+Otherwise it starts HTTP Connection
+The code below determines what connection type should be used.
+*/}}
+{{- define "spire-tornjak.connectionType" -}}
+
+{{- if (lookup "v1" "Secret" (include "spire-server.namespace" .) .Values.tornjak.config.tlsSecret) -}}
+
+{{- $caType := default "INVALID" .Values.tornjak.config.clientCA.type }}
+{{- if (lookup "v1" $caType (include "spire-server.namespace" .) .Values.tornjak.config.clientCA.name) -}}
+{{- printf "mtls" -}}
+{{- else }}
+{{- printf "tls" -}}
+{{- end -}}
+{{- else -}}
+{{- printf "http" -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "spire-tornjak.servicename" -}}
+{{- include "spire-tornjak.backend" . -}}
+{{- end -}}

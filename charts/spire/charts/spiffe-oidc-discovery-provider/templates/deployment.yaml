@@ -15,11 +15,11 @@ spec:
       {{- include "spiffe-oidc-discovery-provider.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
         checksum/config: {{ $configSum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "spiffe-oidc-discovery-provider.selectorLabels" . | nindent 8 }}
     spec:

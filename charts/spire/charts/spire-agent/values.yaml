@@ -62,6 +62,8 @@ resources: {}
 
 nodeSelector: {}
 
+tolerations: []
+
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)

@@ -36,9 +36,9 @@ spec:
       command: ['curl']
       {{- if dig "tests" "tls" "enabled" false $values }}
       {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
-      args: ['--cacert', '/ca/ca.crt', 'https://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      args: ['-s', '-f', '--cacert', '/ca/ca.crt', 'https://{{ (index .Values.ingress.hosts 0).host }}/.well-known/openid-configuration']
       {{- else }}
-      args: ['https://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      args: ['-s', '-f', 'https://{{ (index .Values.ingress.hosts 0).host }}/.well-known/openid-configuration']
       {{- end }}
       {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
       volumeMounts:
@@ -46,7 +46,7 @@ spec:
           mountPoint: /ca
       {{- end }}
       {{- else }}
-      args: ['-s', 'http://{{ index .Values.config.domains 0 }}/.well-known/openid-configuration']
+      args: ['-s', '-f', 'http://{{ (index .Values.ingress.hosts 0).host }}/.well-known/openid-configuration']
       {{- end }}
       {{- if ne (len (dig "tests" "hostAliases" "" $values)) 0 }}
       hostAliases:

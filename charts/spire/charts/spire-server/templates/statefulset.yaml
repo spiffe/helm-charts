@@ -3,6 +3,9 @@
 {{- $configSum3 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $configSumTornjak := (include (print $.Template.BasePath "/tornjak-config.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
+{{- if not (has .Values.persistence.type (list "pvc" "hostPath" "emptyDir")) }}
+{{- fail "persistence.type must be one of [\"pvc\", \"hostPath\", \"emptyDir\"]" }}
+{{- end }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -43,11 +46,11 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
-      {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.createCA }}
+      {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create }}
         - name: wait
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: {{ template "spire-server.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
+          image: {{ template "spire-lib.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tools.kubectl.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
           args:
             - wait
             - --namespace
@@ -56,7 +59,7 @@ spec:
             - --for=condition=ready
             - issuer
             - {{ include "spire-server.fullname" $ }}
-          imagePullPolicy: {{ .Values.controllerManager.validatingWebhookConfiguration.upgradeHook.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.tools.kubectl.image.pullPolicy }}
       {{- end }}
       {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
@@ -175,20 +178,25 @@ spec:
             {{- toYaml .Values.controllerManager.securityContext | nindent 12 }}
           image: {{ template "spire-lib.image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tornjak.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.tornjak.image.pullPolicy }}
+          {{- if eq (include "spire-tornjak.connectionType" .) "http" }}
           startupProbe:
             httpGet:
               scheme: HTTP
               path: /api/tornjak/serverinfo
-              port: 10000
+              port: 10080
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
+          {{- end }}
           args:
             - --spire-config
             - /run/spire/config/server.conf
             - --tornjak-config
             - /run/spire/tornjak-config/server.conf
           ports:
-            - name: tornjak
-              containerPort: 10000
+            - name: tornjak-http
+              containerPort: 10080
+              protocol: TCP
+            - name: tornjak-https
+              containerPort: 10443
               protocol: TCP
           resources:
             {{- toYaml .Values.tornjak.resources | nindent 12 }}
@@ -204,6 +212,14 @@ spec:
             - name: spire-data
               mountPath: /run/spire/data
               readOnly: false
+            {{- if or (eq (include "spire-tornjak.connectionType" .) "tls") (eq (include "spire-tornjak.connectionType" .) "mtls") }}
+            - name: server-cert
+              mountPath: /opt/spire/server
+            {{- end }}
+            {{- if eq (include "spire-tornjak.connectionType" .) "mtls" }}
+            - name: user-cert
+              mountPath: /opt/spire/user
+            {{- end }}
         {{- end }}
 
         {{- if gt (len .Values.extraContainers) 0 }}
@@ -233,6 +249,24 @@ spec:
           emptyDir: {}
         - name: spire-controller-manager-tmp
           emptyDir: {}
+        {{- if or (eq (include "spire-tornjak.connectionType" .) "tls") (eq (include "spire-tornjak.connectionType" .) "mtls") }}
+        - name: server-cert
+          secret:
+            defaultMode: 256
+            secretName: {{ .Values.tornjak.config.tlsSecret }}
+        {{- end }}
+        {{- if eq (include "spire-tornjak.connectionType" .) "mtls" }}
+        {{- if eq .Values.tornjak.config.clientCA.type "Secret" }}
+        - name: user-cert
+          secret:
+            defaultMode: 256
+            secretName: {{ .Values.tornjak.config.clientCA.name }}
+        {{- else if eq .Values.tornjak.config.clientCA.type "ConfigMap" }}
+        - name: user-cert
+          configMap:
+            name: {{ .Values.tornjak.config.clientCA.name }}
+        {{- end }}
+        {{- end }}
         {{- if eq (.Values.upstreamAuthority.disk.enabled | toString) "true" }}
         - name: upstream-ca
           secret:
@@ -254,6 +288,16 @@ spec:
         {{- if gt (len .Values.extraVolumes) 0 }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
+        {{- if eq .Values.persistence.type "emptyDir" }}
+        - name: spire-data
+          emptyDir: {}
+        {{- else if eq .Values.persistence.type "hostPath" }}
+        - name: spire-data
+          hostPath:
+            path: {{ .Values.persistence.hostPath }}
+            type: Directory
+        {{- end }}
+  {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:
     - metadata:
         name: spire-data
@@ -266,3 +310,4 @@ spec:
         {{- if .Values.persistence.storageClass }}
         storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
+  {{- end }}

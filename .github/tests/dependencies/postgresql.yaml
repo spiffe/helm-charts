@@ -6,3 +6,8 @@ primary:
       drop: [ALL]
     seccompProfile:
       type: RuntimeDefault
+auth:
+  database: spire-server
+  username: spire
+  password: sp1ff3Test
+  postgresPassword: sp1ff3TestPassword
