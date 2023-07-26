@@ -51,7 +51,7 @@ spec:
       {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
       volumeMounts:
         - name: custom-ca
-          mountPoint: /ca
+          mountPath: /ca
       {{- end }}
       {{- else }}
       args: ['-s', '{{ index (index (index .Values.federation.ingress.hosts 0) "host") 0 }}/']
