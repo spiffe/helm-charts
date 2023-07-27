@@ -283,6 +283,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
 | spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.waitForIt.resources | object | `{}` |  |
+| spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
 | spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
 | spire-server.affinity | object | `{}` |  |
@@ -372,8 +373,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | spire-server.notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | spire-server.persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| spire-server.persistence.hostPath | string | `""` | Which path to use on the host when type = hostPath |
 | spire-server.persistence.size | string | `"1Gi"` |  |
 | spire-server.persistence.storageClass | string | `nil` |  |
+| spire-server.persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
 | spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
