@@ -241,7 +241,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | spire-agent.fullnameOverride | string | `""` |  |
 | spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
-| spire-agent.hostAliases | list | `[]` |  |
+| spire-agent.hostAliases | list | `[]` | Customize /etc/hosts file as described here https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/ |
 | spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
 | spire-agent.image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
