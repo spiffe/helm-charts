@@ -100,26 +100,26 @@ plugins:
   {{- end }}
   {{- end }}
 
-  {{- with .Values.upstreamAuthority.awspca }}
+  {{- with .Values.upstreamAuthority.awsPCA }}
   {{- if eq (.enabled | toString) "true" }}
   {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
     - aws_pca:
         plugin_data:
           region: {{ .region | quote }}
-          certificate_authority_arn: {{ .certificate_authority_arn | quote }}
-          ca_signing_template_arn: {{ .ca_signing_template_arn | default "arn:aws:acm-pca:::template/SubordinateCACertificate_PathLen0/V1" | quote }}
-          {{- if ne .signing_algorithm "" }}
-          signing_algorithm: {{ .signing_algorithm | quote }}
+          certificate_authority_arn: {{ .certificateAuthorityArn | quote }}
+          ca_signing_template_arn: {{ .caSigningTemplateArn | default "arn:aws:acm-pca:::template/SubordinateCACertificate_PathLen0/V1" | quote }}
+          {{- if ne .signingAlgorithm "" }}
+          signing_algorithm: {{ .signingAlgorithm | quote }}
           {{- end }}          
-          {{- if ne .assume_role_arn "" }}
-          assume_role_arn: {{ .assume_role_arn | quote }}
+          {{- if ne .assumeRoleArn "" }}
+          assume_role_arn: {{ .assumeRoleArn | quote }}
           {{- end }}          
           {{- if ne .endpoint "" }}
           endpoint: {{ .endpoint | quote }}
           {{- end }}          
-          {{- if ne .supplemental_bundle_path "" }}
-          supplemental_bundle_path: {{ .supplemental_bundle_path  | quote }}
+          {{- if ne .supplementalBundlePath "" }}
+          supplemental_bundle_path: {{ .supplementalBundlePath  | quote }}
           {{- end }}          
   {{- end }}
   {{- end }}  
