@@ -170,7 +170,6 @@ ca_subject:
   country: NL
   organization: Example
   common_name: example.org
-  
 upstreamAuthority:
   disk:
     enabled: false
@@ -184,7 +183,7 @@ upstreamAuthority:
         certificate: ""
         key: ""
         bundle: ""
-  awspca:
+  awsPCA:
     enabled: false
     # -- AWS Region to use
     region: ""
