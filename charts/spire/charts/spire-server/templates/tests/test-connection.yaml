@@ -39,22 +39,15 @@ spec:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
     {{- if .Values.federation.ingress.enabled }}
-    - name: ingress
+    - name: federation-ingress
       image: {{ template "spire-lib.image" (dict "image" .Values.tests.bash.image "global" .Values.global) }}
       command: ['curl']
-      {{- if dig "tests" "tls" "enabled" false $values }}
-      {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
-      args: ['--cacert', '/ca/ca.crt', 'https://{{ index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}/']
-      {{- else }}
-      args: ['https://{{ index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}/']
-      {{- end }}
+      args:
+        {{ include "spire-server.test.federation-ingress-args" (dict "Values" $values) | nindent 8 }}
       {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
       volumeMounts:
         - name: custom-ca
           mountPath: /ca
-      {{- end }}
-      {{- else }}
-      args: ['-s', '{{ index (index (index .Values.federation.ingress.hosts 0) "host") 0 }}/']
       {{- end }}
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}

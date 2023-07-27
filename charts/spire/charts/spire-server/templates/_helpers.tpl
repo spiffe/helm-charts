@@ -194,3 +194,18 @@ The code below determines what connection type should be used.
 {{- define "spire-tornjak.servicename" -}}
 {{- include "spire-tornjak.backend" . -}}
 {{- end -}}
+
+{{- define "spire-server.test.federation-ingress-args" }}
+{{-   $args := list }}
+{{-   $host := index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}
+{{-   if dig "tests" "tls" "enabled" false .Values }}
+{{-     if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
+{{-       $args = append "--cacert" }}
+{{-       $args = append "/ca/ca.crt" }}
+{{-     end }}
+{{-     $args = append (printf "https://%s/" $host }}
+{{-   else }}
+{{-     $args = append (printf "http://%s/" $host }}
+{{-   end }}
+{{ $args | toYaml }}
+{{- end }}
