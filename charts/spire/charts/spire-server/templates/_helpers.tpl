@@ -200,12 +200,12 @@ The code below determines what connection type should be used.
 {{-   $host := index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}
 {{-   if dig "tests" "tls" "enabled" false .Values }}
 {{-     if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
-{{-       $args = append "--cacert" }}
-{{-       $args = append "/ca/ca.crt" }}
+{{-       $args = append $args "--cacert" }}
+{{-       $args = append $args "/ca/ca.crt" }}
 {{-     end }}
-{{-     $args = append (printf "https://%s/" $host }}
+{{-     $args = append $args (printf "https://%s/" $host) }}
 {{-   else }}
-{{-     $args = append (printf "http://%s/" $host }}
+{{-     $args = append $args (printf "http://%s/" $host) }}
 {{-   end }}
 {{ $args | toYaml }}
 {{- end }}
