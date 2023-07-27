@@ -170,6 +170,7 @@ ca_subject:
   country: NL
   organization: Example
   common_name: example.org
+  
 upstreamAuthority:
   disk:
     enabled: false
@@ -184,16 +185,16 @@ upstreamAuthority:
         key: ""
         bundle: ""
   awsPCA:
-    enabled: true
+    enabled: false
     # -- AWS Region to use
-    region: "us-west-2"
+    region: ""
     # -- ARN of the "upstream" CA certificate
-    certificateAuthorityArn: "arn:aws:acm-pca:us-west-2:945673678728:certificate-authority/636dbcd8-203f-43e0-9701-be854b094a2b"
+    certificateAuthorityARN: ""
     # -- (Optional) ARN of an IAM role to assume
-    assumeRoleArn: "arn:aws:iam::945673678728:role/PCAAccessSpireRole"
+    assumeRoleARN: ""
     # -- (Optional) ARN of the signing template to use for the server's CA. Defaults to a signing template for end-entity certificates only. 
     # -- See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values.
-    caSigningTemplateArn: ""
+    caSigningTemplateARN: ""
     # -- (Optional) Signing algorithm to use for the server's CA. Defaults to the CA's default. 
     # -- See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values.
     signingAlgorithm: ""

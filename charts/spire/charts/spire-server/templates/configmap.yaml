@@ -107,13 +107,13 @@ plugins:
     - aws_pca:
         plugin_data:
           region: {{ .region | quote }}
-          certificate_authority_arn: {{ .certificateAuthorityArn | quote }}
-          ca_signing_template_arn: {{ .caSigningTemplateArn | default "arn:aws:acm-pca:::template/SubordinateCACertificate_PathLen0/V1" | quote }}
+          certificate_authority_arn: {{ .certificateAuthorityARN | quote }}
+          ca_signing_template_arn: {{ .caSigningTemplateARN | default "arn:aws:acm-pca:::template/SubordinateCACertificate_PathLen0/V1" | quote }}
           {{- if ne .signingAlgorithm "" }}
           signing_algorithm: {{ .signingAlgorithm | quote }}
           {{- end }}          
-          {{- if ne .assumeRoleArn "" }}
-          assume_role_arn: {{ .assumeRoleArn | quote }}
+          {{- if ne .assumeRoleARN "" }}
+          assume_role_arn: {{ .assumeRoleARN | quote }}
           {{- end }}          
           {{- if ne .endpoint "" }}
           endpoint: {{ .endpoint | quote }}
