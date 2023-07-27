@@ -68,6 +68,12 @@ spire-server:
       - ip: "$ip"
         hostnames:
           - "spire-server-federation.example.org"
+  federation:
+    ingress:
+      tls:
+        - hosts:
+            - spire-server-federation.example.org
+          secretName: tls-cert
 EOF
 
 "${helm_install[@]}" spire charts/spire \

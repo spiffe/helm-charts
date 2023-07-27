@@ -21,6 +21,13 @@ spec:
     name: selfsigned-issuer
     kind: Issuer
     group: cert-manager.io
+  subject:
+    countries:
+    - US
+    organizations:
+    - test
+    organizationalUnits:
+    - test
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -40,6 +47,6 @@ spec:
     - spire-server-federation.example.org
   secretName: tls-cert
   issuerRef:
-    name: selfsigned-issuer
+    name: demo-ca
     kind: Issuer
     group: cert-manager.io

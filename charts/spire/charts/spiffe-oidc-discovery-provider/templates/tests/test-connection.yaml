@@ -43,18 +43,18 @@ spec:
       {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
       volumeMounts:
         - name: custom-ca
-          mountPoint: /ca
+          mountPath: /ca
       {{- end }}
       {{- else }}
       args: ['-s', '-f', 'http://{{ (index .Values.ingress.hosts 0).host }}/.well-known/openid-configuration']
       {{- end }}
-      {{- if ne (len (dig "tests" "hostAliases" "" $values)) 0 }}
-      hostAliases:
-        {{- toYaml .Values.tests.hostAliases | nindent 8 }}
-      {{- end }}
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
     {{- end }}
+  {{- if ne (len (dig "tests" "hostAliases" "" $values)) 0 }}
+  hostAliases:
+    {{- toYaml .Values.tests.hostAliases | nindent 4 }}
+  {{- end }}
   {{- if ne (len (dig "tests" "tls" "customCA" "" $values)) 0 }}
   volumes:
     - name: custom-ca
