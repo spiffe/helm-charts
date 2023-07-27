@@ -15,7 +15,7 @@ spire-server:
     registry: docker.io
     repository: kfox1111/misc
     version: tpm-server-test
-  plugins:
+  externalPlugins:
     NodeAttestor:
       tpm:
         plugin_cmd: /bin/tpm_attestor_server

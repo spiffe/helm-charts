@@ -331,6 +331,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.dataStore.sql.username | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.defaultJwtSvidTTL | string | `"1h"` |  |
 | spire-server.defaultX509SvidTTL | string | `"4h"` |  |
+| spire-server.externalPlugins.KeyManager | object | `{}` |  |
+| spire-server.externalPlugins.NodeAttestor | object | `{}` |  |
+| spire-server.externalPlugins.Notifier | object | `{}` |  |
+| spire-server.externalPlugins.UpstreamAuthority | object | `{}` |  |
 | spire-server.extraContainers | list | `[]` |  |
 | spire-server.extraVolumeMounts | list | `[]` |  |
 | spire-server.extraVolumes | list | `[]` |  |
@@ -376,10 +380,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.persistence.size | string | `"1Gi"` |  |
 | spire-server.persistence.storageClass | string | `nil` |  |
 | spire-server.persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
-| spire-server.plugins.KeyManager | object | `{}` |  |
-| spire-server.plugins.NodeAttestor | object | `{}` |  |
-| spire-server.plugins.Notifier | object | `{}` |  |
-| spire-server.plugins.UpstreamAuthority | object | `{}` |  |
 | spire-server.podAnnotations | object | `{}` |  |
 | spire-server.podSecurityContext | object | `{}` |  |
 | spire-server.readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |

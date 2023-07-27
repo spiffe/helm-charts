@@ -1,5 +1,0 @@
-spire-server:
-  plugins:
-    NodeAttestor:
-      join_token:
-        plugin_data: {}

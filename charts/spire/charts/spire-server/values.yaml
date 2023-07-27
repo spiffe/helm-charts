@@ -415,7 +415,7 @@ tornjak:
     #   cpu: 100m
     #   memory: 128Mi
 
-plugins:
+externalPlugins:
   KeyManager: {}
   NodeAttestor: {}
   UpstreamAuthority: {}

@@ -196,13 +196,13 @@ The code below determines what connection type should be used.
 {{- end -}}
 
 {{/*
-Take a copy of the config and merge in .Values.plugins passed through as root.
+Take a copy of the config and merge in .Values.externalPlugins passed through as root.
 */}}
 {{- define "spire-server.config_merge" }}
 {{- $pluginsToMerge := dict "plugins" dict }}
-{{- range $type, $val := .root.Values.plugins }}
+{{- range $type, $val := .root.Values.externalPlugins }}
 {{-   if . }}
-{{-     set $pluginsToMerge.plugins $type $val }}
+{{-     set $pluginsToMerge.plugins $type (deepCopy $val) }}
 {{-   end }}
 {{- end }}
 {{- $newConfig := .config | fromYaml | mustMerge $pluginsToMerge }}
@@ -224,7 +224,7 @@ reformatted from a dict of dicts to a dict of lists of dicts
 
 {{/*
 Take a copy of the config as a yaml config and root var.
-Merge in .root.Values.plugin into config,
+Merge in .root.Values.externalPlugins into config,
 Reformat the plugin section from a dict of dicts to a dict of lists of dicts,
 and export it back as as json string.
 This makes it much easier for users to merge in plugin configs, as dicts are easier

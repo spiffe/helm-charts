@@ -131,6 +131,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | dataStore.sql.username | string | `"spire"` | Only used by "postgres" or "mysql" |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
+| externalPlugins.KeyManager | object | `{}` |  |
+| externalPlugins.NodeAttestor | object | `{}` |  |
+| externalPlugins.Notifier | object | `{}` |  |
+| externalPlugins.UpstreamAuthority | object | `{}` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
@@ -176,10 +180,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
 | persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
-| plugins.KeyManager | object | `{}` |  |
-| plugins.NodeAttestor | object | `{}` |  |
-| plugins.Notifier | object | `{}` |  |
-| plugins.UpstreamAuthority | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
