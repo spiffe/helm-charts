@@ -174,7 +174,7 @@ ca_subject:
   country: NL
   organization: Example
   common_name: example.org
-  
+
 upstreamAuthority:
   disk:
     enabled: false
