@@ -156,6 +156,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-csi-driver.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.affinity | object | `{}` |  |
 | spiffe-oidc-discovery-provider.agentSocketName | string | `"spire-agent.sock"` | The name of the spire-agent unix socket |
+| spiffe-oidc-discovery-provider.annotations | object | `{}` | Annotations for the deployment |
 | spiffe-oidc-discovery-provider.autoscaling.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.autoscaling.maxReplicas | int | `5` |  |
 | spiffe-oidc-discovery-provider.autoscaling.minReplicas | int | `1` |  |
