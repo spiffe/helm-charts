@@ -157,6 +157,56 @@ plugins:
   {{- end }}
   {{- end }}
 
+  {{- with .Values.upstreamAuthority.vault }}
+  {{- if eq (.enabled | toString) "true" }}
+  {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
+  UpstreamAuthority:
+    - vault:
+        plugin_data:
+          vault_addr: {{ .vault_addr | quote }}
+          namespace: {{ .namespace | quote }}
+          pki_mount_point: {{ .pki_mount_point | quote }}
+          ca_cert_path: {{ .ca_cert_path | quote }}
+          insecure_skip_verify: {{ .insecure_skip_verify }}
+
+          {{- $vaultAuthMethodUsed := 0 }}
+          {{- with .cert_auth }}
+          {{- if eq (.enabled | toString) "true" }}
+          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
+          cert_auth:
+            # TODO
+          {{- end }}
+          {{- end }}
+
+          {{- with .token_auth }}
+          {{- if eq (.enabled | toString) "true" }}
+          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
+          token_auth:
+            # TODO
+          {{- end }}
+          {{- end }}
+
+          {{- with .approle_auth }}
+          {{- if eq (.enabled | toString) "true" }}
+          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
+          approle_auth:
+            # TODO
+          {{- end }}
+          {{- end }}
+          
+          {{- with .k8s_auth }}
+          {{- if eq (.enabled | toString) "true" }}
+          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
+          approle_auth:
+            # TODO
+          {{- end }}
+          {{- end }}
+          {{- if gt $vaultAuthMethodUsed 1 }}
+          {{- fail "You can only enable a single authentication mechanism to an upstream Vault." }}
+          {{- end }}
+  {{- end }}
+  {{- end }}  
+
   {{- with .Values.upstreamAuthority.awsPCA }}
   {{- if eq (.enabled | toString) "true" }}
   {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
