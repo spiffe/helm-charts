@@ -31,6 +31,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | agentSocketName | string | `"spire-agent.sock"` | The name of the spire-agent unix socket |
+| annotations | object | `{}` | Annotations for the deployment |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `5` |  |
 | autoscaling.minReplicas | int | `1` |  |
