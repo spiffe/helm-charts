@@ -1,12 +1,13 @@
 {{- with .Values.upstreamAuthority.certManager }}
 {{ if and .enabled .ca.create }}
+{{ $issuerName := printf "%s-selfsigned" (default (include "spire-server.fullname" $) .issuer_name)  }}
 {{/*
 Configuring CA Issuer: https://cert-manager.io/docs/configuration/ca/
 */}}
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: {{ include "spire-server.fullname" $ }}-selfsigned
+  name: {{ $issuerName }}
   namespace: {{ include "spire-server.namespace" $ }}
   labels:
     {{- include "spire-server.labels" $ | nindent 4}}
@@ -38,14 +39,14 @@ spec:
   renewBefore: {{ . }}
   {{- end }}
   issuerRef:
-    name: {{ include "spire-server.fullname" $ }}-selfsigned
+    name: {{ $issuerName }}
     kind: Issuer
     group: cert-manager.io
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: {{ include "spire-server.fullname" $ }}
+  name: {{ include "spire-server.fullname" $ }}-ca
   namespace: {{ include "spire-server.namespace" $ }}
 spec:
   ca:
