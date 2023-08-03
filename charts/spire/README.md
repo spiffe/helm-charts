@@ -582,6 +582,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
 | upstream-spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | upstream-spire-agent.waitForIt.resources | object | `{}` |  |
+| upstream-spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
 | upstream-spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | upstream-spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
 
