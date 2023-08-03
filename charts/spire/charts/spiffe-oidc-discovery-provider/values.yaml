@@ -49,6 +49,17 @@ configMap:
   # -- Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
   annotations: {}
 
+testSecurityContext:
+  allowPrivilegeEscalation: false
+  runAsNonRoot: true
+  runAsUser: 10001
+  runAsGroup: 10001
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+    - ALL
+
 podSecurityContext: {}
   # fsGroup: 2000
 
@@ -220,6 +231,44 @@ tests:
       version: ""
       # -- Overrides the image tag
       tag: 5.2.15
+
+  toolkit:
+    image:
+      # -- The OCI registry to pull the tests image from
+      registry: cgr.dev
+      # -- The repository within the registry
+      repository: chainguard/slim-toolkit-debug
+      # -- The tests image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: 5.2.15
+
+  busybox:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: ""
+      # -- The repository within the registry
+      repository: busybox
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: uclibc
+  agent:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: ghcr.io
+      # -- The repository within the registry
+      repository: spiffe/spire-agent
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: ""
 
 tools:
   kubectl:

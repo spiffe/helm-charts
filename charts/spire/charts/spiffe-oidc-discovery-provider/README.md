@@ -96,6 +96,12 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | telemetry.prometheus.port | int | `9988` |  |
+| testSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| testSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| testSecurityContext.runAsGroup | int | `10001` |  |
+| testSecurityContext.runAsNonRoot | bool | `true` |  |
+| testSecurityContext.runAsUser | int | `10001` |  |
+| testSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | tolerations | list | `[]` |  |
 | tools.kubectl.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | tools.kubectl.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |

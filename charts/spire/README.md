@@ -221,6 +221,12 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spiffe-oidc-discovery-provider |
 | spiffe-oidc-discovery-provider.telemetry.prometheus.port | int | `9988` |  |
+| spiffe-oidc-discovery-provider.testSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| spiffe-oidc-discovery-provider.testSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| spiffe-oidc-discovery-provider.testSecurityContext.runAsGroup | int | `10001` |  |
+| spiffe-oidc-discovery-provider.testSecurityContext.runAsNonRoot | bool | `true` |  |
+| spiffe-oidc-discovery-provider.testSecurityContext.runAsUser | int | `10001` |  |
+| spiffe-oidc-discovery-provider.testSecurityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
 | spiffe-oidc-discovery-provider.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.tools.kubectl.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.tools.kubectl.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
