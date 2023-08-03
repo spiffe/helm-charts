@@ -263,6 +263,22 @@ upstreamAuthority:
     server:
       address: ""
       port: 8081
+  vault:
+    enabled: false
+    vault_addr: ""
+    namespace: ""
+    pki_mount_point: "pki"
+    ca_cert_path: ""
+    insecure_skip_verify: false
+
+    k8sAuth:
+      enabled: false
+      # -- Name of the mount point where the Kubernetes auth method is mounted
+      k8sAuthMountPoint: "kubernetes"
+      # -- Required - Name of the Vault role. The plugin authenticates against the named role
+      k8sAuthRoleName: ""
+      # -- Path to the Kubernetes Service Account Token to use authentication with the Vault
+      tokenPath: "/var/run/secrets/tokens"
 
 notifier:
   k8sbundle:

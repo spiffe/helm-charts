@@ -168,6 +168,10 @@ spec:
               readOnly: true
             {{ end }}
             {{ end }}
+            {{- if eq (.Values.upstreamAuthority.vault.k8sAuth.enabled | toString) "true" }}
+            - name: spire-psat
+              mountPath: {{ .Values.upstreamAuthority.vault.k8sAuth.tokenPath | trimAll "/" | splitList "/" | initial | join "/" | printf "/%s" }}
+            {{- end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -353,6 +357,15 @@ spec:
           hostPath:
             path: {{ .Values.persistence.hostPath }}
             type: Directory
+        {{- end }}
+        {{- if eq (.Values.upstreamAuthority.vault.k8sAuth.enabled | toString) "true" }}
+        - name: spire-psat
+          projected:
+            sources:
+            - serviceAccountToken:
+                path: {{ .Values.upstreamAuthority.vault.k8sAuth.tokenPath | trimAll "/" | splitList "/" | last }}
+                expirationSeconds: 7200
+                audience: vault
         {{- end }}
   {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:

@@ -193,12 +193,15 @@ plugins:
             # TODO
           {{- end }}
           {{- end }}
-          
-          {{- with .k8s_auth }}
+
+          {{- $vaultAuthMethodUsed := 0 }}
+          {{- with .k8sAuth }}
           {{- if eq (.enabled | toString) "true" }}
           {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
-          approle_auth:
-            # TODO
+          k8s_auth:
+            k8s_auth_mount_point: {{ .k8sAuthMountPoint | quote }}
+            k8s_auth_role_name: {{ .k8sAuthRoleName | quote }}
+            token_path: {{ .tokenPath | quote }}
           {{- end }}
           {{- end }}
           {{- if gt $vaultAuthMethodUsed 1 }}
