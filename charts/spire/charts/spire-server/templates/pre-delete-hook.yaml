@@ -23,6 +23,9 @@ rules:
     resources: ["statefulsets"]
     resourceNames: [{{ include "spire-server.fullname" . | quote }}]
     verbs: ["get", "delete"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -72,4 +75,16 @@ spec:
           - statefulset
           - {{ include "spire-server.fullname" . }}
           - --wait
+      - name: pre-delete-check
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        image: {{ template "spire-lib.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tools.kubectl.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
+        args:
+          - wait
+          - --for=delete
+          - pod
+          - -l
+          - app.kubernetes.io/instance={{ include "spire-server.name" . }},app.kubernetes.io/name={{ .Release.Name }},app.kubernetes.io/component=server
+          - -n
+          - {{ include "spire-server.namespace" . }}
 {{- end }}

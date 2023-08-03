@@ -451,7 +451,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.upstreamAuthority.spire.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
 | spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
-| spire-server.upstreamAuthority.spire.upstreamDriver | string | `"upstream.csi.spiffe.io"` |  |
+| spire-server.upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 | tornjak-frontend.affinity | object | `{}` |  |
 | tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | tornjak-frontend.fullnameOverride | string | `""` |  |

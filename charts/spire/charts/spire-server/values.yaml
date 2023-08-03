@@ -209,7 +209,7 @@ upstreamAuthority:
       renewBefore: ""
   spire:
     enabled: false
-    upstreamDriver: upstream.csi.spiffe.io
+    upstreamDriver: ""
     server:
       address: ""
       port: 8081

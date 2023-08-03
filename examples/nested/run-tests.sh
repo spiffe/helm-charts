@@ -12,12 +12,10 @@ source "${SCRIPTPATH}/../../.github/scripts/parse-versions.sh"
 # shellcheck source=/dev/null
 source "${TESTDIR}/common.sh"
 
-helm_install=(helm upgrade --install --create-namespace)
-ns=spire-server
-
 teardown() {
-  helm uninstall --namespace "${ns}" spire 2>/dev/null || true
-  kubectl delete ns "${ns}" 2>/dev/null || true
+  helm uninstall --namespace spire-server spire 2>/dev/null || true
+  kubectl delete ns spire-server 2>/dev/null || true
+  kubectl delete ns spire-system 2>/dev/null || true
 
   helm uninstall --namespace mysql spire-root-server 2>/dev/null || true
   kubectl delete ns spire-root-server 2>/dev/null || true
@@ -25,12 +23,12 @@ teardown() {
 
 trap 'trap - SIGTERM && teardown' SIGINT SIGTERM EXIT
 
-kubectl create namespace spire-system 2>/dev/null || true
+kubectl create namespace spire-system --dry-run=client -o yaml | kubectl apply -f -
 kubectl label namespace spire-system pod-security.kubernetes.io/enforce=privileged || true
-kubectl create namespace "${ns}" 2>/dev/null || true
-kubectl label namespace "${ns}" pod-security.kubernetes.io/enforce=restricted || true
+kubectl create namespace spire-server --dry-run=client -o yaml | kubectl apply -f -
+kubectl label namespace spire-server pod-security.kubernetes.io/enforce=restricted || true
 
-"${helm_install[@]}" spire charts/spire \
+helm upgrade --install --create-namespace spire charts/spire \
   --namespace spire-root-server \
   --values "${DEPS}/spire-root-server-values.yaml" \
   --wait
@@ -39,13 +37,17 @@ kubectl get nodes -o go-template='{{range .items}}{{printf "%s\n" .metadata.uid}
   kubectl exec -t spire-server-0 -n "spire-root-server" -- spire-server entry create -spiffeID spiffe://example.org/example-cluster/nested-spire -parentID "spiffe://example.org/spire/agent/k8s_psat/example-cluster/$line" -selector k8s:pod-label:app.kubernetes.io/name:server -downstream
 done
 
-"${helm_install[@]}" --namespace "${ns}" --values "${SCRIPTPATH}/values.yaml,${SCRIPTPATH}/../production/values.yaml" \
+helm upgrade --install --create-namespace --namespace spire-server --values "${SCRIPTPATH}/values.yaml,${SCRIPTPATH}/../production/values.yaml" \
   --wait spire charts/spire
-helm test --namespace "${ns}" spire
+helm test --namespace spire-server spire
 
 print_helm_releases
-print_spire_workload_status "${ns}"
+print_spire_workload_status spire-root-server
+print_spire_workload_status spire-server
+print_spire_workload_status spire-system
 
 if [[ "$1" -ne 0 ]]; then
-  get_namespace_details "${ns}"
+  get_namespace_details spire-root-server
+  get_namespace_details spire-server
+  get_namespace_details spire-system
 fi

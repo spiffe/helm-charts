@@ -3,6 +3,7 @@ spire-server:
   upstreamAuthority:
     spire:
       enabled: true
+      upstreamDriver: upstream.csi.spiffe.io
       server:
         address: spire-server.spire-root-server
   controllerManager:
