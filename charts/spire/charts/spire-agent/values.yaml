@@ -76,7 +76,6 @@ trustBundleURL: ""
 trustBundleFormat: pem
 bundleConfigMap: spire-bundle
 
-
 # @ignored
 upstream: false
 
