@@ -12,6 +12,9 @@ replicaCount: 1
 
 namespaceOverride: ""
 
+# -- Annotations for the deployment
+annotations: {}
+
 image:
   # -- The OCI registry to pull the image from
   registry: ghcr.io

@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 0.11.1](https://img.shields.io/badge/Version-0.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -156,6 +156,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-csi-driver.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.affinity | object | `{}` |  |
 | spiffe-oidc-discovery-provider.agentSocketName | string | `"spire-agent.sock"` | The name of the spire-agent unix socket |
+| spiffe-oidc-discovery-provider.annotations | object | `{}` | Annotations for the deployment |
 | spiffe-oidc-discovery-provider.autoscaling.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.autoscaling.maxReplicas | int | `5` |  |
 | spiffe-oidc-discovery-provider.autoscaling.minReplicas | int | `1` |  |
@@ -283,6 +284,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
 | spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.waitForIt.resources | object | `{}` |  |
+| spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
 | spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
 | spire-server.affinity | object | `{}` |  |
