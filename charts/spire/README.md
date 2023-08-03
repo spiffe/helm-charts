@@ -471,7 +471,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.upstreamAuthority.vault.k8sAuth.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.vault.k8sAuth.k8sAuthMountPoint | string | `"kubernetes"` | Name of the mount point where the Kubernetes auth method is mounted |
 | spire-server.upstreamAuthority.vault.k8sAuth.k8sAuthRoleName | string | `""` | Required - Name of the Vault role. The plugin authenticates against the named role |
-| spire-server.upstreamAuthority.vault.k8sAuth.tokenPath | string | `"/var/run/secrets/tokens"` | Path to the Kubernetes Service Account Token to use authentication with the Vault |
+| spire-server.upstreamAuthority.vault.k8sAuth.tokenPath | string | `"/var/run/secrets/tokens/spire-server"` | Absolute path to the Kubernetes Service Account Token to use authentication with the Vault |
 | spire-server.upstreamAuthority.vault.namespace | string | `""` | Name of the Vault namespace. This is only available in the Vault Enterprise. |
 | spire-server.upstreamAuthority.vault.pkiMountPoint | string | `"pki"` | Name of the mount point where PKI secret engine is mounted |
 | spire-server.upstreamAuthority.vault.vaultAddr | string | `""` | The URL of the Vault server. (e.g., https://vault.example.com:8443/) |

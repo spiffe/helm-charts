@@ -275,7 +275,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.vault.k8sAuth.enabled | bool | `false` |  |
 | upstreamAuthority.vault.k8sAuth.k8sAuthMountPoint | string | `"kubernetes"` | Name of the mount point where the Kubernetes auth method is mounted |
 | upstreamAuthority.vault.k8sAuth.k8sAuthRoleName | string | `""` | Required - Name of the Vault role. The plugin authenticates against the named role |
-| upstreamAuthority.vault.k8sAuth.tokenPath | string | `"/var/run/secrets/tokens"` | Path to the Kubernetes Service Account Token to use authentication with the Vault |
+| upstreamAuthority.vault.k8sAuth.tokenPath | string | `"/var/run/secrets/tokens/spire-server"` | Absolute path to the Kubernetes Service Account Token to use authentication with the Vault |
 | upstreamAuthority.vault.namespace | string | `""` | Name of the Vault namespace. This is only available in the Vault Enterprise. |
 | upstreamAuthority.vault.pkiMountPoint | string | `"pki"` | Name of the mount point where PKI secret engine is mounted |
 | upstreamAuthority.vault.vaultAddr | string | `""` | The URL of the Vault server. (e.g., https://vault.example.com:8443/) |

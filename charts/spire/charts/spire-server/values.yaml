@@ -277,8 +277,8 @@ upstreamAuthority:
       k8sAuthMountPoint: "kubernetes"
       # -- Required - Name of the Vault role. The plugin authenticates against the named role
       k8sAuthRoleName: ""
-      # -- Path to the Kubernetes Service Account Token to use authentication with the Vault
-      tokenPath: "/var/run/secrets/tokens"
+      # -- Absolute path to the Kubernetes Service Account Token to use authentication with the Vault
+      tokenPath: "/var/run/secrets/tokens/spire-server"
 
 notifier:
   k8sbundle:
