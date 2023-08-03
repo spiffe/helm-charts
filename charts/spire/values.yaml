@@ -13,6 +13,9 @@ global:
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 
+    # -- Set what address to use for the upstream server when using nested spire
+    upstreamServerAddress: ""
+
     image:
       # -- Override all Spire image registries at once
       registry: ""
@@ -41,9 +44,13 @@ spire-agent:
   enabled: true
   nameOverride: agent
 
-upstream-spire-agent:
-  # -- enable upstream agent for use with nested spire.
+upstream:
+  # -- enable upstream agent and driver for use with nested spire.
   enabled: false
+
+upstream-spire-agent:
+  # @ignored
+  upstream: true
   nameOverride: agent-upstream
   bundleConfigMap: spire-bundle-upstream
 
@@ -61,8 +68,6 @@ spiffe-csi-driver:
   enabled: true
 
 upstream-spiffe-csi-driver:
-  # -- enable upstream csi driver for use with nested spire.
-  enabled: false
   pluginName: upstream.csi.spiffe.io
   agentSocketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
   healthChecks:

@@ -1,11 +1,13 @@
+global:
+  spire:
+    upstreamSpireAddress: spire-server.spire-root-server
+
 spire-server:
   enabled: true
   upstreamAuthority:
     spire:
       enabled: true
       upstreamDriver: upstream.csi.spiffe.io
-      server:
-        address: spire-server.spire-root-server
   controllerManager:
     enabled: true
     identities:
@@ -16,10 +18,5 @@ spiffe-oidc-discovery-provider:
   insecureScheme:
     enabled: true
 
-upstream-spiffe-csi-driver:
+upstream:
   enabled: true
-
-upstream-spire-agent:
-  enabled: true
-  server:
-    address: spire-server.spire-root-server

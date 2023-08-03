@@ -76,6 +76,10 @@ trustBundleURL: ""
 trustBundleFormat: pem
 bundleConfigMap: spire-bundle
 
+
+# @ignored
+upstream: false
+
 server:
   address: ""
   port: 8081

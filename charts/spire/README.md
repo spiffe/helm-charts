@@ -116,6 +116,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
 | global.spire.jwtIssuer | string | `"oidc-discovery.example.org"` | Set the jwt issuer |
 | global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| global.spire.upstreamServerAddress | string | `""` | Set what address to use for the upstream server when using nested spire |
 | spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
 | spire-agent.enabled | bool | `true` | Enables deployment of SPIRE Agent(s) |
@@ -125,16 +126,15 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.nameOverride | string | `"server"` |  |
 | tornjak-frontend.enabled | bool | `false` | Enables deployment of Tornjak frontend/UI (Not for production) |
 | upstream-spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
-| upstream-spiffe-csi-driver.enabled | bool | `false` | enable upstream csi driver for use with nested spire. |
 | upstream-spiffe-csi-driver.healthChecks.port | int | `9810` |  |
 | upstream-spiffe-csi-driver.pluginName | string | `"upstream.csi.spiffe.io"` |  |
 | upstream-spire-agent.bundleConfigMap | string | `"spire-bundle-upstream"` |  |
-| upstream-spire-agent.enabled | bool | `false` | enable upstream agent for use with nested spire. |
 | upstream-spire-agent.healthChecks.port | int | `9981` |  |
 | upstream-spire-agent.nameOverride | string | `"agent-upstream"` |  |
 | upstream-spire-agent.serviceAccount.name | string | `"spire-agent-upstream"` |  |
 | upstream-spire-agent.socketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
 | upstream-spire-agent.telemetry.prometheus.port | int | `9989` |  |
+| upstream.enabled | bool | `false` | enable upstream agent and driver for use with nested spire. |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |

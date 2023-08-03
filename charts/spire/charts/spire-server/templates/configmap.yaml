@@ -94,7 +94,7 @@ plugins:
   UpstreamAuthority:
     - spire:
         plugin_data:
-          server_address: {{ .server.address | quote }}
+          server_address: {{ include "spire-server.upstream-spire-address" $root | quote }}
           server_port: {{ .server.port }}
           workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
   {{- end }}
