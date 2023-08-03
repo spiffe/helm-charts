@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 
 A Helm chart to install the SPIRE server.
 
@@ -172,8 +172,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.hostPath | string | `""` | Which path to use on the host when type = hostPath |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
+| persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
@@ -218,6 +220,14 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| upstreamAuthority.awsPCA.assumeRoleARN | Optional | `""` | ARN of an IAM role to assume |
+| upstreamAuthority.awsPCA.caSigningTemplateARN | string | `""` | See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values. |
+| upstreamAuthority.awsPCA.certificateAuthorityARN | string | `""` | ARN of the "upstream" CA certificate |
+| upstreamAuthority.awsPCA.enabled | bool | `false` |  |
+| upstreamAuthority.awsPCA.endpoint | string | `""` | See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information. |
+| upstreamAuthority.awsPCA.region | string | `""` | AWS Region to use |
+| upstreamAuthority.awsPCA.signingAlgorithm | string | `""` | See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values. |
+| upstreamAuthority.awsPCA.supplementalBundlePath | Optional | `""` | Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle. |
 | upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
 | upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
 | upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |

@@ -140,6 +140,8 @@ workloadAttestors:
   k8s:
     # -- If true, kubelet certificate verification is skipped
     skipKubeletVerification: true
+    # -- Set to true if using holdApplicationUntilProxyStarts in Istio
+    disableContainerSelectors: false
 
 telemetry:
   prometheus:
