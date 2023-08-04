@@ -107,7 +107,7 @@ insecureScheme:
       #   cpu: 100m
       #   memory: 64Mi
 
-jwtIssuer: oidc-discovery.example.org
+jwtIssuer: https://oidc-discovery.example.org
 
 config:
   # -- The log level, valid values are "debug", "info", "warn", and "error"
