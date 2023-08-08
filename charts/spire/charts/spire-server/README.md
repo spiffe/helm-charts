@@ -121,6 +121,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| customPlugins.KeyManager | object | `{}` |  |
+| customPlugins.NodeAttestor | object | `{}` |  |
+| customPlugins.Notifier | object | `{}` |  |
+| customPlugins.UpstreamAuthority | object | `{}` |  |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -131,10 +135,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | dataStore.sql.username | string | `"spire"` | Only used by "postgres" or "mysql" |
 | defaultJwtSvidTTL | string | `"1h"` |  |
 | defaultX509SvidTTL | string | `"4h"` |  |
-| externalPlugins.KeyManager | object | `{}` |  |
-| externalPlugins.NodeAttestor | object | `{}` |  |
-| externalPlugins.Notifier | object | `{}` |  |
-| externalPlugins.UpstreamAuthority | object | `{}` |  |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |

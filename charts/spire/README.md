@@ -322,6 +322,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.service.port | int | `443` |  |
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| spire-server.customPlugins.KeyManager | object | `{}` |  |
+| spire-server.customPlugins.NodeAttestor | object | `{}` |  |
+| spire-server.customPlugins.Notifier | object | `{}` |  |
+| spire-server.customPlugins.UpstreamAuthority | object | `{}` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | spire-server.dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
@@ -332,10 +336,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.dataStore.sql.username | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.defaultJwtSvidTTL | string | `"1h"` |  |
 | spire-server.defaultX509SvidTTL | string | `"4h"` |  |
-| spire-server.externalPlugins.KeyManager | object | `{}` |  |
-| spire-server.externalPlugins.NodeAttestor | object | `{}` |  |
-| spire-server.externalPlugins.Notifier | object | `{}` |  |
-| spire-server.externalPlugins.UpstreamAuthority | object | `{}` |  |
 | spire-server.extraContainers | list | `[]` |  |
 | spire-server.extraVolumeMounts | list | `[]` |  |
 | spire-server.extraVolumes | list | `[]` |  |

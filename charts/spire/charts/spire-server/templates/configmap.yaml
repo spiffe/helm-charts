@@ -1,4 +1,4 @@
-{{- range $type, $tvals := .Values.externalPlugins }}
+{{- range $type, $tvals := .Values.customPlugins }}
 {{-   if not (has $type (list "KeyManager" "NodeAttestor" "UpstreamAuthority" "Notifier")) }}
 {{-     fail (printf "Unknown plugin type specified: %s" $type) }}
 {{-   end }}
