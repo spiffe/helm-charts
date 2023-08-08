@@ -58,7 +58,7 @@ spec:
             - --timeout=3m
             - --for=condition=ready
             - issuer
-            - {{ include "spire-server.fullname" $ }}
+            - {{ include "spire-server.fullname" $ }}-ca
           imagePullPolicy: {{ .Values.tools.kubectl.image.pullPolicy }}
       {{- end }}
       {{- if gt (len .Values.initContainers) 0 }}

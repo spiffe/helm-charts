@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.0](https://img.shields.io/badge/AppVersion-1.7.0-informational?style=flat-square)
+![Version: 0.11.1](https://img.shields.io/badge/Version-0.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -156,6 +156,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-csi-driver.tolerations | list | `[]` |  |
 | spiffe-oidc-discovery-provider.affinity | object | `{}` |  |
 | spiffe-oidc-discovery-provider.agentSocketName | string | `"spire-agent.sock"` | The name of the spire-agent unix socket |
+| spiffe-oidc-discovery-provider.annotations | object | `{}` | Annotations for the deployment |
 | spiffe-oidc-discovery-provider.autoscaling.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.autoscaling.maxReplicas | int | `5` |  |
 | spiffe-oidc-discovery-provider.autoscaling.minReplicas | int | `1` |  |
@@ -425,6 +426,14 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
 | spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spire-server.upstreamAuthority.awsPCA.assumeRoleARN | Optional | `""` | ARN of an IAM role to assume |
+| spire-server.upstreamAuthority.awsPCA.caSigningTemplateARN | string | `""` | See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values. |
+| spire-server.upstreamAuthority.awsPCA.certificateAuthorityARN | string | `""` | ARN of the "upstream" CA certificate |
+| spire-server.upstreamAuthority.awsPCA.enabled | bool | `false` |  |
+| spire-server.upstreamAuthority.awsPCA.endpoint | string | `""` | See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information. |
+| spire-server.upstreamAuthority.awsPCA.region | string | `""` | AWS Region to use |
+| spire-server.upstreamAuthority.awsPCA.signingAlgorithm | string | `""` | See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values. |
+| spire-server.upstreamAuthority.awsPCA.supplementalBundlePath | Optional | `""` | Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle. |
 | spire-server.upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
 | spire-server.upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
 | spire-server.upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |
