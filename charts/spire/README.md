@@ -362,6 +362,12 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.keyManager.awsKMS.enabled | bool | `false` |  |
+| spire-server.keyManager.awsKMS.keyMetadataFile | string | `"/run/spire/data/aws-kms-key-metadata"` |  |
+| spire-server.keyManager.awsKMS.keyPolicyFile | string | `""` |  |
+| spire-server.keyManager.awsKMS.region | string | `""` |  |
+| spire-server.keyManager.disk.enabled | bool | `true` |  |
+| spire-server.keyManager.disk.keysPath | string | `"/run/spire/data/keys.json"` |  |
 | spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | spire-server.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |

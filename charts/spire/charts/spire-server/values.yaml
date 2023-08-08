@@ -175,6 +175,16 @@ ca_subject:
   organization: Example
   common_name: example.org
 
+keyManager:
+  disk:
+    enabled: true
+    keysPath: "/run/spire/data/keys.json"
+  awsKMS:
+    enabled: false
+    region: ""
+    keyMetadataFile: "/run/spire/data/aws-kms-key-metadata"
+    keyPolicyFile: ""
+
 upstreamAuthority:
   disk:
     enabled: false
