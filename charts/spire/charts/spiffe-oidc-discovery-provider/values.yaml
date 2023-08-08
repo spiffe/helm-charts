@@ -135,6 +135,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+upgradeHooks:
+  # -- Enable jobs to run at upgrade time to work around issues with deleting
+  enabled: true
+
 autoscaling:
   enabled: false
   minReplicas: 1

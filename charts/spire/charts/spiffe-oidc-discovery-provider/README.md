@@ -103,5 +103,6 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with deleting |
 
 ----------------------------------------------

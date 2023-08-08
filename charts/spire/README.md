@@ -228,6 +228,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spiffe-oidc-discovery-provider.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with deleting |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-agent.clusterName | string | `"example-cluster"` |  |
 | spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
@@ -322,7 +323,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
 | spire-server.controllerManager.service.port | int | `443` |  |
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
-| spire-server.controllerManager.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with custom resources. |
+| spire-server.controllerManager.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with custom resources |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |

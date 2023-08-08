@@ -120,7 +120,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | controllerManager.service.annotations | object | `{}` |  |
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
-| controllerManager.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with custom resources. |
+| controllerManager.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with custom resources |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
