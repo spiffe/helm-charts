@@ -3,6 +3,9 @@
 {{- $configSum3 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $configSumTornjak := (include (print $.Template.BasePath "/tornjak-config.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
+{{- if not (has .Values.persistence.type (list "pvc" "hostPath" "emptyDir")) }}
+{{- fail "persistence.type must be one of [\"pvc\", \"hostPath\", \"emptyDir\"]" }}
+{{- end }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -55,7 +58,7 @@ spec:
             - --timeout=3m
             - --for=condition=ready
             - issuer
-            - {{ include "spire-server.fullname" $ }}
+            - {{ include "spire-server.fullname" $ }}-ca
           imagePullPolicy: {{ .Values.tools.kubectl.image.pullPolicy }}
       {{- end }}
       {{- if gt (len .Values.initContainers) 0 }}
@@ -285,6 +288,16 @@ spec:
         {{- if gt (len .Values.extraVolumes) 0 }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
+        {{- if eq .Values.persistence.type "emptyDir" }}
+        - name: spire-data
+          emptyDir: {}
+        {{- else if eq .Values.persistence.type "hostPath" }}
+        - name: spire-data
+          hostPath:
+            path: {{ .Values.persistence.hostPath }}
+            type: Directory
+        {{- end }}
+  {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:
     - metadata:
         name: spire-data
@@ -297,3 +310,4 @@ spec:
         {{- if .Values.persistence.storageClass }}
         storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
+  {{- end }}
