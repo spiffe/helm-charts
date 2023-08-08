@@ -322,6 +322,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
 | spire-server.controllerManager.service.port | int | `443` |  |
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
+| spire-server.controllerManager.upgradeHooks.enabled | bool | `true` | Enable jobs to run at upgrade time to work around issues with custom resources. |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
