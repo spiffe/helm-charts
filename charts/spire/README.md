@@ -414,7 +414,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
-| spire-server.tornjak.service.ports | object | `{"http":10080,"https":10443}` | Ports for tornjak |
+| spire-server.tornjak.service.ports | object | `{"http":10000,"https":10443}` | Ports for tornjak |
 | spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
 | spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
