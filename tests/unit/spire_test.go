@@ -41,4 +41,34 @@ spire-server:
 			Expect(notes).Should(ContainSubstring("abc123"))
 		})
 	})
+	Describe("spire-server.customPlugin.tpm", func() {
+		It("plugin set ok", func() {
+			objs, err := ValueStringRender(chart, `
+spire-server:
+  customPlugins:
+    NodeAttestor:
+      tpm:
+        plugin_cmd: /bin/tpm_attestor_server
+        plugin_checksum: 97442358ae946e3fb8f2464432b8c23efdc0b5d44ec1eea27babe59ef646cc2f
+        plugin_data: {}
+`)
+			Expect(err).Should(Succeed())
+			notes := objs["spire/charts/spire-server/templates/configmap.yaml"]
+			Expect(notes).Should(ContainSubstring("tpm"))
+		})
+	})
+	Describe("spire-server.unsupportedBuiltInPlugins", func() {
+		It("plugin set ok", func() {
+			objs, err := ValueStringRender(chart, `
+spire-server:
+  unsupportedBuiltInPlugins:
+    NodeAttestor:
+      join_token:
+        plugin_data: {}
+`)
+			Expect(err).Should(Succeed())
+			notes := objs["spire/charts/spire-server/templates/configmap.yaml"]
+			Expect(notes).Should(ContainSubstring("join_token"))
+		})
+	})
 })

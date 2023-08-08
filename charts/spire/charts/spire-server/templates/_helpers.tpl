@@ -205,7 +205,7 @@ Take a copy of the config and merge in .Values.customPlugins and .Values.unsuppo
 {{-     $_ := set $pluginsToMerge.plugins $type (deepCopy $val) }}
 {{-   end }}
 {{- end }}
-{{- range $type, $val := .root.Values.unsupportedBuiltInPluginsPlugins }}
+{{- range $type, $val := .root.Values.unsupportedBuiltInPlugins }}
 {{-   if . }}
 {{-     $_ := set $pluginsToMerge.plugins $type (deepCopy $val) }}
 {{-   end }}
