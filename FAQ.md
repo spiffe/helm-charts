@@ -13,7 +13,7 @@ To resolve, reinstall the chart before trying to remove it again.
 
 The chart requires `Projected Service Account Tokens` which has to be enabled on your k8s api server. In most cases this is already done for you.
 
-> **Note** This is enabled by default with newer versions as shown by the existence of:
+> **Note**: This is enabled by default with newer versions as shown by the existence of:
 >
 >        - --service-account-issuer
 >        - --service-account-key-file
