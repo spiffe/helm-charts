@@ -24,7 +24,6 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 > **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden.
 
 ## FAQ
-
 For any issues see our [FAQ](../../FAQ.md)…
 ## Usage
 
