@@ -8,7 +8,8 @@ domains:
   - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}"
   - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}"
   - "{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}"
-  {{- $jwtIssuer := include "spire-lib.jwt-issuer" . }}
+  {{- $uri := urlParse (include "spire-lib.jwt-issuer" .) }}
+  {{- $jwtIssuer := (default $uri.path $uri.host) }}
   {{- uniq (concat (list $jwtIssuer) .Values.config.additionalDomains) | toYaml | nindent 2 }}
 
 {{- if .Values.insecureScheme.enabled }}
