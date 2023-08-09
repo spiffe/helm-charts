@@ -363,7 +363,6 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.keyManager.awsKMS.enabled | bool | `false` |  |
-| spire-server.keyManager.awsKMS.keyMetadataFile | string | `"/run/spire/data/aws-kms-key-metadata"` |  |
 | spire-server.keyManager.awsKMS.keyPolicyFile | string | `""` |  |
 | spire-server.keyManager.awsKMS.region | string | `""` |  |
 | spire-server.keyManager.disk.enabled | bool | `true` |  |

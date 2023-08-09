@@ -182,7 +182,6 @@ keyManager:
   awsKMS:
     enabled: false
     region: ""
-    keyMetadataFile: "/run/spire/data/aws-kms-key-metadata"
     keyPolicyFile: ""
 
 upstreamAuthority:

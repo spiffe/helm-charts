@@ -161,7 +161,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
 | keyManager.awsKMS.enabled | bool | `false` |  |
-| keyManager.awsKMS.keyMetadataFile | string | `"/run/spire/data/aws-kms-key-metadata"` |  |
 | keyManager.awsKMS.keyPolicyFile | string | `""` |  |
 | keyManager.awsKMS.region | string | `""` |  |
 | keyManager.disk.enabled | bool | `true` |  |

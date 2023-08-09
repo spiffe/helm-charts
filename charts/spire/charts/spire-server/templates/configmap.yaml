@@ -65,7 +65,7 @@ plugins:
     - aws_kms:
         plugin_data:
           region: {{ .region | quote }}
-          key_metadata_file: {{ .keyMetadataFile | quote }}
+          key_metadata_file: "/run/spire/data/aws-kms-key-metadata"
           {{- if ne .accessKeyID "" }}
           access_key_id: {{ .accessKeyID | quote }}
           {{- end }}
