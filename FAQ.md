@@ -5,7 +5,7 @@
 
 ## Uninstall is stuck. How do I fix it?
 
-If you uninstall the spiffe csi driver manually before removing the chart, pods can still be using the driver an are unable to mount the csi volume.
+If you uninstall the spiffe csi driver manually before removing the chart, pods can still be using the driver an are unable to unmount the csi volume.
 
 To resolve, reinstall the chart before trying to remove it again. 
 
