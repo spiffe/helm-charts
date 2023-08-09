@@ -1,7 +1,17 @@
 # Frequently Asked Questions
 
+- [Pods are stuck terminating after uninstall. How do I fix it?](#pods-are-stuck-terminating-after-uninstall-how-do-i-fix-it)
 - [Uninstall is stuck. How do I fix it?](#uninstall-is-stuck-how-do-i-fix-it)
 - [The PSAT plugin is not working](#the-psat-plugin-is-not-working)
+
+## Pods are stuck terminating after uninstall. How do I fix it?
+
+If you uninstall the spire chart before all users of the csi driver are removed, pods will get stuck in a terminating state waiting for the driver, that no longer is installed, to unmount the volumes for the pod. In order to fix this, reinstall the chart and remove all affected workloads that are not part of the spire helm chart itself, before attempting to remove spire again.
+
+You can discover pods that use the driver with the following command:
+```
+kubectl get pods --all-namespaces -o go-template='{{range .items}}{{$nn := printf "%s %s" .metadata.namespace .metadata.name}}{{range .spec.volumes}}{{if .csi.driver}}{{if eq .csi.driver "csi.spiffe.io"}}{{printf "%s\n" $nn}}{{end}}{{end}}{{end}}{{end}}'
+```
 
 ## Uninstall is stuck. How do I fix it?
 
