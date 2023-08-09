@@ -178,7 +178,6 @@ ca_subject:
 keyManager:
   disk:
     enabled: true
-    keysPath: "/run/spire/data/keys.json"
   awsKMS:
     enabled: false
     region: ""

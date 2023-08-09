@@ -164,7 +164,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | keyManager.awsKMS.keyPolicyFile | string | `""` |  |
 | keyManager.awsKMS.region | string | `""` |  |
 | keyManager.disk.enabled | bool | `true` |  |
-| keyManager.disk.keysPath | string | `"/run/spire/data/keys.json"` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
