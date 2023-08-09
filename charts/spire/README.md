@@ -112,7 +112,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
 | global.spire.clusterName | string | `"example-cluster"` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
-| global.spire.jwtIssuer | string | `"oidc-discovery.example.org"` | Set the jwt issuer |
+| global.spire.jwtIssuer | string | `"https://oidc-discovery.example.org"` | Set the jwt issuer |
 | global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
 | spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
@@ -191,7 +191,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
-| spiffe-oidc-discovery-provider.jwtIssuer | string | `"oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.jwtIssuer | string | `"https://oidc-discovery.example.org"` |  |
 | spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
@@ -365,7 +365,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
-| spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | spire-server.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
@@ -418,7 +418,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.tornjak.resources | object | `{}` |  |
 | spire-server.tornjak.service.annotations | object | `{}` |  |
-| spire-server.tornjak.service.ports | object | `{"http":10080,"https":10443}` | Ports for tornjak |
+| spire-server.tornjak.service.ports | object | `{"http":10000,"https":10443}` | Ports for tornjak |
 | spire-server.tornjak.service.type | string | `"ClusterIP"` |  |
 | spire-server.tornjak.startupProbe.failureThreshold | int | `3` |  |
 | spire-server.tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |

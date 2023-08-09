@@ -9,7 +9,7 @@ global:
     # -- The trust domain to be used for the SPIFFE identifiers
     trustDomain: example.org
     # -- Set the jwt issuer
-    jwtIssuer: oidc-discovery.example.org
+    jwtIssuer: https://oidc-discovery.example.org
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 
