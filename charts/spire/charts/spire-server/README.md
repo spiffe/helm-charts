@@ -159,7 +159,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |

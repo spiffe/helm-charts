@@ -132,7 +132,7 @@ dataStore:
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
-jwtIssuer: oidc-discovery.example.org
+jwtIssuer: https://oidc-discovery.example.org
 
 # -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
