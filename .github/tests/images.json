@@ -2,14 +2,14 @@
   "spire-server/values.yaml": [
     {
       "query": "tests.bash.image",
-      "filter": "^latest-",
+      "filter": "LATESTSHA",
       "sort-flags": []
     }
   ],
   "spire-agent/values.yaml": [
     {
       "query": "waitForIt.image",
-      "filter": "^latest-",
+      "filter": "LATESTSHA",
       "sort-flags": []
     }
   ],
@@ -32,14 +32,14 @@
     },
     {
       "query": "tests.bash.image",
-      "filter": "^latest-",
+      "filter": "LATESTSHA",
       "sort-flags": []
     }
   ],
   "tornjak-frontend/values.yaml": [
     {
       "query": "tests.bash.image",
-      "filter": "^latest-",
+      "filter": "LATESTSHA",
       "sort-flags": []
     }
   ]

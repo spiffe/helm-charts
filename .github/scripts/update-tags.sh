@@ -51,7 +51,11 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
     VERSION=$(yq e ".${QUERY}.tag" "$VALUES")
-    LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
+    if [[ "$FILTER" == "LATESTSHA" ]]; then
+      LATEST_VERSION="latest@"$(crane digest "${REGISTRY}/${REPOSITORY}:latest")
+    else
+      LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
+    fi
 
     if trivy image "${REGISTRY}/${REPOSITORY}:${VERSION}" --exit-code 1; then
       echo No CVE found. Skipping.
