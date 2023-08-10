@@ -46,7 +46,7 @@ spire-server:
 			objs, err := ValueStringRender(chart, `
 spire-server:
   customPlugins:
-    NodeAttestor:
+    nodeAttestor:
       tpm:
         plugin_cmd: /bin/tpm_attestor_server
         plugin_checksum: 97442358ae946e3fb8f2464432b8c23efdc0b5d44ec1eea27babe59ef646cc2f
@@ -62,7 +62,7 @@ spire-server:
 			objs, err := ValueStringRender(chart, `
 spire-server:
   unsupportedBuiltInPlugins:
-    NodeAttestor:
+    nodeAttestor:
       join_token:
         plugin_data: {}
 `)

@@ -439,16 +439,16 @@ tornjak:
 # can prioritize proper support.
 # @ignored
 unsupportedBuiltInPlugins:
-  KeyManager: {}
-  NodeAttestor: {}
-  UpstreamAuthority: {}
-  Notifier: {}
+  keyManager: {}
+  nodeAttestor: {}
+  upstreamAuthority: {}
+  notifier: {}
 
 customPlugins:
-  KeyManager: {}
-  NodeAttestor: {}
-  UpstreamAuthority: {}
-  Notifier: {}
+  keyManager: {}
+  nodeAttestor: {}
+  upstreamAuthority: {}
+  notifier: {}
 
 # @ignored
 tests:

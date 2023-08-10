@@ -202,12 +202,14 @@ Take a copy of the config and merge in .Values.customPlugins and .Values.unsuppo
 {{- $pluginsToMerge := dict "plugins" dict }}
 {{- range $type, $val := .root.Values.customPlugins }}
 {{-   if . }}
-{{-     $_ := set $pluginsToMerge.plugins $type (deepCopy $val) }}
+{{-     $nt := printf "%s%s" (substr 0 1 $type | upper) (substr 1 -1 $type) }}
+{{-     $_ := set $pluginsToMerge.plugins $nt (deepCopy $val) }}
 {{-   end }}
 {{- end }}
 {{- range $type, $val := .root.Values.unsupportedBuiltInPlugins }}
 {{-   if . }}
-{{-     $_ := set $pluginsToMerge.plugins $type (deepCopy $val) }}
+{{-     $nt := printf "%s%s" (substr 0 1 $type | upper) (substr 1 -1 $type) }}
+{{-     $_ := set $pluginsToMerge.plugins $nt (deepCopy $val) }}
 {{-   end }}
 {{- end }}
 {{- $newConfig := .config | fromYaml | mustMerge $pluginsToMerge }}

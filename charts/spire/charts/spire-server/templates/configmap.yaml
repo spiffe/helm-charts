@@ -1,5 +1,5 @@
 {{- range $type, $tvals := .Values.customPlugins }}
-{{-   if not (has $type (list "KeyManager" "NodeAttestor" "UpstreamAuthority" "Notifier")) }}
+{{-   if not (has $type (list "keyManager" "nodeAttestor" "upstreamAuthority" "notifier")) }}
 {{-     fail (printf "Unknown plugin type specified: %s" $type) }}
 {{-   end }}
 {{-   range $name, $nval := $tvals }}

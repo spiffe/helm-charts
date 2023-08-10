@@ -1,1 +1,8 @@
 Installed {{ .Chart.Name }}…
+{{- $up := (index .Values "spire-server").unsupportedBuiltInPlugins }}
+{{- $s := add (len $up.keyManager) (len $up.nodeAttestor) (len $up.upstreamAuthority) (len $up.notifier) }}
+{{- if gt $s 0 }}
+
+Warning:
+  You are using an unsupported plugin. Functionality of this release and future upgrades are not guaranteed to work smoothly.
+{{- end }}
