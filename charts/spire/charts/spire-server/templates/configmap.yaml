@@ -67,10 +67,10 @@ plugins:
           region: {{ .region | quote }}
           key_metadata_file: "/run/spire/data/aws-kms-key-metadata"
           {{- if ne .accessKeyID "" }}
-          access_key_id: {{ .accessKeyID | quote }}
+          access_key_id: "${AWS_KMS_ACCESS_KEY_ID}"
           {{- end }}
           {{- if ne .secretAccessKey "" }}
-          secret_access_key: {{ .secretAccessKey | quote }}
+          secret_access_key: "${AWS_KMS_SECRET_ACCESS_KEY}"
           {{- end }}
           {{- if ne .keyPolicyFile "" }}
           key_policy_file: {{ .keyPolicyFile | quote }}
@@ -80,7 +80,7 @@ plugins:
   {{- end }}
 
 {{- if ne $keyManagerUsed 1 }}
-{{- fail "You have to enable exactly one Key Manager." }}
+{{- fail (printf "You have to enable exactly one Key Manager. There are %d enabled." $keyManagerUsed) }}
 {{- end }}
 
   Notifier:

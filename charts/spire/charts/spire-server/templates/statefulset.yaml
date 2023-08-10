@@ -84,6 +84,20 @@ spec:
                 name: {{ $fullname }}-dbpw
                 key: DBPW
           {{- end }}
+          {{- if ne .Values.keyManager.awsKMS.accessKeyID "" }}
+          - name: AWS_KMS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-aws-kms
+                key: AWS_KMS_ACCESS_KEY_ID
+          {{- end }}
+          {{- if ne .Values.keyManager.awsKMS.secretAccessKey "" }}
+          - name: AWS_KMS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-aws-kms
+                key: AWS_KMS_SECRET_ACCESS_KEY
+          {{- end }}
           ports:
             - name: grpc
               containerPort: 8081
