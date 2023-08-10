@@ -161,6 +161,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
+| jobAnnotations | object | `{}` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | keyManager.awsKMS.accessKeyID | Optional | `""` | Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role. |
 | keyManager.awsKMS.enabled | bool | `false` |  |
@@ -208,6 +209,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tools.kubectl.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | tools.kubectl.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | tools.kubectl.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| tools.kubectl.image.securityContext | object | `{}` |  |
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | topologySpreadConstraints | list | `[]` |  |

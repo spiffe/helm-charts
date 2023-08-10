@@ -358,6 +358,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
+| spire-server.jobAnnotations | object | `{}` |  |
 | spire-server.jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.keyManager.awsKMS.accessKeyID | Optional | `""` | Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role. |
 | spire-server.keyManager.awsKMS.enabled | bool | `false` |  |
@@ -405,6 +406,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tools.kubectl.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-server.tools.kubectl.image.registry | string | `"docker.io"` | The OCI registry to pull the image from |
 | spire-server.tools.kubectl.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
+| spire-server.tools.kubectl.image.securityContext | object | `{}` |  |
 | spire-server.tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | spire-server.tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-server.topologySpreadConstraints | list | `[]` |  |
