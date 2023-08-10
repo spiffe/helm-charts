@@ -237,7 +237,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
 | spire-agent.fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| spire-agent.fsGroupFix.image.tag | string | `"5.2.15"` | Overrides the image tag |
+| spire-agent.fsGroupFix.image.tag | string | `"latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4"` | Overrides the image tag |
 | spire-agent.fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | spire-agent.fullnameOverride | string | `""` |  |
@@ -281,7 +281,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
-| spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.waitForIt.image.tag | string | `"latest@sha256:deeaccb164a67a4d7f585c4d416641b1f422c029911a29d72beae28221f823df"` | Overrides the image tag |
 | spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.waitForIt.resources | object | `{}` |  |
 | spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
