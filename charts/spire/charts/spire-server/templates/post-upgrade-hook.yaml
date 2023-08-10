@@ -51,6 +51,9 @@ metadata:
   annotations:
     "helm.sh/hook": post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+    {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
 spec:
   template:
     metadata:

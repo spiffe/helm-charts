@@ -51,8 +51,10 @@ spec:
       initContainers:
       {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create }}
         - name: wait
+          {{- with .Values.tools.kubectl.image.securityContext }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           image: {{ template "spire-lib.kubectl-image" (dict "appVersion" $.Chart.AppVersion "image" .Values.tools.kubectl.image "global" .Values.global "KubeVersion" .Capabilities.KubeVersion.Version) }}
           args:
             - wait
@@ -63,6 +65,10 @@ spec:
             - issuer
             - {{ include "spire-server.fullname" $ }}-ca
           imagePullPolicy: {{ .Values.tools.kubectl.image.pullPolicy }}
+          {{- with .Values.tools.kubectl.image.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
       {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
