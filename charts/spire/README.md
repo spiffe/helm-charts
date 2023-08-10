@@ -25,6 +25,7 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 ## FAQ
 For any issues see our [FAQ](../../FAQ.md)…
+
 ## Usage
 
 To utilize Spire in your own workloads you should add the following to your workload:
