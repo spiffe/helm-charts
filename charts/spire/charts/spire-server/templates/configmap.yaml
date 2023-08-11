@@ -54,7 +54,7 @@ plugins:
   KeyManager:
     - disk:
         plugin_data:
-          keys_path: {{ .keysPath | quote }}
+          keys_path: "/run/spire/data/keys.json"
   {{- end }}
   {{- end }}
 

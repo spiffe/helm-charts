@@ -177,10 +177,9 @@ ca_subject:
 
 keyManager:
   disk:
-    enabled: true
-    keysPath: "/run/spire/data/keys.json"
-  memory:
     enabled: false
+  memory:
+    enabled: true
 
 
 upstreamAuthority:

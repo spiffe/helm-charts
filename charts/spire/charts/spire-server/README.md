@@ -161,7 +161,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | keyManager.disk.enabled | bool | `true` |  |
-| keyManager.disk.keysPath | string | `"/run/spire/data/keys.json"` |  |
 | keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
