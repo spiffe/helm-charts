@@ -132,7 +132,7 @@ dataStore:
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
-jwtIssuer: oidc-discovery.example.org
+jwtIssuer: https://oidc-discovery.example.org
 
 # -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
@@ -213,13 +213,13 @@ upstreamAuthority:
     certificateAuthorityARN: ""
     # -- (Optional) ARN of an IAM role to assume
     assumeRoleARN: ""
-    # -- (Optional) ARN of the signing template to use for the server's CA. Defaults to a signing template for end-entity certificates only. 
+    # -- (Optional) ARN of the signing template to use for the server's CA. Defaults to a signing template for end-entity certificates only.
     # -- See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values.
     caSigningTemplateARN: ""
-    # -- (Optional) Signing algorithm to use for the server's CA. Defaults to the CA's default. 
+    # -- (Optional) Signing algorithm to use for the server's CA. Defaults to the CA's default.
     # -- See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values.
     signingAlgorithm: ""
-    # -- (Optional) Endpoint as hostname or fully-qualified URI that overrides the default endpoint. 
+    # -- (Optional) Endpoint as hostname or fully-qualified URI that overrides the default endpoint.
     # -- See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information.
     endpoint: ""
     # -- (Optional) Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle.
@@ -404,7 +404,7 @@ tornjak:
     type: ClusterIP
     # -- Ports for tornjak
     ports:
-      http: 10080
+      http: 10000
       https: 10443
     annotations: {}
 
