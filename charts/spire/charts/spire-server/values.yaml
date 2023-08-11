@@ -177,10 +177,9 @@ ca_subject:
 
 keyManager:
   disk:
-    enabled: false
-  memory:
     enabled: true
-
+  memory:
+    enabled: false
 
 upstreamAuthority:
   disk:
