@@ -72,8 +72,8 @@ plugins:
           {{- if ne .secretAccessKey "" }}
           secret_access_key: "${AWS_KMS_SECRET_ACCESS_KEY}"
           {{- end }}
-          {{- if ne .keyPolicyFile "" }}
-          key_policy_file: {{ .keyPolicyFile | quote }}
+          {{- if or (ne .keyPolicy.policy "") (ne .keyPolicy.existingConfigMap "") }}
+          key_policy_file: "/run/spire/data/aws-kms-key-policy.json"
           {{- end }}
 
   {{- end }}

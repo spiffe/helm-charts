@@ -181,8 +181,15 @@ keyManager:
   awsKMS:
     enabled: false
     region: ""
-    keyPolicyFile: ""
+    # -- Policy to use when creating keys. If no policy is specified, a default policy will be used.
+    keyPolicy:
+      # -- Key policy in JSON format.
+      policy: ""
+      # -- Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format.
+      existingConfigMap: ""
+    # -- Access key ID for the AWS account. If empty, the default credential chain will be used.
     accessKeyID: ""
+    # -- Secret access key for the AWS account. If empty, the default credential chain will be used.
     secretAccessKey: ""
 
 upstreamAuthority:

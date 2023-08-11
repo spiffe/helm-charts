@@ -160,11 +160,13 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
-| keyManager.awsKMS.accessKeyID | string | `""` |  |
+| keyManager.awsKMS.accessKeyID | string | `""` | Access key ID for the AWS account. If empty, the default credential chain will be used. |
 | keyManager.awsKMS.enabled | bool | `false` |  |
-| keyManager.awsKMS.keyPolicyFile | string | `""` |  |
+| keyManager.awsKMS.keyPolicy | object | `{"existingConfigMap":"","policy":""}` | Policy to use when creating keys. If no policy is specified, a default policy will be used. |
+| keyManager.awsKMS.keyPolicy.existingConfigMap | string | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
+| keyManager.awsKMS.keyPolicy.policy | string | `""` | Key policy in JSON format. |
 | keyManager.awsKMS.region | string | `""` |  |
-| keyManager.awsKMS.secretAccessKey | string | `""` |  |
+| keyManager.awsKMS.secretAccessKey | string | `""` | Secret access key for the AWS account. If empty, the default credential chain will be used. |
 | keyManager.disk.enabled | bool | `true` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |

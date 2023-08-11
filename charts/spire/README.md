@@ -362,11 +362,13 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
-| spire-server.keyManager.awsKMS.accessKeyID | string | `""` |  |
+| spire-server.keyManager.awsKMS.accessKeyID | string | `""` | Access key ID for the AWS account. If empty, the default credential chain will be used. |
 | spire-server.keyManager.awsKMS.enabled | bool | `false` |  |
-| spire-server.keyManager.awsKMS.keyPolicyFile | string | `""` |  |
+| spire-server.keyManager.awsKMS.keyPolicy | object | `{"existingConfigMap":"","policy":""}` | Policy to use when creating keys. If no policy is specified, a default policy will be used. |
+| spire-server.keyManager.awsKMS.keyPolicy.existingConfigMap | string | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
+| spire-server.keyManager.awsKMS.keyPolicy.policy | string | `""` | Key policy in JSON format. |
 | spire-server.keyManager.awsKMS.region | string | `""` |  |
-| spire-server.keyManager.awsKMS.secretAccessKey | string | `""` |  |
+| spire-server.keyManager.awsKMS.secretAccessKey | string | `""` | Secret access key for the AWS account. If empty, the default credential chain will be used. |
 | spire-server.keyManager.disk.enabled | bool | `true` |  |
 | spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
