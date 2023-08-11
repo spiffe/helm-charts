@@ -175,6 +175,13 @@ ca_subject:
   organization: Example
   common_name: example.org
 
+keyManager:
+  disk:
+    enabled: true
+    keysPath: "/run/spire/data/keys.json"
+  memory:
+    enabled: false
+
 upstreamAuthority:
   disk:
     enabled: false
