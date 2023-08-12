@@ -175,6 +175,12 @@ ca_subject:
   organization: Example
   common_name: example.org
 
+keyManager:
+  disk:
+    enabled: true
+  memory:
+    enabled: false
+
 upstreamAuthority:
   disk:
     enabled: false
