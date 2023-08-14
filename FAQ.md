@@ -21,7 +21,7 @@ To resolve, reinstall the chart before trying to remove it again.
 
 ## The PSAT plugin is not working
 
-The chart requires `Projected Service Account Tokens` which has to be enabled on your k8s api server. In most cases this is already done for you.
+The chart requires `Projected Service Account Tokens` which has to be enabled on your Kubernetes API server. In most cases this is already done for you.
 
 > **Note**: This is enabled by default with newer versions as shown by the existence of:
 >
