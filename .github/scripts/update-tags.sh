@@ -57,9 +57,11 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
       LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
     fi
 
-    if trivy image "${REGISTRY}/${REPOSITORY}:${VERSION}" --exit-code 1; then
-      echo No CVE found. Skipping.
-      continue
+    if [[ "$FILTER" == "LATESTSHA" ]]; then
+      if trivy image "${REGISTRY}/${REPOSITORY}:${VERSION}" --exit-code 1; then
+        echo No CVE found. Skipping.
+        continue
+      fi
     fi
 
     export QUERY
