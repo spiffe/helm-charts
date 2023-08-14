@@ -15,6 +15,11 @@ namespaceOverride: ""
 # -- Annotations for the deployment
 annotations: {}
 
+jobAnnotations:
+  "helm.sh/hook": pre-delete
+  "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+
+
 image:
   # -- The OCI registry to pull the image from
   registry: ghcr.io

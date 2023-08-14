@@ -48,8 +48,9 @@ metadata:
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-upgrade
-    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+  {{- range $k, $v := .Values.jobPreUpgradeAnnotations }}
+    {{ $k | quote }}: {{ $v }}
+  {{- end }}
 spec:
   template:
     metadata:

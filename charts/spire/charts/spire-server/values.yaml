@@ -34,6 +34,18 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+jobPostInstallAnnotations:
+  "helm.sh/hook": post-install
+  "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+
+jobPreUpgradeAnnotations:
+  "helm.sh/hook": pre-upgrade
+  "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+
+jobPostUpgradeAnnotations:
+  "helm.sh/hook": post-upgrade
+  "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+
 podAnnotations: {}
 
 podSecurityContext: {}

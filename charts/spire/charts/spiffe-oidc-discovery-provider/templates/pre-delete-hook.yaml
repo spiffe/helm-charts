@@ -48,8 +48,9 @@ metadata:
   labels:
     {{- include "spiffe-oidc-discovery-provider.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-delete
-    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded, hook-failed
+  {{- range $k, $v := .Values.jobAnnotations }}
+    {{ $k | quote }}: {{ $v }}
+  {{- end }}
 spec:
   template:
     metadata:
