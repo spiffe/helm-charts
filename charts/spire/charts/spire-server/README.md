@@ -159,6 +159,12 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
+| jobPostInstallAnnotations."helm.sh/hook" | string | `"post-install"` |  |
+| jobPostInstallAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
+| jobPostUpgradeAnnotations."helm.sh/hook" | string | `"post-upgrade"` |  |
+| jobPostUpgradeAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
+| jobPreUpgradeAnnotations."helm.sh/hook" | string | `"pre-upgrade"` |  |
+| jobPreUpgradeAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | keyManager.disk.enabled | bool | `true` |  |
 | keyManager.memory.enabled | bool | `false` |  |

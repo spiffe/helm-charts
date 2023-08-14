@@ -66,6 +66,8 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | insecureScheme.nginx.resources | object | `{}` |  |
+| jobAnnotations."helm.sh/hook" | string | `"pre-delete"` |  |
+| jobAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` |  |
 | livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |

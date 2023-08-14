@@ -191,6 +191,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
+| spiffe-oidc-discovery-provider.jobAnnotations."helm.sh/hook" | string | `"pre-delete"` |  |
+| spiffe-oidc-discovery-provider.jobAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
 | spiffe-oidc-discovery-provider.jwtIssuer | string | `"https://oidc-discovery.example.org"` |  |
 | spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
@@ -361,6 +363,12 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
+| spire-server.jobPostInstallAnnotations."helm.sh/hook" | string | `"post-install"` |  |
+| spire-server.jobPostInstallAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
+| spire-server.jobPostUpgradeAnnotations."helm.sh/hook" | string | `"post-upgrade"` |  |
+| spire-server.jobPostUpgradeAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
+| spire-server.jobPreUpgradeAnnotations."helm.sh/hook" | string | `"pre-upgrade"` |  |
+| spire-server.jobPreUpgradeAnnotations."helm.sh/hook-delete-policy" | string | `"before-hook-creation, hook-succeeded, hook-failed"` |  |
 | spire-server.jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
 | spire-server.keyManager.disk.enabled | bool | `true` |  |
 | spire-server.keyManager.memory.enabled | bool | `false` |  |
