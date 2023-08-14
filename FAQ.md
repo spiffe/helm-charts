@@ -8,7 +8,7 @@
 
 If you uninstall the SPIRE chart before all users of the CSI driver are removed, Pods will get stuck in a terminating state waiting for the driver, that no longer is installed, to unmount the volumes for the Pod. In order to fix this, reinstall the chart and remove all affected workloads that are not part of the SPIRE helm chart itself, before attempting to remove SPIRE again.
 
-You can discover pods that use the driver with the following command:
+You can discover Pods that use the driver with the following command:
 ```
 kubectl get pods --all-namespaces -o go-template='{{range .items}}{{$nn := printf "%s %s" .metadata.namespace .metadata.name}}{{range .spec.volumes}}{{if .csi.driver}}{{if eq .csi.driver "csi.spiffe.io"}}{{printf "%s\n" $nn}}{{end}}{{end}}{{end}}{{end}}'
 ```
