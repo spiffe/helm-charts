@@ -20,11 +20,6 @@ if ! command -v yq &> /dev/null; then
   exit 1
 fi
 
-if ! command -v trivy &> /dev/null; then
-  echo Please install trivy
-  exit 1
-fi
-
 if ! command -v python3 -c 'import ruamel.yaml' &> /dev/null; then
   echo Please install python3 with the ruamel.yaml module
   exit 1
@@ -55,13 +50,6 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
       LATEST_VERSION="latest@"$(crane digest "${REGISTRY}/${REPOSITORY}:latest")
     else
       LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
-    fi
-
-    if [[ "$FILTER" == "LATESTSHA" ]]; then
-      if trivy image "${REGISTRY}/${REPOSITORY}:${VERSION}" --exit-code 1; then
-        echo No CVE found. Skipping.
-        continue
-      fi
     fi
 
     export QUERY
