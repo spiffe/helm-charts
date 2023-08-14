@@ -15,7 +15,7 @@ kubectl get pods --all-namespaces -o go-template='{{range .items}}{{$nn := print
 
 ## Uninstall is stuck. How do I fix it?
 
-If you uninstall the spiffe csi driver manually before removing the chart, pods can still be using the driver an are unable to unmount the csi volume.
+If you uninstall the SPIFFE CSI driver manually before removing the chart, Pods can still be using the driver and are unable to unmount the csi volume.
 
 To resolve, reinstall the chart before trying to remove it again. 
 
