@@ -244,7 +244,7 @@ notifier:
 controllerManager:
   enabled: false
   helmHooks:
-    # -- Enable jobs to run at upgrade time to work around issues with custom resources
+    # -- Enable Helm hooks to  autofix common issues (should be disabled when using `helm template`)
     enabled: true
 
   image:
