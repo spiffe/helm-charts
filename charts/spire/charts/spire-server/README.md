@@ -168,6 +168,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | keyManager.awsKMS.region | string | `""` |  |
 | keyManager.awsKMS.secretAccessKey | string | `""` | Secret access key for the AWS account. If empty, the default credential chain will be used. |
 | keyManager.disk.enabled | bool | `true` |  |
+| keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |

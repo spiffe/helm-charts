@@ -47,7 +47,7 @@ plugins:
               service_account_allow_list: {{ include "spire-server.serviceAccountAllowedList" $root | trim }}
   {{- end }}
   {{- end }}
- 
+
   {{- with .Values.keyManager.disk }}
   {{- if eq (.enabled | toString) "true" }}
   {{- $keyManagerUsed = add1 $keyManagerUsed }}
@@ -55,6 +55,15 @@ plugins:
     - disk:
         plugin_data:
           keys_path: "/run/spire/data/keys.json"
+  {{- end }}
+  {{- end }}
+
+  {{- with .Values.keyManager.memory }}
+  {{- if eq (.enabled | toString) "true" }}
+  {{- $keyManagerUsed = add1 $keyManagerUsed }}
+  KeyManager:
+    - memory:
+        plugin_data:
   {{- end }}
   {{- end }}
 
@@ -75,7 +84,6 @@ plugins:
           {{- if or (ne .keyPolicy.policy "") (ne .keyPolicy.existingConfigMap "") }}
           key_policy_file: "/run/spire/data/aws-kms-key-policy.json"
           {{- end }}
-
   {{- end }}
   {{- end }}
 

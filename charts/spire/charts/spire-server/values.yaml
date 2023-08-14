@@ -178,6 +178,8 @@ ca_subject:
 keyManager:
   disk:
     enabled: true
+  memory:
+    enabled: false
   awsKMS:
     enabled: false
     region: ""
