@@ -6,7 +6,7 @@
 
 ## Pods are stuck terminating after uninstall. How do I fix it?
 
-If you uninstall the spire chart before all users of the csi driver are removed, pods will get stuck in a terminating state waiting for the driver, that no longer is installed, to unmount the volumes for the pod. In order to fix this, reinstall the chart and remove all affected workloads that are not part of the spire helm chart itself, before attempting to remove spire again.
+If you uninstall the SPIRE chart before all users of the CSI driver are removed, Pods will get stuck in a terminating state waiting for the driver, that no longer is installed, to unmount the volumes for the Pod. In order to fix this, reinstall the chart and remove all affected workloads that are not part of the SPIRE helm chart itself, before attempting to remove SPIRE again.
 
 You can discover pods that use the driver with the following command:
 ```
