@@ -10,7 +10,7 @@ metadata:
 spec:
   securityContext:
     {{- toYaml .Values.podSecurityContext | nindent 4 }}
-  serviceAccountName: {{ include "spiffe-oidc-discovery-provider.serviceAccountName" . }}-test
+  serviceAccountName: {{ include "spiffe-oidc-discovery-provider.serviceAccountName" . }}
   initContainers:
     - name: static-busybox
       image: {{ template "spire-lib.image" (dict "image" .Values.tests.busybox.image "global" .Values.global) }}

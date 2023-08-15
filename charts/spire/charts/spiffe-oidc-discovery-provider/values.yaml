@@ -243,7 +243,7 @@ tests:
       # -- This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
       # -- Overrides the image tag
-      tag: 5.2.15
+      tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4
 
   busybox:
     image:
@@ -256,7 +256,7 @@ tests:
       # -- This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
       # -- Overrides the image tag
-      tag: uclibc
+      tag: uclibc@sha256:3e516f71d8801b0ce6c3f8f8e4f11093ec04e168177a90f1da4498014ee06b6b
   agent:
     image:
       # -- The OCI registry to pull the image from
