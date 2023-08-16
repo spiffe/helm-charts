@@ -341,13 +341,13 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
-| spire-server.keyManager.awsKMS.accessKeyID | string | `""` | Access key ID for the AWS account. If empty, the default credential chain will be used. |
+| spire-server.keyManager.awsKMS.accessKeyID | Optional | `""` | Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role. |
 | spire-server.keyManager.awsKMS.enabled | bool | `false` |  |
 | spire-server.keyManager.awsKMS.keyPolicy | object | `{"existingConfigMap":"","policy":""}` | Policy to use when creating keys. If no policy is specified, a default policy will be used. |
-| spire-server.keyManager.awsKMS.keyPolicy.existingConfigMap | string | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
-| spire-server.keyManager.awsKMS.keyPolicy.policy | string | `""` | Key policy in JSON format. |
+| spire-server.keyManager.awsKMS.keyPolicy.existingConfigMap | Optional | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
+| spire-server.keyManager.awsKMS.keyPolicy.policy | Optional | `""` | Key policy in JSON format. |
 | spire-server.keyManager.awsKMS.region | string | `""` |  |
-| spire-server.keyManager.awsKMS.secretAccessKey | string | `""` | Secret access key for the AWS account. If empty, the default credential chain will be used. |
+| spire-server.keyManager.awsKMS.secretAccessKey | Optional | `""` | Secret access key for the AWS account. |
 | spire-server.keyManager.disk.enabled | bool | `true` |  |
 | spire-server.keyManager.memory.enabled | bool | `false` |  |
 | spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
