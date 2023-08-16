@@ -65,15 +65,15 @@ spec:
           URL=http://{{ include "spiffe-oidc-discovery-provider.fullname" . }}.{{ include "spiffe-oidc-discovery-provider.namespace" . }}.svc.{{ include "spire-lib.cluster-domain" . }}:{{ .Values.service.port }}
           curl -k -s -f "${URL}"/keys
           JWT=$(cat /data/token.svid | jq -r '.[].svids[0].svid' | xargs)
-          bash /scripts/jwt-decode.sh "${URL}"/keys "${JWT}"
+          cat <<'EOF' >> /data/jwt-decode.sh
+          {{- (.Files.Get "files/test/jwt-decode.sh") | nindent 10 }}
+          EOF
+          bash /data/jwt-decode.sh "${URL}"/keys "${JWT}"
       {{- with .Values.securityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumeMounts:
-      - name: scripts
-        mountPath: /scripts/jwt-decode.sh
-        subPath: jwt-decode.sh
       - mountPath: /data
         name: data-volume
   restartPolicy: Never
@@ -82,10 +82,6 @@ spec:
       driver: csi.spiffe.io
       readOnly: true
     name: spire-api
-  - name: scripts
-    configMap:
-      name: "{{ include "spiffe-oidc-discovery-provider.fullname" . }}-test-connection"
-      defaultMode: 0777
   - name: data-volume
     emptyDir: {}
 ---
