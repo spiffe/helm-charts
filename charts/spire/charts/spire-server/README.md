@@ -257,5 +257,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.spire.enabled | bool | `false` |  |
 | upstreamAuthority.spire.server.address | string | `""` |  |
 | upstreamAuthority.spire.server.port | int | `8081` |  |
+| upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 
 ----------------------------------------------
