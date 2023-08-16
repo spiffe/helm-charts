@@ -11,6 +11,11 @@
       "query": "waitForIt.image",
       "filter": "LATESTSHA",
       "sort-flags": []
+    },
+    {
+      "query": "fsGroupFix.image",
+      "filter": "LATESTSHA",
+      "sort-flags": []
     }
   ],
   "spiffe-csi-driver/values.yaml": [
