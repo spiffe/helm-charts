@@ -8,8 +8,10 @@ metadata:
   annotations:
     "helm.sh/hook": test
 spec:
+  {{- with .Values.podSecuritycontext }}
   securityContext:
-    {{- toYaml .Values.podSecurityContext | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   serviceAccountName: {{ include "spiffe-oidc-discovery-provider.serviceAccountName" . }}
   initContainers:
     - name: static-busybox
@@ -20,7 +22,7 @@ spec:
         - |
           cp /bin/busybox /data/busybox
           chmod +x /data/busybox
-      {{- with .Values.testSecurityContext }}
+      {{- with .Values.securityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -39,7 +41,7 @@ spec:
             [ $? -eq 0 ] && break
             sleep 1
           done
-      {{- with .Values.testSecurityContext }}
+      {{- with .Values.securityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -64,7 +66,7 @@ spec:
           curl -k -s -f "${URL}"/keys
           JWT=$(cat /data/token.svid | jq -r '.[].svids[0].svid' | xargs)
           bash /scripts/jwt-decode.sh "${URL}"/keys "${JWT}"
-      {{- with .Values.testSecurityContext }}
+      {{- with .Values.securityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}

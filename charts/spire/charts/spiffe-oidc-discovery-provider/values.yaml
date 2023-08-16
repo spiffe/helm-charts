@@ -49,17 +49,6 @@ configMap:
   # -- Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
   annotations: {}
 
-testSecurityContext:
-  allowPrivilegeEscalation: false
-  runAsNonRoot: true
-  runAsUser: 10001
-  runAsGroup: 10001
-  seccompProfile:
-    type: RuntimeDefault
-  capabilities:
-    drop:
-    - ALL
-
 podSecurityContext: {}
   # fsGroup: 2000
 
