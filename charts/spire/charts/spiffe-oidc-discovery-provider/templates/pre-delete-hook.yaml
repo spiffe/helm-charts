@@ -1,4 +1,4 @@
-{{- if eq (.Values.upgradeHooks.enabled | toString) "true" }}
+{{- if eq ((dig "deleteHooks" "enabled" .Values.deleteHook.enabled .Values.global) | toString) "true" }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
