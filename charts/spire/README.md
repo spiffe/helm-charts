@@ -23,29 +23,8 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 > **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden.
 
-## Prerequisites
-
-Please note this chart requires `Projected Service Account Tokens` which has to be enabled on your k8s api server.
-
-To enable Projected Service Account Tokens on Docker for Mac/Windows run the following
-command to SSH into the Docker Desktop K8s VM.
-
-```bash
-docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
-```
-
-Then add the following to `/etc/kubernetes/manifests/kube-apiserver.yaml`
-
-```yaml
-spec:
-  containers:
-    - command:
-        - kube-apiserver
-        - --api-audiences=api,spire-server
-        - --service-account-issuer=api,spire-agent
-        - --service-account-key-file=/run/config/pki/sa.pub
-        - --service-account-signing-key-file=/run/config/pki/sa.key
-```
+## FAQ
+For any issues see our [FAQ](../../FAQ.md)…
 
 ## Usage
 
@@ -99,8 +78,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
+| file://./charts/spiffe-csi-driver | upstream-spiffe-csi-driver(spiffe-csi-driver) | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
+| file://./charts/spire-agent | upstream-spire-agent(spire-agent) | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
 | file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
 
@@ -114,6 +95,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
 | global.spire.jwtIssuer | string | `"https://oidc-discovery.example.org"` | Set the jwt issuer |
 | global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| global.spire.upstreamServerAddress | string | `""` | Set what address to use for the upstream server when using nested spire |
 | spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
 | spire-agent.enabled | bool | `true` | Enables deployment of SPIRE Agent(s) |
@@ -122,6 +104,16 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.enabled | bool | `true` | Enables deployment of SPIRE Server |
 | spire-server.nameOverride | string | `"server"` |  |
 | tornjak-frontend.enabled | bool | `false` | Enables deployment of Tornjak frontend/UI (Not for production) |
+| upstream-spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
+| upstream-spiffe-csi-driver.healthChecks.port | int | `9810` |  |
+| upstream-spiffe-csi-driver.pluginName | string | `"upstream.csi.spiffe.io"` |  |
+| upstream-spire-agent.bundleConfigMap | string | `"spire-bundle-upstream"` |  |
+| upstream-spire-agent.healthChecks.port | int | `9981` |  |
+| upstream-spire-agent.nameOverride | string | `"agent-upstream"` |  |
+| upstream-spire-agent.serviceAccount.name | string | `"spire-agent-upstream"` |  |
+| upstream-spire-agent.socketPath | string | `"/run/spire/agent-sockets-upstream/spire-agent.sock"` |  |
+| upstream-spire-agent.telemetry.prometheus.port | int | `9989` |  |
+| upstream.enabled | bool | `false` | enable upstream agent and driver for use with nested spire. |
 | spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
 | spiffe-csi-driver.fullnameOverride | string | `""` |  |
 | spiffe-csi-driver.healthChecks.port | int | `9809` |  |
@@ -237,7 +229,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
 | spire-agent.fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
-| spire-agent.fsGroupFix.image.tag | string | `"5.2.15"` | Overrides the image tag |
+| spire-agent.fsGroupFix.image.tag | string | `"latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4"` | Overrides the image tag |
 | spire-agent.fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
 | spire-agent.fullnameOverride | string | `""` |  |
@@ -281,7 +273,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
-| spire-agent.waitForIt.image.tag | string | `"latest-20230517"` | Overrides the image tag |
+| spire-agent.waitForIt.image.tag | string | `"latest@sha256:deeaccb164a67a4d7f585c4d416641b1f422c029911a29d72beae28221f823df"` | Overrides the image tag |
 | spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spire-agent.waitForIt.resources | object | `{}` |  |
 | spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
@@ -366,6 +358,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
 | spire-server.jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.keyManager.disk.enabled | bool | `true` |  |
+| spire-server.keyManager.memory.enabled | bool | `false` |  |
 | spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | spire-server.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | spire-server.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
@@ -454,6 +448,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.upstreamAuthority.spire.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
 | spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
+| spire-server.upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 | tornjak-frontend.affinity | object | `{}` |  |
 | tornjak-frontend.apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
 | tornjak-frontend.fullnameOverride | string | `""` |  |
@@ -484,5 +479,96 @@ Now you can interact with the Spire agent socket from your own application. The 
 | tornjak-frontend.startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
 | tornjak-frontend.tolerations | list | `[]` |  |
 | tornjak-frontend.topologySpreadConstraints | list | `[]` |  |
+| upstream-spiffe-csi-driver.agentSocketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
+| upstream-spiffe-csi-driver.fullnameOverride | string | `""` |  |
+| upstream-spiffe-csi-driver.healthChecks.port | int | `9809` |  |
+| upstream-spiffe-csi-driver.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| upstream-spiffe-csi-driver.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| upstream-spiffe-csi-driver.image.repository | string | `"spiffe/spiffe-csi-driver"` | The repository within the registry |
+| upstream-spiffe-csi-driver.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion |
+| upstream-spiffe-csi-driver.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| upstream-spiffe-csi-driver.imagePullSecrets | list | `[]` |  |
+| upstream-spiffe-csi-driver.kubeletPath | string | `"/var/lib/kubelet"` |  |
+| upstream-spiffe-csi-driver.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
+| upstream-spiffe-csi-driver.livenessProbe.timeoutSeconds | int | `5` | Timeout value in seconds for livenessProbe |
+| upstream-spiffe-csi-driver.nameOverride | string | `""` |  |
+| upstream-spiffe-csi-driver.namespaceOverride | string | `""` |  |
+| upstream-spiffe-csi-driver.nodeDriverRegistrar.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| upstream-spiffe-csi-driver.nodeDriverRegistrar.image.registry | string | `"registry.k8s.io"` | The OCI registry to pull the image from |
+| upstream-spiffe-csi-driver.nodeDriverRegistrar.image.repository | string | `"sig-storage/csi-node-driver-registrar"` | The repository within the registry |
+| upstream-spiffe-csi-driver.nodeDriverRegistrar.image.tag | string | `"v2.8.0"` | Overrides the image tag |
+| upstream-spiffe-csi-driver.nodeDriverRegistrar.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| upstream-spiffe-csi-driver.nodeDriverRegistrar.resources | object | `{}` |  |
+| upstream-spiffe-csi-driver.nodeSelector | object | `{}` |  |
+| upstream-spiffe-csi-driver.pluginName | string | `"csi.spiffe.io"` | Set the csi driver name deployed to Kubernetes. |
+| upstream-spiffe-csi-driver.podAnnotations | object | `{}` |  |
+| upstream-spiffe-csi-driver.podSecurityContext | object | `{}` |  |
+| upstream-spiffe-csi-driver.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| upstream-spiffe-csi-driver.resources | object | `{}` |  |
+| upstream-spiffe-csi-driver.securityContext.privileged | bool | `true` |  |
+| upstream-spiffe-csi-driver.securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| upstream-spiffe-csi-driver.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| upstream-spiffe-csi-driver.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| upstream-spiffe-csi-driver.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| upstream-spiffe-csi-driver.tolerations | list | `[]` |  |
+| upstream-spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
+| upstream-spire-agent.clusterName | string | `"example-cluster"` |  |
+| upstream-spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
+| upstream-spire-agent.extraContainers | list | `[]` |  |
+| upstream-spire-agent.extraVolumeMounts | list | `[]` |  |
+| upstream-spire-agent.extraVolumes | list | `[]` |  |
+| upstream-spire-agent.fsGroupFix.image.pullPolicy | string | `"Always"` | The image pull policy |
+| upstream-spire-agent.fsGroupFix.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| upstream-spire-agent.fsGroupFix.image.repository | string | `"chainguard/bash"` | The repository within the registry |
+| upstream-spire-agent.fsGroupFix.image.tag | string | `"latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4"` | Overrides the image tag |
+| upstream-spire-agent.fsGroupFix.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| upstream-spire-agent.fsGroupFix.resources | object | `{}` | Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ |
+| upstream-spire-agent.fullnameOverride | string | `""` |  |
+| upstream-spire-agent.healthChecks.port | int | `9980` | override the host port used for health checking |
+| upstream-spire-agent.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| upstream-spire-agent.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
+| upstream-spire-agent.image.repository | string | `"spiffe/spire-agent"` | The repository within the registry |
+| upstream-spire-agent.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| upstream-spire-agent.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| upstream-spire-agent.imagePullSecrets | list | `[]` |  |
+| upstream-spire-agent.initContainers | list | `[]` |  |
+| upstream-spire-agent.livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
+| upstream-spire-agent.livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
+| upstream-spire-agent.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
+| upstream-spire-agent.nameOverride | string | `""` |  |
+| upstream-spire-agent.namespaceOverride | string | `""` |  |
+| upstream-spire-agent.nodeSelector | object | `{}` |  |
+| upstream-spire-agent.podAnnotations | object | `{}` |  |
+| upstream-spire-agent.podSecurityContext | object | `{}` |  |
+| upstream-spire-agent.priorityClassName | string | `""` | Priority class assigned to daemonset pods |
+| upstream-spire-agent.readinessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for readinessProbe |
+| upstream-spire-agent.readinessProbe.periodSeconds | int | `60` | Period seconds for readinessProbe |
+| upstream-spire-agent.resources | object | `{}` |  |
+| upstream-spire-agent.securityContext | object | `{}` |  |
+| upstream-spire-agent.server.address | string | `""` |  |
+| upstream-spire-agent.server.namespaceOverride | string | `""` |  |
+| upstream-spire-agent.server.port | int | `8081` |  |
+| upstream-spire-agent.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| upstream-spire-agent.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| upstream-spire-agent.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| upstream-spire-agent.socketPath | string | `"/run/spire/agent-sockets/spire-agent.sock"` | The unix socket path to the spire-agent |
+| upstream-spire-agent.telemetry.prometheus.enabled | bool | `false` |  |
+| upstream-spire-agent.telemetry.prometheus.podMonitor.enabled | bool | `false` |  |
+| upstream-spire-agent.telemetry.prometheus.podMonitor.labels | object | `{}` |  |
+| upstream-spire-agent.telemetry.prometheus.podMonitor.namespace | string | `""` | Override where to install the podMonitor, if not set will use the same namespace as the spire-agent |
+| upstream-spire-agent.telemetry.prometheus.port | int | `9988` |  |
+| upstream-spire-agent.tolerations | list | `[]` |  |
+| upstream-spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
+| upstream-spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
+| upstream-spire-agent.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| upstream-spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
+| upstream-spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
+| upstream-spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
+| upstream-spire-agent.waitForIt.image.tag | string | `"latest@sha256:deeaccb164a67a4d7f585c4d416641b1f422c029911a29d72beae28221f823df"` | Overrides the image tag |
+| upstream-spire-agent.waitForIt.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| upstream-spire-agent.waitForIt.resources | object | `{}` |  |
+| upstream-spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
+| upstream-spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
+| upstream-spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
 
 ----------------------------------------------

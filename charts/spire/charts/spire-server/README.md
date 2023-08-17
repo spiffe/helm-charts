@@ -164,6 +164,8 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| keyManager.disk.enabled | bool | `true` |  |
+| keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
@@ -252,5 +254,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.spire.enabled | bool | `false` |  |
 | upstreamAuthority.spire.server.address | string | `""` |  |
 | upstreamAuthority.spire.server.port | int | `8081` |  |
+| upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 
 ----------------------------------------------

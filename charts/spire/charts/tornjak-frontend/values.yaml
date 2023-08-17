@@ -105,4 +105,4 @@ tests:
       # -- This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
       # -- Overrides the image tag
-      tag: 5.2.15
+      tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4

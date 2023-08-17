@@ -18,6 +18,7 @@
 {{- end }}
 {{- define "spire-server.yaml-config" -}}
 {{- $upstreamAuthorityUsed := 0 }}
+{{- $keyManagerUsed := 0 }}
 {{- $root := . }}
 server:
   bind_address: "0.0.0.0"
@@ -65,10 +66,28 @@ plugins:
   {{- end }}
   {{- end }}
 
+  {{- with .Values.keyManager.disk }}
+  {{- if eq (.enabled | toString) "true" }}
+  {{- $keyManagerUsed = add1 $keyManagerUsed }}
   KeyManager:
     disk:
       plugin_data:
         keys_path: "/run/spire/data/keys.json"
+  {{- end }}
+  {{- end }}
+
+  {{- with .Values.keyManager.memory }}
+  {{- if eq (.enabled | toString) "true" }}
+  {{- $keyManagerUsed = add1 $keyManagerUsed }}
+  KeyManager:
+    memory:
+      plugin_data:
+  {{- end }}
+  {{- end }}
+
+{{- if gt $keyManagerUsed 1 }}
+{{- fail "You can only enable a single KeyManager" }}
+{{- end }}
 
   Notifier:
     k8sbundle:
@@ -112,7 +131,7 @@ plugins:
   UpstreamAuthority:
     spire:
       plugin_data:
-        server_address: {{ .server.address | quote }}
+        server_address: {{ include "spire-server.upstream-spire-address" $root | quote }}
         server_port: {{ .server.port }}
         workload_api_socket: "/run/spire/upstream_agent/spire-agent.sock"
   {{- end }}
