@@ -107,20 +107,20 @@ insecureScheme:
       #   cpu: 100m
       #   memory: 64Mi
 
-jwtIssuer: https://oidc-discovery.example.org
+jwtIssuer: ""
 
 config:
   # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
   # -- Add additional domains that can be used for oidc discovery
-  additionalDomains:
-    - localhost
+  additionalDomains: {}
+  #  - localhost
 
   acme:
     tosAccepted: false
     cacheDir: /run/spire
     directoryUrl: https://acme-v02.api.letsencrypt.org/directory
-    emailAddress: letsencrypt@example.org
+    emailAddress: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -149,7 +149,7 @@ tolerations: []
 affinity: {}
 
 # -- Set the trust domain to be used for the SPIFFE identifiers
-trustDomain: example.org
+trustDomain: ""
 # -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
 clusterDomain: cluster.local
 
@@ -196,11 +196,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     # nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-  hosts:
-    - host: oidc-discovery.example.org
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
+  #  - host: oidc-discovery.example.org
+  #    paths:
+  #      - path: /
+  #        pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

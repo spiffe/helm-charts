@@ -5,11 +5,11 @@ global:
     clusterDomain: cluster.local
   spire:
     # -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
-    clusterName: example-cluster
+    clusterName: ""
     # -- The trust domain to be used for the SPIFFE identifiers
-    trustDomain: example.org
+    trustDomain: ""
     # -- Set the jwt issuer
-    jwtIssuer: https://oidc-discovery.example.org
+    jwtIssuer: ""
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
 

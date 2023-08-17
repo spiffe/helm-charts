@@ -132,12 +132,12 @@ dataStore:
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
-jwtIssuer: https://oidc-discovery.example.org
+jwtIssuer: ""
 
 # -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
-clusterName: example-cluster
+clusterName: ""
 # -- Set the trust domain to be used for the SPIFFE identifiers
-trustDomain: example.org
+trustDomain: ""
 
 bundleConfigMap: spire-bundle
 
@@ -159,11 +159,11 @@ federation:
       # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       # If Profile Type == https_spiffe:
       # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    hosts:
-      - host: spire-server-federation.example.org
-        paths:
-          - path: /
-            pathType: Prefix
+    hosts: []
+    #  - host: spire-server-federation.example.org
+    #    paths:
+    #      - path: /
+    #        pathType: Prefix
     tls: []
     #  - hosts:
     #      - spire-server-federation.example.org
@@ -171,9 +171,9 @@ federation:
     #    secretName: spire-server-federation-tls
 
 ca_subject:
-  country: NL
-  organization: Example
-  common_name: example.org
+  country: ""
+  organization: ""
+  common_name: ""
 
 keyManager:
   disk:
@@ -347,11 +347,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
     # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-  hosts:
-    - host: spire-server.example.org
-      paths:
-        - path: /
-          pathType: Prefix
+  hosts: []
+  #  - host: spire-server.example.org
+  #    paths:
+  #      - path: /
+  #        pathType: Prefix
   tls: []
   #  - secretName: spire-server-tls
   #    hosts:

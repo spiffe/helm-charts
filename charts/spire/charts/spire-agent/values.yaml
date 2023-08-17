@@ -67,9 +67,9 @@ tolerations: []
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The name of the Kubernetes cluster (`kubeadm init --service-dns-domain`)
-clusterName: example-cluster
+clusterName: ""
 # -- The trust domain to be used for the SPIFFE identifiers
-trustDomain: example.org
+trustDomain: ""
 # -- If set, obtain trust bundle from url instead of Kubernetes ConfigMap
 trustBundleURL: ""
 # -- If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe"

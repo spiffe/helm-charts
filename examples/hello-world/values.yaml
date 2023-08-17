@@ -1,0 +1,11 @@
+# You should never use these values in production. Change them to fit your cluster.
+global:
+  spire:
+    clusterName: "example-cluster"
+    trustDomain: "example.org"
+    jwtIssuer: "https://oidc-discovery.example.org"
+spire-server:
+  ca_subject:
+    country: NL
+    organization: Example
+    common_name: example.org

@@ -1,3 +1,9 @@
+{{- include "spire-lib.strict-check" (list . "trustDomain must be set" (eq (include "spire-lib.trust-domain" .) ""))}}
+{{- include "spire-lib.strict-check" (list . "clusterName must be set" (eq (include "spire-lib.cluster-name" .) ""))}}
+{{- include "spire-lib.strict-check" (list . "jwtIssuer must be set" (eq (include "spire-lib.jwt-issuer" .) ""))}}
+{{- include "spire-lib.strict-check" (list . "ca_subject.county must be set" (eq .Values.ca_subject.country ""))}}
+{{- include "spire-lib.strict-check" (list . "ca_subject.organization must be set" (eq .Values.ca_subject.organization ""))}}
+{{- include "spire-lib.strict-check" (list . "ca_subject.common_name must be set" (eq .Values.ca_subject.common_name ""))}}
 {{- define "spire-server.yaml-config" -}}
 {{- $upstreamAuthorityUsed := 0 }}
 {{- $keyManagerUsed := 0 }}
