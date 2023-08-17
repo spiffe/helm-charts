@@ -91,10 +91,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 |-----|------|---------|-------------|
 | global.k8s.clusterDomain | string | `"cluster.local"` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
-| global.spire.clusterName | string | `"example-cluster"` |  |
+| global.spire.clusterName | string | `""` |  |
 | global.spire.image.registry | string | `""` | Override all Spire image registries at once |
-| global.spire.jwtIssuer | string | `"https://oidc-discovery.example.org"` | Set the jwt issuer |
-| global.spire.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| global.spire.jwtIssuer | string | `""` | Set the jwt issuer |
+| global.spire.trustDomain | string | `""` | The trust domain to be used for the SPIFFE identifiers |
 | global.spire.upstreamServerAddress | string | `""` | Set what address to use for the upstream server when using nested spire |
 | spiffe-csi-driver.enabled | bool | `true` | Enables deployment of CSI driver |
 | spiffe-oidc-discovery-provider.enabled | bool | `false` | Enables deployment of OIDC discovery provider |
@@ -157,9 +157,9 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.clusterDomain | string | `"cluster.local"` |  |
 | spiffe-oidc-discovery-provider.config.acme.cacheDir | string | `"/run/spire"` |  |
 | spiffe-oidc-discovery-provider.config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
-| spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
+| spiffe-oidc-discovery-provider.config.acme.emailAddress | string | `""` |  |
 | spiffe-oidc-discovery-provider.config.acme.tosAccepted | bool | `false` |  |
-| spiffe-oidc-discovery-provider.config.additionalDomains | list | `["localhost"]` | Add additional domains that can be used for oidc discovery |
+| spiffe-oidc-discovery-provider.config.additionalDomains | object | `{}` | Add additional domains that can be used for oidc discovery |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
@@ -172,9 +172,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.ingress.annotations | object | `{}` |  |
 | spiffe-oidc-discovery-provider.ingress.className | string | `""` |  |
 | spiffe-oidc-discovery-provider.ingress.enabled | bool | `false` |  |
-| spiffe-oidc-discovery-provider.ingress.hosts[0].host | string | `"oidc-discovery.example.org"` |  |
-| spiffe-oidc-discovery-provider.ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| spiffe-oidc-discovery-provider.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spiffe-oidc-discovery-provider.ingress.hosts | list | `[]` |  |
 | spiffe-oidc-discovery-provider.ingress.tls | list | `[]` |  |
 | spiffe-oidc-discovery-provider.insecureScheme.enabled | bool | `false` |  |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -183,7 +181,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | spiffe-oidc-discovery-provider.insecureScheme.nginx.resources | object | `{}` |  |
-| spiffe-oidc-discovery-provider.jwtIssuer | string | `"https://oidc-discovery.example.org"` |  |
+| spiffe-oidc-discovery-provider.jwtIssuer | string | `""` |  |
 | spiffe-oidc-discovery-provider.livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | spiffe-oidc-discovery-provider.nameOverride | string | `""` |  |
@@ -219,9 +217,9 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.tools.kubectl.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
 | spiffe-oidc-discovery-provider.tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | spiffe-oidc-discovery-provider.tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| spiffe-oidc-discovery-provider.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spiffe-oidc-discovery-provider.trustDomain | string | `""` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
-| spire-agent.clusterName | string | `"example-cluster"` |  |
+| spire-agent.clusterName | string | `""` |  |
 | spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
 | spire-agent.extraContainers | list | `[]` |  |
 | spire-agent.extraVolumeMounts | list | `[]` |  |
@@ -269,7 +267,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-agent.tolerations | list | `[]` |  |
 | spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| spire-agent.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| spire-agent.trustDomain | string | `""` | The trust domain to be used for the SPIFFE identifiers |
 | spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |
@@ -287,11 +285,11 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.bundleConfigMap | string | `"spire-bundle"` |  |
 | spire-server.caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
 | spire-server.caTTL | string | `"24h"` |  |
-| spire-server.ca_subject.common_name | string | `"example.org"` |  |
-| spire-server.ca_subject.country | string | `"NL"` |  |
-| spire-server.ca_subject.organization | string | `"Example"` |  |
+| spire-server.ca_subject.common_name | string | `""` |  |
+| spire-server.ca_subject.country | string | `""` |  |
+| spire-server.ca_subject.organization | string | `""` |  |
 | spire-server.clusterDomain | string | `"cluster.local"` |  |
-| spire-server.clusterName | string | `"example-cluster"` |  |
+| spire-server.clusterName | string | `""` |  |
 | spire-server.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
 | spire-server.controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
 | spire-server.controllerManager.enabled | bool | `false` |  |
@@ -334,9 +332,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.federation.ingress.annotations | object | `{}` |  |
 | spire-server.federation.ingress.className | string | `""` |  |
 | spire-server.federation.ingress.enabled | bool | `false` |  |
-| spire-server.federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
-| spire-server.federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| spire-server.federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.federation.ingress.hosts | list | `[]` |  |
 | spire-server.federation.ingress.tls | list | `[]` |  |
 | spire-server.fullnameOverride | string | `""` |  |
 | spire-server.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -348,12 +344,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.ingress.annotations | object | `{}` |  |
 | spire-server.ingress.className | string | `""` |  |
 | spire-server.ingress.enabled | bool | `false` |  |
-| spire-server.ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
-| spire-server.ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| spire-server.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| spire-server.ingress.hosts | list | `[]` |  |
 | spire-server.ingress.tls | list | `[]` |  |
 | spire-server.initContainers | list | `[]` |  |
-| spire-server.jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| spire-server.jwtIssuer | string | `""` | The JWT issuer domain |
 | spire-server.keyManager.disk.enabled | bool | `true` |  |
 | spire-server.keyManager.memory.enabled | bool | `false` |  |
 | spire-server.livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
@@ -415,7 +409,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.tornjak.startupProbe.periodSeconds | int | `10` |  |
 | spire-server.tornjak.startupProbe.successThreshold | int | `1` |  |
 | spire-server.tornjak.startupProbe.timeoutSeconds | int | `5` |  |
-| spire-server.trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| spire-server.trustDomain | string | `""` | Set the trust domain to be used for the SPIFFE identifiers |
 | spire-server.upstreamAuthority.awsPCA.assumeRoleARN | Optional | `""` | ARN of an IAM role to assume |
 | spire-server.upstreamAuthority.awsPCA.caSigningTemplateARN | string | `""` | See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values. |
 | spire-server.upstreamAuthority.awsPCA.certificateAuthorityARN | string | `""` | ARN of the "upstream" CA certificate |
@@ -508,7 +502,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spiffe-csi-driver.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | upstream-spiffe-csi-driver.tolerations | list | `[]` |  |
 | upstream-spire-agent.bundleConfigMap | string | `"spire-bundle"` |  |
-| upstream-spire-agent.clusterName | string | `"example-cluster"` |  |
+| upstream-spire-agent.clusterName | string | `""` |  |
 | upstream-spire-agent.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
 | upstream-spire-agent.extraContainers | list | `[]` |  |
 | upstream-spire-agent.extraVolumeMounts | list | `[]` |  |
@@ -556,7 +550,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.tolerations | list | `[]` |  |
 | upstream-spire-agent.trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | upstream-spire-agent.trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| upstream-spire-agent.trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| upstream-spire-agent.trustDomain | string | `""` | The trust domain to be used for the SPIFFE identifiers |
 | upstream-spire-agent.waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | upstream-spire-agent.waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | upstream-spire-agent.waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |

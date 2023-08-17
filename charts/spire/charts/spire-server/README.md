@@ -93,11 +93,11 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | bundleConfigMap | string | `"spire-bundle"` |  |
 | caKeyType | string | `"rsa-2048"` | The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported) |
 | caTTL | string | `"24h"` |  |
-| ca_subject.common_name | string | `"example.org"` |  |
-| ca_subject.country | string | `"NL"` |  |
-| ca_subject.organization | string | `"Example"` |  |
+| ca_subject.common_name | string | `""` |  |
+| ca_subject.country | string | `""` |  |
+| ca_subject.organization | string | `""` |  |
 | clusterDomain | string | `"cluster.local"` |  |
-| clusterName | string | `"example-cluster"` |  |
+| clusterName | string | `""` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
 | controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
 | controllerManager.enabled | bool | `false` |  |
@@ -140,9 +140,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | federation.ingress.annotations | object | `{}` |  |
 | federation.ingress.className | string | `""` |  |
 | federation.ingress.enabled | bool | `false` |  |
-| federation.ingress.hosts[0].host | string | `"spire-server-federation.example.org"` |  |
-| federation.ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| federation.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| federation.ingress.hosts | list | `[]` |  |
 | federation.ingress.tls | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -154,12 +152,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"spire-server.example.org"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.hosts | list | `[]` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| jwtIssuer | string | `""` | The JWT issuer domain |
 | keyManager.disk.enabled | bool | `true` |  |
 | keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
@@ -221,7 +217,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.startupProbe.periodSeconds | int | `10` |  |
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
-| trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| trustDomain | string | `""` | Set the trust domain to be used for the SPIFFE identifiers |
 | upstreamAuthority.awsPCA.assumeRoleARN | Optional | `""` | ARN of an IAM role to assume |
 | upstreamAuthority.awsPCA.caSigningTemplateARN | string | `""` | See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values. |
 | upstreamAuthority.awsPCA.certificateAuthorityARN | string | `""` | ARN of the "upstream" CA certificate |

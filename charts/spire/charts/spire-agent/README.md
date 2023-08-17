@@ -30,7 +30,7 @@ A Helm chart to install the SPIRE agent.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | bundleConfigMap | string | `"spire-bundle"` |  |
-| clusterName | string | `"example-cluster"` |  |
+| clusterName | string | `""` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Agent ConfigMap |
 | extraContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
@@ -78,7 +78,7 @@ A Helm chart to install the SPIRE agent.
 | tolerations | list | `[]` |  |
 | trustBundleFormat | string | `"pem"` | If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe" |
 | trustBundleURL | string | `""` | If set, obtain trust bundle from url instead of Kubernetes ConfigMap |
-| trustDomain | string | `"example.org"` | The trust domain to be used for the SPIFFE identifiers |
+| trustDomain | string | `""` | The trust domain to be used for the SPIFFE identifiers |
 | waitForIt.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | waitForIt.image.registry | string | `"cgr.dev"` | The OCI registry to pull the image from |
 | waitForIt.image.repository | string | `"chainguard/wait-for-it"` | The repository within the registry |

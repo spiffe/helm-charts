@@ -40,9 +40,9 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | clusterDomain | string | `"cluster.local"` |  |
 | config.acme.cacheDir | string | `"/run/spire"` |  |
 | config.acme.directoryUrl | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
-| config.acme.emailAddress | string | `"letsencrypt@example.org"` |  |
+| config.acme.emailAddress | string | `""` |  |
 | config.acme.tosAccepted | bool | `false` |  |
-| config.additionalDomains | list | `["localhost"]` | Add additional domains that can be used for oidc discovery |
+| config.additionalDomains | object | `{}` | Add additional domains that can be used for oidc discovery |
 | config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
 | fullnameOverride | string | `""` |  |
@@ -55,9 +55,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"oidc-discovery.example.org"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.hosts | list | `[]` |  |
 | ingress.tls | list | `[]` |  |
 | insecureScheme.enabled | bool | `false` |  |
 | insecureScheme.nginx.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
@@ -66,7 +64,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | insecureScheme.nginx.image.tag | string | `"1.24.0-alpine"` | Overrides the image tag |
 | insecureScheme.nginx.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | insecureScheme.nginx.resources | object | `{}` |  |
-| jwtIssuer | string | `"https://oidc-discovery.example.org"` |  |
+| jwtIssuer | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `5` | Period seconds for livenessProbe |
 | nameOverride | string | `""` |  |
@@ -102,6 +100,6 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | tools.kubectl.image.repository | string | `"rancher/kubectl"` | The repository within the registry |
 | tools.kubectl.image.tag | string | `""` | Overrides the image tag |
 | tools.kubectl.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| trustDomain | string | `""` | Set the trust domain to be used for the SPIFFE identifiers |
 
 ----------------------------------------------
