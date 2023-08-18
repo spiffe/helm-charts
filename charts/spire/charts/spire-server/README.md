@@ -159,7 +159,9 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| keyManager.disk.enabled | bool | `true` |  |
+| keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
@@ -212,7 +214,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
-| tornjak.service.ports | object | `{"http":10080,"https":10443}` | Ports for tornjak |
+| tornjak.service.ports | object | `{"http":10000,"https":10443}` | Ports for tornjak |
 | tornjak.service.type | string | `"ClusterIP"` |  |
 | tornjak.startupProbe.failureThreshold | int | `3` |  |
 | tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
@@ -248,5 +250,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.spire.enabled | bool | `false` |  |
 | upstreamAuthority.spire.server.address | string | `""` |  |
 | upstreamAuthority.spire.server.port | int | `8081` |  |
+| upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 
 ----------------------------------------------

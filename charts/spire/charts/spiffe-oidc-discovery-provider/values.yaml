@@ -107,14 +107,14 @@ insecureScheme:
       #   cpu: 100m
       #   memory: 64Mi
 
-jwtIssuer: oidc-discovery.example.org
+jwtIssuer: https://oidc-discovery.example.org
 
 config:
   # -- The log level, valid values are "debug", "info", "warn", and "error"
   logLevel: info
   # -- Add additional domains that can be used for oidc discovery
   additionalDomains:
-  - localhost
+    - localhost
 
   acme:
     tosAccepted: false
@@ -219,7 +219,7 @@ tests:
       # -- This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
       # -- Overrides the image tag
-      tag: 5.2.15
+      tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4
 
 tools:
   kubectl:

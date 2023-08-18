@@ -13,6 +13,7 @@ metadata:
   namespace: {{ include "spire-server.namespace" . }}
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}
+    app.kubernetes.io/component: server
 spec:
   {{- if not .Values.autoscaling.enabled }}
   {{- if and (eq .Values.dataStore.sql.databaseType "sqlite3") (gt (int .Values.replicaCount) 1) }}
@@ -24,6 +25,7 @@ spec:
   selector:
     matchLabels:
       {{- include "spire-server.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: server
   template:
     metadata:
       annotations:
@@ -36,6 +38,7 @@ spec:
         {{- end }}
       labels:
         {{- include "spire-server.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: server
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -128,6 +131,11 @@ spec:
               mountPath: /run/spire/upstream_ca
               readOnly: false
             {{ end }}
+            {{- if gt (len .Values.upstreamAuthority.spire.upstreamDriver) 0 }}
+            - name: upstream-agent
+              mountPath: /run/spire/upstream_agent
+              readOnly: true
+            {{ end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -183,7 +191,7 @@ spec:
             httpGet:
               scheme: HTTP
               path: /api/tornjak/serverinfo
-              port: 10080
+              port: 10000
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
           {{- end }}
           args:
@@ -193,7 +201,7 @@ spec:
             - /run/spire/tornjak-config/server.conf
           ports:
             - name: tornjak-http
-              containerPort: 10080
+              containerPort: 10000
               protocol: TCP
             - name: tornjak-https
               containerPort: 10443
@@ -271,6 +279,12 @@ spec:
         - name: upstream-ca
           secret:
             secretName: {{ include "spire-server.upstream-ca-secret" . }}
+        {{- end }}
+        {{- if gt (len .Values.upstreamAuthority.spire.upstreamDriver) 0 }}
+        - name: upstream-agent
+          csi:
+            driver: {{ .Values.upstreamAuthority.spire.upstreamDriver }}
+            readOnly: true
         {{- end }}
         {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
         - name: controller-manager-config

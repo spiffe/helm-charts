@@ -153,6 +153,14 @@ Create the name of the service account to use
 {{- $config | toYaml }}
 {{- end }}
 
+{{- define "spire-server.upstream-spire-address" }}
+{{- if ne (len (dig "spire" "upstreamSpireAddress" "" .Values.global)) 0 }}
+{{- print .Values.global.spire.upstreamSpireAddress }}
+{{- else }}
+{{- print .Values.upstreamAuthority.spire.server.address }}
+{{- end }}
+{{- end }}
+
 {{/*
 Tornjak specific section
 */}}

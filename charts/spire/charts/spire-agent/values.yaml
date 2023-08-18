@@ -76,6 +76,9 @@ trustBundleURL: ""
 trustBundleFormat: pem
 bundleConfigMap: spire-bundle
 
+# @ignored
+upstream: false
+
 server:
   address: ""
   port: 8081
@@ -108,7 +111,7 @@ waitForIt:
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: latest-20230517
+    tag: latest@sha256:deeaccb164a67a4d7f585c4d416641b1f422c029911a29d72beae28221f823df
   resources: {}
 
 # When running as non root, needed to ensure the socket path has the correct permissions.
@@ -124,7 +127,7 @@ fsGroupFix:
     # -- This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
     # -- Overrides the image tag
-    tag: 5.2.15
+    tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4
   # -- Specify resource needs as per https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
   resources: {}
 
