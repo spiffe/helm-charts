@@ -250,6 +250,12 @@ notifier:
 
 controllerManager:
   enabled: false
+  installAndUpgradeHook:
+    # -- Enable Helm hook to autofix common install/upgrade issues (should be disabled when using `helm template`)
+    enabled: true
+  deleteHook:
+    # -- Enable Helm hook to autofix common delete issues (should be disabled when using `helm template`)
+    enabled: true
 
   image:
     # -- The OCI registry to pull the image from

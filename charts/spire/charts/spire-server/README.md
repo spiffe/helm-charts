@@ -100,6 +100,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | clusterName | string | `"example-cluster"` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
 | controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
+| controllerManager.deleteHook.enabled | bool | `true` | Enable Helm hook to autofix common delete issues (should be disabled when using `helm template`) |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
@@ -115,6 +116,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| controllerManager.installAndUpgradeHook.enabled | bool | `true` | Enable Helm hook to autofix common install/upgrade issues (should be disabled when using `helm template`) |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |

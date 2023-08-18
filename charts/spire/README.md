@@ -89,6 +89,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| global.deleteHooks.enabled | bool | `true` | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`) |
+| global.installAndUpgradeHooks.enabled | bool | `true` | Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`) |
 | global.k8s.clusterDomain | string | `"cluster.local"` |  |
 | global.spire.bundleConfigMap | string | `""` | Override all instances of bundleConfigMap |
 | global.spire.clusterName | string | `"example-cluster"` |  |
@@ -162,6 +164,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spiffe-oidc-discovery-provider.config.additionalDomains | list | `["localhost"]` | Add additional domains that can be used for oidc discovery |
 | spiffe-oidc-discovery-provider.config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | spiffe-oidc-discovery-provider.configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
+| spiffe-oidc-discovery-provider.deleteHook.enabled | bool | `true` | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`) |
 | spiffe-oidc-discovery-provider.fullnameOverride | string | `""` |  |
 | spiffe-oidc-discovery-provider.image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | spiffe-oidc-discovery-provider.image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |
@@ -294,6 +297,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.clusterName | string | `"example-cluster"` |  |
 | spire-server.configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
 | spire-server.controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
+| spire-server.controllerManager.deleteHook.enabled | bool | `true` | Enable Helm hook to autofix common delete issues (should be disabled when using `helm template`) |
 | spire-server.controllerManager.enabled | bool | `false` |  |
 | spire-server.controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | spire-server.controllerManager.identities.enabled | bool | `true` |  |
@@ -309,6 +313,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | spire-server.controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | spire-server.controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| spire-server.controllerManager.installAndUpgradeHook.enabled | bool | `true` | Enable Helm hook to autofix common install/upgrade issues (should be disabled when using `helm template`) |
 | spire-server.controllerManager.resources | object | `{}` |  |
 | spire-server.controllerManager.securityContext | object | `{}` |  |
 | spire-server.controllerManager.service.annotations | object | `{}` |  |
