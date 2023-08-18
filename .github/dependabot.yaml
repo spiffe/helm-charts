@@ -13,6 +13,12 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 5
 
+  - package-ecosystem: gomod
+    directory: "/tests"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 5
+
   - package-ecosystem: pip
     directory: "/.github/scripts"
     schedule:
