@@ -15,6 +15,7 @@ global:
     ## @param global.spire.image.registry Image registry override
     ## @param global.spire.jwtIssuer The issuer for Spire JWT tokens
     ## @param global.spire.trustDomain The trust domain for Spire install
+    ## @param global.spire.upstreamServerAddress Set what address to use for the upstream server when using nested spire
     ##
     bundleConfigMap: ""
     clusterName: example-cluster
@@ -22,6 +23,7 @@ global:
       registry: ""
     jwtIssuer: oidc-discovery.example.org
     trustDomain: example.org
+    upstreamServerAddress: ""
 
 ## @section Spire server parameters
 ## Parameter values for Spire server
@@ -47,6 +49,38 @@ spire-agent:
   enabled: true
   nameOverride: agent
 
+## @section Upstream Spire agent and CSI driver configuration
+## Parameter values enabling upstream spire agent and CSI driver
+##
+upstream:
+  ## @param upstream.enabled Enable upstream agent and driver for use with nested spire
+  ## 
+  enabled: false
+
+## @section Upstream Spire agent parameters
+## Parameter values for upstream Spire agent
+##
+upstream-spire-agent:
+  ## @param upstream-spire-agent.upstream Flag for enabling upstream Spire agent
+  ## @param upstream-spire-agent.nameOverride Name override for upstream Spire agent
+  ## @param upstream-spire-agent.bundleConfigMap The configmap name for upstream Spire agent bundle
+  ## @param upstream-spire-agent.socketPath Socket path where Spire agent socket is mounted
+  ## @param upstream-spire-agent.serviceAccount.name Service account name for upstream Spire agent
+  ## @param upstream-spire-agent.healthChecks.port Health check port number for upstream Spire agent
+  ## @param upstream-spire-agent.telemetry.prometheus.port The port where prometheus metrics are available
+  ##
+  upstream: true
+  nameOverride: agent-upstream
+  bundleConfigMap: spire-bundle-upstream
+  socketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  serviceAccount:
+    name: spire-agent-upstream
+  healthChecks:
+    port: 9981
+  telemetry:
+    prometheus:
+      port: 9989
+
 ## @section Spire CSI Driver parameters
 ## Parameter values for spire-csi-driver
 ##
@@ -54,6 +88,19 @@ spiffe-csi-driver:
   ## @param spiffe-csi-driver.enabled Flag to enable spiffe-csi-driver for the cluster
   ## 
   enabled: true
+
+## @section Upstream Spire CSI Driver parameters
+## Parameter values for upstream spire-csi-driver
+##
+upstream-spiffe-csi-driver:
+  ## @param upstream-spiffe-csi-driver.pluginName The plugin name for configuring upstream Spiffe CSI driver
+  ## @param upstream-spiffe-csi-driver.agentSocketPath The socket path where Spiffe CSI driver mounts agent socket
+  ## @param upstream-spiffe-csi-driver.healthChecks.port The port where Spiffe CSI driver health checks are exposed
+  ##
+  pluginName: upstream.csi.spiffe.io
+  agentSocketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  healthChecks:
+    port: 9810
 
 ## @section SPIFFE oidc discovery provider parameters
 ## Parameter values for spiffe-oidc-discovery-provider
