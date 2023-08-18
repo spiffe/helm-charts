@@ -162,6 +162,13 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| keyManager.awsKMS.accessKeyID | Optional | `""` | Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role. |
+| keyManager.awsKMS.enabled | bool | `false` |  |
+| keyManager.awsKMS.keyPolicy | object | `{"existingConfigMap":"","policy":""}` | Policy to use when creating keys. If no policy is specified, a default policy will be used. |
+| keyManager.awsKMS.keyPolicy.existingConfigMap | Optional | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
+| keyManager.awsKMS.keyPolicy.policy | Optional | `""` | Key policy in JSON format. |
+| keyManager.awsKMS.region | string | `""` |  |
+| keyManager.awsKMS.secretAccessKey | Optional | `""` | Secret access key for the AWS account. |
 | keyManager.disk.enabled | bool | `true` |  |
 | keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |

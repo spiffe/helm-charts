@@ -180,6 +180,19 @@ keyManager:
     enabled: true
   memory:
     enabled: false
+  awsKMS:
+    enabled: false
+    region: ""
+    # -- Policy to use when creating keys. If no policy is specified, a default policy will be used.
+    keyPolicy:
+      # -- (Optional) Key policy in JSON format.
+      policy: ""
+      # -- (Optional) Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format.
+      existingConfigMap: ""
+    # -- (Optional) Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role.
+    accessKeyID: ""
+    # -- (Optional) Secret access key for the AWS account.
+    secretAccessKey: ""
 
 upstreamAuthority:
   disk:
