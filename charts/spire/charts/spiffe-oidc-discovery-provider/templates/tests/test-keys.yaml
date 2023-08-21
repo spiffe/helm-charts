@@ -8,7 +8,7 @@ metadata:
   annotations:
     "helm.sh/hook": test
 spec:
-  {{- with .Values.podSecuritycontext }}
+  {{- with .Values.podSecurityContext }}
   securityContext:
     {{- toYaml . | nindent 4 }}
   {{- end }}
