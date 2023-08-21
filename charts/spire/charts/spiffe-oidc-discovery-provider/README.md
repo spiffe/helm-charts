@@ -45,6 +45,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | config.additionalDomains | list | `["localhost"]` | Add additional domains that can be used for oidc discovery |
 | config.logLevel | string | `"info"` | The log level, valid values are "debug", "info", "warn", and "error" |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap |
+| deleteHook.enabled | bool | `true` | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`) |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` | The image pull policy |
 | image.registry | string | `"ghcr.io"` | The OCI registry to pull the image from |

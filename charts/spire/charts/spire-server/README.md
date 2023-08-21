@@ -100,6 +100,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | clusterName | string | `"example-cluster"` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
 | controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
+| controllerManager.deleteHook.enabled | bool | `true` | Enable Helm hook to autofix common delete issues (should be disabled when using `helm template`) |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
@@ -115,6 +116,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| controllerManager.installAndUpgradeHook.enabled | bool | `true` | Enable Helm hook to autofix common install/upgrade issues (should be disabled when using `helm template`) |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |
@@ -164,6 +166,13 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
 | jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| keyManager.awsKMS.accessKeyID | Optional | `""` | Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role. |
+| keyManager.awsKMS.enabled | bool | `false` |  |
+| keyManager.awsKMS.keyPolicy | object | `{"existingConfigMap":"","policy":""}` | Policy to use when creating keys. If no policy is specified, a default policy will be used. |
+| keyManager.awsKMS.keyPolicy.existingConfigMap | Optional | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
+| keyManager.awsKMS.keyPolicy.policy | Optional | `""` | Key policy in JSON format. |
+| keyManager.awsKMS.region | string | `""` |  |
+| keyManager.awsKMS.secretAccessKey | Optional | `""` | Secret access key for the AWS account. |
 | keyManager.disk.enabled | bool | `true` |  |
 | keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |

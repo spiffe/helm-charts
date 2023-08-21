@@ -135,6 +135,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+deleteHook:
+  # -- Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)
+  enabled: true
+
 autoscaling:
   enabled: false
   minReplicas: 1
