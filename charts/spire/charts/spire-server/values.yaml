@@ -137,7 +137,6 @@ dataStore:
       # -- The key of the secret object whose value is the dataStore password
       key: "DBPW"
 
-
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
