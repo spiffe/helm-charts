@@ -14,6 +14,13 @@ if [[ -z '$(type -d "${README_GENERATOR_EXE}")' ]]; then
 fi
 
 # generate docs and show the diff
+
+# chart_paths=( $( find -type f -iname "Chart.yaml" | xargs -L1 dirname ) )
+# for cpath in "${chart_paths[@]}"
+# do
+#   readme-generator --values="${cpath}/values.yaml" --readme="${cpath}/README.md"
+# done
+
 readme-generator --values="${SCRIPTPATH}/charts/spire/values.yaml" --readme="${SCRIPTPATH}/charts/spire/README.md"
 git diff --exit-code
 
