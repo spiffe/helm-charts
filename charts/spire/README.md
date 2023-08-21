@@ -322,6 +322,9 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
+| spire-server.dataStore.sql.dbSecret | object | `{"key":"DBPW","name":""}` | The secret should reside in the same namespace as the spire server |
+| spire-server.dataStore.sql.dbSecret.key | string | `"DBPW"` | The key of the secret object whose value is the dataStore password |
+| spire-server.dataStore.sql.dbSecret.name | string | `""` | The name of the secret object |
 | spire-server.dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.options | list | `[]` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.password | string | `""` | Only used by "postgres" or "mysql" |

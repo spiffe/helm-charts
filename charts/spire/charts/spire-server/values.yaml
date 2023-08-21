@@ -129,6 +129,15 @@ dataStore:
     # -- Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
     plugin_data: {}
 
+    # -- When an external source creates the secret e.g. https://github.com/external-secrets/external-secrets
+    # -- The secret should reside in the same namespace as the spire server
+    dbSecret:
+      # -- The name of the secret object
+      name: ""
+      # -- The key of the secret object whose value is the dataStore password
+      key: "DBPW"
+
+
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
