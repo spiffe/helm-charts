@@ -36,7 +36,7 @@ jobs:
         uses: actions/setup-go@v4.1.0
 
       - name: Setup crane
-        uses: imjasonh/setup-crane@v0.1
+        uses: imjasonh/setup-crane@v0.3
 
       - uses: actions/setup-python@v4.6.1
         with:
