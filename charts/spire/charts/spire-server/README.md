@@ -123,11 +123,11 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | controllerManager.service.port | int | `443` |  |
 | controllerManager.service.type | string | `"ClusterIP"` |  |
 | controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| dataStore.dbSecret | object | `{"key":"DBPW","name":""}` | The secret should reside in the same namespace as the spire server |
+| dataStore.dbSecret.key | string | `"DBPW"` | The key of the secret object whose value is the dataStore password |
+| dataStore.dbSecret.name | string | `""` | The name of the secret object |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
-| dataStore.sql.dbSecret | object | `{"key":"DBPW","name":""}` | The secret should reside in the same namespace as the spire server |
-| dataStore.sql.dbSecret.key | string | `"DBPW"` | The key of the secret object whose value is the dataStore password |
-| dataStore.sql.dbSecret.name | string | `""` | The name of the secret object |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
 | dataStore.sql.options | list | `[]` | Only used by "postgres" or "mysql" |
 | dataStore.sql.password | string | `""` | Only used by "postgres" or "mysql" |
