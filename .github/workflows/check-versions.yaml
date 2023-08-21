@@ -32,6 +32,26 @@ jobs:
           ./.github/scripts/update-versions.sh
           git diff
 
+      - name: Setup go
+        uses: actions/setup-go@v4.1.0
+
+      - name: Setup crane
+        uses: imjasonh/setup-crane@v0.3
+
+      - uses: actions/setup-python@v4.6.1
+        with:
+          python-version: '3.9'
+
+      - name: Update image tags
+        run: |
+          go install github.com/mikefarah/yq/v4@latest
+
+          sudo apt-get install wget apt-transport-https gnupg lsb-release
+          sudo pip install -r .github/scripts/requirements.txt
+
+          ./.github/scripts/update-tags.sh
+          git diff
+
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v5.0.2

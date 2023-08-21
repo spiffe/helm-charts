@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
 
 A Helm chart to install the SPIRE server.
 
@@ -100,6 +100,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | clusterName | string | `"example-cluster"` |  |
 | configMap.annotations | object | `{}` | Annotations to add to the SPIRE Server ConfigMap |
 | controllerManager.configMap.annotations | object | `{}` | Annotations to add to the Controller Manager ConfigMap |
+| controllerManager.deleteHook.enabled | bool | `true` | Enable Helm hook to autofix common delete issues (should be disabled when using `helm template`) |
 | controllerManager.enabled | bool | `false` |  |
 | controllerManager.identities.dnsNameTemplates | list | `[]` |  |
 | controllerManager.identities.enabled | bool | `true` |  |
@@ -115,6 +116,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | controllerManager.image.repository | string | `"spiffe/spire-controller-manager"` | The repository within the registry |
 | controllerManager.image.tag | string | `"0.2.3"` | Overrides the image tag |
 | controllerManager.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
+| controllerManager.installAndUpgradeHook.enabled | bool | `true` | Enable Helm hook to autofix common install/upgrade issues (should be disabled when using `helm template`) |
 | controllerManager.resources | object | `{}` |  |
 | controllerManager.securityContext | object | `{}` |  |
 | controllerManager.service.annotations | object | `{}` |  |
@@ -159,7 +161,16 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers | list | `[]` |  |
-| jwtIssuer | string | `"oidc-discovery.example.org"` | The JWT issuer domain |
+| jwtIssuer | string | `"https://oidc-discovery.example.org"` | The JWT issuer domain |
+| keyManager.awsKMS.accessKeyID | Optional | `""` | Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role. |
+| keyManager.awsKMS.enabled | bool | `false` |  |
+| keyManager.awsKMS.keyPolicy | object | `{"existingConfigMap":"","policy":""}` | Policy to use when creating keys. If no policy is specified, a default policy will be used. |
+| keyManager.awsKMS.keyPolicy.existingConfigMap | Optional | `""` | Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format. |
+| keyManager.awsKMS.keyPolicy.policy | Optional | `""` | Key policy in JSON format. |
+| keyManager.awsKMS.region | string | `""` |  |
+| keyManager.awsKMS.secretAccessKey | Optional | `""` | Secret access key for the AWS account. |
+| keyManager.disk.enabled | bool | `true` |  |
+| keyManager.memory.enabled | bool | `false` |  |
 | livenessProbe.failureThreshold | int | `2` | Failure threshold count for livenessProbe |
 | livenessProbe.initialDelaySeconds | int | `15` | Initial delay seconds for livenessProbe |
 | livenessProbe.periodSeconds | int | `60` | Period seconds for livenessProbe |
@@ -172,8 +183,10 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | nodeSelector | object | `{}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
 | notifier.k8sbundle.namespace | string | `""` | Namespace to push the bundle into, if blank will default to SPIRE Server namespace |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
+| persistence.hostPath | string | `""` | Which path to use on the host when type = hostPath |
 | persistence.size | string | `"1Gi"` |  |
 | persistence.storageClass | string | `nil` |  |
+| persistence.type | string | `"pvc"` | What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | readinessProbe.initialDelaySeconds | int | `5` | Initial delay seconds for readinessProbe |
@@ -210,7 +223,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
 | tornjak.resources | object | `{}` |  |
 | tornjak.service.annotations | object | `{}` |  |
-| tornjak.service.ports | object | `{"http":10080,"https":10443}` | Ports for tornjak |
+| tornjak.service.ports | object | `{"http":10000,"https":10443}` | Ports for tornjak |
 | tornjak.service.type | string | `"ClusterIP"` |  |
 | tornjak.startupProbe.failureThreshold | int | `3` |  |
 | tornjak.startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for |
@@ -218,6 +231,14 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | tornjak.startupProbe.successThreshold | int | `1` |  |
 | tornjak.startupProbe.timeoutSeconds | int | `5` |  |
 | trustDomain | string | `"example.org"` | Set the trust domain to be used for the SPIFFE identifiers |
+| upstreamAuthority.awsPCA.assumeRoleARN | Optional | `""` | ARN of an IAM role to assume |
+| upstreamAuthority.awsPCA.caSigningTemplateARN | string | `""` | See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values. |
+| upstreamAuthority.awsPCA.certificateAuthorityARN | string | `""` | ARN of the "upstream" CA certificate |
+| upstreamAuthority.awsPCA.enabled | bool | `false` |  |
+| upstreamAuthority.awsPCA.endpoint | string | `""` | See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information. |
+| upstreamAuthority.awsPCA.region | string | `""` | AWS Region to use |
+| upstreamAuthority.awsPCA.signingAlgorithm | string | `""` | See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values. |
+| upstreamAuthority.awsPCA.supplementalBundlePath | Optional | `""` | Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle. |
 | upstreamAuthority.certManager.ca.create | bool | `false` | Creates a Cert-Manager CA |
 | upstreamAuthority.certManager.ca.duration | string | `"87600h"` | Duration of the CA. Defaults to 10 years. |
 | upstreamAuthority.certManager.ca.privateKey.algorithm | string | `"ECDSA"` |  |
@@ -238,5 +259,6 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.spire.enabled | bool | `false` |  |
 | upstreamAuthority.spire.server.address | string | `""` |  |
 | upstreamAuthority.spire.server.port | int | `8081` |  |
+| upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 
 ----------------------------------------------

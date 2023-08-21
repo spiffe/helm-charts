@@ -9,13 +9,23 @@ global:
     # -- The trust domain to be used for the SPIFFE identifiers
     trustDomain: example.org
     # -- Set the jwt issuer
-    jwtIssuer: oidc-discovery.example.org
+    jwtIssuer: https://oidc-discovery.example.org
     # -- Override all instances of bundleConfigMap
     bundleConfigMap: ""
+
+    # -- Set what address to use for the upstream server when using nested spire
+    upstreamServerAddress: ""
 
     image:
       # -- Override all Spire image registries at once
       registry: ""
+
+  installAndUpgradeHooks:
+    # -- Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`)
+    enabled: true
+  deleteHooks:
+    # -- Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)
+    enabled: true
 
 #  telemetry:
 #    prometheus:
@@ -41,9 +51,34 @@ spire-agent:
   enabled: true
   nameOverride: agent
 
+upstream:
+  # -- enable upstream agent and driver for use with nested spire.
+  enabled: false
+
+upstream-spire-agent:
+  # @ignored
+  upstream: true
+  nameOverride: agent-upstream
+  bundleConfigMap: spire-bundle-upstream
+
+  socketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  serviceAccount:
+    name: spire-agent-upstream
+  healthChecks:
+    port: 9981
+  telemetry:
+    prometheus:
+      port: 9989
+
 spiffe-csi-driver:
   # -- Enables deployment of CSI driver
   enabled: true
+
+upstream-spiffe-csi-driver:
+  pluginName: upstream.csi.spiffe.io
+  agentSocketPath: /run/spire/agent-sockets-upstream/spire-agent.sock
+  healthChecks:
+    port: 9810
 
 spiffe-oidc-discovery-provider:
   # -- Enables deployment of OIDC discovery provider

@@ -101,9 +101,13 @@ readinessProbe:
   periodSeconds: 5
 
 persistence:
+  # -- What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
+  type: pvc
   size: 1Gi
   accessMode: ReadWriteOnce
   storageClass: null
+  # -- Which path to use on the host when type = hostPath
+  hostPath: ""
 
 dataStore:
   sql:
@@ -128,7 +132,7 @@ dataStore:
 # -- The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
 # -- The JWT issuer domain
-jwtIssuer: oidc-discovery.example.org
+jwtIssuer: https://oidc-discovery.example.org
 
 # -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
@@ -171,6 +175,25 @@ ca_subject:
   organization: Example
   common_name: example.org
 
+keyManager:
+  disk:
+    enabled: true
+  memory:
+    enabled: false
+  awsKMS:
+    enabled: false
+    region: ""
+    # -- Policy to use when creating keys. If no policy is specified, a default policy will be used.
+    keyPolicy:
+      # -- (Optional) Key policy in JSON format.
+      policy: ""
+      # -- (Optional) Name of a ConfigMap that has a `policy.json` file with the key policy in JSON format.
+      existingConfigMap: ""
+    # -- (Optional) Access key ID for the AWS account. It's recommended to use an IAM role instead. See [here](https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html) to learn how to annotate your SPIRE Server Service Account to assume an IAM role.
+    accessKeyID: ""
+    # -- (Optional) Secret access key for the AWS account.
+    secretAccessKey: ""
+
 upstreamAuthority:
   disk:
     enabled: false
@@ -184,6 +207,25 @@ upstreamAuthority:
         certificate: ""
         key: ""
         bundle: ""
+  awsPCA:
+    enabled: false
+    # -- AWS Region to use
+    region: ""
+    # -- ARN of the "upstream" CA certificate
+    certificateAuthorityARN: ""
+    # -- (Optional) ARN of an IAM role to assume
+    assumeRoleARN: ""
+    # -- (Optional) ARN of the signing template to use for the server's CA. Defaults to a signing template for end-entity certificates only.
+    # -- See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values.
+    caSigningTemplateARN: ""
+    # -- (Optional) Signing algorithm to use for the server's CA. Defaults to the CA's default.
+    # -- See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values.
+    signingAlgorithm: ""
+    # -- (Optional) Endpoint as hostname or fully-qualified URI that overrides the default endpoint.
+    # -- See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information.
+    endpoint: ""
+    # -- (Optional) Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle.
+    supplementalBundlePath: ""
   certManager:
     enabled: false
     rbac:
@@ -209,6 +251,7 @@ upstreamAuthority:
       renewBefore: ""
   spire:
     enabled: false
+    upstreamDriver: ""
     server:
       address: ""
       port: 8081
@@ -220,6 +263,12 @@ notifier:
 
 controllerManager:
   enabled: false
+  installAndUpgradeHook:
+    # -- Enable Helm hook to autofix common install/upgrade issues (should be disabled when using `helm template`)
+    enabled: true
+  deleteHook:
+    # -- Enable Helm hook to autofix common delete issues (should be disabled when using `helm template`)
+    enabled: true
 
   image:
     # -- The OCI registry to pull the image from
@@ -364,7 +413,7 @@ tornjak:
     type: ClusterIP
     # -- Ports for tornjak
     ports:
-      http: 10080
+      http: 10000
       https: 10443
     annotations: {}
 
@@ -424,4 +473,4 @@ tests:
       # -- This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
       # -- Overrides the image tag
-      tag: 5.2.15
+      tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4

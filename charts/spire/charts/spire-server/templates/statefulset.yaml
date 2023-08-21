@@ -3,6 +3,9 @@
 {{- $configSum3 := (include (print $.Template.BasePath "/controller-manager-configmap.yaml") . | sha256sum) }}
 {{- $configSumTornjak := (include (print $.Template.BasePath "/tornjak-config.yaml") . | sha256sum) }}
 {{- $fullname := include "spire-server.fullname" . }}
+{{- if not (has .Values.persistence.type (list "pvc" "hostPath" "emptyDir")) }}
+{{- fail "persistence.type must be one of [\"pvc\", \"hostPath\", \"emptyDir\"]" }}
+{{- end }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -10,6 +13,7 @@ metadata:
   namespace: {{ include "spire-server.namespace" . }}
   labels:
     {{- include "spire-server.labels" . | nindent 4 }}
+    app.kubernetes.io/component: server
 spec:
   {{- if not .Values.autoscaling.enabled }}
   {{- if and (eq .Values.dataStore.sql.databaseType "sqlite3") (gt (int .Values.replicaCount) 1) }}
@@ -21,6 +25,7 @@ spec:
   selector:
     matchLabels:
       {{- include "spire-server.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: server
   template:
     metadata:
       annotations:
@@ -33,6 +38,7 @@ spec:
         {{- end }}
       labels:
         {{- include "spire-server.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: server
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -42,6 +48,7 @@ spec:
       shareProcessNamespace: true
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if or (gt (len .Values.initContainers) 0) (and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create) }}
       initContainers:
       {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create }}
         - name: wait
@@ -60,6 +67,7 @@ spec:
       {{- end }}
       {{- if gt (len .Values.initContainers) 0 }}
         {{- toYaml .Values.initContainers | nindent 8 }}
+      {{- end }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -80,6 +88,20 @@ spec:
               secretKeyRef:
                 name: {{ $fullname }}-dbpw
                 key: DBPW
+          {{- end }}
+          {{- if ne .Values.keyManager.awsKMS.accessKeyID "" }}
+          - name: AWS_KMS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-aws-kms
+                key: AWS_KMS_ACCESS_KEY_ID
+          {{- end }}
+          {{- if ne .Values.keyManager.awsKMS.secretAccessKey "" }}
+          - name: AWS_KMS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ $fullname }}-aws-kms
+                key: AWS_KMS_SECRET_ACCESS_KEY
           {{- end }}
           ports:
             - name: grpc
@@ -124,6 +146,19 @@ spec:
             - name: upstream-ca
               mountPath: /run/spire/upstream_ca
               readOnly: false
+            {{ end }}
+            {{- if gt (len .Values.upstreamAuthority.spire.upstreamDriver) 0 }}
+            - name: upstream-agent
+              mountPath: /run/spire/upstream_agent
+              readOnly: true
+            {{ end }}
+            {{- with .Values.keyManager.awsKMS }}
+            {{- if and (eq (.enabled | toString) "true") (or (ne .keyPolicy.policy "") (ne .keyPolicy.existingConfigMap "")) }}
+            - name: aws-kms-key-policy
+              mountPath: /run/spire/data/aws-kms-key-policy.json
+              subPath: policy.json
+              readOnly: true
+            {{ end }}
             {{ end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
@@ -180,7 +215,7 @@ spec:
             httpGet:
               scheme: HTTP
               path: /api/tornjak/serverinfo
-              port: 10080
+              port: 10000
             {{- toYaml .Values.tornjak.startupProbe | nindent 12 }}
           {{- end }}
           args:
@@ -190,7 +225,7 @@ spec:
             - /run/spire/tornjak-config/server.conf
           ports:
             - name: tornjak-http
-              containerPort: 10080
+              containerPort: 10000
               protocol: TCP
             - name: tornjak-https
               containerPort: 10443
@@ -269,6 +304,23 @@ spec:
           secret:
             secretName: {{ include "spire-server.upstream-ca-secret" . }}
         {{- end }}
+        {{- if gt (len .Values.upstreamAuthority.spire.upstreamDriver) 0 }}
+        - name: upstream-agent
+          csi:
+            driver: {{ .Values.upstreamAuthority.spire.upstreamDriver }}
+            readOnly: true
+        {{- end }}
+        {{- with .Values.keyManager.awsKMS }}
+        {{- if and (eq (.enabled | toString) "true") (or (ne .keyPolicy.policy "") (ne .keyPolicy.existingConfigMap "")) }}
+        - name: aws-kms-key-policy
+          configMap:
+            {{- if ne .keyPolicy.policy "" }}
+            name: {{ $fullname }}-aws-kms
+            {{- else if ne .keyPolicy.existingConfigMap "" }}
+            name: {{ .keyPolicy.existingConfigMap }}
+            {{- end }}
+        {{- end }}
+        {{- end }}
         {{- if eq (.Values.controllerManager.enabled | toString) "true" }}
         - name: controller-manager-config
           configMap:
@@ -285,6 +337,16 @@ spec:
         {{- if gt (len .Values.extraVolumes) 0 }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
+        {{- if eq .Values.persistence.type "emptyDir" }}
+        - name: spire-data
+          emptyDir: {}
+        {{- else if eq .Values.persistence.type "hostPath" }}
+        - name: spire-data
+          hostPath:
+            path: {{ .Values.persistence.hostPath }}
+            type: Directory
+        {{- end }}
+  {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:
     - metadata:
         name: spire-data
@@ -297,3 +359,4 @@ spec:
         {{- if .Values.persistence.storageClass }}
         storageClassName: {{ .Values.persistence.storageClass }}
         {{- end }}
+  {{- end }}
