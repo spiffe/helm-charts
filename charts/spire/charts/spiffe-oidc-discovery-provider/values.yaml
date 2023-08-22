@@ -225,6 +225,44 @@ tests:
       # -- Overrides the image tag
       tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4
 
+  toolkit:
+    image:
+      # -- The OCI registry to pull the tests image from
+      registry: cgr.dev
+      # -- The repository within the registry
+      repository: chainguard/slim-toolkit-debug
+      # -- The tests image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: latest@sha256:d717d0a2c88518f8e36d9cfe1571639a40617e8c4291e34876d46bdeefb1ab5a
+
+  busybox:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: ""
+      # -- The repository within the registry
+      repository: busybox
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: uclibc@sha256:3e516f71d8801b0ce6c3f8f8e4f11093ec04e168177a90f1da4498014ee06b6b
+  agent:
+    image:
+      # -- The OCI registry to pull the image from
+      registry: ghcr.io
+      # -- The repository within the registry
+      repository: spiffe/spire-agent
+      # -- The image pull policy
+      pullPolicy: IfNotPresent
+      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      version: ""
+      # -- Overrides the image tag
+      tag: ""
+
 tools:
   kubectl:
     image:
