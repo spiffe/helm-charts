@@ -83,12 +83,12 @@ spec:
           - name: PATH
             value: "/opt/spire/bin:/bin"
           {{- if ne .Values.dataStore.sql.databaseType "sqlite3" }}
-          {{- if ne .Values.dataStore.dbSecret.name "" }}
+          {{- if .Values.dataStore.sql.externalSecret.enabled }}
           - name: DBPW
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.dataStore.dbSecret.name }}
-                key: {{ .Values.dataStore.dbSecret.key }}
+                name: {{ .Values.dataStore.sql.externalSecret.name }}
+                key: {{ .Values.dataStore.sql.externalSecret.key }}
           {{- else }}
           - name: DBPW
             valueFrom:
