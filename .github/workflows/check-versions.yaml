@@ -47,7 +47,7 @@ jobs:
           go install github.com/mikefarah/yq/v4@latest
 
           sudo apt-get install wget apt-transport-https gnupg lsb-release
-          sudo pip install -r .github/scripts/requirements.txt
+          pip install -r .github/scripts/requirements.txt
 
           ./.github/scripts/update-tags.sh
           git diff
