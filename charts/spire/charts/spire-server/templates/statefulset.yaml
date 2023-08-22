@@ -83,11 +83,19 @@ spec:
           - name: PATH
             value: "/opt/spire/bin:/bin"
           {{- if ne .Values.dataStore.sql.databaseType "sqlite3" }}
+          {{- if .Values.dataStore.sql.externalSecret.enabled }}
+          - name: DBPW
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.dataStore.sql.externalSecret.name }}
+                key: {{ .Values.dataStore.sql.externalSecret.key }}
+          {{- else }}
           - name: DBPW
             valueFrom:
               secretKeyRef:
                 name: {{ $fullname }}-dbpw
                 key: DBPW
+          {{- end }}
           {{- end }}
           {{- if ne .Values.keyManager.awsKMS.accessKeyID "" }}
           - name: AWS_KMS_ACCESS_KEY_ID
