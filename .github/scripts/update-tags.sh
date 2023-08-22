@@ -52,7 +52,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     if [[ "$FILTER" == "LATESTSHA" ]]; then
       LATEST_VERSION="latest@"$(crane digest "${REGISTRY}${REPOSITORY}:latest")
     else
-      LATEST_VERSION=$(crane ls "${REGISTRY}${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
+      LATEST_VERSION=$(crane ls "${REGISTRY}${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}" | tail -n 1)
     fi
 
     export QUERY
