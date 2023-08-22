@@ -46,10 +46,13 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     REGISTRY=$(yq e ".${QUERY}.registry" "$VALUES")
     REPOSITORY=$(yq e ".${QUERY}.repository" "$VALUES")
     VERSION=$(yq e ".${QUERY}.tag" "$VALUES")
+    if [[ "$REGISTRY" != "" ]]; then
+      REGISTRY="$REGISTRY/"
+    fi
     if [[ "$FILTER" == "LATESTSHA" ]]; then
-      LATEST_VERSION="latest@"$(crane digest "${REGISTRY}/${REPOSITORY}:latest")
+      LATEST_VERSION="latest@"$(crane digest "${REGISTRY}${REPOSITORY}:latest")
     else
-      LATEST_VERSION=$(crane ls "${REGISTRY}/${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
+      LATEST_VERSION=$(crane ls "${REGISTRY}${REPOSITORY}" | grep "${FILTER}" | sort "${SORTFLAGS[@]}"| tail -n 1)
     fi
 
     export QUERY
@@ -57,7 +60,7 @@ jq -r '. | keys[]' "$IMAGEJSON" | while read -r CHART; do
     export LATEST_VERSION
 
     if [ "${VERSION}" != "${LATEST_VERSION}" ]; then
-      echo "New image version found: ${REGISTRY}/${REPOSITORY}:${LATEST_VERSION}"
+      echo "New image version found: ${REGISTRY}${REPOSITORY}:${LATEST_VERSION}"
       "${SCRIPTPATH}/edit-yaml.py" > /tmp/$$
       mv /tmp/$$ "${VALUES}"
     fi
