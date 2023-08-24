@@ -129,6 +129,9 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | customPlugins.upstreamAuthority | object | `{}` |  |
 | dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
+| dataStore.sql.externalSecret | object | `{"enabled":false,"key":"","name":""}` | When an external source creates the secret. The secret should reside in the same namespace as the spire server |
+| dataStore.sql.externalSecret.key | string | `""` | The key of the secret object whose value is the dataStore.sql password |
+| dataStore.sql.externalSecret.name | string | `""` | The name of the secret object |
 | dataStore.sql.host | string | `""` | Only used by "postgres" or "mysql" |
 | dataStore.sql.options | list | `[]` | Only used by "postgres" or "mysql" |
 | dataStore.sql.password | string | `""` | Only used by "postgres" or "mysql" |
