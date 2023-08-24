@@ -320,6 +320,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.controllerManager.service.port | int | `443` |  |
 | spire-server.controllerManager.service.type | string | `"ClusterIP"` |  |
 | spire-server.controllerManager.validatingWebhookConfiguration.failurePolicy | string | `"Fail"` |  |
+| spire-server.customPlugins.keyManager | object | `{}` |  |
+| spire-server.customPlugins.nodeAttestor | object | `{}` |  |
+| spire-server.customPlugins.notifier | object | `{}` |  |
+| spire-server.customPlugins.upstreamAuthority | object | `{}` |  |
 | spire-server.dataStore.sql.databaseName | string | `"spire"` | Only used by "postgres" or "mysql" |
 | spire-server.dataStore.sql.databaseType | string | `"sqlite3"` | Other supported databases are "postgres" and "mysql" |
 | spire-server.dataStore.sql.externalSecret | object | `{"enabled":false,"key":"","name":""}` | When an external source creates the secret. The secret should reside in the same namespace as the spire server |
