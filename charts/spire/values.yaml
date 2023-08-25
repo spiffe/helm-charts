@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: APACHE-2.0
 
 ## @section Global parameters
-## Note: the paramter values specified here will override the chart level values for these parameters.
+## Note: the parameter values specified here will override the chart level values for these parameters.
 ##
 global:
   k8s:

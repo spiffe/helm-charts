@@ -52,38 +52,4 @@ port forwarding. See the chart NOTES output for more details.
 
 * <https://github.com/spiffe/tornjak>
 
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| apiServerURL | string | `"http://localhost:10000/"` | URL of the Tornjak APIs (backend) Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser. |
-| fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"spiffe/tornjak-frontend"` |  |
-| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| image.version | string | `""` | This value is deprecated in favor of tag. (Will be removed in a future release) |
-| imagePullSecrets | list | `[]` |  |
-| labels | object | `{}` |  |
-| nameOverride | string | `""` |  |
-| namespaceOverride | string | `""` |  |
-| nodeSelector | object | `{"kubernetes.io/arch":"amd64"}` | Select specific nodes to run on (currently only amd64 is supported by Tornjak) |
-| podSecurityContext | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| service.annotations | object | `{}` |  |
-| service.port | int | `3000` |  |
-| service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| spireHealthCheck.enabled | bool | `true` | Enables the SPIRE Healthchecker indicator |
-| startupProbe.enabled | bool | `true` | Enable startupProbe on Tornjak frontend container |
-| startupProbe.failureThreshold | int | `6` | Failure threshold count for startupProbe |
-| startupProbe.initialDelaySeconds | int | `5` | Initial delay seconds for startupProbe |
-| startupProbe.periodSeconds | int | `10` | Period seconds for startupProbe |
-| startupProbe.successThreshold | int | `1` | Success threshold count for startupProbe |
-| startupProbe.timeoutSeconds | int | `5` | Timeout seconds for startupProbe |
-| tolerations | list | `[]` |  |
-| topologySpreadConstraints | list | `[]` |  |
-----------------------------------------------
+## Parameters

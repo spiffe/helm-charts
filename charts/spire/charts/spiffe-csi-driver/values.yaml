@@ -5,7 +5,7 @@
 global: {}
 
 ## @section SPIFFE CSI Driver Chart parameters
-## @param Set the csi driver name deployed to Kubernetes.
+## @param pluginName Set the csi driver name deployed to Kubernetes.
 ##
 pluginName: csi.spiffe.io
 

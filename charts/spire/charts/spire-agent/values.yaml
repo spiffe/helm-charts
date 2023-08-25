@@ -85,12 +85,12 @@ clusterName: example-cluster
 trustDomain: example.org
 ## @param trustBundleURL If set, obtain trust bundle from url instead of Kubernetes ConfigMap
 trustBundleURL: ""
-## @param turstBundleFormat If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe"
+## @param trustBundleFormat If using trustBundleURL, what format is the url. Choices are "pem" and "spiffe"
 trustBundleFormat: pem
 ## @param bundleConfigMap Configmap name for Spire bundle
 bundleConfigMap: spire-bundle
 
-# @skip upstream
+## @skip upstream
 upstream: false
 
 ## @param server.address Address for Spire server
@@ -175,7 +175,7 @@ telemetry:
     ## @param telemetry.prometheus.port Port for prometheus metrics
     port: 9988
     podMonitor:
-      ## @param telemetry.prometheus.podMonitor.enable Enable podMonitor for prometheus
+      ## @param telemetry.prometheus.podMonitor.enabled Enable podMonitor for prometheus
       ## @param telemetry.prometheus.podMonitor.namespace Override where to install the podMonitor, if not set will use the same namespace as the spire-agent
       ## @param telemetry.prometheus.podMonitor.labels [object] Pod labels to filter for prometheus monitoring
       ##
@@ -186,7 +186,7 @@ telemetry:
 ## @param socketPath The unix socket path to the spire-agent
 socketPath: /run/spire/agent-sockets/spire-agent.sock
 
-## @param priorityClassname Priority class assigned to daemonset pods
+## @param priorityClassName Priority class assigned to daemonset pods
 priorityClassName: ""
 
 ## @param extraVolumes [array] Extra volumes to be mounted on Spire Agent pods
@@ -195,8 +195,8 @@ extraVolumes: []
 ## @param extraVolumeMounts [array] Extra volume mounts for Spire Agent pods
 extraVolumeMounts: []
 
-## @params extraContainers [array] Additional containers to create with Spire Agent pods
+## @param extraContainers [array] Additional containers to create with Spire Agent pods
 extraContainers: []
 
-## @params initContainers [array] Additional init containers to create with Spire Agent pods
+## @param initContainers [array] Additional init containers to create with Spire Agent pods
 initContainers: []
