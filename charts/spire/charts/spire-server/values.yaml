@@ -1,44 +1,54 @@
-# Default values for spire-server.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Default configuration for Spire server
+# SPDX-License-Identifier: APACHE-2.0
 
-# @ignored
+## @skip global
 global: {}
 
-# -- SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database.
+## @param replicaCount SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database.
 replicaCount: 1
 
+## @param image.registry The OCI registry to pull the image from
+## @param image.repository The repository within the registry
+## @param image.pullPolicy The image pull policy
+## @param image.version This value is deprecated in favor of tag. (Will be removed in a future release)
+## @param image.tag Overrides the image tag whose default is the chart appVersion
+##
 image:
-  # -- The OCI registry to pull the image from
   registry: ghcr.io
-  # -- The repository within the registry
   repository: spiffe/spire-server
-  # -- The image pull policy
   pullPolicy: IfNotPresent
-  # -- This value is deprecated in favor of tag. (Will be removed in a future release)
   version: ""
-  # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+## @param imagePullSecrets [array] Pull secrets for images
 imagePullSecrets: []
+
+## @param nameOverride Name override 
 nameOverride: ""
+
+## @param namespaceOverride Namespace override 
 namespaceOverride: ""
+
+## @param fullnameOverride Fullname override 
 fullnameOverride: ""
 
 serviceAccount:
-  # -- Specifies whether a service account should be created
+  ## @param serviceAccount.create Specifies whether a service account should be created
   create: true
-  # -- Annotations to add to the service account
+  ## @param serviceAccount.annotations [object] Annotations to add to the service account
   annotations: {}
-  # -- The name of the service account to use.
+  ## @param serviceAccount.name The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## @param podAnnotations [object] Annotations to add to pods
 podAnnotations: {}
 
+## @param podSecurityContext [object] Pod security context
 podSecurityContext: {}
   # fsGroup: 2000
 
+## @param securityContext [object] Security context
 securityContext: {}
   # capabilities:
   #   drop:
@@ -48,14 +58,18 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  ## @param service.type Type of the Spire server service created
   type: ClusterIP
+  ## @param service.port Port for the created service
   port: 8081
+  ## @param service.annotations [object] Annotations to add to the service object
   annotations: {}
 
 configMap:
-  # -- Annotations to add to the SPIRE Server ConfigMap
+  ## @param configMap.annotations [object] Annotations to add to the SPIRE Server ConfigMap
   annotations: {}
 
+## @param resources [object] Resource requests and limits
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -69,107 +83,130 @@ resources: {}
   #   memory: 256Mi
 
 autoscaling:
+  ## @param autoscaling.enabled Flag to enable autoscaling
   enabled: false
+  ## @param autoscaling.minReplicas Minimum replicas for autoscaling
   minReplicas: 1
+  ## @param autoscaling.maxReplicas Maximum replicas for autoscaling
   maxReplicas: 100
+  ## @param autoscaling.targetCPUUtilizationPercentage Target CPU utlization that triggers autoscaling
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# -- Select specific nodes to run on (currently only amd64 is supported by Tornjak)
+## @param nodeSelector [object] Select specific nodes to run on (currently only amd64 is supported by Tornjak)
 nodeSelector: {}
 
+## @param tolerations [array] List of tolerations
 tolerations: []
 
+## @param affinity [object] List of node affinities
 affinity: {}
 
+## @param topologySpreadConstraints [array] Topology spread constraints for resilience
 topologySpreadConstraints: []
 
 livenessProbe:
-  # -- Failure threshold count for livenessProbe
+  ## @param livenessProbe.failureThreshold Failure threshold count for livenessProbe
   failureThreshold: 2
-  # -- Initial delay seconds for livenessProbe
+  ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
   initialDelaySeconds: 15
-  # -- Period seconds for livenessProbe
+  ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
   periodSeconds: 60
-  # -- Timeout in seconds for livenessProbe
+  ## @param livenessProbe.timeoutSeconds Timeout in seconds for livenessProbe
   timeoutSeconds: 3
 
 readinessProbe:
-  # -- Initial delay seconds for readinessProbe
+  ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
   initialDelaySeconds: 5
-  # -- Period seconds for readinessProbe
+  ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
   periodSeconds: 5
 
 persistence:
-  # -- What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
+  ## @param persistence.type What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
   type: pvc
+  ## @param persistence.size What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
   size: 1Gi
+  ## @param persistence.accessMode What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
   accessMode: ReadWriteOnce
+  ## @param persistence.storageClass What type of volume to use for persistence. Valid options pvc (recommended), hostPath, emptyDir (testing only)
   storageClass: null
-  # -- Which path to use on the host when type = hostPath
+  ## @param persistence.hostPath Which path to use on the host when type = hostPath
   hostPath: ""
 
 dataStore:
   sql:
-    # -- Other supported databases are "postgres" and "mysql"
+    ## @param dataStore.sql.databaseType Other supported databases are "postgres" and "mysql"
     databaseType: sqlite3
-    # -- Only used by "postgres" or "mysql"
+    ## @param dataStore.sql.databaseName Only used by "postgres" or "mysql"
     databaseName: spire
-    # -- Only used by "postgres" or "mysql"
+    ## @param dataStore.sql.host Only used by "postgres" or "mysql"
     host: ""
-    # -- If 0 (default), it will auto set to 5432 for postgres and 3306 for mysql. Only used by those databases.
+    ## @param dataStore.sql.port If 0 (default), it will auto set to 5432 for postgres and 3306 for mysql. Only used by those databases.
     port: 0
-    # -- Only used by "postgres" or "mysql"
+    ## @param dataStore.sql.username Only used by "postgres" or "mysql"
     username: spire
-    # -- Only used by "postgres" or "mysql"
+    ## @param dataStore.sql.password Only used by "postgres" or "mysql"
     password: ""
-    # -- Only used by "postgres" or "mysql"
+    ## @param dataStore.sql.options [array] Only used by "postgres" or "mysql"
     options: []
 
-    # -- Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
+    ## @param dataStore.sql.plugin_data [object] Settings from https://github.com/spiffe/spire/blob/main/doc/plugin_server_datastore_sql.md go in this section
     plugin_data: {}
 
-# -- The log level, valid values are "debug", "info", "warn", and "error"
+## @param logLevel The log level, valid values are "debug", "info", "warn", and "error"
 logLevel: info
-# -- The JWT issuer domain
+## @param jwtIssuer The JWT issuer domain
 jwtIssuer: https://oidc-discovery.example.org
 
-# -- Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
+## @param clusterName Set the name of the Kubernetes cluster. (`kubeadm init --service-dns-domain`)
 clusterName: example-cluster
-# -- Set the trust domain to be used for the SPIFFE identifiers
+## @param trustDomain Set the trust domain to be used for the SPIFFE identifiers
 trustDomain: example.org
 
+## @param bundleConfigMap Set the trust domain to be used for the SPIFFE identifiers
 bundleConfigMap: spire-bundle
 
-# -- This is the value of your clusters `kubeadm init --service-dns-domain` flag
+## @param clusterDomain This is the value of your clusters `kubeadm init --service-dns-domain` flag
 clusterDomain: cluster.local
 
 federation:
+  ## @param federation.enabled Flag to enable federation
   enabled: false
   bundleEndpoint:
+    ## @param federation.bundleEndpoint.port Port value for trust bundle federation
     port: 8443
+    ## @param federation.bundleEndpoint.address Address for trust bundle federation
     address: "0.0.0.0"
 
   ingress:
+    ## @param federation.ingress.enabled Flag to enable ingress for federation
     enabled: false
+    ## @param federation.ingress.className Ingress class name for federation
     className: ""
+    ## @param federation.ingress.annotations [object] Annotations for the ingress object
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
       # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       # If Profile Type == https_spiffe:
       # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    ## @param federation.ingress.hosts [array] Host paths for ingress object
     hosts:
       - host: spire-server-federation.example.org
         paths:
           - path: /
             pathType: Prefix
+    ## @param federation.ingress.tls [array] Secrets containining TLS certs to enable https on ingress
     tls: []
     #  - hosts:
     #      - spire-server-federation.example.org
     #    If Profile Type == https_web:
     #    secretName: spire-server-federation-tls
 
+## @param ca_subject.country Country for Spire server CA
+## @param ca_subject.organization Organization for Spire server CA
+## @param ca_subject.common_name Common Name for Spire server CA
+##
 ca_subject:
   country: NL
   organization: Example
@@ -185,56 +222,56 @@ upstreamAuthority:
   disk:
     enabled: false
     secret:
-      # -- If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself.
+      ## @param If disabled requires you to create a secret with the given keys (certificate, key and optional bundle) yourself.
       create: true
-      # -- If secret creation is disabled, the secret with this name will be used.
+      ## @param If secret creation is disabled, the secret with this name will be used.
       name: "spiffe-upstream-ca"
-      # -- If secret creation is enabled, will create a secret with following certificate info
+      ## @param If secret creation is enabled, will create a secret with following certificate info
       data:
         certificate: ""
         key: ""
         bundle: ""
   awsPCA:
     enabled: false
-    # -- AWS Region to use
+    ## @param AWS Region to use
     region: ""
-    # -- ARN of the "upstream" CA certificate
+    ## @param ARN of the "upstream" CA certificate
     certificateAuthorityARN: ""
-    # -- (Optional) ARN of an IAM role to assume
+    ## @param (Optional) ARN of an IAM role to assume
     assumeRoleARN: ""
-    # -- (Optional) ARN of the signing template to use for the server's CA. Defaults to a signing template for end-entity certificates only.
-    # -- See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values.
+    ## @param (Optional) ARN of the signing template to use for the server's CA. Defaults to a signing template for end-entity certificates only.
+    ## @param See Using Templates (https://docs.aws.amazon.com/acm-pca/latest/userguide/UsingTemplates.html) for possible values.
     caSigningTemplateARN: ""
-    # -- (Optional) Signing algorithm to use for the server's CA. Defaults to the CA's default.
-    # -- See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values.
+    ## @param (Optional) Signing algorithm to use for the server's CA. Defaults to the CA's default.
+    ## @param See Issue Certificate (https://docs.aws.amazon.com/cli/latest/reference/acm-pca/issue-certificate.html) for possible values.
     signingAlgorithm: ""
-    # -- (Optional) Endpoint as hostname or fully-qualified URI that overrides the default endpoint.
-    # -- See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information.
+    ## @param (Optional) Endpoint as hostname or fully-qualified URI that overrides the default endpoint.
+    ## @param See AWS SDK Config docs (https://docs.aws.amazon.com/sdk-for-go/api/aws/#Config) for more information.
     endpoint: ""
-    # -- (Optional) Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle.
+    ## @param (Optional) Path to a file containing PEM-encoded CA certificates that should be additionally included in the bundle.
     supplementalBundlePath: ""
   certManager:
     enabled: false
     rbac:
       create: true
-    # -- Defaults to the release name, override if CA is provided outside of the chart
+    ## @param Defaults to the release name, override if CA is provided outside of the chart
     issuer_name: ""
     issuer_kind: "Issuer"
     issuer_group: "cert-manager.io"
-    # -- Specify to use a namespace other then the one the chart is installed into
+    ## @param Specify to use a namespace other then the one the chart is installed into
     namespace: ""
     kube_config_file: ""
 
     ca:
-      # -- Creates a Cert-Manager CA
+      ## @param Creates a Cert-Manager CA
       create: false
-      # -- Duration of the CA. Defaults to 10 years.
+      ## @param Duration of the CA. Defaults to 10 years.
       duration:  87600h
       privateKey:
         algorithm: ECDSA
         size: 256
         rotationPolicy: ""
-      # -- How long to wait before renewing the CA
+      ## @param How long to wait before renewing the CA
       renewBefore: ""
   spire:
     enabled: false
@@ -245,22 +282,22 @@ upstreamAuthority:
 
 notifier:
   k8sbundle:
-    # -- Namespace to push the bundle into, if blank will default to SPIRE Server namespace
+    ## @param Namespace to push the bundle into, if blank will default to SPIRE Server namespace
     namespace: ""
 
 controllerManager:
   enabled: false
 
   image:
-    # -- The OCI registry to pull the image from
+    ## @param The OCI registry to pull the image from
     registry: ghcr.io
-    # -- The repository within the registry
+    ## @param The repository within the registry
     repository: spiffe/spire-controller-manager
-    # -- The image pull policy
+    ## @param The image pull policy
     pullPolicy: IfNotPresent
-    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    ## @param This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
-    # -- Overrides the image tag
+    ## @param Overrides the image tag
     tag: "0.2.3"
 
   resources: {}
@@ -289,7 +326,7 @@ controllerManager:
     annotations: {}
 
   configMap:
-    # -- Annotations to add to the Controller Manager ConfigMap
+    ## @param Annotations to add to the Controller Manager ConfigMap
     annotations: {}
 
   ignoreNamespaces:
@@ -319,15 +356,15 @@ controllerManager:
 tools:
   kubectl:
     image:
-      # -- The OCI registry to pull the image from
+      ## @param The OCI registry to pull the image from
       registry: docker.io
-      # -- The repository within the registry
+      ## @param The repository within the registry
       repository: rancher/kubectl
-      # -- The image pull policy
+      ## @param The image pull policy
       pullPolicy: IfNotPresent
-      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      ## @param This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
-      # -- Overrides the image tag
+      ## @param Overrides the image tag
       tag: ""
 
 telemetry:
@@ -335,7 +372,7 @@ telemetry:
     enabled: false
     podMonitor:
       enabled: false
-      # -- Override where to install the podMonitor, if not set will use the same namespace as the spire-server
+      ## @param Override where to install the podMonitor, if not set will use the same namespace as the spire-server
       namespace: ""
       labels: {}
 
@@ -363,7 +400,7 @@ extraContainers: []
 
 initContainers: []
 
-# -- The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported)
+## @param The CA key type to use, possible values are rsa-2048, rsa-4096, ec-p256, ec-p384 (AWS requires the use of RSA.  EC cryptography is not supported)
 caKeyType: rsa-2048
 caTTL: 24h
 defaultX509SvidTTL: 4h
@@ -376,23 +413,23 @@ nodeAttestor:
 
 # tornjak - Tornjak default values
 tornjak:
-  # -- Deploys Tornjak API (backend) (Not for production)
+  ## @param Deploys Tornjak API (backend) (Not for production)
   enabled: false
   image:
-    # -- The OCI registry to pull the Tornjak image from
+    ## @param The OCI registry to pull the Tornjak image from
     registry: ghcr.io
-    # -- The repository within the registry
+    ## @param The repository within the registry
     repository: spiffe/tornjak-backend
-    # -- The Tornjak image pull policy
+    ## @param The Tornjak image pull policy
     pullPolicy: IfNotPresent
-    # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+    ## @param This value is deprecated in favor of tag. (Will be removed in a future release)
     version: ""
-    # -- Overrides the image tag
+    ## @param Overrides the image tag
     tag: "v1.2.2"
 
   service:
     type: ClusterIP
-    # -- Ports for tornjak
+    ## @param Ports for tornjak
     ports:
       http: 10000
       https: 10443
@@ -400,7 +437,7 @@ tornjak:
 
   startupProbe:
     failureThreshold: 3
-    # -- Initial delay seconds for
+    ## @param Initial delay seconds for
     initialDelaySeconds: 5
     periodSeconds: 10
     successThreshold: 1
@@ -408,7 +445,7 @@ tornjak:
 
   # tornjak - Tornjak default values
   config:
-    # -- Persistent DB for storing Tornjak specific information
+    ## @param Persistent DB for storing Tornjak specific information
     dataStore:
       driver: "sqlite3"
       file: "/run/spire/data/tornjak.sqlite3"
@@ -419,11 +456,11 @@ tornjak:
     # When `tlsSecret` and `clientCA.tornjak-client-ca` are created in this chart namespace, the mTLS connection is started
     # When none of them are created, Tornjak starts with HTTP connection only
 
-    # -- Name of the secret containing server side key and certificate for TLS verification
+    ## @param Name of the secret containing server side key and certificate for TLS verification
     # (required for `tls` or `mtls` connectionType)
     tlsSecret: tornjak-tls-secret
     clientCA:
-      # -- Type of delivery for the user CA for mTLS client verification
+      ## @param Type of delivery for the user CA for mTLS client verification
       # options are `Secret` or `ConfigMap`
       # (required for `mtls` connectionType)
       type: Secret
@@ -445,13 +482,13 @@ tornjak:
 tests:
   bash:
     image:
-      # -- The OCI registry to pull the image from
+      ## @param The OCI registry to pull the image from
       registry: cgr.dev
-      # -- The repository within the registry
+      ## @param The repository within the registry
       repository: chainguard/bash
-      # -- The image pull policy
+      ## @param The image pull policy
       pullPolicy: IfNotPresent
-      # -- This value is deprecated in favor of tag. (Will be removed in a future release)
+      ## @param This value is deprecated in favor of tag. (Will be removed in a future release)
       version: ""
-      # -- Overrides the image tag
+      ## @param Overrides the image tag
       tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4
