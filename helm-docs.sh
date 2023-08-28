@@ -6,10 +6,9 @@ SCRIPTPATH=$(dirname "$0")
 README_GENERATOR_VERSION="2.5.1"
 README_GENERATOR_EXE="readme-generator"
 
-
-if [[ -z '$(type "${README_GENERATOR_EXE}")' ]]; then
+if ! command -v -- "${README_GENERATOR_EXE}" > /dev/null 2>&1; then
   echo "readme-generator not installed. Installing..."
-  if [[ -z '$(type npm)' ]]; then
+  if ! command -v -- "npm" > /dev/null 2>&1; then
     echo "npm is required to install ${README_GENERATOR_EXE}. Please install npm and rerun the script."
     exit 1
   fi

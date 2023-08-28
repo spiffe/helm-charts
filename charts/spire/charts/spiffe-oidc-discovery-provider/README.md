@@ -2,7 +2,7 @@
 
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.1](https://img.shields.io/badge/AppVersion-1.7.1-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
 
 A Helm chart to install the SPIFFE OIDC discovery provider.
 
@@ -72,6 +72,7 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | `serviceAccount.create`                               | Specifies whether a service account should be created                                                | `true`                                                                           |
 | `serviceAccount.annotations`                          | Annotations to add to the service account                                                            | `{}`                                                                             |
 | `serviceAccount.name`                                 | The name of the service account to use.                                                              | `""`                                                                             |
+| `deleteHook.enabled`                                  | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)    | `true`                                                                           |
 | `autoscaling.enabled`                                 | Flag to enable autoscaling                                                                           | `false`                                                                          |
 | `autoscaling.minReplicas`                             | Minimum replicas for autoscaling                                                                     | `1`                                                                              |
 | `autoscaling.maxReplicas`                             | Maximum replicas for autoscaling                                                                     | `5`                                                                              |
@@ -103,6 +104,21 @@ A Helm chart to install the SPIFFE OIDC discovery provider.
 | `tests.bash.image.pullPolicy`                         | The image pull policy                                                                                | `IfNotPresent`                                                                   |
 | `tests.bash.image.version`                            | This value is deprecated in favor of tag. (Will be removed in a future release)                      | `""`                                                                             |
 | `tests.bash.image.tag`                                | Overrides the image tag whose default is the chart appVersion                                        | `latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4` |
+| `tests.toolkit.image.registry`                        | The OCI registry to pull the image from                                                              | `cgr.dev`                                                                        |
+| `tests.toolkit.image.repository`                      | The repository within the registry                                                                   | `chainguard/slim-toolkit-debug`                                                  |
+| `tests.toolkit.image.pullPolicy`                      | The image pull policy                                                                                | `IfNotPresent`                                                                   |
+| `tests.toolkit.image.version`                         | This value is deprecated in favor of tag. (Will be removed in a future release)                      | `""`                                                                             |
+| `tests.toolkit.image.tag`                             | Overrides the image tag whose default is the chart appVersion                                        | `latest@sha256:d717d0a2c88518f8e36d9cfe1571639a40617e8c4291e34876d46bdeefb1ab5a` |
+| `tests.busybox.image.registry`                        | The OCI registry to pull the image from                                                              | `""`                                                                             |
+| `tests.busybox.image.repository`                      | The repository within the registry                                                                   | `busybox`                                                                        |
+| `tests.busybox.image.pullPolicy`                      | The image pull policy                                                                                | `IfNotPresent`                                                                   |
+| `tests.busybox.image.version`                         | This value is deprecated in favor of tag. (Will be removed in a future release)                      | `""`                                                                             |
+| `tests.busybox.image.tag`                             | Overrides the image tag whose default is the chart appVersion                                        | `uclibc@sha256:3e516f71d8801b0ce6c3f8f8e4f11093ec04e168177a90f1da4498014ee06b6b` |
+| `tests.agent.image.registry`                          | The OCI registry to pull the image from                                                              | `ghcr.io`                                                                        |
+| `tests.agent.image.repository`                        | The repository within the registry                                                                   | `spiffe/spire-agent`                                                             |
+| `tests.agent.image.pullPolicy`                        | The image pull policy                                                                                | `IfNotPresent`                                                                   |
+| `tests.agent.image.version`                           | This value is deprecated in favor of tag. (Will be removed in a future release)                      | `""`                                                                             |
+| `tests.agent.image.tag`                               | Overrides the image tag whose default is the chart appVersion                                        | `""`                                                                             |
 | `tools.kubectl.image.registry`                        | The OCI registry to pull the image from                                                              | `docker.io`                                                                      |
 | `tools.kubectl.image.repository`                      | The repository within the registry                                                                   | `rancher/kubectl`                                                                |
 | `tools.kubectl.image.pullPolicy`                      | The image pull policy                                                                                | `IfNotPresent`                                                                   |

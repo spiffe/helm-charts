@@ -1,3 +1,4 @@
+{{- if eq ((dig "deleteHooks" "enabled" .Values.controllerManager.deleteHook.enabled .Values.global) | toString) "true" }}
 {{- if .Values.upstreamAuthority.spire.enabled }}
 apiVersion: v1
 kind: ServiceAccount
@@ -87,4 +88,5 @@ spec:
           - app.kubernetes.io/instance={{ include "spire-server.name" . }},app.kubernetes.io/name={{ .Release.Name }},app.kubernetes.io/component=server
           - -n
           - {{ include "spire-server.namespace" . }}
+{{- end }}
 {{- end }}

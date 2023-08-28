@@ -164,6 +164,9 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
+deleteHook:
+  ## @param deleteHook.enabled Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)
+  enabled: true
 
 autoscaling:
   ## @param autoscaling.enabled Flag to enable autoscaling
@@ -272,6 +275,48 @@ tests:
       pullPolicy: IfNotPresent
       version: ""
       tag: latest@sha256:96ab1600d945b4a99c8610b5c8b31e346da63dc20573a26bb0777dd0190db5d4
+
+  toolkit:
+    ## @param tests.toolkit.image.registry The OCI registry to pull the image from
+    ## @param tests.toolkit.image.repository The repository within the registry
+    ## @param tests.toolkit.image.pullPolicy The image pull policy
+    ## @param tests.toolkit.image.version This value is deprecated in favor of tag. (Will be removed in a future release)
+    ## @param tests.toolkit.image.tag Overrides the image tag whose default is the chart appVersion
+    ##
+    image:
+      registry: cgr.dev
+      repository: chainguard/slim-toolkit-debug
+      pullPolicy: IfNotPresent
+      version: ""
+      tag: latest@sha256:d717d0a2c88518f8e36d9cfe1571639a40617e8c4291e34876d46bdeefb1ab5a
+
+  busybox:
+    ## @param tests.busybox.image.registry The OCI registry to pull the image from
+    ## @param tests.busybox.image.repository The repository within the registry
+    ## @param tests.busybox.image.pullPolicy The image pull policy
+    ## @param tests.busybox.image.version This value is deprecated in favor of tag. (Will be removed in a future release)
+    ## @param tests.busybox.image.tag Overrides the image tag whose default is the chart appVersion
+    ##
+    image:
+      registry: ""
+      repository: busybox
+      pullPolicy: IfNotPresent
+      version: ""
+      tag: uclibc@sha256:3e516f71d8801b0ce6c3f8f8e4f11093ec04e168177a90f1da4498014ee06b6b
+
+  agent:
+    ## @param tests.agent.image.registry The OCI registry to pull the image from
+    ## @param tests.agent.image.repository The repository within the registry
+    ## @param tests.agent.image.pullPolicy The image pull policy
+    ## @param tests.agent.image.version This value is deprecated in favor of tag. (Will be removed in a future release)
+    ## @param tests.agent.image.tag Overrides the image tag whose default is the chart appVersion
+    ##
+    image:
+      registry: ghcr.io
+      repository: spiffe/spire-agent
+      pullPolicy: IfNotPresent
+      version: ""
+      tag: ""
 
 tools:
   kubectl:
