@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
 
       - name: Verify Docs updated
         run: ./helm-docs.sh
@@ -73,7 +73,7 @@ jobs:
           fi
 
       - name: Setup Go
-        uses: actions/setup-go@v4.0.1
+        uses: actions/setup-go@v4.1.0
         with:
           go-version-file: tests/go.mod
           cache-dependency-path: tests/go.sum
@@ -94,7 +94,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
         with:
           fetch-depth: 0
 
@@ -136,7 +136,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
         with:
           fetch-depth: 0
 
@@ -184,7 +184,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
 
       - id: set-matrix
         name: Collect all examples
@@ -216,7 +216,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
 
       - name: Set up Helm
         uses: azure/setup-helm@v3.5
