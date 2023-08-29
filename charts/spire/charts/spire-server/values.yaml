@@ -486,6 +486,10 @@ customPlugins:
 
 # @ignored
 tests:
+  hostAliases: []
+  tls:
+    enabled: false
+    customCA: ""
   bash:
     image:
       # -- The OCI registry to pull the image from

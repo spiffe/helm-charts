@@ -203,6 +203,21 @@ The code below determines what connection type should be used.
 {{- include "spire-tornjak.backend" . -}}
 {{- end -}}
 
+{{- define "spire-server.test.federation-ingress-args" }}
+{{-   $args := list }}
+{{-   $host := index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}
+{{-   if dig "tests" "tls" "enabled" false .Values }}
+{{-     if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
+{{-       $args = append $args "--cacert" }}
+{{-       $args = append $args "/ca/ca.crt" }}
+{{-     end }}
+{{-     $args = append $args (printf "https://%s/" $host) }}
+{{-   else }}
+{{-     $args = append $args (printf "http://%s/" $host) }}
+{{-   end }}
+{{ $args | toYaml }}
+{{- end -}}
+
 {{/*
 Take a copy of the config and merge in .Values.customPlugins and .Values.unsupportedBuiltInPlugins passed through as root.
 */}}

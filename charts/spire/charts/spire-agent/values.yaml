@@ -164,3 +164,5 @@ extraVolumeMounts: []
 extraContainers: []
 
 initContainers: []
+# -- Customize /etc/hosts file as described here https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
+hostAliases: []
