@@ -5,8 +5,8 @@
 global: {}
 
 ## @section Chart parameters
-## @param agentSocketName The name of the spire-agent unix socket
 ##
+## @param agentSocketName The name of the spire-agent unix socket
 agentSocketName: spire-agent.sock
 
 ## @param replicaCount Replica count 
@@ -15,7 +15,7 @@ replicaCount: 1
 ## @param namespaceOverride Namespace override 
 namespaceOverride: ""
 
-## @param annotations Annotations for the deployment
+## @param annotations [object] Annotations for the deployment
 annotations: {}
 
 image:
@@ -31,7 +31,7 @@ image:
   version: ""
   tag: ""
 
-## @param resources Resource requests and limits
+## @param resources [object] Resource requests and limits
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -54,15 +54,15 @@ service:
   annotations: {}
   # external-dns.alpha.kubernetes.io/hostname: oidc-discovery.example.org
 
-## @param configMap.annotations Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
 configMap:
+  ## @param configMap.annotations [object] Annotations to add to the SPIFFE OIDC Discovery Provider ConfigMap
   annotations: {}
 
-## @param podSecurityContext Pod security context for OIDC discovery provider pods
+## @param podSecurityContext [object] Pod security context for OIDC discovery provider pods
 podSecurityContext: {}
   # fsGroup: 2000
 
-## @param securityContext Security context for OIDC discovery provider deployment
+## @param securityContext [object] Security context for OIDC discovery provider deployment
 securityContext: {}
   # capabilities:
   #   drop:
@@ -85,7 +85,7 @@ livenessProbe:
   initialDelaySeconds: 5
   periodSeconds: 5
 
-## @param podAnnotations Pod annotations for Spire OIDC discovery provider
+## @param podAnnotations [object] Pod annotations for Spire OIDC discovery provider
 podAnnotations: {}
 
 insecureScheme:
@@ -135,15 +135,14 @@ config:
   additionalDomains:
     - localhost
 
-  ## @param config.acme.tosAccepted Flag for Terms of Service acceptance
-  ## @param config.acme.cacheDir Path for cache directory
-  ## @param config.acme.directoryUrl URL for acme directory
-  ## @param config.acme.emailAddress Email address for registration
-  ##
   acme:
+    ## @param config.acme.tosAccepted Flag for Terms of Service acceptance
     tosAccepted: false
+    ## @param config.acme.cacheDir Path for cache directory
     cacheDir: /run/spire
+    ## @param config.acme.directoryUrl URL for acme directory
     directoryUrl: https://acme-v02.api.letsencrypt.org/directory
+    ## @param config.acme.emailAddress Email address for registration
     emailAddress: letsencrypt@example.org
 
 ## @param imagePullSecrets [array] Image pull secret names
@@ -155,38 +154,39 @@ nameOverride: ""
 ## @param fullnameOverride Full name override
 fullnameOverride: ""
 
+## @param serviceAccount.create Specifies whether a service account should be created
+## @param serviceAccount.annotations Annotations to add to the service account
+## @param serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated.
+##
 serviceAccount:
-  ## @param serviceAccount.create Specifies whether a service account should be created
   create: true
-  ## @param serviceAccount.annotations Annotations to add to the service account
   annotations: {}
-  ## @param serviceAccount.name The name of the service account to use. 
-  ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
 deleteHook:
   ## @param deleteHook.enabled Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)
   enabled: true
 
+## @param autoscaling.enabled Flag to enable autoscaling
+## @param autoscaling.minReplicas Minimum replicas for autoscaling
+## @param autoscaling.maxReplicas Maximum replicas for autoscaling
+## @param autoscaling.targetCPUUtilizationPercentage Target CPU utlization that triggers autoscaling
+## @param autoscaling.targetMemoryUtilizationPercentage Target Memory utlization that triggers autoscaling
+##
 autoscaling:
-  ## @param autoscaling.enabled Flag to enable autoscaling
   enabled: false
-  ## @param autoscaling.minReplicas Minimum replicas for autoscaling
   minReplicas: 1
-  ## @param autoscaling.maxReplicas Maximum replicas for autoscaling
   maxReplicas: 5
-  ## @param autoscaling.targetCPUUtilizationPercentage Target CPU utlization that triggers autoscaling
   targetCPUUtilizationPercentage: 80
-  ## @param autoscaling.targetMemoryUtilizationPercentage Target Memory utlization that triggers autoscaling
   targetMemoryUtilizationPercentage: 80
 
-## @param nodeSelector Node selector
+## @param nodeSelector [object] Node selector
 nodeSelector: {}
 
-## @param tolerations List of tolerations
+## @param tolerations [array] iist of tolerations
 tolerations: []
 
-## @param affinity Node affinity
+## @param affinity [object] Node affinity
 affinity: {}
 
 ## @param trustDomain Set the trust domain to be used for the SPIFFE identifiers
@@ -203,11 +203,10 @@ telemetry:
     port: 9988
     podMonitor:
       ## @param telemetry.prometheus.podMonitor.enabled Enable podMonitor for prometheus
-      ## @param telemetry.prometheus.podMonitor.namespace Override where to install the podMonitor, if not set will use the same namespace as the helm release
-      ## @param telemetry.prometheus.podMonitor.labels [object] Pod labels to filter for prometheus monitoring
-      ##
       enabled: false
+      ## @param telemetry.prometheus.podMonitor.namespace Override where to install the podMonitor, if not set will use the same namespace as the helm release
       namespace: ""
+      ## @param telemetry.prometheus.podMonitor.labels [object] Pod labels to filter for prometheus monitoring
       labels: {}
 
     nginxExporter:

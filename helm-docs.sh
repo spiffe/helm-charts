@@ -6,12 +6,9 @@ SCRIPTPATH=$(dirname "$0")
 README_GENERATOR_VERSION="2.5.1"
 README_GENERATOR_EXE="readme-generator"
 
-if ! command -v -- "${README_GENERATOR_EXE}" > /dev/null 2>&1; then
+if ! hash "${README_GENERATOR_EXE}" 2>/dev/null; then
   echo "readme-generator not installed. Installing..."
-  if ! command -v -- "npm" > /dev/null 2>&1; then
-    echo "npm is required to install ${README_GENERATOR_EXE}. Please install npm and rerun the script."
-    exit 1
-  fi
+  hash npm 2>/dev/null || { echo >&2 "npm is required to install ${README_GENERATOR_EXE}. Please install npm and rerun the script. Aborting."; exit 1; }
   # platform agnostic npm install, also adds into the path
   npm install -g "@bitnami/readme-generator-for-helm@${README_GENERATOR_VERSION}"
 fi

@@ -29,13 +29,13 @@ namespaceOverride: ""
 ## @param fullnameOverride Fullname override 
 fullnameOverride: ""
 
+## @param serviceAccount.create Specifies whether a service account should be created
+## @param serviceAccount.annotations [object] Annotations to add to the service account
+## @param serviceAccount.name The name of the service account to use. If not set and create is true, a name is generated.
+##
 serviceAccount:
-  ## @param serviceAccount.create Specifies whether a service account should be created
   create: true
-  ## @param serviceAccount.annotations [object] Annotations to add to the service account
   annotations: {}
-  ## @param serviceAccount.name The name of the service account to use.
-  ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
 ## @param labels [object] Labels for tornjak frontend pods
@@ -86,9 +86,7 @@ topologySpreadConstraints: []
 #     cpu: 100m
 #     memory: 512Mi
 
-## @param apiServerURL URL of the Tornjak APIs (backend)
-# Since Tornjak Frontend runs in the browser, this URL must be accessible from
-# the machine running a browser.
+## @param apiServerURL URL of the Tornjak APIs (backend). Since Tornjak Frontend runs in the browser, this URL must be accessible from the machine running a browser.
 apiServerURL: "http://localhost:10000/"  # 👈 Use it for minikube or kind
 
 # SPIRE Healthchecker indicator
@@ -98,19 +96,19 @@ spireHealthCheck:
 
 ## Configure extra options for Tornjak frontend container's startup probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes
+## @param startupProbe.enabled Enable startupProbe on Tornjak frontend container
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold count for startupProbe
+## @param startupProbe.successThreshold Success threshold count for startupProbe
 ##
 startupProbe:
-  ## @param startupProbe.enabled Enable startupProbe on Tornjak frontend container
   enabled: true
-  ## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
   initialDelaySeconds: 5
-  ## @param startupProbe.periodSeconds Period seconds for startupProbe
   periodSeconds: 10
-  ## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
   timeoutSeconds: 5
-  ## @param startupProbe.failureThreshold Failure threshold count for startupProbe
   failureThreshold: 6
-  ## @param startupProbe.successThreshold Success threshold count for startupProbe
   successThreshold: 1
 
 tests:
