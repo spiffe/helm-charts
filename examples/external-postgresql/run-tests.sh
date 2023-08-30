@@ -26,12 +26,12 @@ kubectl label namespace spire-system pod-security.kubernetes.io/enforce=privileg
 kubectl create namespace spire-server --dry-run=client -o yaml | kubectl apply -f -
 kubectl label namespace spire-server pod-security.kubernetes.io/enforce=restricted || true
 
-helm upgrade --install --create-namespace postgresql postgresql --version "$VERSION_POSTGRESQL" --repo "$HELM_REPO_POSTGRESQL" \
+helm upgrade --install postgresql postgresql --version "$VERSION_POSTGRESQL" --repo "$HELM_REPO_POSTGRESQL" \
   --namespace spire-server \
   --values "${DEPS}/postgresql.yaml,${SCRIPTPATH}/../production/values.yaml,${SCRIPTPATH}/../production/values-node-pod-antiaffinity.yaml" \
   --wait
 
-helm upgrade --install --create-namespace --namespace "spire-server" \
+helm upgrade --install --namespace "spire-server" \
   --values "${SCRIPTPATH}/values.yaml,${SCRIPTPATH}/../production/values.yaml,${SCRIPTPATH}/../production/values-node-pod-antiaffinity.yaml" \
   --set 'spire-server.dataStore.sql.password=sp1ff3Test' --wait spire charts/spire
 helm test --namespace "spire-server" spire
