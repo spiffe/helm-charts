@@ -20,6 +20,11 @@ if ! command -v yq &> /dev/null; then
   exit 1
 fi
 
+if ! command -v npm &> /dev/null; then
+  echo Please install npm
+  exit 1
+fi
+
 if ! command -v python3 -c 'import ruamel.yaml' &> /dev/null; then
   echo Please install python3 with the ruamel.yaml module
   exit 1
