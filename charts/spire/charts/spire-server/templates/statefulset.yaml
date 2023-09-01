@@ -171,7 +171,7 @@ spec:
             {{- with .Values.upstreamAuthority.vault }}
             {{- if eq (.k8sAuth.enabled | toString) "true" }}
             - name: spire-psat
-              mountPath: /var/run/secrets/kubernetes.io/serviceaccount/{{ .k8sAuth.token.name }}
+              mountPath: /run/spire/secrets/kubernetes.io/serviceaccount/{{ .k8sAuth.token.name }}
             {{- end }}
             {{- end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}

@@ -178,7 +178,7 @@ plugins:
       k8s_auth:
         k8s_auth_mount_point: {{ .k8sAuthMountPoint | quote }}
         k8s_auth_role_name: {{ .k8sAuthRoleName | quote }}
-        token_path: "/var/run/secrets/kubernetes.io/serviceaccount/{{ .token.name }}"
+        token_path: "/run/spire/secrets/kubernetes.io/serviceaccount/{{ .token.name }}"
       {{- end }}
       {{- end }}
       {{- if gt $vaultAuthMethodUsed 1 }}
