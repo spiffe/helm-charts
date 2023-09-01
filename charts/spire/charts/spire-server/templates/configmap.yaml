@@ -165,8 +165,10 @@ plugins:
     plugin_data:
       vault_addr: {{ .vaultAddr | quote }}
       pki_mount_point: {{ .pkiMountPoint | quote }}
-      ca_cert_path: {{ .caCertPath | quote }}
       insecure_skip_verify: {{ .insecureSkipVerify }}
+      {{- if ne (.insecureSkipVerify | toString) "true" }}
+      ca_cert_path: "/run/spire/vault-upstream/tls.crt"
+      {{- end }}
       {{- if ne .namespace "" }}
       namespace: {{ .namespace | quote }}
       {{- end }}

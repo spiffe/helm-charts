@@ -173,6 +173,10 @@ spec:
             - name: spire-psat
               mountPath: /run/spire/secrets/kubernetes.io/serviceaccount/{{ .k8sAuth.token.name }}
             {{- end }}
+            {{- if ne (.insecureSkipVerify | toString) "true" }}
+            - name: vault-ca
+              mountPath: /run/spire/vault-upstream
+            {{- end }}
             {{- end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
@@ -361,6 +365,18 @@ spec:
             type: Directory
         {{- end }}
         {{- with .Values.upstreamAuthority.vault }}
+        {{- if ne (.insecureSkipVerify | toString) "true" }}
+        {{- if eq (.caCert.type | lower) "configmap" }}
+        - name: vault-ca
+          configMap:
+            name: {{ .caCert.name }}
+        {{- else if eq (.caCert.type | lower) "secret" }}
+        - name: vault-ca
+          secret:
+            secretName: {{ .caCert.name }}
+            optional: false
+        {{- end }}
+        {{- end -}}
         {{- if eq (.k8sAuth.enabled | toString) "true" }}
         - name: spire-psat
           projected:

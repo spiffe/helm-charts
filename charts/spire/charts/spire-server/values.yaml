@@ -268,8 +268,14 @@ upstreamAuthority:
     vaultAddr: ""
     namespace: ""
     pkiMountPoint: "pki"
-    caCertPath: ""
+    # -- If true, caCert options are ignored and Spire accepts any server certificates claiming to be Vault
     insecureSkipVerify: false
+    # -- The CA Certificate file used to verify the Vault server certificate. Only PEM format is supported
+    caCert:
+      # -- Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named 'tls.crt'
+      type: ConfigMap
+      # -- Name of the Kubernetes resource containing the Vault server certificate 
+      name: vault-ca
 
     k8sAuth:
       enabled: false
