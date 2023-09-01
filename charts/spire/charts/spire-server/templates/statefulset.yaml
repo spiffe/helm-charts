@@ -365,6 +365,7 @@ spec:
             type: Directory
         {{- end }}
         {{- with .Values.upstreamAuthority.vault }}
+        {{- if eq (.enabled | toString) "true" }}
         {{- if ne (.insecureSkipVerify | toString) "true" }}
         {{- if eq (.caCert.type | lower) "configmap" }}
         - name: vault-ca
@@ -386,6 +387,7 @@ spec:
                 expirationSeconds: {{ .k8sAuth.token.expiry }}
                 audience: {{ .k8sAuth.token.audience }}
         {{- end }}
+        {{- end -}}
         {{- end -}}
   {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:
