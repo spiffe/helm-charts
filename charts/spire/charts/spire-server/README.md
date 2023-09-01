@@ -1,8 +1,11 @@
 # spire-server
 
+
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
+
+
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square) 
 
 A Helm chart to install the SPIRE server.
 
@@ -269,13 +272,17 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.spire.server.address | string | `""` |  |
 | upstreamAuthority.spire.server.port | int | `8081` |  |
 | upstreamAuthority.spire.upstreamDriver | string | `""` |  |
-| upstreamAuthority.vault.caCertPath | string | `""` | Path to a CA certificate file used to verify the Vault server certificate. Only PEM format is supported. |
+| upstreamAuthority.vault.caCert | object | `{"name":"vault-ca","type":"ConfigMap"}` | The CA Certificate file used to verify the Vault server certificate. Only PEM format is supported |
+| upstreamAuthority.vault.caCert.name | string | `"vault-ca"` | Name of the Kubernetes resource containing the Vault server certificate  |
+| upstreamAuthority.vault.caCert.type | string | `"ConfigMap"` | Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `tls.crt` |
 | upstreamAuthority.vault.enabled | bool | `false` |  |
-| upstreamAuthority.vault.insecureSkipVerify | bool | `false` | If true, the 'caCertPath' configuration is omitted and the vault client accepts any server certificates |
+| upstreamAuthority.vault.insecureSkipVerify | bool | `false` | If true, caCert options are ignored and Spire accepts any server certificates claiming to be Vault |
 | upstreamAuthority.vault.k8sAuth.enabled | bool | `false` |  |
 | upstreamAuthority.vault.k8sAuth.k8sAuthMountPoint | string | `"kubernetes"` | Name of the mount point where the Kubernetes auth method is mounted |
 | upstreamAuthority.vault.k8sAuth.k8sAuthRoleName | string | `""` | Required - Name of the Vault role. The plugin authenticates against the named role |
-| upstreamAuthority.vault.k8sAuth.tokenPath | string | `"/var/run/secrets/tokens/spire-server"` | Absolute path to the Kubernetes Service Account Token to use authentication with the Vault |
+| upstreamAuthority.vault.k8sAuth.token.audience | string | `"https://kubernetes.default.svc"` | Intended audience of the PSAT, it must match one of the audiences supported by the Kubernetes API server. See [here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for more info on 'Audience'. |
+| upstreamAuthority.vault.k8sAuth.token.expiry | int | `7200` | Expiry time in seconds for the token |
+| upstreamAuthority.vault.k8sAuth.token.name | string | `"spire-server"` | Name of the Kubernetes Projected Service Account Token to use for authentication with the Vault |
 | upstreamAuthority.vault.namespace | string | `""` | Name of the Vault namespace. This is only available in the Vault Enterprise. |
 | upstreamAuthority.vault.pkiMountPoint | string | `"pki"` | Name of the mount point where PKI secret engine is mounted |
 | upstreamAuthority.vault.vaultAddr | string | `""` | The URL of the Vault server. (e.g., https://vault.example.com:8443/) |

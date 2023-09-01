@@ -1,11 +1,15 @@
 # spire
 
+
 <!-- This README.md is generated. Please edit README.md.gotmpl -->
 
-![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
+
+
+![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square) 
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
+
 
 **Homepage:** <https://github.com/spiffe/helm-charts/tree/main/charts/spire>
 
@@ -21,7 +25,7 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 | Helm       | `3.x`              |
 | Kubernetes | `1.22+`            |
 
-> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden.
+> **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden. 
 
 ## FAQ
 For any issues see our [FAQ](../../FAQ.md)…
@@ -465,13 +469,17 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.upstreamAuthority.spire.server.address | string | `""` |  |
 | spire-server.upstreamAuthority.spire.server.port | int | `8081` |  |
 | spire-server.upstreamAuthority.spire.upstreamDriver | string | `""` |  |
-| spire-server.upstreamAuthority.vault.caCertPath | string | `""` | Path to a CA certificate file used to verify the Vault server certificate. Only PEM format is supported. |
+| spire-server.upstreamAuthority.vault.caCert | object | `{"name":"vault-ca","type":"ConfigMap"}` | The CA Certificate file used to verify the Vault server certificate. Only PEM format is supported |
+| spire-server.upstreamAuthority.vault.caCert.name | string | `"vault-ca"` | Name of the Kubernetes resource containing the Vault server certificate  |
+| spire-server.upstreamAuthority.vault.caCert.type | string | `"ConfigMap"` | Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `tls.crt` |
 | spire-server.upstreamAuthority.vault.enabled | bool | `false` |  |
-| spire-server.upstreamAuthority.vault.insecureSkipVerify | bool | `false` | If true, the 'caCertPath' configuration is omitted and the vault client accepts any server certificates |
+| spire-server.upstreamAuthority.vault.insecureSkipVerify | bool | `false` | If true, caCert options are ignored and Spire accepts any server certificates claiming to be Vault |
 | spire-server.upstreamAuthority.vault.k8sAuth.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.vault.k8sAuth.k8sAuthMountPoint | string | `"kubernetes"` | Name of the mount point where the Kubernetes auth method is mounted |
 | spire-server.upstreamAuthority.vault.k8sAuth.k8sAuthRoleName | string | `""` | Required - Name of the Vault role. The plugin authenticates against the named role |
-| spire-server.upstreamAuthority.vault.k8sAuth.tokenPath | string | `"/var/run/secrets/tokens/spire-server"` | Absolute path to the Kubernetes Service Account Token to use authentication with the Vault |
+| spire-server.upstreamAuthority.vault.k8sAuth.token.audience | string | `"https://kubernetes.default.svc"` | Intended audience of the PSAT, it must match one of the audiences supported by the Kubernetes API server. See [here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for more info on 'Audience'. |
+| spire-server.upstreamAuthority.vault.k8sAuth.token.expiry | int | `7200` | Expiry time in seconds for the token |
+| spire-server.upstreamAuthority.vault.k8sAuth.token.name | string | `"spire-server"` | Name of the Kubernetes Projected Service Account Token to use for authentication with the Vault |
 | spire-server.upstreamAuthority.vault.namespace | string | `""` | Name of the Vault namespace. This is only available in the Vault Enterprise. |
 | spire-server.upstreamAuthority.vault.pkiMountPoint | string | `"pki"` | Name of the mount point where PKI secret engine is mounted |
 | spire-server.upstreamAuthority.vault.vaultAddr | string | `""` | The URL of the Vault server. (e.g., https://vault.example.com:8443/) |
