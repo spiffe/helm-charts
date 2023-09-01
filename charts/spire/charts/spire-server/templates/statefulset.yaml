@@ -167,10 +167,12 @@ spec:
               subPath: policy.json
               readOnly: true
             {{ end }}
-            {{ end }}
-            {{- if eq (.Values.upstreamAuthority.vault.k8sAuth.enabled | toString) "true" }}
+            {{- end }}
+            {{- with .Values.upstreamAuthority.vault }}
+            {{- if eq (.k8sAuth.enabled | toString) "true" }}
             - name: spire-psat
-              mountPath: {{ .Values.upstreamAuthority.vault.k8sAuth.tokenPath | trimAll "/" | splitList "/" | initial | join "/" | printf "/%s" }}
+              mountPath: /var/run/secrets/kubernetes.io/serviceaccount/{{ .k8sAuth.token.name }}
+            {{- end }}
             {{- end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
@@ -358,15 +360,17 @@ spec:
             path: {{ .Values.persistence.hostPath }}
             type: Directory
         {{- end }}
-        {{- if eq (.Values.upstreamAuthority.vault.k8sAuth.enabled | toString) "true" }}
+        {{- with .Values.upstreamAuthority.vault }}
+        {{- if eq (.k8sAuth.enabled | toString) "true" }}
         - name: spire-psat
           projected:
             sources:
             - serviceAccountToken:
-                path: {{ .Values.upstreamAuthority.vault.k8sAuth.tokenPath | trimAll "/" | splitList "/" | last }}
+                path: {{ .k8sAuth.token.name }}
                 expirationSeconds: 7200
                 audience: vault
         {{- end }}
+        {{- end -}}
   {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:
     - metadata:
