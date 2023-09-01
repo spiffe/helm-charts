@@ -367,8 +367,8 @@ spec:
             sources:
             - serviceAccountToken:
                 path: {{ .k8sAuth.token.name }}
-                expirationSeconds: 7200
-                audience: vault
+                expirationSeconds: {{ .k8sAuth.token.expiry }}
+                audience: {{ .k8sAuth.token.audience }}
         {{- end }}
         {{- end -}}
   {{- if eq .Values.persistence.type "pvc" }}

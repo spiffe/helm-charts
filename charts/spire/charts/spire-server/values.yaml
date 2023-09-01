@@ -280,6 +280,10 @@ upstreamAuthority:
       token:
         # -- Name of the Kubernetes Projected Service Account Token to use for authentication with the Vault
         name: "spire-server"
+        # -- Intended audience of the PSAT, see https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection
+        audience: "api"
+        # -- Expiry time in seconds for the token
+        expiry: 7200
 
 notifier:
   k8sbundle:
