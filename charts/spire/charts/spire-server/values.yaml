@@ -265,11 +265,11 @@ upstreamAuthority:
       port: 8081
   vault:
     enabled: false
-    vault_addr: ""
+    vaultAddr: ""
     namespace: ""
-    pki_mount_point: "pki"
-    ca_cert_path: ""
-    insecure_skip_verify: false
+    pkiMountPoint: "pki"
+    caCertPath: ""
+    insecureSkipVerify: false
 
     k8sAuth:
       enabled: false

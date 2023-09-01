@@ -161,52 +161,27 @@ plugins:
   {{- if eq (.enabled | toString) "true" }}
   {{- $upstreamAuthorityUsed = add1 $upstreamAuthorityUsed }}
   UpstreamAuthority:
-    - vault:
-        plugin_data:
-          vault_addr: {{ .vault_addr | quote }}
-          namespace: {{ .namespace | quote }}
-          pki_mount_point: {{ .pki_mount_point | quote }}
-          ca_cert_path: {{ .ca_cert_path | quote }}
-          insecure_skip_verify: {{ .insecure_skip_verify }}
+  vault:
+    plugin_data:
+      vault_addr: {{ .vaultAddr | quote }}
+      namespace: {{ .namespace | quote }}
+      pki_mount_point: {{ .pkiMountPoint | quote }}
+      ca_cert_path: {{ .caCertPath | quote }}
+      insecure_skip_verify: {{ .insecureSkipVerify }}
 
-          {{- $vaultAuthMethodUsed := 0 }}
-          {{- with .cert_auth }}
-          {{- if eq (.enabled | toString) "true" }}
-          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
-          cert_auth:
-            # TODO
-          {{- end }}
-          {{- end }}
-
-          {{- with .token_auth }}
-          {{- if eq (.enabled | toString) "true" }}
-          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
-          token_auth:
-            # TODO
-          {{- end }}
-          {{- end }}
-
-          {{- with .approle_auth }}
-          {{- if eq (.enabled | toString) "true" }}
-          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
-          approle_auth:
-            # TODO
-          {{- end }}
-          {{- end }}
-
-          {{- $vaultAuthMethodUsed := 0 }}
-          {{- with .k8sAuth }}
-          {{- if eq (.enabled | toString) "true" }}
-          {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
-          k8s_auth:
-            k8s_auth_mount_point: {{ .k8sAuthMountPoint | quote }}
-            k8s_auth_role_name: {{ .k8sAuthRoleName | quote }}
-            token_path: "/var/run/secrets/kubernetes.io/serviceaccount/{{ .token.name }}"
-          {{- end }}
-          {{- end }}
-          {{- if gt $vaultAuthMethodUsed 1 }}
-          {{- fail "You can only enable a single authentication mechanism to an upstream Vault." }}
-          {{- end }}
+      {{- $vaultAuthMethodUsed := 0 }}
+      {{- with .k8sAuth }}
+      {{- if eq (.enabled | toString) "true" }}
+      {{- $vaultAuthMethodUsed = add1 $vaultAuthMethodUsed }}
+      k8s_auth:
+        k8s_auth_mount_point: {{ .k8sAuthMountPoint | quote }}
+        k8s_auth_role_name: {{ .k8sAuthRoleName | quote }}
+        token_path: "/var/run/secrets/kubernetes.io/serviceaccount/{{ .token.name }}"
+      {{- end }}
+      {{- end }}
+      {{- if gt $vaultAuthMethodUsed 1 }}
+      {{- fail "You can only enable a single authentication mechanism to an upstream Vault." }}
+      {{- end }}
   {{- end }}
   {{- end }}  
 
