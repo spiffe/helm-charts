@@ -595,6 +595,10 @@ customPlugins:
   notifier: {}
 
 tests:
+  hostAliases: []
+  tls:
+    enabled: false
+    customCA: ""
   bash:
     ## @param tests.bash.image.registry The OCI registry to pull the image from
     ## @param tests.bash.image.repository The repository within the registry
