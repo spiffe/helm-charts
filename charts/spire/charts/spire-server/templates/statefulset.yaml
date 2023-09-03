@@ -387,7 +387,9 @@ spec:
             - serviceAccountToken:
                 path: {{ .k8sAuth.token.name }}
                 expirationSeconds: {{ .k8sAuth.token.expiry }}
+                {{- if ne .k8sAuth.token.audience "" }}
                 audience: {{ .k8sAuth.token.audience }}
+                {{- end }}
         {{- end }}
         {{- end -}}
         {{- end -}}
