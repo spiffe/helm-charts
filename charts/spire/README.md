@@ -467,7 +467,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | spire-server.upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 | spire-server.upstreamAuthority.vault.caCert | object | `{"name":"vault-ca","type":"ConfigMap"}` | The CA Certificate file used to verify the Vault server certificate. Only PEM format is supported |
 | spire-server.upstreamAuthority.vault.caCert.name | string | `"vault-ca"` | Name of the Kubernetes resource containing the Vault server certificate  |
-| spire-server.upstreamAuthority.vault.caCert.type | string | `"ConfigMap"` | Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `tls.crt` |
+| spire-server.upstreamAuthority.vault.caCert.type | string | `"ConfigMap"` | Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `ca.crt` |
 | spire-server.upstreamAuthority.vault.enabled | bool | `false` |  |
 | spire-server.upstreamAuthority.vault.insecureSkipVerify | bool | `false` | If true, caCert options are ignored and Spire accepts any server certificates claiming to be Vault |
 | spire-server.upstreamAuthority.vault.k8sAuth.enabled | bool | `false` |  |

@@ -269,7 +269,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | upstreamAuthority.spire.upstreamDriver | string | `""` |  |
 | upstreamAuthority.vault.caCert | object | `{"name":"vault-ca","type":"ConfigMap"}` | The CA Certificate file used to verify the Vault server certificate. Only PEM format is supported |
 | upstreamAuthority.vault.caCert.name | string | `"vault-ca"` | Name of the Kubernetes resource containing the Vault server certificate  |
-| upstreamAuthority.vault.caCert.type | string | `"ConfigMap"` | Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `tls.crt` |
+| upstreamAuthority.vault.caCert.type | string | `"ConfigMap"` | Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `ca.crt` |
 | upstreamAuthority.vault.enabled | bool | `false` |  |
 | upstreamAuthority.vault.insecureSkipVerify | bool | `false` | If true, caCert options are ignored and Spire accepts any server certificates claiming to be Vault |
 | upstreamAuthority.vault.k8sAuth.enabled | bool | `false` |  |

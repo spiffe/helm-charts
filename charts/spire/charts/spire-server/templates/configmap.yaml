@@ -167,7 +167,7 @@ plugins:
         pki_mount_point: {{ .pkiMountPoint | quote }}
         insecure_skip_verify: {{ .insecureSkipVerify }}
         {{- if ne (.insecureSkipVerify | toString) "true" }}
-        ca_cert_path: "/run/spire/vault-upstream/tls.crt"
+        ca_cert_path: "/run/spire/vault-upstream/ca.crt"
         {{- end }}
         {{- if ne .namespace "" }}
         namespace: {{ .namespace | quote }}
