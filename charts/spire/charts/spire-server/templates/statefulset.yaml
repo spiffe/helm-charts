@@ -172,7 +172,7 @@ spec:
             {{- if eq (.enabled | toString) "true" }}
             {{- if eq (.k8sAuth.enabled | toString) "true" }}
             - name: spire-psat
-              mountPath: /run/spire/secrets/kubernetes.io/serviceaccount/{{ .k8sAuth.token.name }}
+              mountPath: /run/spire/secrets/kubernetes.io/psat/
             {{- end }}
             {{- if ne (.insecureSkipVerify | toString) "true" }}
             - name: vault-ca
@@ -385,7 +385,7 @@ spec:
           projected:
             sources:
             - serviceAccountToken:
-                path: {{ .k8sAuth.token.name }}
+                path: spire-server
                 expirationSeconds: {{ .k8sAuth.token.expiry }}
                 {{- if ne .k8sAuth.token.audience "" }}
                 audience: {{ .k8sAuth.token.audience }}
