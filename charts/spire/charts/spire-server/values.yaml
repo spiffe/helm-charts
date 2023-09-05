@@ -4,6 +4,8 @@
 ## @skip global
 global: {}
 
+## @section Chart parameters
+##
 ## @param replicaCount SPIRE server currently runs with a sqlite database. Scaling to multiple instances will not work until we use an external database.
 replicaCount: 1
 
@@ -595,9 +597,12 @@ customPlugins:
   notifier: {}
 
 tests:
+  ## @param tests.hostAliases [array] List of host aliases for testing
   hostAliases: []
   tls:
+    ## @param tests.tls.enabled Flag for enabling tls for tests
     enabled: false
+    ## @param tests.tls.customCA Custom CA value for tests
     customCA: ""
   bash:
     ## @param tests.bash.image.registry The OCI registry to pull the image from

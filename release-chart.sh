@@ -72,10 +72,6 @@ command -v gh >/dev/null 2>&1 || {
   print_error_and_exit 'the GitHub cli (gh) is required to run this script'
 }
 
-command -v npm >/dev/null 2>&1 || {
-  print_error_and_exit 'the Node Package Manager cli (npm) is required to run this script'
-}
-
 if [[ $OSTYPE == "darwin"* ]]; then
   command -v gsed >/dev/null 2>&1 || {
     print_error_and_exit 'gsed is required to run this script'
