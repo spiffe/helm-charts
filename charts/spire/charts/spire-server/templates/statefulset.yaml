@@ -172,7 +172,7 @@ spec:
             {{- if eq (.enabled | toString) "true" }}
             {{- if eq (.k8sAuth.enabled | toString) "true" }}
             - name: spire-psat
-              mountPath: /run/spire/secrets/kubernetes.io/psat/
+              mountPath: /var/run/secrets/tokens
             {{- end }}
             {{- if ne (.insecureSkipVerify | toString) "true" }}
             - name: vault-ca
