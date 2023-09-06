@@ -64,7 +64,6 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v5.0.2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           title: Bump test chart dependencies
           branch: bump-test-chart-deps
           commit-message: Bump test chart dependencies
