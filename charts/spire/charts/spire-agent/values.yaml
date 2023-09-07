@@ -170,6 +170,9 @@ workloadAttestors:
     ## @param workloadAttestors.k8s.disableContainerSelectors Set to true if using holdApplicationUntilProxyStarts in Istio
     disableContainerSelectors: false
 
+# -- SDS configuration https://github.com/spiffe/spire/blob/main/doc/spire_agent.md#sds-configuration
+sds: {}
+
 telemetry:
   prometheus:
     ## @param telemetry.prometheus.enabled Flag to enable prometheus monitoring
