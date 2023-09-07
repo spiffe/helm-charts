@@ -134,13 +134,13 @@ Now you can interact with the Spire agent socket from your own application. The 
 | `upstream-spire-agent.healthChecks.port`         | Health check port number for upstream Spire agent  | `9981`                                               |
 | `upstream-spire-agent.telemetry.prometheus.port` | The port where prometheus metrics are available    | `9989`                                               |
 
-### Spire CSI Driver parameters
+### SPIFFE CSI Driver parameters
 
 | Name                        | Description                                      | Value  |
 | --------------------------- | ------------------------------------------------ | ------ |
 | `spiffe-csi-driver.enabled` | Flag to enable spiffe-csi-driver for the cluster | `true` |
 
-### Upstream Spire CSI Driver parameters
+### Upstream SPIFFE CSI Driver parameters
 
 | Name                                           | Description                                                 | Value                                                |
 | ---------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
@@ -156,9 +156,9 @@ Now you can interact with the Spire agent socket from your own application. The 
 
 ### Tornjak frontend parameters
 
-| Name                       | Description                     | Value   |
-| -------------------------- | ------------------------------- | ------- |
-| `tornjak-frontend.enabled` | Flag to enable Tronjak frontend | `false` |
+| Name                       | Description                                                    | Value   |
+| -------------------------- | -------------------------------------------------------------- | ------- |
+| `tornjak-frontend.enabled` | Enables deployment of Tornjak frontend/UI (Not for production) | `false` |
 
 ## Values
 
