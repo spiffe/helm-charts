@@ -159,4 +159,3 @@ Now you can interact with the Spire agent socket from your own application. The 
 | Name                       | Description                                                    | Value   |
 | -------------------------- | -------------------------------------------------------------- | ------- |
 | `tornjak-frontend.enabled` | Enables deployment of Tornjak frontend/UI (Not for production) | `false` |
-
