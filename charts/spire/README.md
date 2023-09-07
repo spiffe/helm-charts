@@ -23,29 +23,8 @@ A Helm chart for deploying the complete Spire stack including: spire-server, spi
 
 > **Note**: For Kubernetes, we will officially support the last 3 versions as described in [k8s versioning](https://kubernetes.io/releases/version-skew-policy/#supported-versions). Any version before the last 3 we will try to support as long it doesn't bring security issues or any big maintenance burden.
 
-## Prerequisites
-
-Please note this chart requires `Projected Service Account Tokens` which has to be enabled on your k8s api server.
-
-To enable Projected Service Account Tokens on Docker for Mac/Windows run the following
-command to SSH into the Docker Desktop K8s VM.
-
-```bash
-docker run -it --privileged --pid=host debian nsenter -t 1 -m -u -n -i sh
-```
-
-Then add the following to `/etc/kubernetes/manifests/kube-apiserver.yaml`
-
-```yaml
-spec:
-  containers:
-    - command:
-        - kube-apiserver
-        - --api-audiences=api,spire-server
-        - --service-account-issuer=api,spire-agent
-        - --service-account-key-file=/run/config/pki/sa.pub
-        - --service-account-signing-key-file=/run/config/pki/sa.key
-```
+## FAQ
+For any issues see our [FAQ](../../FAQ.md)…
 
 ## Usage
 
@@ -99,8 +78,10 @@ Now you can interact with the Spire agent socket from your own application. The 
 | Repository | Name | Version |
 |------------|------|---------|
 | file://./charts/spiffe-csi-driver | spiffe-csi-driver | 0.1.0 |
+| file://./charts/spiffe-csi-driver | upstream-spiffe-csi-driver(spiffe-csi-driver) | 0.1.0 |
 | file://./charts/spiffe-oidc-discovery-provider | spiffe-oidc-discovery-provider | 0.1.0 |
 | file://./charts/spire-agent | spire-agent | 0.1.0 |
+| file://./charts/spire-agent | upstream-spire-agent(spire-agent) | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
 | file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
 
