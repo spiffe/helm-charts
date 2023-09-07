@@ -38,5 +38,3 @@ This project is licensed under [Apache License, Version 2.0](LICENSE).
 ## Reporting a Vulnerability
 
 Vulnerabilities can be reported by sending an email to security@spiffe.io. A confirmation email will be sent to acknowledge the report within 72 hours. A second acknowledgement will be sent within 7 days when the vulnerability has been positively or negatively confirmed.
-
-## Parameters

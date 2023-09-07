@@ -93,15 +93,15 @@ upstream-spire-agent:
       ## @param upstream-spire-agent.telemetry.prometheus.port The port where prometheus metrics are available
       port: 9989
 
-## @section Spire CSI Driver parameters
-## Parameter values for spire-csi-driver
+## @section SPIFFE CSI Driver parameters
+## Parameter values for spiffe-csi-driver
 ##
 spiffe-csi-driver:
   ## @param spiffe-csi-driver.enabled Flag to enable spiffe-csi-driver for the cluster
   enabled: true
 
-## @section Upstream Spire CSI Driver parameters
-## Parameter values for upstream spire-csi-driver
+## @section Upstream SPIFFE CSI Driver parameters
+## Parameter values for upstream spiffe-csi-driver
 ##
 upstream-spiffe-csi-driver:
   ## @param upstream-spiffe-csi-driver.pluginName The plugin name for configuring upstream Spiffe CSI driver
@@ -123,5 +123,5 @@ spiffe-oidc-discovery-provider:
 ## Parameter values for Tornjak frontend
 ##
 tornjak-frontend:
-  ## @param tornjak-frontend.enabled Flag to enable Tronjak frontend
+  ## @param tornjak-frontend.enabled Enables deployment of Tornjak frontend/UI (Not for production)
   enabled: false
