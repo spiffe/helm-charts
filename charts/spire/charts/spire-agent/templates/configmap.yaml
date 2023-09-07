@@ -13,6 +13,11 @@ agent:
   {{- end }}
   trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
 
+  {{- with .Values.sds}}
+  sds:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
 plugins:
   NodeAttestor:
     - k8s_psat:
