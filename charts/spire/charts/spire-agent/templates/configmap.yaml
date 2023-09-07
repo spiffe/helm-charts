@@ -16,7 +16,7 @@ agent:
     default_svid_name: {{ .Values.sds.default_svid_name | quote }}
     default_bundle_name: {{ .Values.sds.default_bundle_name | quote }}
     default_all_bundles_name: {{ .Values.sds.default_all_bundles_name | quote }}
-    disable_spiffe_cert_validation: {{ .Values.disable_spiffe_cert_validation }}
+    disable_spiffe_cert_validation: {{ .Values.sds.disable_spiffe_cert_validation }}
 
 plugins:
   NodeAttestor:
