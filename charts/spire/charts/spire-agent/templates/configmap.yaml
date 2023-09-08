@@ -13,10 +13,10 @@ agent:
   {{- end }}
   trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
   sds:
-    default_svid_name: {{ .Values.sds.default_svid_name | quote }}
-    default_bundle_name: {{ .Values.sds.default_bundle_name | quote }}
-    default_all_bundles_name: {{ .Values.sds.default_all_bundles_name | quote }}
-    disable_spiffe_cert_validation: {{ .Values.sds.disable_spiffe_cert_validation }}
+    default_svid_name: {{ .Values.sds.defaultSvidName | quote }}
+    default_bundle_name: {{ .Values.sds.defaultBundleName | quote }}
+    default_all_bundles_name: {{ .Values.sds.defaultAllBundlesName | quote }}
+    disable_spiffe_cert_validation: {{ .Values.sds.disableSpiffeCertValidation }}
 
 plugins:
   NodeAttestor:
