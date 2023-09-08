@@ -25,13 +25,13 @@ image:
 ## @param imagePullSecrets [array] Pull secrets for images
 imagePullSecrets: []
 
-## @param nameOverride Name override 
+## @param nameOverride Name override
 nameOverride: ""
 
-## @param namespaceOverride Namespace override 
+## @param namespaceOverride Namespace override
 namespaceOverride: ""
 
-## @param fullnameOverride Fullname override 
+## @param fullnameOverride Fullname override
 fullnameOverride: ""
 
 ## @param serviceAccount.create Specifies whether a service account should be created
@@ -58,6 +58,9 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+
+## @param priorityClassName Priority class assigned to statefulset pods
+priorityClassName: ""
 
 ## @param service.type Type of the Spire server service created
 ## @param service.port Port for the created service
