@@ -85,6 +85,81 @@ Now you can interact with the Spire agent socket from your own application. The 
 | file://./charts/spire-server | spire-server | 0.1.0 |
 | file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
 
+## Parameters
+
+### Global parameters
+
+| Name                                    | Description                                                                                                | Value                        |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `global.k8s.clusterDomain`              | Cluster domain name configured for Spire install                                                           | `cluster.local`              |
+| `global.spire.bundleConfigMap`          | A configmap containing the Spire bundle                                                                    | `""`                         |
+| `global.spire.clusterName`              | The name of the k8s cluster for Spire install                                                              | `example-cluster`            |
+| `global.spire.jwtIssuer`                | The issuer for Spire JWT tokens                                                                            | `oidc-discovery.example.org` |
+| `global.spire.trustDomain`              | The trust domain for Spire install                                                                         | `example.org`                |
+| `global.spire.upstreamServerAddress`    | Set what address to use for the upstream server when using nested spire                                    | `""`                         |
+| `global.spire.image.registry`           | Override all Spire image registries at once                                                                | `""`                         |
+| `global.installAndUpgradeHooks.enabled` | Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`) | `true`                       |
+| `global.deleteHooks.enabled`            | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)          | `true`                       |
+
+### Spire server parameters
+
+| Name                                     | Description                                   | Value    |
+| ---------------------------------------- | --------------------------------------------- | -------- |
+| `spire-server.enabled`                   | Flag to enable Spire server                   | `true`   |
+| `spire-server.nameOverride`              | Overrides the name of Spire server pods       | `server` |
+| `spire-server.controllerManager.enabled` | Enable controller manager and provision CRD's | `true`   |
+
+### Spire agent parameters
+
+| Name                       | Description                            | Value   |
+| -------------------------- | -------------------------------------- | ------- |
+| `spire-agent.enabled`      | Flag to enable Spire agent             | `true`  |
+| `spire-agent.nameOverride` | Overrides the name of Spire agent pods | `agent` |
+
+### Upstream Spire agent and CSI driver configuration
+
+| Name               | Description                                                | Value   |
+| ------------------ | ---------------------------------------------------------- | ------- |
+| `upstream.enabled` | Enable upstream agent and driver for use with nested spire | `false` |
+
+### Upstream Spire agent parameters
+
+| Name                                             | Description                                        | Value                                                |
+| ------------------------------------------------ | -------------------------------------------------- | ---------------------------------------------------- |
+| `upstream-spire-agent.upstream`                  | Flag for enabling upstream Spire agent             | `true`                                               |
+| `upstream-spire-agent.nameOverride`              | Name override for upstream Spire agent             | `agent-upstream`                                     |
+| `upstream-spire-agent.bundleConfigMap`           | The configmap name for upstream Spire agent bundle | `spire-bundle-upstream`                              |
+| `upstream-spire-agent.socketPath`                | Socket path where Spire agent socket is mounted    | `/run/spire/agent-sockets-upstream/spire-agent.sock` |
+| `upstream-spire-agent.serviceAccount.name`       | Service account name for upstream Spire agent      | `spire-agent-upstream`                               |
+| `upstream-spire-agent.healthChecks.port`         | Health check port number for upstream Spire agent  | `9981`                                               |
+| `upstream-spire-agent.telemetry.prometheus.port` | The port where prometheus metrics are available    | `9989`                                               |
+
+### SPIFFE CSI Driver parameters
+
+| Name                        | Description                                      | Value  |
+| --------------------------- | ------------------------------------------------ | ------ |
+| `spiffe-csi-driver.enabled` | Flag to enable spiffe-csi-driver for the cluster | `true` |
+
+### Upstream SPIFFE CSI Driver parameters
+
+| Name                                           | Description                                                 | Value                                                |
+| ---------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
+| `upstream-spiffe-csi-driver.pluginName`        | The plugin name for configuring upstream Spiffe CSI driver  | `upstream.csi.spiffe.io`                             |
+| `upstream-spiffe-csi-driver.agentSocketPath`   | The socket path where Spiffe CSI driver mounts agent socket | `/run/spire/agent-sockets-upstream/spire-agent.sock` |
+| `upstream-spiffe-csi-driver.healthChecks.port` | The port where Spiffe CSI driver health checks are exposed  | `9810`                                               |
+
+### SPIFFE oidc discovery provider parameters
+
+| Name                                     | Description                                                   | Value   |
+| ---------------------------------------- | ------------------------------------------------------------- | ------- |
+| `spiffe-oidc-discovery-provider.enabled` | Flag to enable spiffe-oidc-discovery-provider for the cluster | `false` |
+
+### Tornjak frontend parameters
+
+| Name                       | Description                                                    | Value   |
+| -------------------------- | -------------------------------------------------------------- | ------- |
+| `tornjak-frontend.enabled` | Enables deployment of Tornjak frontend/UI (Not for production) | `false` |
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -587,5 +662,3 @@ Now you can interact with the Spire agent socket from your own application. The 
 | upstream-spire-agent.workloadAttestors.k8s.disableContainerSelectors | bool | `false` | Set to true if using holdApplicationUntilProxyStarts in Istio |
 | upstream-spire-agent.workloadAttestors.k8s.skipKubeletVerification | bool | `true` | If true, kubelet certificate verification is skipped |
 | upstream-spire-agent.workloadAttestors.unix.enabled | bool | `false` | enables the Unix workload attestor |
-
-----------------------------------------------
