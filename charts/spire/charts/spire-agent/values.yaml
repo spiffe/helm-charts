@@ -22,13 +22,13 @@ image:
 ## @param imagePullSecrets [array] Pull secrets for images
 imagePullSecrets: []
 
-## @param nameOverride Name override 
+## @param nameOverride Name override
 nameOverride: ""
 
-## @param namespaceOverride Namespace override 
+## @param namespaceOverride Namespace override
 namespaceOverride: ""
 
-## @param fullnameOverride Fullname override 
+## @param fullnameOverride Fullname override
 fullnameOverride: ""
 
 serviceAccount:
@@ -197,7 +197,7 @@ telemetry:
       labels: {}
 
 ## @param socketPath The unix socket path to the spire-agent
-socketPath: /run/spire/agent-sockets/spire-agent.sock
+socketPath: /tmp/spire-agent/private/api.sock
 
 ## @param priorityClassName Priority class assigned to daemonset pods
 priorityClassName: ""
