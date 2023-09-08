@@ -172,13 +172,13 @@ workloadAttestors:
 
 # Optional SDS configuration section.
 sds:
-  # -- The TLS Certificate resource name to use for the default X509-SVID with Envoy SDS
+  ## @param sds.default_svid_name The TLS Certificate resource name to use for the default X509-SVID with Envoy SDS
   default_svid_name: "default"
-  # -- The Validation Context resource name to use for the default X.509 bundle with Envoy SDS
+  ## @param sds.default_bundle_name The Validation Context resource name to use for the default X.509 bundle with Envoy SDS
   default_bundle_name: "ROOTCA"
-  # -- The Validation Context resource name to use for all bundles (including federated) with Envoy SDS
+  ## @param sds.default_all_bundles_name The Validation Context resource name to use for all bundles (including federated) with Envoy SDS
   default_all_bundles_name: "ALL"
-  # -- Disable Envoy SDS custom validation
+  ## @param sds.disable_spiffe_cert_validation Disable Envoy SDS custom validation
   disable_spiffe_cert_validation: false
 
 telemetry:
