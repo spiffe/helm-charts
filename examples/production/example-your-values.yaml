@@ -6,6 +6,7 @@ global:
 
 spire-server:
   ca_subject:
+    country: US
     organization: Production
     common_name: production.other
 
