@@ -28,7 +28,7 @@ spire-server:
       tls:
         - hosts:
             - spire-server-federation.production.other
-          secretName: spire-server-federation-tls
+          secretName: tls-cert
 
 spiffe-oidc-discovery-provider:
   ingress:
