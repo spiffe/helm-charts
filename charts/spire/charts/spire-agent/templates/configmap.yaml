@@ -12,11 +12,13 @@ agent:
   trust_bundle_path: "/run/spire/bundle/bundle.crt"
   {{- end }}
   trust_domain: {{ include "spire-lib.trust-domain" . | quote }}
+  {{- if .Values.sds.enabled }}
   sds:
     default_svid_name: {{ .Values.sds.defaultSvidName | quote }}
     default_bundle_name: {{ .Values.sds.defaultBundleName | quote }}
     default_all_bundles_name: {{ .Values.sds.defaultAllBundlesName | quote }}
     disable_spiffe_cert_validation: {{ .Values.sds.disableSpiffeCertValidation }}
+  {{- end }}
 
 plugins:
   NodeAttestor:
