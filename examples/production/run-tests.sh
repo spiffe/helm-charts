@@ -79,13 +79,13 @@ EOF
 "${helm_install[@]}" spire charts/spire \
   --namespace "${ns}" \
   --values "${SCRIPTPATH}/values.yaml" \
-  --values "${SCRIPTPATH}/example-your-values.yaml" \
   --values "${SCRIPTPATH}/values-export-spiffe-oidc-discovery-provider-ingress-nginx.yaml" \
   --values "${SCRIPTPATH}/values-export-spire-server-ingress-nginx.yaml" \
   --values "${SCRIPTPATH}/values-export-federation-https-web-ingress-nginx.yaml" \
   --values /tmp/dummydns \
   --set spiffe-oidc-discovery-provider.tests.tls.customCA=tls-cert,spire-server.tests.tls.customCA=tls-cert \
   --set spire-agent.server.address=spire-server.example.org,spire-agent.server.port=443 \
+  --values "${SCRIPTPATH}/example-your-values.yaml" \
   --wait
 
 helm test --namespace "${ns}" spire
