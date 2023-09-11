@@ -1,0 +1,10 @@
+global:
+  spire:
+    clusterName: production
+    trustDomain: production.other
+    jwtIssuer: oidc-discovery.production.other
+
+spire-server:
+  ca_subject:
+    organization: Production
+    common_name: production.other
