@@ -172,7 +172,7 @@ workloadAttestors:
 
 # Optional SDS configuration section.
 sds:
-  ## @param sds.enabled Enables setting non-default values for the SDS configuration
+  ## @param sds.enabled enables setting non-default values for the SDS configuration
   enabled: false
   ## @param sds.defaultSvidName The TLS Certificate resource name to use for the default X509-SVID with Envoy SDS
   defaultSvidName: "default"
