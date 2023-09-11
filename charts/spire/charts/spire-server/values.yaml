@@ -340,7 +340,7 @@ upstreamAuthority:
     insecureSkipVerify: false
     caCert:
       ## @param upstreamAuthority.vault.caCert.type Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `ca.crt`
-      type: ConfigMap
+      type: Secret
       ## @param upstreamAuthority.vault.caCert.name Name of the Kubernetes resource containing the Vault server certificate
       name: vault-ca
 
