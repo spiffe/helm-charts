@@ -79,6 +79,7 @@ EOF
 "${helm_install[@]}" spire charts/spire \
   --namespace "${ns}" \
   --values "${SCRIPTPATH}/values.yaml" \
+  --values "${SCRIPTPATH}/example-your-values.yaml" \
   --values "${SCRIPTPATH}/values-export-spiffe-oidc-discovery-provider-ingress-nginx.yaml" \
   --values "${SCRIPTPATH}/values-export-spire-server-ingress-nginx.yaml" \
   --values "${SCRIPTPATH}/values-export-federation-https-web-ingress-nginx.yaml" \
