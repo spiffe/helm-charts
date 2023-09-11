@@ -1,3 +1,4 @@
+{{- include "spire-lib.strict-check" (list . "trustDomain must be set" (eq (include "spire-lib.trust-domain" .) "example.org"))}}
 {{- $oidcSocket := "/run/spire/oidc-sockets/spire-oidc-server.sock" }}
 {{- define "spiffe-oidc-discovery-provider.yaml-config" -}}
 {{- $oidcSocket := .oidcSocket }}

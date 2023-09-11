@@ -2,6 +2,8 @@ global:
   telemetry:
     prometheus:
       enabled: true
+  spire:
+    strictChecking: false
 
 spire-server:
   nodeAttestor:

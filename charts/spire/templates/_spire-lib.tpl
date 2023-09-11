@@ -107,3 +107,18 @@ rules:
 {{- end }}
 {{- include "spire-lib.image" $root }}
 {{- end }}
+
+{{/*
+Take in an array of, '.', a failure string to display, and boolean to to display it,
+if strict checking is enabled and the boolean is true
+*/}}
+{{- define "spire-lib.strict-check" }}
+{{ $root := index . 0 }}
+{{ $message := index . 1 }}
+{{ $condition := index . 2 }}
+{{- if (dig "spire" "strictChecking" false $root.Values.global) }}
+{{- if $condition }}
+{{- fail $message }}
+{{- end }}
+{{- end }}
+{{- end }}

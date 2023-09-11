@@ -89,6 +89,11 @@ EOF
 
 helm test --namespace "${ns}" spire
 
+if helm get manifest -n spire-server spire | grep -i example; then
+  echo Global settings did not work. Please fix.
+  exit 1
+fi
+
 print_helm_releases
 print_spire_workload_status "${ns}"
 
