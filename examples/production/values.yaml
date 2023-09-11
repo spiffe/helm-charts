@@ -3,7 +3,7 @@ global:
     prometheus:
       enabled: true
   spire:
-    strictChecking: false
+   productionChecks: false
 
 spire-server:
   nodeAttestor:

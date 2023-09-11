@@ -25,7 +25,7 @@ global:
       registry: ""
 
     # -- Set to false to disable production requirements to enable you to kick the tires with spire without needing a lot of configuration.
-    strictChecking: false
+    productionChecks: false
 
   installAndUpgradeHooks:
     ## @param global.installAndUpgradeHooks.enabled Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`)
