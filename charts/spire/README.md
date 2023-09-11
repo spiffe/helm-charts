@@ -89,17 +89,18 @@ Now you can interact with the Spire agent socket from your own application. The 
 
 ### Global parameters
 
-| Name                                    | Description                                                                                                | Value                        |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `global.k8s.clusterDomain`              | Cluster domain name configured for Spire install                                                           | `cluster.local`              |
-| `global.spire.bundleConfigMap`          | A configmap containing the Spire bundle                                                                    | `""`                         |
-| `global.spire.clusterName`              | The name of the k8s cluster for Spire install                                                              | `example-cluster`            |
-| `global.spire.jwtIssuer`                | The issuer for Spire JWT tokens                                                                            | `oidc-discovery.example.org` |
-| `global.spire.trustDomain`              | The trust domain for Spire install                                                                         | `example.org`                |
-| `global.spire.upstreamServerAddress`    | Set what address to use for the upstream server when using nested spire                                    | `""`                         |
-| `global.spire.image.registry`           | Override all Spire image registries at once                                                                | `""`                         |
-| `global.installAndUpgradeHooks.enabled` | Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`) | `true`                       |
-| `global.deleteHooks.enabled`            | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)          | `true`                       |
+| Name                                    | Description                                                                                                                        | Value                        |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `global.k8s.clusterDomain`              | Cluster domain name configured for Spire install                                                                                   | `cluster.local`              |
+| `global.spire.bundleConfigMap`          | A configmap containing the Spire bundle                                                                                            | `""`                         |
+| `global.spire.clusterName`              | The name of the k8s cluster for Spire install                                                                                      | `example-cluster`            |
+| `global.spire.jwtIssuer`                | The issuer for Spire JWT tokens                                                                                                    | `oidc-discovery.example.org` |
+| `global.spire.trustDomain`              | The trust domain for Spire install                                                                                                 | `example.org`                |
+| `global.spire.upstreamServerAddress`    | Set what address to use for the upstream server when using nested spire                                                            | `""`                         |
+| `global.spire.image.registry`           | Override all Spire image registries at once                                                                                        | `""`                         |
+| `global.spire.productionChecks`         | Set to false to disable production requirements to enable you to kick the tires with spire without needing a lot of configuration. | `false`                      |
+| `global.installAndUpgradeHooks.enabled` | Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`)                         | `true`                       |
+| `global.deleteHooks.enabled`            | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)                                  | `true`                       |
 
 ### Spire server parameters
 
