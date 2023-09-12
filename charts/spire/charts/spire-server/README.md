@@ -81,7 +81,7 @@ curl  --cacert CA/rootCA.crt --key client.key --cert client.crt https://localhos
 
 In order to run Tornjak with simple HTTP Connection only, make sure you don't create any `Secrets` or `ConfigMaps` listed above.
 
-## Parameters 
+## Parameters
 
 ### Chart parameters
 
@@ -103,6 +103,7 @@ In order to run Tornjak with simple HTTP Connection only, make sure you don't cr
 | `podAnnotations`                                                 | Annotations to add to pods                                                                                                                                                                                                                                         | `{}`                                                                                           |
 | `podSecurityContext`                                             | Pod security context                                                                                                                                                                                                                                               | `{}`                                                                                           |
 | `securityContext`                                                | Security context                                                                                                                                                                                                                                                   | `{}`                                                                                           |
+| `priorityClassName`                                              | Priority class assigned to statefulset pods                                                                                                                                                                                                                        | `""`                                                                                           |
 | `service.type`                                                   | Type of the Spire server service created                                                                                                                                                                                                                           | `ClusterIP`                                                                                    |
 | `service.port`                                                   | Port for the created service                                                                                                                                                                                                                                       | `8081`                                                                                         |
 | `service.annotations`                                            | Annotations to add to the service object                                                                                                                                                                                                                           | `{}`                                                                                           |
