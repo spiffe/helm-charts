@@ -56,7 +56,7 @@ spiffe-oidc-discovery-provider:
     hostAliases:
       - ip: "$ip"
         hostnames:
-          - "oidc-discovery.production.production.other"
+          - "oidc-discovery.production.other"
 spire-agent:
   hostAliases:
     - ip: "$ip"
