@@ -1,9 +1,9 @@
 {{- include "spire-lib.production-check" (list . "clusterName must be set" (eq (include "spire-lib.cluster-name" .) "example-cluster"))}}
 {{- include "spire-lib.production-check" (list . "trustDomain must be set" (eq (include "spire-lib.trust-domain" .) "example.org"))}}
-{{- include "spire-lib.strict-check" (list . "jwtIssuer must be set" (eq (include "spire-lib.jwt-issuer" .) "https://oidc-discovery.example.org"))}}
-{{- include "spire-lib.strict-check" (list . "ca_subject.county must be set" (eq .Values.ca_subject.country "ARPA"))}}
-{{- include "spire-lib.strict-check" (list . "ca_subject.organization must be set" (eq .Values.ca_subject.organization "Example"))}}
-{{- include "spire-lib.strict-check" (list . "ca_subject.common_name must be set" (eq .Values.ca_subject.common_name "example.org"))}}
+{{- include "spire-lib.production-check" (list . "jwtIssuer must be set" (eq (include "spire-lib.jwt-issuer" .) "https://oidc-discovery.example.org"))}}
+{{- include "spire-lib.production-check" (list . "ca_subject.county must be set" (eq .Values.ca_subject.country "ARPA"))}}
+{{- include "spire-lib.production-check" (list . "ca_subject.organization must be set" (eq .Values.ca_subject.organization "Example"))}}
+{{- include "spire-lib.production-check" (list . "ca_subject.common_name must be set" (eq .Values.ca_subject.common_name "example.org"))}}
 {{- range $type, $tvals := .Values.customPlugins }}
 {{-   if not (has $type (list "keyManager" "nodeAttestor" "upstreamAuthority" "notifier")) }}
 {{-     fail (printf "Unknown plugin type specified: %s" $type) }}
