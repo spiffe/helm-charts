@@ -352,10 +352,8 @@ upstreamAuthority:
       ## @param upstreamAuthority.vault.k8sAuth.k8sAuthRoleName Required - Name of the Vault role. The plugin authenticates against the named role
       k8sAuthRoleName: ""
       token:
-        ## @param upstreamAuthority.vault.k8sAuth.token.audience Intended audience of the PSAT, it must match one of the audiences supported by the Kubernetes API server. If no audience is specified, it defaults to the identifier of API Server.
-        # See ['Configure Service Accounts'](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection)
-        # and ['Service Account Token'](https://kubernetes.io/docs/concepts/storage/projected-volumes/#serviceaccounttoken) for more info on 'Audience'.
-        audience: ""
+        ## @param upstreamAuthority.vault.k8sAuth.token.audience Intended audience of the PSAT, it must match one of the audiences supported by the Kubernetes API server. If no audience is specified, it defaults to the identifier of API Server. See ['Service Account Documentation'](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for more info.
+        audience: "vault"
         ## @param upstreamAuthority.vault.k8sAuth.token.expiry Expiry time in seconds for the token
         expiry: 7200
 
