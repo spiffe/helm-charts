@@ -59,6 +59,9 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+## @param priorityClassName Priority class assigned to statefulset pods
+priorityClassName: ""
+
 ## @param service.type Type of the Spire server service created
 ## @param service.port Port for the created service
 ## @param service.annotations [object] Annotations to add to the service object
