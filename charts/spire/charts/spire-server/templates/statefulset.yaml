@@ -49,6 +49,9 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- if or (gt (len .Values.initContainers) 0) (and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create) }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
       initContainers:
       {{- if and .Values.upstreamAuthority.certManager.enabled .Values.upstreamAuthority.certManager.ca.create }}
         - name: wait
@@ -83,11 +86,19 @@ spec:
           - name: PATH
             value: "/opt/spire/bin:/bin"
           {{- if ne .Values.dataStore.sql.databaseType "sqlite3" }}
+          {{- if .Values.dataStore.sql.externalSecret.enabled }}
+          - name: DBPW
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.dataStore.sql.externalSecret.name }}
+                key: {{ .Values.dataStore.sql.externalSecret.key }}
+          {{- else }}
           - name: DBPW
             valueFrom:
               secretKeyRef:
                 name: {{ $fullname }}-dbpw
                 key: DBPW
+          {{- end }}
           {{- end }}
           {{- if ne .Values.keyManager.awsKMS.accessKeyID "" }}
           - name: AWS_KMS_ACCESS_KEY_ID
@@ -159,7 +170,19 @@ spec:
               subPath: policy.json
               readOnly: true
             {{ end }}
-            {{ end }}
+            {{- end }}
+            {{- with .Values.upstreamAuthority.vault }}
+            {{- if eq (.enabled | toString) "true" }}
+            {{- if eq (.k8sAuth.enabled | toString) "true" }}
+            - name: spire-psat
+              mountPath: /var/run/secrets/tokens
+            {{- end }}
+            {{- if ne (.insecureSkipVerify | toString) "true" }}
+            - name: vault-ca
+              mountPath: /run/spire/vault-upstream
+            {{- end }}
+            {{- end }}
+            {{- end }}
             {{- if gt (len .Values.extraVolumeMounts) 0 }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -346,6 +369,33 @@ spec:
             path: {{ .Values.persistence.hostPath }}
             type: Directory
         {{- end }}
+        {{- with .Values.upstreamAuthority.vault }}
+        {{- if eq (.enabled | toString) "true" }}
+        {{- if ne (.insecureSkipVerify | toString) "true" }}
+        {{- if eq (.caCert.type | lower) "configmap" }}
+        - name: vault-ca
+          configMap:
+            name: {{ .caCert.name }}
+        {{- else if eq (.caCert.type | lower) "secret" }}
+        - name: vault-ca
+          secret:
+            secretName: {{ .caCert.name }}
+            optional: false
+        {{- end }}
+        {{- end -}}
+        {{- if eq (.k8sAuth.enabled | toString) "true" }}
+        - name: spire-psat
+          projected:
+            sources:
+            - serviceAccountToken:
+                path: spire-server
+                expirationSeconds: {{ .k8sAuth.token.expiry }}
+                {{- if ne .k8sAuth.token.audience "" }}
+                audience: {{ .k8sAuth.token.audience }}
+                {{- end }}
+        {{- end }}
+        {{- end -}}
+        {{- end -}}
   {{- if eq .Values.persistence.type "pvc" }}
   volumeClaimTemplates:
     - metadata:

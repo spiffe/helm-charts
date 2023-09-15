@@ -202,3 +202,67 @@ The code below determines what connection type should be used.
 {{- define "spire-tornjak.servicename" -}}
 {{- include "spire-tornjak.backend" . -}}
 {{- end -}}
+
+{{- define "spire-server.test.federation-ingress-args" }}
+{{-   $args := list }}
+{{-   $host := index (index (index .Values.federation.ingress.tls 0) "hosts") 0 }}
+{{-   if dig "tests" "tls" "enabled" false .Values }}
+{{-     if ne (len (dig "tests" "tls" "customCA" "" .Values)) 0 }}
+{{-       $args = append $args "--cacert" }}
+{{-       $args = append $args "/ca/ca.crt" }}
+{{-     end }}
+{{-     $args = append $args (printf "https://%s/" $host) }}
+{{-   else }}
+{{-     $args = append $args (printf "http://%s/" $host) }}
+{{-   end }}
+{{ $args | toYaml }}
+{{- end -}}
+
+{{/*
+Take a copy of the config and merge in .Values.customPlugins and .Values.unsupportedBuiltInPlugins passed through as root.
+*/}}
+{{- define "spire-server.config_merge" }}
+{{- $pluginsToMerge := dict "plugins" dict }}
+{{- range $type, $val := .root.Values.customPlugins }}
+{{-   if . }}
+{{-     $nt := printf "%s%s" (substr 0 1 $type | upper) (substr 1 -1 $type) }}
+{{-     $_ := set $pluginsToMerge.plugins $nt (deepCopy $val) }}
+{{-   end }}
+{{- end }}
+{{- range $type, $val := .root.Values.unsupportedBuiltInPlugins }}
+{{-   if . }}
+{{-     $nt := printf "%s%s" (substr 0 1 $type | upper) (substr 1 -1 $type) }}
+{{-     $_ := set $pluginsToMerge.plugins $nt (deepCopy $val) }}
+{{-   end }}
+{{- end }}
+{{- $newConfig := .config | fromYaml | mustMerge $pluginsToMerge }}
+{{- $newConfig | toYaml }}
+{{- end }}
+
+{{/*
+Take a copy of the plugin section and return a yaml string based version
+reformatted from a dict of dicts to a dict of lists of dicts
+*/}}
+{{- define "spire-server.plugins_reformat" }}
+{{- range $type, $v := . }}
+{{ $type }}:
+{{-   range $name, $v2 := $v }}
+    - {{ $name }}: {{ $v2 | toYaml | nindent 8 }}
+{{-   end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Take a copy of the config as a yaml config and root var.
+Merge in .root.Values.customPlugins and .Values.unsupportedBuiltInPlugins into config,
+Reformat the plugin section from a dict of dicts to a dict of lists of dicts,
+and export it back as as json string.
+This makes it much easier for users to merge in plugin configs, as dicts are easier
+to merge in values, but spire needs arrays.
+*/}}
+{{- define "spire-server.reformat-and-yaml2json" -}}
+{{- $config := include "spire-server.config_merge" . | fromYaml }}
+{{- $plugins := include "spire-server.plugins_reformat" $config.plugins | fromYaml }}
+{{- $_ := set $config "plugins" $plugins }}
+{{- $config | toPrettyJson }}
+{{- end }}
