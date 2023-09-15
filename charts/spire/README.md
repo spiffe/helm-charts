@@ -1,8 +1,6 @@
 # spire
 
-<!-- This README.md is generated. Please edit README.md.gotmpl -->
-
-![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
+![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.7.2](https://img.shields.io/badge/AppVersion-1.7.2-informational?style=flat-square)
 [![Development Phase](https://github.com/spiffe/spiffe/blob/main/.img/maturity/dev.svg)](https://github.com/spiffe/spiffe/blob/main/MATURITY.md#development)
 
 A Helm chart for deploying the complete Spire stack including: spire-server, spire-agent, spiffe-csi-driver, spiffe-oidc-discovery-provider and spire-controller-manager.
@@ -84,6 +82,8 @@ Now you can interact with the Spire agent socket from your own application. The 
 | file://./charts/spire-agent | upstream-spire-agent(spire-agent) | 0.1.0 |
 | file://./charts/spire-server | spire-server | 0.1.0 |
 | file://./charts/tornjak-frontend | tornjak-frontend | 0.1.0 |
+
+<!-- The parameters section is generated using helm-docs.sh and should not be edited by hand. -->
 
 ## Parameters
 
