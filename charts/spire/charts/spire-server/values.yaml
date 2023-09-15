@@ -330,6 +330,35 @@ upstreamAuthority:
       address: ""
       ## @param upstreamAuthority.spire.server.port Port for upstream Spire server
       port: 8081
+  vault:
+    ## @param upstreamAuthority.vault.enabled Enable Hashicorp Vault as upstream CA
+    enabled: false
+    ## @param upstreamAuthority.vault.vaultAddr The URL of the Vault server. (e.g., https://vault.example.com:8443/)
+    vaultAddr: ""
+    ## @param upstreamAuthority.vault.namespace Name of the Vault namespace. This is only available in the Vault Enterprise.
+    namespace: ""
+    ## @param upstreamAuthority.vault.pkiMountPoint Name of the mount point where PKI secret engine is mounted
+    pkiMountPoint: "pki"
+      ## @param upstreamAuthority.vault.insecureSkipVerify If true, caCert options are ignored and Spire accepts any server certificates claiming to be Vault
+    insecureSkipVerify: false
+    caCert:
+      ## @param upstreamAuthority.vault.caCert.type Type of resource representing the Vault server certificate, options are 'Secret' or 'Configmap', the item must be named `ca.crt`
+      type: Secret
+      ## @param upstreamAuthority.vault.caCert.name Name of the Kubernetes resource containing the Vault server certificate
+      name: vault-ca
+
+    k8sAuth:
+      ## @param upstreamAuthority.vault.k8sAuth.enabled Enable k8s authentication to Hashicorp Vault
+      enabled: false
+      ## @param upstreamAuthority.vault.k8sAuth.k8sAuthMountPoint Name of the mount point where the Kubernetes auth method is mounted
+      k8sAuthMountPoint: "kubernetes"
+      ## @param upstreamAuthority.vault.k8sAuth.k8sAuthRoleName Required - Name of the Vault role. The plugin authenticates against the named role
+      k8sAuthRoleName: ""
+      token:
+        ## @param upstreamAuthority.vault.k8sAuth.token.audience Intended audience of the PSAT, it must match one of the audiences supported by the Kubernetes API server. If no audience is specified, it defaults to the identifier of API Server. See ['Service Account Documentation'](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection) for more info.
+        audience: "vault"
+        ## @param upstreamAuthority.vault.k8sAuth.token.expiry Expiry time in seconds for the token
+        expiry: 7200
 
 notifier:
   k8sbundle:
