@@ -23,7 +23,6 @@ UPGRADE_ARGS=""
 for i in "$@"; do
   case $i in
     -u)
-      UPGRADE=1
       UPGRADE_ARGS="--repo $UPGRADE_REPO --version $UPGRADE_VERSION"
       shift # past argument=value
       ;;
@@ -92,6 +91,8 @@ spire-server:
 EOF
 
 install_and_test() {
+  # Can't pass an array to a function. We completely control the string so its safe.
+  # shellcheck disable=SC2086
   "${helm_install[@]}" spire "$1" \
     --namespace "${ns}" \
     --values "${SCRIPTPATH}/values.yaml" \
