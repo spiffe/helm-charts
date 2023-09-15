@@ -108,7 +108,7 @@ install_and_test() {
     helm test --namespace "${ns}" spire
 }
 
-if [[ -z "$UPGRADE_ARGS" ]]; then
+if [[ ! -z "$UPGRADE_ARGS" ]]; then
   install_and_test spire "$UPGRADE_ARGS"
   # Any other upgrade steps go here. (Upgrade crds, delete statefulsets without cascade, etc.)
 fi
