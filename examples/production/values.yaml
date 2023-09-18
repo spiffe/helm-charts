@@ -25,6 +25,7 @@ spire-server:
       drop: [ALL]
     seccompProfile:
       type: RuntimeDefault
+  priorityClassName: system-cluster-critical
 
   logLevel: info
 
