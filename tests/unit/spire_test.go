@@ -87,7 +87,6 @@ spire-server:
 			notes := objs["spire/charts/spire-server/templates/configmap.yaml"]
 			Expect(notes).Should(ContainSubstring("\"aws_kms\": {"))
         })
-
 	})
 	Describe("spire-server.UpstreamAuthority.aws_pca", func() {
 		It("plugin set ok", func() {
