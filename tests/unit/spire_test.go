@@ -103,6 +103,5 @@ spire-server:
 			notes := objs["spire/charts/spire-server/templates/configmap.yaml"]
 			Expect(notes).Should(ContainSubstring("\"aws_pca\": {"))
         })
-
 	})
 })
