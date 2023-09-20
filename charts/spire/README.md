@@ -98,7 +98,7 @@ Now you can interact with the Spire agent socket from your own application. The 
 | `global.spire.trustDomain`              | The trust domain for Spire install                                                                         | `example.org`                |
 | `global.spire.upstreamServerAddress`    | Set what address to use for the upstream server when using nested spire                                    | `""`                         |
 | `global.spire.image.registry`           | Override all Spire image registries at once                                                                | `""`                         |
-| `global.spire.productionChecks`         | Check values, such as trustDomain, are suitable for production deployment                                  | `false`                      |
+| `global.spire.strictMode`         | Check values, such as trustDomain, are suitable for production deployment                                  | `false`                      |
 | `global.installAndUpgradeHooks.enabled` | Enable Helm hooks to autofix common install/upgrade issues (should be disabled when using `helm template`) | `true`                       |
 | `global.deleteHooks.enabled`            | Enable Helm hooks to autofix common delete issues (should be disabled when using `helm template`)          | `true`                       |
 

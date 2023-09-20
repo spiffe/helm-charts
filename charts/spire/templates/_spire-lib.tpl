@@ -110,13 +110,13 @@ rules:
 
 {{/*
 Take in an array of, '.', a failure string to display, and boolean to to display it,
-if production checking is enabled and the boolean is true
+if strictMode is enabled and the boolean is true
 */}}
-{{- define "spire-lib.production-check" }}
+{{- define "spire-lib.check-strict-mode" }}
 {{ $root := index . 0 }}
 {{ $message := index . 1 }}
 {{ $condition := index . 2 }}
-{{- if (dig "spire" "productionChecks" false $root.Values.global) }}
+{{- if (dig "spire" "strictMode" false $root.Values.global) }}
 {{- if $condition }}
 {{- fail $message }}
 {{- end }}
