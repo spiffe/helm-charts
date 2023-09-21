@@ -49,6 +49,15 @@ server:
   {{- end }}
   {{- end }}
 
+  experimental:
+    cache_reload_interval: {{ .Values.experimental.cacheReloadInterval | quote }}
+    {{- if gt (len .Values.experimental.featureFlags) 0 }}
+    feature_flags:
+      {{- range .Values.experimental.featureFlags }}
+        - {{ . | quote }}
+      {{- end }}
+    {{- end }}
+
 plugins:
   DataStore:
     sql:
