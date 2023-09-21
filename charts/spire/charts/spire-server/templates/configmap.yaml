@@ -49,14 +49,18 @@ server:
   {{- end }}
   {{- end }}
 
+  {{- with .Values.experimental }}
+  {{- if eq (.enabled | toString) "true" }}
   experimental:
-    cache_reload_interval: {{ .Values.experimental.cacheReloadInterval | quote }}
-    {{- if gt (len .Values.experimental.featureFlags) 0 }}
+    cache_reload_interval: {{ .cacheReloadInterval | quote }}
+    {{- if gt (len .featureFlags) 0 }}
     feature_flags:
-      {{- range .Values.experimental.featureFlags }}
+      {{- range .featureFlags }}
         - {{ . | quote }}
       {{- end }}
     {{- end }}
+  {{- end }}
+  {{- end }}
 
 plugins:
   DataStore:

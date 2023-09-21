@@ -629,6 +629,8 @@ customPlugins:
   notifier: {}
 
 experimental:
+  ## @param experimental.enabled Allow configuration of experimental features
+  enabled: true
   ## @param experimental.cacheReloadInterval The amount of time between two reloads of the in-memory entry cache.
   cacheReloadInterval: 5s
   ## @param experimental.featureFlags [array] List of developer feature flags
