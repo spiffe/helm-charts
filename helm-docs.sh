@@ -14,7 +14,7 @@ if ! hash "${README_GENERATOR_EXE}" 2>/dev/null; then
 fi
 
 # generate docs and show the diff
-mapfile -t chart_paths < <(find "$SCRIPTPATH/charts" -type f -iname "Chart.yaml" -exec dirname {} +)
+mapfile -t chart_paths < <(find "$SCRIPTPATH/charts" -type f -iname "Chart.yaml" -exec dirname {} + | grep -v spire-lib)
 for cpath in "${chart_paths[@]}"
 do
   echo >&2 "Generating Chart documentation for ${cpath}…"
