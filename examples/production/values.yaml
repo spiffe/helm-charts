@@ -3,7 +3,7 @@ global:
     prometheus:
       enabled: true
   spire:
-   strictMode: true
+    strictMode: true
 
 spire-server:
   nodeAttestor:
