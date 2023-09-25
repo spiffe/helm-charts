@@ -1,3 +1,5 @@
+{{- include "spire-lib.check-strict-mode" (list . "clusterName must be set" (eq (include "spire-lib.cluster-name" .) "example-cluster"))}}
+{{- include "spire-lib.check-strict-mode" (list . "trustDomain must be set" (eq (include "spire-lib.trust-domain" .) "example.org"))}}
 {{- define "spire-agent.yaml-config" -}}
 agent:
   data_dir: "/run/spire"

@@ -62,7 +62,7 @@ kubectl apply -f "${DEPS}/testcert.yaml" -n spire-server
  --wait
 
 ip=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o go-template='{{ .spec.clusterIP }}')
-echo "$ip" oidc-discovery.example.org
+echo "$ip" oidc-discovery.production.other
 
 cat > /tmp/dummydns <<EOF
 spiffe-oidc-discovery-provider:
@@ -70,24 +70,18 @@ spiffe-oidc-discovery-provider:
     hostAliases:
       - ip: "$ip"
         hostnames:
-          - "oidc-discovery.example.org"
+          - "oidc-discovery.production.other"
 spire-agent:
   hostAliases:
     - ip: "$ip"
       hostnames:
-        - "spire-server.example.org"
+        - "spire-server.production.other"
 spire-server:
   tests:
     hostAliases:
       - ip: "$ip"
         hostnames:
-          - "spire-server-federation.example.org"
-  federation:
-    ingress:
-      tls:
-        - hosts:
-            - spire-server-federation.example.org
-          secretName: tls-cert
+          - "spire-server-federation.production.other"
 EOF
 
 install_and_test() {
@@ -101,7 +95,8 @@ install_and_test() {
     --values "${SCRIPTPATH}/values-export-federation-https-web-ingress-nginx.yaml" \
     --values /tmp/dummydns \
     --set spiffe-oidc-discovery-provider.tests.tls.customCA=tls-cert,spire-server.tests.tls.customCA=tls-cert \
-    --set spire-agent.server.address=spire-server.example.org,spire-agent.server.port=443 \
+    --set spire-agent.server.address=spire-server.production.other,spire-agent.server.port=443 \
+    --values "${SCRIPTPATH}/example-your-values.yaml" \
     $2 \
     --wait
 
@@ -114,6 +109,11 @@ if [[ -n "$UPGRADE_ARGS" ]]; then
 fi
 
 install_and_test charts/spire ""
+
+if helm get manifest -n spire-server spire | grep -i example; then
+  echo Global settings did not work. Please fix.
+  exit 1
+fi
 
 print_helm_releases
 print_spire_workload_status "${ns}"
