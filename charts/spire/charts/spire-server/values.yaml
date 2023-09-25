@@ -225,7 +225,7 @@ federation:
 
 ca_subject:
   ## @param ca_subject.country Country for Spire server CA
-  country: NL
+  country: ARPA
   ## @param ca_subject.organization Organization for Spire server CA
   organization: Example
   ## @param ca_subject.common_name Common Name for Spire server CA
