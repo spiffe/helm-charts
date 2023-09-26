@@ -1,6 +1,6 @@
 In this introduction to SPIRE on Kubernetes you will learn how to:
 
-* Deploy SPIRE and SPIFFE with helm
+* Deploy SPIRE and SPIFFE with helm in a non production ready configuration suitable for testing purposes.
 * Configure a registration entry for a workload
 * Fetch an x509-SVID over the SPIFFE Workload API
 * Learn where to find resources for more complex installations
