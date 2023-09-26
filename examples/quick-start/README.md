@@ -5,10 +5,10 @@ In this introduction to SPIRE on Kubernetes you will learn how to:
 * Fetch an x509-SVID over the SPIFFE Workload API
 * Learn where to find resources for more complex installations
 
-The steps in this guide have been tested on these 
-Kubernetes versions: 1.26
-Helm Chart version: 0.10.1
-App Version: 1.7.0
+The steps in this guide have been tested on these versions:
+- Kubernetes: 1.26
+- Helm Chart: 0.10.1
+- App: 1.7.0
 
 {{< info >}}
 If you are using Minikube to run this tutorial you should specify some special flags as described [here](#considerations-when-using-minikube).
